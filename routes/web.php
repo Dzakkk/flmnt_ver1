@@ -7,7 +7,9 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SupplierController;
+use App\Livewire\ProductFormula;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +54,10 @@ Route::get('product/store', [ProductsController::class, 'newProductForm']);
 Route::post('product/store', [ProductsController::class, 'newProduct']);
 Route::delete('product/delete/{id}', [ProductsController::class, 'delete'])->name('product.delete');
 
+Livewire::component('product-formula', ProductFormula::class);
 
 
+Route::get('formula', [ProductsController::class, 'formula']);
 
 
 

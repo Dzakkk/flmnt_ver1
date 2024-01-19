@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('product_formula', function (Blueprint $table) {
             $table->string('FAI_code')->primary();
             $table->string('product_name');
-            $table->string('FAI_code_barang');
-            $table->decimal('persentase'. 5, 2);
+            $table->json('FAI_code_barang');
+            $table->json('persentase');
             $table->timestamps();
         });
     }

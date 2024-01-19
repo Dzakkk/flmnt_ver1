@@ -159,7 +159,6 @@ class BarangMasukController extends Controller
 
     public function brgMasuk(Request $request)
     {
-        // Step 1: Validate the request
         $validator = FacadesValidator::make($request->all(), [
             'jenis_penerimaan' => 'required',
             'tanggal_masuk' => 'required',
@@ -183,17 +182,14 @@ class BarangMasukController extends Controller
             'id_rak' => 'required',
         ]);
 
-        // If validation fails, redirect back with errors
         if ($validator->fails()) {
             return redirect('your-form-route')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        // Combine selected documentation checkboxes into a string
         $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
 
-        // Create a new BarangMasuk instance and fill it with the request data
         $barangMasuk = new BarangMasuk([
             'jenis_penerimaan' => $request->jenis_penerimaan,
             'tanggal_masuk' => $request->tanggal_masuk,
@@ -215,15 +211,23 @@ class BarangMasukController extends Controller
             'id_rak' => $request->id_rak,
         ]);
 
-        // Step 2: Save the BarangMasuk instance to insert data into the barang_masuk table
         try {
             $barangMasuk->save();
         } catch (\Exception $e) {
-            // Log or dd($e->getMessage()) to see the exception details
             dd($e->getMessage());
         }
 
-        // Create a new Stock instance and fill it with the request data
+        $rakGudang = RakGudang::find($request->id_rak);
+
+        if ($rakGudang->kapasitas >= $request->qty_masuk_LOT) {
+        } else {
+            return redirect()->back()->with('error', 'Kapasitas rak tidak mencukupi.');
+        }
+
+        $rakGudang->kapasitas -= $request->qty_masuk_LOT;
+        $rakGudang->save();
+
+
         $stock = new Stock([
             'FAI_code' => $request->FAI_code,
             'no_LOT' => $request->no_LOT,
@@ -233,15 +237,12 @@ class BarangMasukController extends Controller
             'weight' => $request->qty_masuk_LOT, // Assuming qty_masuk_LOT and weight are the same
         ]);
 
-        // Step 3: Save the Stock instance to insert data into the stock_lot table
         try {
             $stock->save();
         } catch (\Exception $e) {
-            // Log or dd($e->getMessage()) to see the exception details
             dd($e->getMessage());
         }
 
-        // Step 4: Redirect after saving
         return redirect('barangMasuk');
     }
 }

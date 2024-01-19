@@ -24,6 +24,8 @@ class ProductsController extends Controller
 
     public function newProduct(Request $request)
     {
+
+
         $validator = Validator::make($request->all(), [
             'FAI_code' => 'required',
             'category' => 'required',
@@ -38,8 +40,8 @@ class ProductsController extends Controller
             'release_date' => 'required',
             'created_by' => 'required',
             'note' => 'required',
+            'target_order' => 'required',
             'storage' => 'required',
-            'total_order' => 'required',
             'unit' => 'required',
         ]);
 
@@ -49,7 +51,6 @@ class ProductsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
         // Combine selected documentation checkboxes into a string
 
         // Create a new BarangMasuk instance and fill it with the request data
@@ -68,7 +69,7 @@ class ProductsController extends Controller
             'created_by' => $request->created_by,
             'note' => $request->note,
             'storage' => $request->storage,
-            'total_order' => $request->total_order,
+            'target_order' => $request->target_order,
             'unit' => $request->unit,
         ]);
 
@@ -84,9 +85,10 @@ class ProductsController extends Controller
         $formula = new ProductFormula([
             'FAI_code' => $request->FAI_code,
             'product_name' => $request->product_name,
-            'FAI_code_barang' => $request->FAI_code_barang,
-            'persentase' => $request->persentase,
+            'FAI_code_barang' => json_encode($request->FAI_code_barang),
+            'persentase' => json_encode($request->persentase),
         ]);
+        
 
         // Step 3: Save the formula instance to insert data into the formula_lot table
         try {
@@ -97,6 +99,12 @@ class ProductsController extends Controller
         }
 
         // Step 4: Redirect after saving
-        return redirect('Products');
+        return redirect('product');
+    }
+
+    public function formula()
+    {
+        $frm = ProductFormula::all();
+        return view('product.formula', ['frm' => $frm]);
     }
 }

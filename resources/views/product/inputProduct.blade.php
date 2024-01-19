@@ -2,7 +2,7 @@
 
 @section('product_form')
     <div class="container shadow pt-2 mt-2" style="width: 800px">
-        <form class="row g-3 d-flex" action="/newBarang" method="POST" enctype="multipart/form-data">
+        <form class="row g-3 d-flex" action="/product/store" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Daftar Barang Baru</h5>
@@ -85,23 +85,13 @@
                     </select>
                 </div>
             </div>
-
-            {{-- <div class="col-md-6">
-                <label for="supplier" class="form-label">supplier</label>
-                <select name="supplier" id="supplier" class="form-control select2" required>
-                    <option value="" disabled selected>Select Supplier</option>
-                    @foreach ($supp as $c)
-                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
             <div class="col-md-6">
                 <label class="form-label" for="created_date">created_date</label>
-                <input type="text" name="created_date" class="form-control" id="created_date">
+                <input type="date" name="created_date" class="form-control" id="created_date">
             </div>
             <div class="col-md-6">
                 <label for="release_date" class="form-label">release_date</label>
-                <input type="text" name="release_date" id="release_date" class="form-control">
+                <input type="date" name="release_date" id="release_date" class="form-control">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="created_by">created_by</label>
@@ -116,8 +106,8 @@
                 <input type="text" name="storage" id="storage" class="form-control">
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="total_order">total_order</label>
-                <input type="text" name="total_order" class="form-control" id="total_order">
+                <label class="form-label" for="target_order">target_order</label>
+                <input type="number" name="target_order" class="form-control" id="target_order">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="unit">unit</label>
@@ -143,21 +133,18 @@
                             <option value="{{ $c->FAI_code }}">{{ $c->FAI_code }}</option>
                         @endforeach
                     </select>
-                    <button class="btn btn-danger" onclick="removeInput(0)" type="button">Remove</button>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" onclick="addInput()" id="add-input">Add Input</button>
-            <div class="col-12 pb-4">
-                <button type="submit" class="btn btn-primary">Tambah Data</button>
-            </div>
+            @livewire('product-formula')
+
+            {{-- <button type="button" class="btn btn-primary" onclick="addInput()" id="add-input">Add Input</button> --}}
         </form>
     </div>
 
 
-
     <!-- ... (Your previous HTML and form) ... -->
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             let inputCounter = 1;
     
@@ -209,6 +196,6 @@
     
             $('#add-input').on('click', addInput);
         });
-    </script>
+    </script> --}}
     
 @endsection

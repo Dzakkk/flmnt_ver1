@@ -256,6 +256,12 @@
                     <span>Product</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/formula ">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Formula</span>
+                </a>
+            </li>
             
             <!-- End F.A.Q Page Nav -->
 
@@ -306,7 +312,7 @@
             @yield('customer')
             @yield('data_product')
             @yield('product_form')
-
+            @yield('formula')
 
         </section>
 

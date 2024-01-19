@@ -97,6 +97,15 @@ class BarangKeluarController extends Controller
             dd($e->getMessage());
         }
 
+        $rakGudang = RakGudang::find($request->id_rak);
+        $rakGudang->kapasitas += $request->total_qty_keluar_LOT;
+        $rakGudang->save();
+        try {
+            $barangKeluar->save();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }        
+        
         $requestedWeight = $request->total_qty_keluar_LOT;
         $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('weight');
 

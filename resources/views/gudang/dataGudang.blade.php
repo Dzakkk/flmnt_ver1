@@ -38,7 +38,7 @@
                         </div>
                     </td>
                     <td>
-                        2
+                        {{ $item->rak->count() }}
                     </td>
                 </tr>
 

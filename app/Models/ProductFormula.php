@@ -20,4 +20,9 @@ class ProductFormula extends Model
     protected $keyType = 'string';
 
     protected $guarded = [];
+
+    protected $casts = [
+        'FAI_code_barang' => 'array',
+        'persentase' => 'array',
+    ];
 }
