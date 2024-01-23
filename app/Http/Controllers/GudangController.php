@@ -39,7 +39,7 @@ class GudangController extends Controller
             'posisi_lokasi' => $request->posisi_lokasi,
             'kapasitas' => $request->kapasitas,
         ]);
-
+        session()->flash('success', 'Fungsi berhasil diselesaikan!');
         return redirect('/gudang');
     }
 }

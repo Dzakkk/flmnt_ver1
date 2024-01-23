@@ -27,4 +27,14 @@ class Barang extends Model
     {
         return $this->hasOne(Stock::class, 'FAI_code', 'FAI_code');
     }
+
+    /**
+     * Get all of the sb for the Barang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sb(): HasMany
+    {
+        return $this->HasMany(StockBarang::class, 'FAI_code', 'FAI_code');
+    }
 }

@@ -1,13 +1,25 @@
 @extends('dashboard')
 
 @section('gudang')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <?php $row = 1; ?>
     <table class="table table-hover shadow mt-3">
         <button class="btn btn-primary me-1 " type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
-            aria-expanded="false" aria-controls="@foreach ($gudang as $i)
-            collapseExample-{{ $i->id_gudang }}
-            @endforeach">
-        Lihat Rak
+            aria-expanded="false"
+            aria-controls="@foreach ($gudang as $i)
+            collapseExample-{{ $i->id_gudang }} @endforeach">
+            Lihat Rak
         </button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Tambah Rak

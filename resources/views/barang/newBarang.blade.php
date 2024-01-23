@@ -90,8 +90,32 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="packaging_type">packaging_type</label>
-                <input type="text" name="packaging_type" class="form-control" id="packaging_type">
+                <label class="form-label" for="unit">Jenis Kemasan</label>
+                <div class="input-group">
+                    <select class="form-select" id="golongan_select" name="packaging_type">
+                        <option value="">Pilih Kemasan</option>
+                        <option value="Alumunium Bottle">Alumunium Bottle</option>
+                        <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
+                        <option value="Bag">Bag</option>
+                        <option value="Box with Alumunium Bottle">Box with Alumunium Bottle</option>
+                        <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch Pack
+                        </option>
+                        <option value="Carton">Carton</option>
+                        <option value="Fiber Box">Fiber Box</option>
+                        <option value="Fiber Drum">Fiber Drum</option>
+                        <option value="Glass Bottle">Glass Bottle</option>
+                        <option value="Jerry Can">Jerry Can</option>
+                        <option value="Metal Can">Metal Can</option>
+                        <option value="Metal Drum">Metal Drum</option>
+                        <option value="Plastic Bottle">Plastic Bottle</option>
+                        <option value="Plastic Container with Polyethylene Inner Bag">Plastic Container
+                            with Polyethylene Inner Bag</option>
+                        <option value="Plastic Drum">Plastic Drum</option>
+                        <option value="Plastic Jar">Plastic Jar</option>
+                        <option value="Sacks">Sacks</option>
+                        <option value="Goody Bag">Goody Bag</option>
+                    </select>
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="form-label">documentation</label>
@@ -139,7 +163,12 @@
             </div>
             <div class="col-md-6">
                 <label for="ex_origin" class="form-label">ex_origin</label>
-                <input type="text" name="ex_origin" id="ex_origin" class="form-control">
+                <select name="ex_origin" id="ex_origin" class="form-control select2" required>
+                    <option value="" disabled selected>Select ex_origin</option>
+                    @foreach ($ex as $c)
+                        <option value="{{ $c->manufacturer_name }}">{{ $c->manufacturer_name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="initial_ex">initial_ex</label>

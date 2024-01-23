@@ -1,10 +1,25 @@
 @extends('dashboard')
 
 @section('barangKeluar')
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Keluar
     </button>
-    <table class="table table-hover">
+    <table class="table table-hover shadow">
         <thead>
             <tr>
                 <th scope="col">Jenis Penerimaan</th>
@@ -215,7 +230,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">total_qty_keluar_LOT</label>
-                                <input type="number" name="total_qty_keluar_LOT" class="form-control" id="exampleInputEmail1">
+                                <input type="number" name="total_qty_keluar_LOT" class="form-control"
+                                    id="exampleInputEmail1">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="unit">unit</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Gudang;
+use App\Models\Manufacturer;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,10 @@ class BarangController extends Controller
     public function newBarangForm()
     {
         $supp = Supplier::all();
-        return view('barang.newBarang', ['supp' => $supp]);
+        $mnc = Manufacturer::all();
+        return view('barang.newBarang', ['supp' => $supp, 'ex' => $mnc]);
     }
-
+ 
     public function newBarang(Request $request)
     {
         $request->validate([
@@ -103,7 +105,7 @@ class BarangController extends Controller
             'refractive_index_d25' => $request->refractive_index_d25,
             'berat_gram' => $request->berat_gram,
         ]);
-
+        session()->flash('success', 'Data telah Ditambahkan');
         return redirect('/barang')->with('success', 'Barang berhasil ditambahkan');
     }
 }

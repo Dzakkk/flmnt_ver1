@@ -203,7 +203,8 @@ class BarangKeluarController extends Controller
         })->find($request->id_rak);
 
         if (!$rakGudang) {
-            // Rak gudang tidak ditemukan berdasarkan FAI_code
+            session()->flash('error', 'Gagal');
+
             return redirect('barangKeluar')->with('error', 'Rak Gudang not found for the specified FAI_code.');
         }
 
@@ -212,12 +213,13 @@ class BarangKeluarController extends Controller
         try {
             $rakGudang->save();
         } catch (\Exception $e) {
-            // Handle the exception if needed
+            session()->flash('error', 'Gagal');
         }
 
         try {
             $barangKeluar->save();
         } catch (\Exception $e) {
+            session()->flash('error', 'Gagal');
             return redirect('barangKeluar')
                 ->with('error', 'Failed to save BarangKeluar: ' . $e->getMessage());
         }
@@ -232,6 +234,8 @@ class BarangKeluarController extends Controller
         if ($requestedWeight > $availableStock && $requestedWeight2 > $availableStock2) {
             // If requested quantity is more than available stock
             return redirect('barangKeluar')->with('warning', 'Partial stock issued. Requested quantity exceeds available stock.');
+            session()->flash('error', 'Gagal');
+
         } else {
             // If requested quantity is within available stock
             try {
@@ -241,7 +245,7 @@ class BarangKeluarController extends Controller
                 return redirect('barangKeluar')
                     ->with('error', 'Failed to decrease stock: ' . $e->getMessage());
             }
-
+            session()->flash('success', 'Berhasil');
             return redirect('barangKeluar')->with('success', 'Stock issued successfully.');
         }
     }
@@ -270,7 +274,7 @@ class BarangKeluarController extends Controller
         foreach ($stocks as $stock) {
             if ($requestedWeight >= $stock->quantity) {
                 // If requested weight is greater than or equal to current stock weight, delete the stock entry
-                $stock->delete();
+                $stock->update(['quantity' => 0]);
                 $requestedWeight -= $stock->quantity;
             } else {
                 // If requested weight is less than the current stock weight, update the stock entry

@@ -269,6 +269,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="/manufacturer ">
+                    <i class="bi bi-people-fill"></i>
+                    <span>manufacturer</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="/formula ">
                     <i class="ri-flask-line"></i>
                     <span>Formula</span>
@@ -328,6 +334,8 @@
             @yield('data_lot')
             @yield('stock')
             @yield('script')
+            @yield('manufacturer')
+
 
         </section>
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GudangController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockProductController;
@@ -64,6 +65,13 @@ Route::post('/produksi/product', [StockProductController::class, 'storeProductio
 
 Route::get('stock/lot', [StockController::class, 'lot']);
 Route::get('stock/barang', [StockController::class, 'stock']);
+
+
+Route::get('/manufacturer', [ManufacturerController::class, 'dataManufacturer']);
+Route::post('/manufacturer/store', [ManufacturerController::class, 'storeManufacturer']);
+Route::get('/manufacturer/update/{id}', [ManufacturerController::class, 'updateManufacturer']);
+Route::put('/manufacturer/update/{id}', [ManufacturerController::class, 'update']);
+Route::delete('/manufacturer/delete/{id}', [ManufacturerController::class, 'delete'])->name('manufacturer.delete');
 
 
 

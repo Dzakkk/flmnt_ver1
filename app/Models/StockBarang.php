@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StockBarang extends Model
 {
@@ -18,4 +20,16 @@ class StockBarang extends Model
     public $incrementing = false;
 
     protected $guarded = [];
+
+
+    /**
+     * Get all of the sb for the StockBarang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function barang(): BelongsTo
+    {
+        return $this->BelongsTo(Barang::class, 'FAI_code', 'FAI_code');
+    }
+
 }

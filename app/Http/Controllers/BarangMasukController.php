@@ -243,9 +243,6 @@ class BarangMasukController extends Controller
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
-            
-
-
 
             // Retrieve additional information from the Barang table
             $barangAspect = Barang::where('FAI_code', $request->FAI_code)->value('aspect');
@@ -280,10 +277,11 @@ class BarangMasukController extends Controller
                     return redirect()->back()->with('error', 'Failed to save Stock Barang: ' . $e->getMessage());
                 }
             }
-
+            session()->flash('success', 'Data telah Ditambahkan!');
             return redirect('barangMasuk')->with('success', 'Barang masuk successfully.');
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Kapasitas rak tidak mencukupi.']);
+            session()->flash('error', 'Kapasitas Rak tidak mencukupi');
+            return redirect('barangMasuk');
 
         }
     }

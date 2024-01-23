@@ -1,17 +1,21 @@
 @extends('dashboard')
 
-@section('script')
-    <script>
-        // Handle response from server
-        @if(session('status') == 'success')
-            alert('Data saved successfully!');
-        @elseif(session('status') == 'error')
-            alert('{{ session('message') }}');
-        @endif
-    </script>
-@endsection
+
 
 @section('barangMasuk')
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Masuk
     </button>
@@ -232,7 +236,6 @@
                                         <option value="Plastic Container with Polyethylene Inner Bag">Plastic Container
                                             with Polyethylene Inner Bag</option>
                                         <option value="Plastic Drum">Plastic Drum</option>
-                                        <option value="gram">gram</option>
                                         <option value="Plastic Jar">Plastic Jar</option>
                                         <option value="Sacks">Sacks</option>
                                         <option value="Goody Bag">Goody Bag</option>

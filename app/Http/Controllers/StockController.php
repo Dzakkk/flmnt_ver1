@@ -18,7 +18,7 @@ class StockController extends Controller
 
     public function stock()
     {
-        $stock = StockBarang::all();
+        $stock = StockBarang::with('barang')->get();
         return view('stock.stock', ['stock' => $stock]);
     }
 }
