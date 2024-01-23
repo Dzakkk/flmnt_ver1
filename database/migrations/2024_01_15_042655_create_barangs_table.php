@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('initial_code');
             $table->string('number_code');
             $table->string('alokasi_penyimpanan');
-            $table->float('reOrder_qty', 8, 3);
+            $table->float('reOrder_qty', 8, 2);
             $table->string('unit');
             $table->string('supplier');
             $table->string('packaging_type');
@@ -35,9 +35,9 @@ return new class extends Migration
             $table->string('country_of_origin');
             $table->string('remark');
             $table->string('usage_level');
-            $table->float('harga_ex_work_USD', 8, 3);
-            $table->float('harga_CIF_USD', 8, 3);
-            $table->float('harga_MOQ_USD', 8, 3);
+            $table->float('harga_ex_work_USD', 8, 2);
+            $table->float('harga_CIF_USD', 8, 2);
+            $table->float('harga_MOQ_USD', 8, 2);
             $table->string('appearance');
             $table->string('color_rangeColor');
             $table->string('odour_taste');
@@ -46,7 +46,7 @@ return new class extends Migration
             $table->string('spesific_gravity_d25');
             $table->string('refractive_index_d20');
             $table->string('refractive_index_d25');
-            $table->float('berat_gram', 8, 3);
+            $table->float('berat_gram', 8, 2);
             $table->timestamps();
         });
     }

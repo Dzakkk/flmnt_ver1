@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RakGudang extends Model
 {
@@ -31,5 +32,15 @@ class RakGudang extends Model
     public function gudang(): BelongsTo
     {
         return $this->belongsTo(Gudang::class, 'id_gudang', 'id_gudang');
+    }
+    
+    /**
+     * Get all of the stocks for the RakGudang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stock::class, 'id_rak', 'id_rak');
     }
 }

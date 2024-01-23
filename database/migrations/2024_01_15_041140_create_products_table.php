@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('created_by');
             $table->text('note')->nullable();
             $table->string('storage');
-            $table->float('target_order', 8, 3);
+            $table->float('target_order', 8, 2);
             $table->string('unit');
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('id_gudang');
             $table->string('keterangan');
             $table->string('posisi_lokasi');
-            $table->float('kapasitas', 8, 3);
+            $table->float('kapasitas', 8, 2);
             $table->timestamps();
         });
     }

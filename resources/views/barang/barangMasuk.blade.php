@@ -1,5 +1,16 @@
 @extends('dashboard')
 
+@section('script')
+    <script>
+        // Handle response from server
+        @if(session('status') == 'success')
+            alert('Data saved successfully!');
+        @elseif(session('status') == 'error')
+            alert('{{ session('message') }}');
+        @endif
+    </script>
+@endsection
+
 @section('barangMasuk')
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Masuk

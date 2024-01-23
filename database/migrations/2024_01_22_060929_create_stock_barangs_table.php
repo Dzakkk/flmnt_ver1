@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_lot', function (Blueprint $table) {
-            $table->id('id_lot');
-            $table->string('FAI_code');
-            $table->string('no_LOT');
-            $table->float('weight', 8, 2);
+        Schema::create('stock_barang', function (Blueprint $table) {
+            $table->string('FAI_code')->primary();
+            $table->string('product_name');
+            $table->string('common_name');
+            $table->string('aspect');
+            $table->string('category');
+            $table->float('quantity', 8, 2);
             $table->string('unit');
-            $table->date('tanggal_produksi');
-            $table->date('tanggal_expire');
-            $table->string('id_rak');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_lot');
+        Schema::dropIfExists('stock_barang');
     }
 };

@@ -25,11 +25,11 @@ return new class extends Migration
             $table->string('FAI_code');
             $table->date('tanggal_produksi');
             $table->date('tanggal_expire');
-            $table->float('total_qty_keluar_LOT', 8, 3);
+            $table->float('total_qty_keluar_LOT', 8, 2);
             $table->string('unit');
             $table->string('jenis_kemasan');
-            $table->float('berat_per_kemasan_KG', 8, 3);
-            $table->float('total_QTY_kemasan', 8,3);
+            $table->float('berat_per_kemasan_KG', 8, 2);
+            $table->float('total_QTY_kemasan', 8,2);
             $table->string('status');
             $table->string('id_rak');
             $table->timestamps();

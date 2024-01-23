@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Barang extends Model
 {
@@ -20,4 +22,9 @@ class Barang extends Model
     protected $keyType = 'string';
 
     protected $guarded = [];
+
+    public function stock(): HasOne
+    {
+        return $this->hasOne(Stock::class, 'FAI_code', 'FAI_code');
+    }
 }

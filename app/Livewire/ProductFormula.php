@@ -11,6 +11,9 @@ class ProductFormula extends Component
     public $persentase = [];
     public $FAI_code_barang = [];
     public $brg;
+    protected $rules = [
+        'persentase.*' => 'numeric|min:0',
+    ];
 
     public function mount()
     {
@@ -41,5 +44,13 @@ class ProductFormula extends Component
         $this->fields = array_values($this->fields);
         $this->persentase = array_values($this->persentase);
         $this->FAI_code_barang = array_values($this->FAI_code_barang);
+    }
+
+    public function updatedPersentase()
+    {
+        // Convert the input values to numeric
+        $this->persentase = collect($this->persentase)->map(function ($value) {
+            return is_numeric($value) ? (float) $value : null;
+        })->toArray();
     }
 }

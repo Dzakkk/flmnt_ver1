@@ -24,11 +24,11 @@ return new class extends Migration
             $table->string('no_LOT');
             $table->date('tanggal_produksi');
             $table->date('tanggal_expire');
-            $table->float('qty_masuk_LOT', 8, 3);
+            $table->float('qty_masuk_LOT', 8, 2);
             $table->string('unit');
             $table->string('jenis_kemasan');
-            $table->float('satuan_QTY_kemasan', 8, 3);
-            $table->float('total_QTY_kemasan',8 ,3);
+            $table->float('satuan_QTY_kemasan', 8, 2);
+            $table->float('total_QTY_kemasan',8 ,2);
             $table->string('status');
             $table->string('id_rak');
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Gudang;
 use App\Models\ProductFormula;
 use App\Models\Products;
 use Illuminate\Http\Request;
@@ -19,12 +20,12 @@ class ProductsController extends Controller
     public function newProductForm()
     {
         $brg = Barang::all();
-        return view('product.inputProduct', ['brg' => $brg]);
+        $gdg = Gudang::all();
+        return view('product.inputProduct', ['brg' => $brg, 'gdg' =>$gdg]);
     }
 
     public function newProduct(Request $request)
     {
-
 
         $validator = Validator::make($request->all(), [
             'FAI_code' => 'required',
@@ -51,8 +52,6 @@ class ProductsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        // Combine selected documentation checkboxes into a string
-
         // Create a new BarangMasuk instance and fill it with the request data
         $Products = new Products([
             'FAI_code' => $request->FAI_code,
@@ -86,10 +85,9 @@ class ProductsController extends Controller
             'FAI_code' => $request->FAI_code,
             'product_name' => $request->product_name,
             'FAI_code_barang' => json_encode($request->FAI_code_barang),
-            'persentase' => json_encode($request->persentase),
+            'persentase' => json_encode($request->persentase, JSON_NUMERIC_CHECK),
         ]);
         
-
         // Step 3: Save the formula instance to insert data into the formula_lot table
         try {
             $formula->save();

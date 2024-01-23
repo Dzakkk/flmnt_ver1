@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Gudang;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class BarangController extends Controller
 {
     public function dataBarang()
     {
-        $brg = Barang::all();
+        $brg = Barang::with('stock')->get();
         return view('barang.dataBarang', ['brg' => $brg]);
     }
 

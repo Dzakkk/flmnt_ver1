@@ -218,20 +218,20 @@
             
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/barang">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bi bi-box-seam"></i>
                     <span>Barang</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/barangMasuk">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bx bxs-package"></i>
                     <span>Barang Masuk</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/barangKeluar">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bi bi-truck"></i>
                     <span>Barang Keluar</span>
                 </a>
             </li>
@@ -257,8 +257,20 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/formula ">
+                <a class="nav-link collapsed" href="/stock/lot ">
                     <i class="bi bi-people-fill"></i>
+                    <span>LOT</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/stock/barang ">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Stock</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/formula ">
+                    <i class="ri-flask-line"></i>
                     <span>Formula</span>
                 </a>
             </li>
@@ -313,6 +325,9 @@
             @yield('data_product')
             @yield('product_form')
             @yield('formula')
+            @yield('data_lot')
+            @yield('stock')
+            @yield('script')
 
         </section>
 

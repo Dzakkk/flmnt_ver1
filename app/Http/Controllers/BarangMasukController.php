@@ -6,9 +6,10 @@ use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\RakGudang;
 use App\Models\Stock;
+use App\Models\StockBarang;
 use App\Models\Supplier;
 use Dotenv\Validator as DotenvValidator;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Illuminate\Validation\Validator as ValidationValidator;
@@ -159,7 +160,7 @@ class BarangMasukController extends Controller
 
     public function brgMasuk(Request $request)
     {
-        $validator = FacadesValidator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'jenis_penerimaan' => 'required',
             'tanggal_masuk' => 'required',
             'id_supplier' => 'required',
@@ -211,38 +212,79 @@ class BarangMasukController extends Controller
             'id_rak' => $request->id_rak,
         ]);
 
-        try {
-            $barangMasuk->save();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
-
         $rakGudang = RakGudang::find($request->id_rak);
 
         if ($rakGudang->kapasitas >= $request->qty_masuk_LOT) {
+            // Deduct capacity from the rack
+            $rakGudang->kapasitas -= $request->qty_masuk_LOT;
+            $rakGudang->save();
+
+            // Create or update the stock entry
+            $stock = new Stock([
+                'FAI_code' => $request->FAI_code,
+                'no_LOT' => $request->no_LOT,
+                'tanggal_produksi' => $request->tanggal_produksi,
+                'tanggal_expire' => $request->tanggal_expire,
+                'unit' => $request->unit,
+                'weight' => $request->qty_masuk_LOT,
+                'id_rak' => $request->id_rak,
+
+            ]);
+
+            try {
+                $stock->save();
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            }
+            
+
+            try {
+                $barangMasuk->save();
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            }
+            
+
+
+
+            // Retrieve additional information from the Barang table
+            $barangAspect = Barang::where('FAI_code', $request->FAI_code)->value('aspect');
+            $commonName = Barang::where('FAI_code', $request->FAI_code)->value('common_name');
+            $productName = Barang::where('FAI_code', $request->FAI_code)->value('name');
+
+            // Check if the FAI_code already exists in the stock_barang table
+            $existingStock = StockBarang::where('FAI_code', $request->FAI_code)->first();
+
+            // If the FAI_code exists, update the quantity; otherwise, create a new entry
+            if ($existingStock) {
+                $existingStock->update([
+                    'quantity' => $existingStock->quantity + $request->qty_masuk_LOT,
+                    'aspect' => $barangAspect,
+                    'common_name' => $commonName,
+                    'product_name' => $productName,
+                ]);
+            } else {
+                $stockBarang = new StockBarang([
+                    'FAI_code' => $request->FAI_code,
+                    'product_name' => $productName,
+                    'common_name' => $commonName,
+                    'aspect' => $barangAspect,
+                    'category' => $request->kategori_barang,
+                    'quantity' => $request->qty_masuk_LOT,
+                    'unit' => $request->unit,
+                ]);
+
+                try {
+                    $stockBarang->save();
+                } catch (\Exception $e) {
+                    return redirect()->back()->with('error', 'Failed to save Stock Barang: ' . $e->getMessage());
+                }
+            }
+
+            return redirect('barangMasuk')->with('success', 'Barang masuk successfully.');
         } else {
-            return redirect()->back()->with('error', 'Kapasitas rak tidak mencukupi.');
+            return response()->json(['status' => 'error', 'message' => 'Kapasitas rak tidak mencukupi.']);
+
         }
-
-        $rakGudang->kapasitas -= $request->qty_masuk_LOT;
-        $rakGudang->save();
-
-
-        $stock = new Stock([
-            'FAI_code' => $request->FAI_code,
-            'no_LOT' => $request->no_LOT,
-            'tanggal_produksi' => $request->tanggal_produksi,
-            'tanggal_expire' => $request->tanggal_expire,
-            'unit' => $request->unit,
-            'weight' => $request->qty_masuk_LOT, // Assuming qty_masuk_LOT and weight are the same
-        ]);
-
-        try {
-            $stock->save();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
-
-        return redirect('barangMasuk');
     }
 }

@@ -5,10 +5,10 @@
         <form class="row g-3 d-flex" action="/product/store" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="col-md-12">
-                <h5 for="nama_pendidikan" class="form-h5">Daftar Barang Baru</h5>
+                <h5 for="nama_pendidikan" class="form-h5">Daftar Product Baru</h5>
             </div>
             <div class="col-md-6">
-                <label for="inpnip" class="form-label">FAI_code</label>
+                <label for="inpnip" class="form-label">FAI code</label>
                 <input type="text" name="FAI_code" class="form-control" id="inpFAI_code">
             </div>
             <div class="col-md-6">
@@ -16,7 +16,7 @@
                 <input type="text" name="FINA_code" class="form-control" id="FINA_code">
             </div>
             <div class="col-md-6">
-                <label for="category" class="form-label">category</label>
+                <label for="category" class="form-label">Category</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="category">
                         <option value="">Pilih Kategori</option>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="aspect">aspect</label>
+                <label class="form-label" for="aspect">Aspect</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="aspect">
                         <option value="">Pilih Kategori</option>
@@ -38,11 +38,11 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="product_name" class="form-label">product_name</label>
+                <label for="product_name" class="form-label">Product Name</label>
                 <input type="text" name="product_name" id="product_name" class="form-control">
             </div>
             <div class="col-md-6">
-                <label for="build_product" class="form-label">build_product</label>
+                <label for="build_product" class="form-label">Build Product</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="build_product">
                         <option value="" disabled>Pilih Kategori</option>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="formula_id" class="form-label">formula_id</label>
+                <label for="formula_id" class="form-label">Formula id</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="formula_id">
                         <option value="" disabled>Pilih Kategori</option>
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="segment" class="form-label">segment</label>
+                <label for="segment" class="form-label">Segment</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="segment">
                         <option value="" disabled>Pilih Kategori</option>
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="solubility" class="form-label">solubility</label>
+                <label for="solubility" class="form-label">Solubility</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="solubility">
                         <option value="" disabled>Pilih Kategori</option>
@@ -86,31 +86,38 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="created_date">created_date</label>
+                <label class="form-label" for="created_date">Created Date</label>
                 <input type="date" name="created_date" class="form-control" id="created_date">
             </div>
             <div class="col-md-6">
-                <label for="release_date" class="form-label">release_date</label>
+                <label for="release_date" class="form-label">Release Date</label>
                 <input type="date" name="release_date" id="release_date" class="form-control">
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="created_by">created_by</label>
+                <label class="form-label" for="created_by">Created by</label>
                 <input type="text" name="created_by" class="form-control" id="created_by">
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="note">note</label>
-                <input type="text" name="note" class="form-control" id="note">
+                <label class="form-label" for="note">Note</label>
+                <textarea name="note" id="note" cols="30" rows="1" class="form-control"></textarea>
             </div>
             <div class="col-md-6">
-                <label for="storage" class="form-label">storage</label>
-                <input type="text" name="storage" id="storage" class="form-control">
+                <label class="form-label" for="unit">Storage</label>
+                <div class="input-group">
+                    <select class="form-select" id="golongan_select" name="storage">
+                        <option value="" disabled>Pilih Kategori</option>
+                        @foreach ($gdg as $g)
+                            <option value="{{ $g->id_gudang }}">{{ $g->nama_gudang }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="target_order">target_order</label>
+                <label class="form-label" for="target_order">Target Order</label>
                 <input type="number" name="target_order" class="form-control" id="target_order">
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="unit">unit</label>
+                <label class="form-label" for="unit">Unit</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="unit">
                         <option value="">Pilih Kategori</option>
@@ -121,20 +128,25 @@
                     </select>
                 </div>
             </div>
-            {{-- //formula --}}
-            <div class="col-md-12" id="input-container">
-                <div class="input-group">
-                    <label class="form-label" for="persentase-0">Persentase:</label>
-                    <input type="number" id="persentase-0" name="persentase[]" required class="form-control">
-                    <label class="form-label" for="kandungan-0">Kandungan:</label>
-                    <select name="FAI_code_barang[]" id="kandungan-0" class="form-control select2" required>
-                        <option value="" disabled selected>Select Supplier</option>
-                        @foreach ($brg as $c)
-                            <option value="{{ $c->FAI_code }}">{{ $c->FAI_code }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="mt-3">
+                <h3 class="pt-3">
+                    FORMULA PRODUCT ===========================
+                </h3>
             </div>
+            <div class="col-md-6">
+                <label class="form-label" for="persentase-0">Persentase:</label>
+                <input type="text" id="persentase-0" name="persentase[]" required class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="kandungan-0">Kandungan:</label>
+                <select name="FAI_code_barang[]" id="kandungan-0" class="form-control select2" required>
+                    <option value="" disabled selected>Select FAI code</option>
+                    @foreach ($brg as $c)
+                        <option value="{{ $c->FAI_code }}">{{ $c->FAI_code }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             @livewire('product-formula')
 
             {{-- <button type="button" class="btn btn-primary" onclick="addInput()" id="add-input">Add Input</button> --}}
@@ -197,5 +209,4 @@
             $('#add-input').on('click', addInput);
         });
     </script> --}}
-    
 @endsection

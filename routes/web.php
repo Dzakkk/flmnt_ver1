@@ -6,6 +6,8 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
 use App\Livewire\ProductFormula;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +60,11 @@ Livewire::component('product-formula', ProductFormula::class);
 
 
 Route::get('formula', [ProductsController::class, 'formula']);
+Route::post('/produksi/product', [StockProductController::class, 'storeProduction']);
+
+Route::get('stock/lot', [StockController::class, 'lot']);
+Route::get('stock/barang', [StockController::class, 'stock']);
+
 
 
 

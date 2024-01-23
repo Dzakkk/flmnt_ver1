@@ -3,9 +3,11 @@
 @section('gudang')
     <?php $row = 1; ?>
     <table class="table table-hover shadow mt-3">
-        <button class="btn btn-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-            aria-expanded="false" aria-controls="collapseExample">
-            Lihat Rak
+        <button class="btn btn-primary me-1 " type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
+            aria-expanded="false" aria-controls="@foreach ($gudang as $i)
+            collapseExample-{{ $i->id_gudang }}
+            @endforeach">
+        Lihat Rak
         </button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Tambah Rak
@@ -21,27 +23,40 @@
             @foreach ($gudang as $item)
                 <tr>
                     <th scope="row">{{ $row }}</th>
-                    <td>{{ $item->nama_gudang }}
-                        <div class="collapse" id="collapseExample">
+                    <td data-bs-toggle="collapse" data-bs-target="#collapseExample-{{ $item->id_gudang }}"
+                        aria-expanded="false" aria-controls="collapseExample-{{ $item->id_gudang }}"
+                        style="cursor: pointer">{{ $item->nama_gudang }}
+                        <div class="collapse multi-collapse" id="collapseExample-{{ $item->id_gudang }}">
                             <div class="">
-                                @foreach ($item->rak as $rg)
-                                    <div>
-                                        <p>
-                                            {{ $rg->id_rak }}&nbsp;
-                                            {{ $rg->keterangan }}
-                                            {{ $rg->posisi_lokasi }}
-                                            {{ $rg->kapasitas }} Kg</p>
-                                    </div>
-                                @endforeach
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <ul class="list-group list-group-horizontal">
+                                                <li class="list-group-item w-25">RAK</li>
+                                                <li class="list-group-item w-25">Keterangan</li>
+                                                <li class="list-group-item w-25">Lokasi</li>
+                                                <li class="list-group-item w-25">Kapasitas/Kg</li>
+                                            </ul>
+                                        </li>
+                                        @foreach ($item->rak as $rg)
+                                            <li>
+                                                <ul class="list-group list-group-horizontal">
+                                                    <li class="list-group-item w-25">{{ $rg->id_rak }}</li>
+                                                    <li class="list-group-item w-25">{{ $rg->keterangan }}</li>
+                                                    <li class="list-group-item w-25">{{ $rg->posisi_lokasi }}</li>
+                                                    <li class="list-group-item w-25">{{ $rg->kapasitas }} Kg</li>
+                                                </ul>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-
                         </div>
                     </td>
                     <td>
                         {{ $item->rak->count() }}
                     </td>
                 </tr>
-
                 <?php $row++; ?>
             @endforeach
         </tbody>
