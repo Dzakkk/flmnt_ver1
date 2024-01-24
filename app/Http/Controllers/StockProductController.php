@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductFormula;
-use App\Models\Stock;
+use App\Models\StockBarang;
 use App\Models\stockProduct;
 use Illuminate\Http\Request;
 
 class StockProductController extends Controller
 {
+
+    public function stock()
+    {
+        $stock = stockProduct::all();
+        return view('stock.stockProduct', ['stock' => $stock]);
+    }
+
+
     public function storeProduction(Request $request)
     {
         // Validate the input data
@@ -32,42 +40,52 @@ class StockProductController extends Controller
 
         // Save the production entry
         $production->save();
-
         // Get the product formula for the given FAI_code
         $formula = ProductFormula::where('FAI_code', $request->FAI_code)->first();
 
         // Check if the formula exists
         if ($formula) {
             // Decode the JSON-encoded persentase values
-            $persentase = json_decode($formula->persentase, true);
-
             // Update stock weights for stock_product
-            $this->updateStockProductWeight($request->FAI_code, $persentase, $request->weight);
+            $this->updateStockProductWeight($request->FAI_code, $request->weight);
         }
 
         // Redirect or return a response as needed
         return redirect('formula')->with('success', 'Production entry saved successfully.');
     }
 
-    private function updateStockProductWeight($FAI_code, $persentase, $originalWeight)
+    private function updateStockProductWeight($FAI_code, $originalWeight)
     {
-        // Get the stock product for the given FAI_code
-        $stockProduct = StockProduct::where('FAI_code', $FAI_code)->first();
+        // Get the product formula for the given FAI_code
+        $formula = ProductFormula::where('FAI_code', $FAI_code)->first();
 
-        // Check if the stock product exists
-        if ($stockProduct) {
-            // Calculate the new weights based on percentages
-            $newWeights = [];
-            foreach ($persentase as $percentage) {
-                $newWeights[] = $originalWeight * ($percentage / 100);
+        // Check if the formula exists
+        if ($formula) {
+            // Confirm that FAI_code_barang and persentase are arrays
+            $FAI_code_barang_array = json_decode($formula->FAI_code_barang, true);
+            $persentase_array = json_decode($formula->persentase, true);
+
+            if (is_array($FAI_code_barang_array) && is_array($persentase_array)) {
+                // Calculate the new weights based on percentages for each FAI_code_barang
+                foreach ($FAI_code_barang_array as $index => $FAI_code_barang) {
+                    // Ensure that $originalWeight and $percentage are numeric values
+                    $originalWeight = floatval($originalWeight);
+                    $percentage = floatval($persentase_array[$index]);
+
+                    // Get the stock product for the given FAI_code_barang
+                    $stockProduct = StockBarang::where('FAI_code', $FAI_code_barang)->first();
+
+                    // Check if the stock product exists
+                    if ($stockProduct) {
+                        // Calculate the new weight based on the percentage
+                        $newWeight = $originalWeight * ($percentage / 100);
+
+                        // Update the stock product quantity
+                        $stockProduct->quantity -= $newWeight;
+                        $stockProduct->save();
+                    }
+                }
             }
-
-            // Update the stock product weights
-            $stockProduct->update([
-                'weight' => $originalWeight - array_sum($newWeights),
-            ]);
         }
     }
 }
-
-

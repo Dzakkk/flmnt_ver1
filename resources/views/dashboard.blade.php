@@ -269,6 +269,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="/stock/product ">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Stock Product</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="/manufacturer ">
                     <i class="bi bi-people-fill"></i>
                     <span>manufacturer</span>
@@ -335,6 +341,8 @@
             @yield('stock')
             @yield('script')
             @yield('manufacturer')
+            @yield('stock_product')
+
 
 
         </section>

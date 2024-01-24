@@ -65,6 +65,7 @@ Route::post('/produksi/product', [StockProductController::class, 'storeProductio
 
 Route::get('stock/lot', [StockController::class, 'lot']);
 Route::get('stock/barang', [StockController::class, 'stock']);
+Route::get('stock/product', [StockProductController::class, 'stock']);
 
 
 Route::get('/manufacturer', [ManufacturerController::class, 'dataManufacturer']);
