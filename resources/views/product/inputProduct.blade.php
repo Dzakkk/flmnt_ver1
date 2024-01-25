@@ -1,9 +1,13 @@
 @extends('dashboard')
 
 @section('product_form')
+
+@livewireStyles
     <div class="container shadow pt-2 mt-2" style="width: 800px">
         <form class="row g-3 d-flex" action="/product/store" method="POST" enctype="multipart/form-data">
             @csrf
+
+
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Daftar Product Baru</h5>
             </div>
@@ -147,10 +151,11 @@
                 </select>
             </div>
 
-            @livewire('product-formula')
 
-            {{-- <button type="button" class="btn btn-primary" onclick="addInput()" id="add-input">Add Input</button> --}}
+            @livewire('formula-product')
+            <button type="submit" class="btn btn-primary" id="add-input">buat</button>
+            @livewireScripts
+
         </form>
     </div>
-
 @endsection

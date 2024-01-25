@@ -236,7 +236,7 @@ class BarangMasukController extends Controller
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
-            
+
 
             try {
                 $barangMasuk->save();
@@ -282,7 +282,144 @@ class BarangMasukController extends Controller
         } else {
             session()->flash('error', 'Kapasitas Rak tidak mencukupi');
             return redirect('barangMasuk');
-
         }
+    }
+
+
+
+
+
+    public function updateBrgMasuk(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'jenis_penerimaan' => 'required',
+            'tanggal_masuk' => 'required',
+            'id_supplier' => 'required',
+            'NoSuratJalanMasuk_NoProduksi' => 'required',
+            'NoPO_NoWO' => 'required',
+            'kategori_barang' => 'required',
+            'FAI_code' => 'required',
+            'no_LOT' => 'required',
+            'tanggal_produksi' => 'required',
+            'tanggal_expire' => 'required',
+            'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
+            'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
+            'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
+            'qty_masuk_LOT' => 'required',
+            'unit' => 'required',
+            'jenis_kemasan' => 'required',
+            'satuan_QTY_kemasan' => 'required',
+            'total_QTY_kemasan' => 'required',
+            'status' => 'required',
+            'id_rak' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('your-form-route.edit', $id)  // Ganti 'your-form-route.edit' dengan nama route untuk form edit
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
+
+        $barangMasuk = BarangMasuk::find($id);
+
+        if (!$barangMasuk) {
+            return redirect('barangMasuk')->with('error', 'Data barang masuk tidak ditemukan.');
+        }
+
+        // Update properties
+        $barangMasuk->jenis_penerimaan = $request->jenis_penerimaan;
+        $barangMasuk->tanggal_masuk = $request->tanggal_masuk;
+        $barangMasuk->id_supplier = $request->id_supplier;
+        $barangMasuk->NoSuratJalanMasuk_NoProduksi = $request->NoSuratJalanMasuk_NoProduksi;
+        $barangMasuk->NoPO_NoWO = $request->NoPO_NoWO;
+        $barangMasuk->kategori_barang = $request->kategori_barang;
+        $barangMasuk->FAI_code = $request->FAI_code;
+        $barangMasuk->no_LOT = $request->no_LOT;
+        $barangMasuk->tanggal_produksi = $request->tanggal_produksi;
+        $barangMasuk->tanggal_expire = $request->tanggal_expire;
+        $barangMasuk->dokumen = $documentation;
+        $barangMasuk->qty_masuk_LOT = $request->qty_masuk_LOT;
+        $barangMasuk->unit = $request->unit;
+        $barangMasuk->jenis_kemasan = $request->jenis_kemasan;
+        $barangMasuk->satuan_QTY_kemasan = $request->satuan_QTY_kemasan;
+        $barangMasuk->total_QTY_kemasan = $request->total_QTY_kemasan;
+        $barangMasuk->status = $request->status;
+        $barangMasuk->id_rak = $request->id_rak;
+
+        // Simpan perubahan
+        try {
+            $barangMasuk->save();
+        } catch (\Exception $e) {
+            return redirect()->route('your-form-route.edit', $id)
+                ->with('error', 'Gagal menyimpan perubahan: ' . $e->getMessage());
+        }
+
+        $stock = Stock::where('FAI_code', $request->FAI_code)
+            ->where('no_LOT', $request->no_LOT)
+            ->first();
+
+        if ($stock) {
+            // Update properties
+            $stock->tanggal_produksi = $request->tanggal_produksi;
+            $stock->tanggal_expire = $request->tanggal_expire;
+            $stock->unit = $request->unit;
+            $stock->weight = $request->qty_masuk_LOT;
+            $stock->id_rak = $request->id_rak;
+
+            // Simpan perubahan Stock
+            try {
+                $stock->save();
+            } catch (\Exception $e) {
+                return redirect()->route('your-form-route.edit', $id)
+                    ->with('error', 'Gagal menyimpan perubahan Stock: ' . $e->getMessage());
+            }
+        }
+
+        // Update StockBarang
+        $barangAspect = Barang::where('FAI_code', $request->FAI_code)->value('aspect');
+        $commonName = Barang::where('FAI_code', $request->FAI_code)->value('common_name');
+        $productName = Barang::where('FAI_code', $request->FAI_code)->value('name');
+
+        $stockBarang = StockBarang::where('FAI_code', $request->FAI_code)->first();
+
+        if ($stockBarang) {
+            // Update properties
+            $stockBarang->product_name = $productName;
+            $stockBarang->common_name = $commonName;
+            $stockBarang->aspect = $barangAspect;
+            $stockBarang->category = $request->kategori_barang;
+            $stockBarang->quantity = $request->qty_masuk_LOT;
+            $stockBarang->unit = $request->unit;
+
+            // Simpan perubahan StockBarang
+            try {
+                $stockBarang->save();
+            } catch (\Exception $e) {
+                return redirect()->route('your-form-route.edit', $id)
+                    ->with('error', 'Gagal menyimpan perubahan StockBarang: ' . $e->getMessage());
+            }
+        } else {
+            $newStockBarang = new StockBarang([
+                'FAI_code' => $request->FAI_code,
+                'product_name' => $productName,
+                'common_name' => $commonName,
+                'aspect' => $barangAspect,
+                'category' => $request->kategori_barang,
+                'quantity' => $request->qty_masuk_LOT,
+                'unit' => $request->unit,
+            ]);
+
+            try {
+                $newStockBarang->save();
+            } catch (\Exception $e) {
+                return redirect()->route('your-form-route.edit', $id)
+                    ->with('error', 'Gagal menyimpan StockBarang baru: ' . $e->getMessage());
+            }
+        }
+
+        session()->flash('success', 'Data telah diperbarui!');
+        return redirect('barangMasuk')->with('success', 'Data barang masuk berhasil diperbarui.');
     }
 }

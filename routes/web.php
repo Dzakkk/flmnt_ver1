@@ -10,7 +10,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
-use App\Livewire\ProductFormula;
+use App\Http\Livewire\FormulaProduct;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -35,6 +35,8 @@ Route::post('rak/store', [GudangController::class, 'storeRak']);
 Route::get('barang', [BarangController::class, 'dataBarang']);
 Route::get('newBarang', [BarangController::class, 'newBarangForm']);
 Route::post('newBarang', [BarangController::class, 'newBarang']);
+Route::put('/barang/update/{id}', [BarangController::class, 'updateBarang']);
+
 
 Route::get('supplier', [SupplierController::class, 'dataSupplier']);
 Route::post('supplier/store', [SupplierController::class, 'storeSupplier']);
@@ -57,8 +59,6 @@ Route::get('product/store', [ProductsController::class, 'newProductForm']);
 Route::post('product/store', [ProductsController::class, 'newProduct']);
 Route::delete('product/delete/{id}', [ProductsController::class, 'delete'])->name('product.delete');
 
-Livewire::component('product-formula', ProductFormula::class);
-
 
 Route::get('formula', [ProductsController::class, 'formula']);
 Route::post('/produksi/product', [StockProductController::class, 'storeProduction']);
@@ -77,10 +77,11 @@ Route::delete('/manufacturer/delete/{id}', [ManufacturerController::class, 'dele
 
 
 
+Route::get('/barang/export', [BarangController::class, 'export']);
 
 
-
-
+// Route::livewire('/product-form', [FormulaProduct::class]);
+Livewire::component('/product-form', [FormulaProduct::class]);
 
 
 

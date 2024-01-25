@@ -73,15 +73,22 @@ class StockProductController extends Controller
                     $percentage = floatval($persentase_array[$index]);
 
                     // Get the stock product for the given FAI_code_barang
-                    $stockProduct = StockBarang::where('FAI_code', $FAI_code_barang)->first();
-
+                    $stockBarang = StockBarang::where('FAI_code', $FAI_code_barang)->first();
+                    $stockProduct = stockProduct::where('FAI_code', $FAI_code_barang)->first();
                     // Check if the stock product exists
-                    if ($stockProduct) {
+                    if ($stockBarang) {
                         // Calculate the new weight based on the percentage
                         $newWeight = $originalWeight * ($percentage / 100);
 
                         // Update the stock product quantity
-                        $stockProduct->quantity -= $newWeight;
+                        $stockBarang->quantity -= $newWeight;
+                        $stockBarang->save();
+                    }
+                    if ($stockProduct) {
+                        $newWeight = $originalWeight * ($percentage / 100);
+
+                        // Update the stock product quantity
+                        $stockProduct->weight -= $newWeight;
                         $stockProduct->save();
                     }
                 }
