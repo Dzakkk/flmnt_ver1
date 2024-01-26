@@ -17,8 +17,8 @@
                 <th scope="col">Formula ID</th>
                 <th scope="col">Segment</th>
                 <th scope="col">Solubility</th>
-                <th scope="col">Created Date</th>
-                <th scope="col">Release Date </th>
+                <th scope="col">Created</th>
+                <th scope="col">Release </th>
                 <th scope="col">NOTE</th>
                 <th scope="col">ACTION</th>
             </tr>
@@ -26,22 +26,22 @@
         <tbody>
             @foreach ($prd as $i)
                 <tr>
-                    <th scope="row">{{ $i->FAI_code }}</th>
-                    <td>{{ $i->FINA_code }}</td>
-                    <td>{{ $i->category }}</td>
-                    <td>{{ $i->aspect }}</td>
-                    <td>{{ $i->product_name }}</td>
-                    <td>{{ $i->build_product }}</td>
-                    <td>{{ $i->formula_id }}</td>
-                    <td>{{ $i->segment }}</td>
-                    <td>{{ $i->solubility }}</td>
-                    <td>{{ $i->created_date }}</td>
-                    <td>{{ $i->release_date }}</td>
-                    <td>{{ $i->note }}</td>
+                    <th scope="row" style="font-size: 14px;">{{ $i->FAI_code }}</th>
+                    <td style="font-size: 14px;">{{ $i->FINA_code }}</td>
+                    <td style="font-size: 14px;">{{ $i->category }}</td>
+                    <td style="font-size: 14px;">{{ $i->aspect }}</td>
+                    <td style="font-size: 14px;">{{ $i->product_name }}</td>
+                    <td style="font-size: 14px;">{{ $i->build_product }}</td>
+                    <td style="font-size: 14px;">{{ $i->formula_id }}</td>
+                    <td style="font-size: 14px;">{{ $i->segment }}</td>
+                    <td style="font-size: 14px;">{{ $i->solubility }}</td>
+                    <td style="font-size: 14px;">{{ $i->created_date }}</td>
+                    <td style="font-size: 14px;">{{ $i->release_date }}</td>
+                    <td style="font-size: 14px;">{{ $i->note }}</td>
                     <td>
-                        <div class="">
+                        <div class="d-flex">
                             <a href="/supplier/update/{{ $i->FAI_code }}"
-                                class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                                class="btn btn-outline-primary btn-sm me-1">Ubah</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}">Delete</button>
                         </div>

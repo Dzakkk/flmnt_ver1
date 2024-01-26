@@ -12,13 +12,12 @@
     <!-- Favicons -->
     <link href="{{ asset('template/assets/img/favicon.png') }}" rel="icon">
     <link href="{{ asset('template/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
-
     <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
+    {{-- <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
+        rel="stylesheet"> --}}
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <!-- Vendor CSS Files -->
     <link href="{{ asset('template/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('template/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
@@ -27,10 +26,13 @@
     <link href="{{ asset('template/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('template/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('template/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/table.css') }}" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Template Main CSS File -->
     <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet">
 </head>
@@ -137,6 +139,7 @@
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
+
             {{-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#pegawai-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-person"></i>
@@ -187,25 +190,70 @@
                             <i class="bi bi-circle"></i><span>Tambah Pendidikan</span>
                         </a>
                     </li>
-                </ul>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Pangkat-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-award"></i><span>Pangkat</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="Pangkat-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="/petugas/dashboard/pangkat">
-                            <i class="bi bi-circle"></i><span>Pangkat Pegawai</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/petugas/storePangkat">
-                            <i class="bi bi-circle"></i><span>Tambah Pangkat</span>
-                        </a>
-                    </li>
                 </ul> --}}
-                
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#barang-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-box-seam"></i><span>Barang</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="barang-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/barang">
+                            <i class="bi bi-circle"></i><span>Data Barang</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/barangMasuk">
+                            <i class="bi bi-circle"></i><span>Barang Masuk</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/barangKeluar">
+                            <i class="bi bi-circle"></i><span>Barang Keluar</span>
+                        </a>
+                    </li>
+                </ul>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#stock-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-box-seam"></i><span>Persediaan</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="stock-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/stock/barang">
+                            <i class="bi bi-circle"></i><span>Stock Barang</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/stock/product">
+                            <i class="bi bi-circle"></i><span>Stock Product</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/stock/lot">
+                            <i class="bi bi-circle"></i><span>Stock/LOT</span>
+                        </a>
+                    </li>
+                </ul>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#product-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bx bxs-flask"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="product-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                    <li>
+                        <a href="/product">
+                            <i class="bi bi-circle"></i><span>Product</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/formula">
+                            <i class="bi bi-circle"></i><span>Formula</span>
+                        </a>
+                    </li>
+                </ul>
+
 
             <li class="nav-heading">Pages</li>
 
@@ -215,30 +263,11 @@
                     <span>Gudang</span>
                 </a>
             </li>
-            
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/barang">
-                    <i class="bi bi-box-seam"></i>
-                    <span>Barang</span>
-                </a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/barangMasuk">
-                    <i class="bx bxs-package"></i>
-                    <span>Barang Masuk</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/barangKeluar">
-                    <i class="bi bi-truck"></i>
-                    <span>Barang Keluar</span>
-                </a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/supplier ">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bi bi-truck"></i>
                     <span>Supplier</span>
                 </a>
             </li>
@@ -251,42 +280,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/product ">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Product</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/stock/lot ">
-                    <i class="bi bi-people-fill"></i>
-                    <span>LOT</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/stock/barang ">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Stock</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/stock/product ">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Stock Product</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link collapsed" href="/manufacturer ">
                     <i class="bi bi-people-fill"></i>
-                    <span>manufacturer</span>
+                    <span>Manufacturer</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/formula ">
-                    <i class="ri-flask-line"></i>
-                    <span>Formula</span>
-                </a>
-            </li>
-            
+
+
             <!-- End F.A.Q Page Nav -->
 
             {{-- <li class="nav-item">

@@ -39,20 +39,20 @@
         <tbody>
             @foreach ($brgmasuk as $i)
                 <tr>
-                    <th scope="row">{{ $i->jenis_penerimaan }}</th>
-                    <td>{{ $i->tanggal_masuk }}</td>
-                    <td>{{ $i->supplier_name }}</td>
-                    <td>{{ $i->NoSuratJalanMasuk_NoProduksi }}</td>
-                    <td>{{ $i->NoPO_NoWO }}</td>
-                    <td>{{ $i->kategori_barang }}</td>
-                    <td>{{ $i->dokumen }}</td>
-                    <td>{{ $i->FAI_code }}</td>
-                    <td>{{ $i->no_LOT }}</td>
-                    <td>{{ $i->jenis_kemasan }}</td>
-                    <td>{{ $i->qty_masuk_LOT }}</td>
-                    <td>
-                        <div class="">
-                            <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
+                    <th scope="row" style="font-size: 14px;">{{ $i->jenis_penerimaan }}</th>
+                    <td style="font-size: 14px;">{{ $i->tanggal_masuk }}</td>
+                    <td style="font-size: 14px;">{{ $i->supplier_name }}</td>
+                    <td style="font-size: 14px;">{{ $i->NoSuratJalanMasuk_NoProduksi }}</td>
+                    <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
+                    <td style="font-size: 14px;">{{ $i->kategori_barang }}</td>
+                    <td style="font-size: 14px;">{{ $i->dokumen }}</td>
+                    <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
+                    <td style="font-size: 14px;">{{ $i->no_LOT }}</td>
+                    <td style="font-size: 14px;">{{ $i->jenis_kemasan }}</td>
+                    <td style="font-size: 14px;">{{ $i->qty_masuk_LOT }}</td>
+                    <td style="font-size: 14px;">
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop-{{ $i->id_penerimaan }}">
                                 ubah
                             </button>

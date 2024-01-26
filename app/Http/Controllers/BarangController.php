@@ -204,4 +204,29 @@ class BarangController extends Controller
     {
         return Excel::download(new BarangExport, 'BarangTerdaftar.xlsx');
     }
+
+
+public function search(Request $request)
+{
+    try {
+        $searchTerm = $request->input('search');
+
+        // Perform search using $searchTerm
+        $brg = Barang::where('FAI_code', 'like', '%' . $searchTerm . '%')
+        ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
+        ->orWhere('documentation', 'like', '%' . $searchTerm . '%')
+        ->orWhere('name', 'like', '%' . $searchTerm . '%')
+        ->orWhere('common_name', 'like', '%' . $searchTerm . '%')
+        ->orWhere('country_of_origin', 'like', '%' . $searchTerm . '%')->get();
+        
+                            
+        // Return JSON response with search results
+        return response()->json(['brg' => $brg]);
+        } catch (\Exception $e) {
+        // Handle errors and return a JSON response with status 500 (Internal Server Error)
+        return response()->json(['error' => 'Internal Server Error'], 500);
+    }
+}
+
+
 }

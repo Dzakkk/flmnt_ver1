@@ -27,26 +27,24 @@
         <tbody>
             @foreach ($customer as $i)
                 <tr>
-                    <th scope="row">{{ $i->id_customer }}</th>
-                    <td>{{ $i->customer_name }}</td>
-                    <td>{{ $i->telephone }}</td>
-                    <td>{{ $i->contact_name }}</td>
-                    <td>{{ $i->status }}</td>
-                    <td>{{ $i->address }}</td>
-                    <td>{{ $i->city }}</td>
-                    <td>{{ $i->provinces }}</td>
-                    <td>{{ $i->postal_code }}</td>
-                    <td>{{ $i->country }}</td>
-                    <td>{{ $i->email }}</td>
-                    <td>{{ $i->note }}</td>
-                    <td>{{ $i->sales_name }}</td>
-                    <td>
-                        <div class="">
-                            <a href="/customer/update/{{ $i->id_customer }}"
-                                class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
-                            <button class="btn btn-primary m-1" data-bs-toggle="modal"
+                    <th scope="row" style="font-size: 14px;">{{ $i->id_customer }}</th>
+                    <td style="font-size: 14px;">{{ $i->customer_name }}</td>
+                    <td style="font-size: 14px;">{{ $i->telephone }}</td>
+                    <td style="font-size: 14px;">{{ $i->contact_name }}</td>
+                    <td style="font-size: 14px;">{{ $i->status }}</td>
+                    <td style="font-size: 14px;">{{ $i->address }}</td>
+                    <td style="font-size: 14px;">{{ $i->city }}</td>
+                    <td style="font-size: 14px;">{{ $i->provinces }}</td>
+                    <td style="font-size: 14px;">{{ $i->postal_code }}</td>
+                    <td style="font-size: 14px;">{{ $i->country }}</td>
+                    <td style="font-size: 14px;">{{ $i->email }}</td>
+                    <td style="font-size: 14px;">{{ $i->note }}</td>
+                    <td style="font-size: 14px;">{{ $i->sales_name }}</td>
+                    <td style="font-size: 14px;">
+                        <div class="d-flex">
+                            <button class="btn btn-primary btn-sm m-1" data-bs-toggle="modal"
                                 data-bs-target="#editModal-{{ $i->id_customer }}">Edit</button>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal-{{ $i->id_customer }}">Delete</button>
                         </div>
                     </td>

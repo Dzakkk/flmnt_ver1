@@ -18,6 +18,14 @@
         }
     </style>
 
+
+        <div class="form-floating mb-4">
+            <input type="text" id="search" name="search" placeholder="Search..." class="form-control">
+
+            <label for="search" class="form-label"><i
+                    class="bi bi-search"></i>&nbsp;&nbsp;&nbsp;Search</label>
+        </div>
+
     <a class="btn btn-info m-1" href="/newBarang">
         Pendaftaran Barang
     </a>
@@ -63,45 +71,45 @@
                 <th scope="col">#</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach ($brg as $item)
+        <tbody id="search-results">
+            @foreach ($brg as $index => $item)
                 <tr>
-                    <th scope="row">{{ $row }}</th>
-                    <td>{{ $item->FAI_code }}</td>
-                    <td>{{ $item->FINA_code }}</td>
-                    <td>{{ $item->kategori_barang }}</td>
-                    <td>{{ $item->aspect }}</td>
-                    <td>{{ $item->initial_code }}</td>
-                    <td>{{ $item->number_code }}</td>
-                    <td>{{ $item->alokasi_penyimpanan }}</td>
-                    <td>{{ $item->reOrder_qty }}</td>
-                    <td>{{ $item->unit }}</td>
-                    <td>{{ $item->supplier }}</td>
-                    <td>{{ $item->packaging_type }}</td>
-                    <td>{{ $item->documentation }}</td>
-                    <td>{{ $item->halal_certification }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->common_name }}</td>
-                    <td>{{ $item->brandProduct_code }}</td>
-                    <td>{{ $item->chemical_IUPACname }}</td>
-                    <td>{{ $item->CAS_number }}</td>
-                    <td>{{ $item->ex_origin }}</td>
-                    <td>{{ $item->initial_ex }}</td>
-                    <td>{{ $item->country_of_origin }}</td>
-                    <td>{{ $item->remark }}</td>
-                    <td>{{ $item->usage_level }}</td>
-                    <td>{{ $item->harga_ex_work_USD }}</td>
-                    <td>{{ $item->harga_CIF_USD }}</td>
-                    <td>{{ $item->harga_MOQ_USD }}</td>
-                    <td>{{ $item->appearance }}</td>
-                    <td>{{ $item->color_rangeColor }}</td>
-                    <td>{{ $item->odour_taste }}</td>
-                    <td>{{ $item->material }}</td>
-                    <td>{{ $item->spesific_gravity_d20 }}</td>
-                    <td>{{ $item->spesific_gravity_d25 }}</td>
-                    <td>{{ $item->refractive_index_d20 }}</td>
-                    <td>{{ $item->refractive_index_d25 }}</td>
-                    <td>{{ $item->berat_gram }}</td>
+                    <th scope="row" style="font-size: 13px;">{{ $index + 1 }}</th>
+                    <td style="font-size: 13px;">{{ $item->FAI_code }}</td>
+                    <td style="font-size: 13px;">{{ $item->FINA_code }}</td>
+                    <td style="font-size: 13px;">{{ $item->kategori_barang }}</td>
+                    <td style="font-size: 13px;">{{ $item->aspect }}</td>
+                    <td style="font-size: 13px;">{{ $item->initial_code }}</td>
+                    <td style="font-size: 13px;">{{ $item->number_code }}</td>
+                    <td style="font-size: 13px;">{{ $item->alokasi_penyimpanan }}</td>
+                    <td style="font-size: 13px;">{{ $item->reOrder_qty }}</td>
+                    <td style="font-size: 13px;">{{ $item->unit }}</td>
+                    <td style="font-size: 13px;">{{ $item->supplier }}</td>
+                    <td style="font-size: 13px;">{{ $item->packaging_type }}</td>
+                    <td style="font-size: 13px;">{{ $item->documentation }}</td>
+                    <td style="font-size: 13px;">{{ $item->halal_certification }}</td>
+                    <td style="font-size: 13px;">{{ $item->name }}</td>
+                    <td style="font-size: 13px;">{{ $item->common_name }}</td>
+                    <td style="font-size: 13px;">{{ $item->brandProduct_code }}</td>
+                    <td style="font-size: 13px;">{{ $item->chemical_IUPACname }}</td>
+                    <td style="font-size: 13px;">{{ $item->CAS_number }}</td>
+                    <td style="font-size: 13px;">{{ $item->ex_origin }}</td>
+                    <td style="font-size: 13px;">{{ $item->initial_ex }}</td>
+                    <td style="font-size: 13px;">{{ $item->country_of_origin }}</td>
+                    <td style="font-size: 13px;">{{ $item->remark }}</td>
+                    <td style="font-size: 13px;">{{ $item->usage_level }}</td>
+                    <td style="font-size: 13px;">{{ $item->harga_ex_work_USD }}</td>
+                    <td style="font-size: 13px;">{{ $item->harga_CIF_USD }}</td>
+                    <td style="font-size: 13px;">{{ $item->harga_MOQ_USD }}</td>
+                    <td style="font-size: 13px;">{{ $item->appearance }}</td>
+                    <td style="font-size: 13px;">{{ $item->color_rangeColor }}</td>
+                    <td style="font-size: 13px;">{{ $item->odour_taste }}</td>
+                    <td style="font-size: 13px;">{{ $item->material }}</td>
+                    <td style="font-size: 13px;">{{ $item->spesific_gravity_d20 }}</td>
+                    <td style="font-size: 13px;">{{ $item->spesific_gravity_d25 }}</td>
+                    <td style="font-size: 13px;">{{ $item->refractive_index_d20 }}</td>
+                    <td style="font-size: 13px;">{{ $item->refractive_index_d25 }}</td>
+                    <td style="font-size: 13px;">{{ $item->berat_gram }}</td>
                     <td>
                         <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">
@@ -225,7 +233,8 @@
                                                     <option value="Bag">Bag</option>
                                                     <option value="Box with Alumunium Bottle">Box with Alumunium Bottle
                                                     </option>
-                                                    <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch
+                                                    <option value="Box with Alumunium Pouch Pack">Box with Alumunium
+                                                        Pouch
                                                         Pack
                                                     </option>
                                                     <option value="Carton">Carton</option>
@@ -236,7 +245,8 @@
                                                     <option value="Metal Can">Metal Can</option>
                                                     <option value="Metal Drum">Metal Drum</option>
                                                     <option value="Plastic Bottle">Plastic Bottle</option>
-                                                    <option value="Plastic Container with Polyethylene Inner Bag">Plastic
+                                                    <option value="Plastic Container with Polyethylene Inner Bag">
+                                                        Plastic
                                                         Container
                                                         with Polyethylene Inner Bag</option>
                                                     <option value="Plastic Drum">Plastic Drum</option>
@@ -301,7 +311,8 @@
                                             <label for="ex_origin" class="form-label">ex_origin</label>
                                             <select name="ex_origin" id="ex_origin" class="form-control select2"
                                                 required>
-                                                <option value="{{ $item->ex_origin }}">{{ $item->ex_origin }}</option>
+                                                <option value="{{ $item->ex_origin }}">{{ $item->ex_origin }}
+                                                </option>
                                                 @foreach ($ex as $c)
                                                     <option value="{{ $c->manufacturer_name }}">
                                                         {{ $c->manufacturer_name }}</option>
@@ -405,6 +416,7 @@
                     </div>
                 </div>
             @endforeach
+
         </tbody>
     </table>
     <a href="/barang/export" class="btn btn-success">export excel</a>
@@ -430,6 +442,73 @@
                     customerForm.reset();
                 });
             }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#search').on('input', function() {
+                var searchTerm = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('search.index') }}",
+                    type: "GET",
+                    data: {
+                        search: searchTerm
+                    },
+                    success: function(response) {
+                        // Clear previous search results
+                        $('#search-results').empty();
+
+                        // Iterate over the search results and append them to the table
+                        $.each(response.brg, function(index, item) {
+                            var row = '<tr>' +
+                                '<td>' + (index + 1) + '</td>' +
+                                '<td>' + item.FAI_code + '</td>' +
+                                '<td>' + item.FINA_code + '</td>' +
+                                '<td>' + item.kategori_barang + '</td>' +
+                                '<td>' + item.aspect + '</td>' +
+                                '<td>' + item.initial_code + '</td>' +
+                                '<td>' + item.number_code + '</td>' +
+                                '<td>' + item.alokasi_penyimpanan + '</td>' +
+                                '<td>' + item.reOrder_qty + '</td>' +
+                                '<td>' + item.unit + '</td>' +
+                                '<td>' + item.supplier + '</td>' +
+                                '<td>' + item.packaging_type + '</td>' +
+                                '<td>' + item.documentation + '</td>' +
+                                '<td>' + item.halal_certification + '</td>' +
+                                '<td>' + item.name + '</td>' +
+                                '<td>' + item.common_name + '</td>' +
+                                '<td>' + item.brandProduct_code + '</td>' +
+                                '<td>' + item.chemical_IUPACname + '</td>' +
+                                '<td>' + item.CAS_number + '</td>' +
+                                '<td>' + item.ex_origin + '</td>' +
+                                '<td>' + item.initial_ex + '</td>' +
+                                '<td>' + item.country_of_origin + '</td>' +
+                                '<td>' + item.remark + '</td>' +
+                                '<td>' + item.usage_level + '</td>' +
+                                '<td>' + item.harga_ex_work_USD + '</td>' +
+                                '<td>' + item.harga_CIF_USD + '</td>' +
+                                '<td>' + item.harga_MOQ_USD + '</td>' +
+                                '<td>' + item.appearance + '</td>' +
+                                '<td>' + item.color_rangeColor + '</td>' +
+                                '<td>' + item.odour_taste + '</td>' +
+                                '<td>' + item.material + '</td>' +
+                                '<td>' + item.spesific_gravity_d20 + '</td>' +
+                                '<td>' + item.spesific_gravity_d25 + '</td>' +
+                                '<td>' + item.refractive_index_d20 + '</td>' +
+                                '<td>' + item.refractive_index_d25 + '</td>' +
+                                '<td>' + item.berat_gram + '</td>' +
+                                '</tr>';
+
+
+                            $('#search-results').append(row);
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
         });
     </script>
 @endsection

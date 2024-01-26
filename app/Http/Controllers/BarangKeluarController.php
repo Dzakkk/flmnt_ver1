@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
+use App\Models\stockProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,7 +21,8 @@ class BarangKeluarController extends Controller
         $brg = Barang::all();
         $rak = RakGudang::all();
         $stock = Stock::all();
-        return view('barang.barangKeluar', ['brgkeluar' => $brgkeluar, 'rak' => $rak, 'cust' => $cust, 'brg' => $brg, 'stock' => $stock]);
+        $prd = stockProduct::all();
+        return view('barang.barangKeluar', ['brgkeluar' => $brgkeluar, 'rak' => $rak, 'cust' => $cust, 'brg' => $brg, 'stock' => $stock, 'prd' => $prd]);
     }
 
     // private function isStockSufficient(Request $request)
@@ -257,6 +259,7 @@ class BarangKeluarController extends Controller
         foreach ($stocks as $stock) {
             if ($requestedWeight >= $stock->weight) {
                 // If requested weight is greater than or equal to current stock weight, delete the stock entry
+                session()->flash('error', 'Quantity Kurang');
                 $stock->delete();
                 $requestedWeight -= $stock->weight;
             } else {
@@ -274,6 +277,7 @@ class BarangKeluarController extends Controller
         foreach ($stocks as $stock) {
             if ($requestedWeight >= $stock->quantity) {
                 // If requested weight is greater than or equal to current stock weight, delete the stock entry
+                session()->flash('error', 'Quantity Kurang');
                 $stock->update(['quantity' => 0]);
                 $requestedWeight -= $stock->quantity;
             } else {

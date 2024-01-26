@@ -6,24 +6,24 @@
             <tr>
                 <th scope="col">ID PRODUCT</th>
                 <th scope="col">PRODUCT NAME</th>
-                <th scope="col">BRG</th>
-                <th scope="col">PERSEN</th>
+                <th scope="col">PERSENTASE</th>
+                <th scope="col">FAI CODE</th>
                 <th scope="col"> </th>
             </tr>
         </thead>
         <tbody>
             @foreach ($frm as $i)
                 <tr>
-                    <th scope="row">{{ $i->FAI_code }}</th>
-                    <td>{{ $i->product_name }}</td>
-                    <td>
+                    <th scope="row" style="font-size: 14px;">{{ $i->FAI_code }}</th>
+                    <td style="font-size: 14px;">{{ $i->product_name }}</td>
+                    <td style="font-size: 14px;">
                         <ul>
                             @foreach (json_decode($i->persentase) as $li)
                                 <li>{{ $li }}%</li>
                             @endforeach
                         </ul>
                     </td>
-                    <td>
+                    <td style="font-size: 14px;">
                         <ul>
                             @foreach (json_decode($i->FAI_code_barang) as $li)
                                 <li>{{ $li }}</li>

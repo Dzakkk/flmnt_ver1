@@ -85,6 +85,9 @@ Livewire::component('/product-form', [FormulaProduct::class]);
 
 
 
+Route::get('/search',[BarangController::class, 'search'])->name('search.index');
+
+
 
 
 

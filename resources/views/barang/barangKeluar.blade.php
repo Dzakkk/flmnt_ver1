@@ -22,38 +22,38 @@
     <table class="table table-hover shadow">
         <thead>
             <tr>
-                <th scope="col">Jenis Penerimaan</th>
-                <th scope="col">Tanggal Masuk</th>
-                <th scope="col">Supplier</th>
-                <th scope="col">No Produksi</th>
-                <th scope="col">NO PO/WO</th>
-                <th scope="col">Kategori Barang</th>
-                <th scope="col">Dokumen</th>
-                <th scope="col">FAI code</th>
-                <th scope="col">no LOT</th>
-                <th scope="col">Jenis Kemasan</th>
-                <th scope="col">Quantity/LOT</th>
-                <th scope="col">ACTION</th>
+                <th scope="col" style="font-size: 14px;">Jenis Penerimaan</th>
+                <th scope="col" style="font-size: 14px;">Tanggal Masuk</th>
+                <th scope="col" style="font-size: 14px;">Supplier</th>
+                <th scope="col" style="font-size: 14px;">No Produksi</th>
+                <th scope="col" style="font-size: 14px;">NO PO/WO</th>
+                <th scope="col" style="font-size: 14px;">Kategori Barang</th>
+                <th scope="col" style="font-size: 14px;">Dokumen</th>
+                <th scope="col" style="font-size: 14px;">FAI code</th>
+                <th scope="col" style="font-size: 14px;">no LOT</th>
+                <th scope="col" style="font-size: 14px;">Jenis Kemasan</th>
+                <th scope="col" style="font-size: 14px;">Quantity/LOT</th>
+                <th scope="col" style="font-size: 14px;">ACTION</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($brgkeluar as $i)
                 <tr>
-                    <th scope="row">{{ $i->jenis_pengeluaran }}</th>
-                    <td>{{ $i->tanggal_keluar }}</td>
-                    <td>{{ $i->shipment }}</td>
-                    <td>{{ $i->customer }}</td>
-                    <td>{{ $i->NoPO_NoWO }}</td>
-                    <td>{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
-                    <td>{{ $i->dokumen }}</td>
-                    <td>{{ $i->FAI_code }}</td>
-                    <td>{{ $i->no_LOT }}</td>
-                    <td>{{ $i->jenis_kemasan }}</td>
-                    <td>{{ $i->total_qty_keluar_LOT }}</td>
-                    <td>
-                        <div class="">
+                    <th scope="row" style="font-size: 14px;">{{ $i->jenis_pengeluaran }}</th>
+                    <td style="font-size: 14px;">{{ $i->tanggal_keluar }}</td>
+                    <td style="font-size: 14px;">{{ $i->shipment }}</td>
+                    <td style="font-size: 14px;">{{ $i->customer }}</td>
+                    <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
+                    <td style="font-size: 14px;">{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
+                    <td style="font-size: 14px;">{{ $i->dokumen }}</td>
+                    <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
+                    <td style="font-size: 14px;">{{ $i->no_LOT }}</td>
+                    <td style="font-size: 14px;">{{ $i->jenis_kemasan }}</td>
+                    <td style="font-size: 14px;">{{ $i->total_qty_keluar_LOT }}</td>
+                    <td style="font-size: 14px;">
+                        <div class="d-flex">
                             <a href="/supplier/update/{{ $i->id_pengeluaran }}"
-                                class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                                class="btn btn-outline-primary btn-sm me-1">Ubah</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal-{{ $i->id_pengeluaran }}">Delete</button>
                         </div>
@@ -209,6 +209,10 @@
                                 <select name="FAI_code" id="barang" class="form-control select2" required>
                                     <option value="" disabled selected>Select FAI</option>
                                     @foreach ($brg as $r)
+                                        <option value="{{ $r->FAI_code }}">
+                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                    @endforeach
+                                    @foreach ($prd as $r)
                                         <option value="{{ $r->FAI_code }}">
                                             {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
                                     @endforeach

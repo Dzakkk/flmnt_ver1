@@ -27,22 +27,20 @@
         <tbody>
             @foreach ($manufacturer as $i)
                 <tr>
-                    <th scope="row">{{ $i->id_manufacturer }}</th>
-                    <td>{{ $i->manufacturer_name }}</td>
-                    <td>{{ $i->telephone }}</td>
-                    <td>{{ $i->contact_name }}</td>
-                    <td>{{ $i->status }}</td>
-                    <td>{{ $i->address }}</td>
-                    <td>{{ $i->city }}</td>
-                    <td>{{ $i->provinces }}</td>
-                    <td>{{ $i->postal_code }}</td>
-                    <td>{{ $i->country }}</td>
-                    <td>{{ $i->email }}</td>
-                    <td>{{ $i->note }}</td>
-                    <td>
-                        <div class="">
-                            <a href="/manufacturer/update/{{ $i->id_manufacturer }}"
-                                class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                    <th scope="row" style="font-size: 14px;">{{ $i->id_manufacturer }}</th>
+                    <td style="font-size: 14px;">{{ $i->manufacturer_name }}</td>
+                    <td style="font-size: 14px;">{{ $i->telephone }}</td>
+                    <td style="font-size: 14px;">{{ $i->contact_name }}</td>
+                    <td style="font-size: 14px;">{{ $i->status }}</td>
+                    <td style="font-size: 14px;">{{ $i->address }}</td>
+                    <td style="font-size: 14px;">{{ $i->city }}</td>
+                    <td style="font-size: 14px;">{{ $i->provinces }}</td>
+                    <td style="font-size: 14px;">{{ $i->postal_code }}</td>
+                    <td style="font-size: 14px;">{{ $i->country }}</td>
+                    <td style="font-size: 14px;">{{ $i->email }}</td>
+                    <td style="font-size: 14px;">{{ $i->note }}</td>
+                    <td style="font-size: 14px;">
+                        <div class="d-flex">
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal-{{ $i->id_manufacturer }}">Delete</button>
                         </div>

@@ -27,19 +27,28 @@ class StockProductController extends Controller
             'weight' => 'required',
             'unit' => 'required',
         ]);
-
-        // Create a new production entry
-        $production = new StockProduct([
-            'FAI_code' => $request->FAI_code,
-            'FINA_code' => $request->FAI_code, // Assuming FINA_code is derived from FAI_code
-            'product_name' => $request->product_name,
-            'storage' => $request->storage,
-            'weight' => $request->weight,
-            'unit' => $request->unit,
-        ]);
-
-        // Save the production entry
-        $production->save();
+    
+        // Check if the FAI_code already exists in the StockProduct table
+        $existingProduct = StockProduct::where('FAI_code', $request->FAI_code)->first();
+    
+        if ($existingProduct) {
+            // If the product already exists, update its weight
+            $existingProduct->weight += $request->weight;
+            $existingProduct->save();
+        } else {
+            // If the product does not exist, create a new entry
+            $production = new StockProduct([
+                'FAI_code' => $request->FAI_code,
+                'FINA_code' => $request->FAI_code, // Assuming FINA_code is derived from FAI_code
+                'product_name' => $request->product_name,
+                'storage' => $request->storage,
+                'weight' => $request->weight,
+                'unit' => $request->unit,
+            ]);
+    
+            // Save the production entry
+            $production->save();
+        }
         // Get the product formula for the given FAI_code
         $formula = ProductFormula::where('FAI_code', $request->FAI_code)->first();
 
