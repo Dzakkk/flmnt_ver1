@@ -4,6 +4,18 @@
     {{-- <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
     Tambah Supplier
 </button> --}}
+@if (session('success'))
+<div class="alert alert-success alert-dismissible fade show">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <a href="/product/store" class="btn btn-info mt-1 mb-1">Tambah Product Baru</a>
     <table class="table table-hover">
         <thead>
@@ -40,7 +52,7 @@
                     <td style="font-size: 14px;">{{ $i->note }}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="/supplier/update/{{ $i->FAI_code }}"
+                            <a href="/product/update/{{ $i->FAI_code }}"
                                 class="btn btn-outline-primary btn-sm me-1">Ubah</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}">Delete</button>

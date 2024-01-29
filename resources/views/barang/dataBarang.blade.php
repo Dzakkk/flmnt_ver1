@@ -19,12 +19,11 @@
     </style>
 
 
-        <div class="form-floating mb-4">
-            <input type="text" id="search" name="search" placeholder="Search..." class="form-control">
+    <div class="form-floating mb-4">
+        <input type="text" id="search" name="search" placeholder="Search..." class="form-control">
 
-            <label for="search" class="form-label"><i
-                    class="bi bi-search"></i>&nbsp;&nbsp;&nbsp;Search</label>
-        </div>
+        <label for="search" class="form-label"><i class="bi bi-search"></i>&nbsp;&nbsp;&nbsp;Search</label>
+    </div>
 
     <a class="btn btn-info m-1" href="/newBarang">
         Pendaftaran Barang
@@ -498,7 +497,8 @@
                                 '<td>' + item.refractive_index_d20 + '</td>' +
                                 '<td>' + item.refractive_index_d25 + '</td>' +
                                 '<td>' + item.berat_gram + '</td>' +
-                                '</tr>';
+                                '<td><button type = "button" class = "btn btn-primary m-3" data-bs-toggle = "modal" data-bs-target = "#staticBackdrop" >Update</button></td>'+
+                            '</tr>';
 
 
                             $('#search-results').append(row);

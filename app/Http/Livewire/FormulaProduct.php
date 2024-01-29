@@ -26,6 +26,12 @@ class FormulaProduct extends Component
         $this->faicodeOptions[] = null; // Change to null to avoid JSON issue
     }
 
+    public function removeInput($index)
+    {
+        unset($this->inputs[$index]);
+        unset($this->faicodeOptions[$index]);
+    }
+
     public function render()
     {
         return view('livewire.formula-product');

@@ -342,6 +342,7 @@
             @yield('script')
             @yield('manufacturer')
             @yield('stock_product')
+            @yield('updateProduct')
 
 
 

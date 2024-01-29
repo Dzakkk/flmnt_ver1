@@ -1,6 +1,18 @@
 @extends('dashboard')
 
 @section('formula')
+@if (session('success'))
+<div class="alert alert-success alert-dismissible fade show">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <table class="table table-hover">
         <thead>
             <tr>
@@ -61,9 +73,14 @@
                                             <input type="text" class="form-control" name="product_name"
                                                 value="{{ $i->product_name }}">
                                         </div>
-                                        <div class="col-md-12">
-                                            <label for="" class="form-label">Storage</label>
-                                            <input type="text" class="form-control" name="storage">
+                                        <div class="col-md-6">
+                                            <label for="supplier" class="form-label">Rak</label>
+                                            <select name="storage" id="supplier" class="form-control select2" required>
+                                                <option value="{{ $i->id_rak }}">{{ $i->id_rak }}</option>
+                                                @foreach ($rak as $r)
+                                                    <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">Weight/Quantity</label>

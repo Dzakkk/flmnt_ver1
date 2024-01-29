@@ -1,7 +1,6 @@
 @extends('dashboard')
 
 @section('barangKeluar')
-
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show">
             {{ session('success') }}
@@ -116,7 +115,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Tanggal Keluar</label>
-                                <input type="date" name="tanggal_keluar" class="form-control" id="exampleInputPassword1">
+                                <input type="date" name="tanggal_keluar" class="form-control"
+                                    id="exampleInputPassword1">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="TMT">shipment</label>
@@ -295,9 +295,6 @@
                                 <label for="rak" class="form-label">Rak</label>
                                 <select name="id_rak" id="rak" class="form-control select2" required>
                                     <option value="" disabled selected>Select Rak</option>
-                                    @foreach ($rak as $r)
-                                        <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
@@ -310,7 +307,33 @@
             </div>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function() {
+            $('#barang').change(function() {
+                var FAI_code = $(this).val();
+                // Send AJAX request to fetch Rak options
+                $.ajax({
+                    url: '/getRakOption',
+                    type: 'GET',
+                    data: {
+                        FAI_code: FAI_code
+                    },
+                    success: function(response) {
+                        // Clear existing options
+                        $('#rak').empty();
+                        // Append new options based on the response
+                        $.each(response.options, function(index, option) {
+                            $('#rak').append('<option value="' + option.id_rak + '">' +
+                                option.id_rak + '</option>');
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var modalElement = document.getElementById('staticBackdrop');

@@ -10,6 +10,7 @@ use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\stockProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class BarangKeluarController extends Controller
@@ -287,4 +288,21 @@ class BarangKeluarController extends Controller
             }
         }
     }
+
+
+public function getRakOptions(Request $request)
+{
+    $FAI_code = $request->FAI_code;
+    
+    // Retrieve Rak options based on the FAI_code from the Barang Masuk table
+    $rakOptions = DB::table('barang_masuk')
+                    ->join('rak_gudang', 'barang_masuk.id_rak', '=', 'rak_gudang.id_rak')
+                    ->where('barang_masuk.FAI_code', $FAI_code)
+                    ->select('rak_gudang.id_rak')
+                    ->distinct()
+                    ->get();
+
+    return response()->json(['options' => $rakOptions]);
+}
+
 }
