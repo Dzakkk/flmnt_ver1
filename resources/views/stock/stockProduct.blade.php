@@ -14,16 +14,16 @@
         </thead>
         <tbody>
             @foreach ($stock as $i)
-                {{-- @php
-                        $reOrderQty = $i->barang->reOrder_qty;
-                    @endphp
-                    <tr class="{{ ($reOrderQty !== null && $i->quantity <= $reOrderQty) ? 'table-danger' : '' }}"> --}}
-                <tr>
+            @php
+            $targetOrder = $i->product->target_order;
+            $totalQuantity = $i->stockLot->sum('quantity');
+        @endphp
+        <tr class="{{ $targetOrder !== null && $totalQuantity <= $targetOrder ? 'table-danger' : '' }}">
                     <th scope="row">{{ $i->FAI_code }}</th>
                     <td>{{ $i->product_name }}</td>
                     <td>{{ $i->FINA_code }}</td>
-                    <td>{{ $i->storage }}</td>
-                    <td>{{ $i->weight }}</td>
+                    <td>{{ $i->aspect }}</td>
+                    <td>{{ $totalQuantity }}</td>
                     <td>{{ $i->unit }}</td>
                 </tr>
             @endforeach

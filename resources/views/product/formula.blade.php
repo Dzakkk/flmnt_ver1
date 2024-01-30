@@ -75,7 +75,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="supplier" class="form-label">Rak</label>
-                                            <select name="storage" id="supplier" class="form-control select2" required>
+                                            <select name="id_rak" id="supplier" class="form-control select2" required>
                                                 <option value="{{ $i->id_rak }}">{{ $i->id_rak }}</option>
                                                 @foreach ($rak as $r)
                                                     <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
@@ -84,23 +84,33 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">Weight/Quantity</label>
-                                            <input type="text" class="form-control" name="weight">
+                                            <input type="text" class="form-control" name="quantity">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">unit</label>
                                             <input type="text" class="form-control" name="unit">
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">no_LOT</label>
+                                            <input type="text" class="form-control" name="no_LOT">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">tanggal Produksi</label>
+                                            <input type="date" class="form-control" name="tanggal_produksi">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">tanggal expire</label>
+                                            <input type="date" class="form-control" name="tanggal_expire">
+                                        </div>
                                         <div class="col-md-12 mt-2">
                                             <button type="submit" class="btn btn-info">SUBMIT</button>
                                         </div>
-
                                     </form>
                                 </div>
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                              uhuh
                             </div>
                         </div>
                     </div>

@@ -418,7 +418,7 @@
 
         </tbody>
     </table>
-    <a href="/barang/export" class="btn btn-success">export excel</a>
+    <a href="/barang/export" class="btn btn-success">export excel <i class="ri-file-excel-2-fill"></i></a>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -20,7 +20,6 @@
                 <th scope="col">EMAIL</th>
                 <th scope="col">NOTE</th>
                 <th scope="col">ACTION</th>
-
             </tr>
         </thead>
         <tbody>

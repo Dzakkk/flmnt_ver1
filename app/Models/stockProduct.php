@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class stockProduct extends Model
 {
@@ -16,4 +18,24 @@ class stockProduct extends Model
     protected $primaryKey = 'id_product';
 
     protected $guarded = [];
+
+    /**
+     * Get all of the stockLot for the stockProduct
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stockLot(): HasMany
+    {
+        return $this->hasMany(Stock::class, 'FAI_code', 'FAI_code');
+    }
+
+    /**
+     * Get the Product that owns the stockProduct
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Products::class, 'FAI_code', 'FAI_code');
+    }
 }

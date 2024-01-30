@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stock_product', function (Blueprint $table) {
-            $table->id('id_product');
-            $table->string('FAI_code');
+            $table->string('FAI_code')->primary();
             $table->string('FINA_code');
             $table->string('product_name');
-            $table->string('storage');
-            $table->float('weight', 8, 2);
+            $table->string('common_name');
+            $table->string('aspect');
+            $table->string('category');
             $table->string('unit');
             $table->timestamps();
         });

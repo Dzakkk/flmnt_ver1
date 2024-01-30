@@ -7,27 +7,28 @@
                 <th scope="col">FAI code</th>
                 <th scope="col">Product Name</th>
                 <th scope="col">Common Name</th>
-                <th scope="col">aspect</th>
-                <th scope="col">categoty</th>
-                <th scope="col">quantity</th>
-                <th scope="col">unit</th>
+                <th scope="col">Aspect</th>
+                <th scope="col">Category</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($stock as $i)
-                    @php
-                        $reOrderQty = $i->barang->reOrder_qty;
-                    @endphp
-                    <tr class="{{ ($reOrderQty !== null && $i->quantity <= $reOrderQty) ? 'table-danger' : '' }}">
-                        <th scope="row">{{ $i->FAI_code }}</th>
-                        <td>{{ $i->product_name }}</td>
-                        <td>{{ $i->common_name }}</td>
-                        <td>{{ $i->aspect }}</td>
-                        <td>{{ $i->category }}</td>
-                        <td>{{ $i->quantity }}</td>
-                        <td>{{ $i->unit }}</td>
-                    </tr>
-                @endforeach
+            @foreach ($stock as $item)
+                @php
+                    $reOrderQty = $item->barang->reOrder_qty;
+                    $totalQuantity = $item->stockLots->sum('quantity');
+                @endphp
+                <tr class="{{ $reOrderQty !== null && $totalQuantity <= $reOrderQty ? 'table-danger' : '' }}">
+                    <th scope="row">{{ $item->FAI_code }}</th>
+                    <td>{{ $item->product_name }}</td>
+                    <td>{{ $item->common_name }}</td>
+                    <td>{{ $item->aspect }}</td>
+                    <td>{{ $item->category }}</td>
+                    <td>{{ $totalQuantity }}</td>
+                    <td>{{ $item->unit }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 @endsection

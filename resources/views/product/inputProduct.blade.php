@@ -117,17 +117,6 @@
                 <textarea name="note" id="note" cols="30" rows="1" class="form-control"></textarea>
             </div>
             <div class="col-md-6">
-                <label class="form-label" for="unit">Storage</label>
-                <div class="input-group">
-                    <select class="form-select" id="golongan_select" name="storage">
-                        <option value="" disabled>Pilih Kategori</option>
-                        @foreach ($gdg as $g)
-                            <option value="{{ $g->id_gudang }}">{{ $g->nama_gudang }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-6">
                 <label class="form-label" for="target_order">Target Order</label>
                 <input type="number" name="target_order" class="form-control" id="target_order">
             </div>

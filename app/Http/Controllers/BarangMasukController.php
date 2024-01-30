@@ -226,7 +226,7 @@ class BarangMasukController extends Controller
                 'tanggal_produksi' => $request->tanggal_produksi,
                 'tanggal_expire' => $request->tanggal_expire,
                 'unit' => $request->unit,
-                'weight' => $request->qty_masuk_LOT,
+                'quantity' => $request->qty_masuk_LOT,
                 'id_rak' => $request->id_rak,
 
             ]);
@@ -255,7 +255,6 @@ class BarangMasukController extends Controller
             // If the FAI_code exists, update the quantity; otherwise, create a new entry
             if ($existingStock) {
                 $existingStock->update([
-                    'quantity' => $existingStock->quantity + $request->qty_masuk_LOT,
                     'aspect' => $barangAspect,
                     'common_name' => $commonName,
                     'product_name' => $productName,
@@ -263,11 +262,11 @@ class BarangMasukController extends Controller
             } else {
                 $stockBarang = new StockBarang([
                     'FAI_code' => $request->FAI_code,
+                    'FINA_code' => $request->FAI_code,
                     'product_name' => $productName,
                     'common_name' => $commonName,
                     'aspect' => $barangAspect,
                     'category' => $request->kategori_barang,
-                    'quantity' => $request->qty_masuk_LOT,
                     'unit' => $request->unit,
                 ]);
 
@@ -365,7 +364,7 @@ class BarangMasukController extends Controller
             $stock->tanggal_produksi = $request->tanggal_produksi;
             $stock->tanggal_expire = $request->tanggal_expire;
             $stock->unit = $request->unit;
-            $stock->weight = $request->qty_masuk_LOT;
+            $stock->quantity = $request->qty_masuk_LOT;
             $stock->id_rak = $request->id_rak;
 
             // Simpan perubahan Stock
@@ -390,7 +389,6 @@ class BarangMasukController extends Controller
             $stockBarang->common_name = $commonName;
             $stockBarang->aspect = $barangAspect;
             $stockBarang->category = $request->kategori_barang;
-            $stockBarang->quantity = $request->qty_masuk_LOT;
             $stockBarang->unit = $request->unit;
 
             // Simpan perubahan StockBarang
@@ -403,11 +401,11 @@ class BarangMasukController extends Controller
         } else {
             $newStockBarang = new StockBarang([
                 'FAI_code' => $request->FAI_code,
+                'FINA_code' => $request->FAI_code,
                 'product_name' => $productName,
                 'common_name' => $commonName,
                 'aspect' => $barangAspect,
                 'category' => $request->kategori_barang,
-                'quantity' => $request->qty_masuk_LOT,
                 'unit' => $request->unit,
             ]);
 
@@ -415,7 +413,8 @@ class BarangMasukController extends Controller
                 $newStockBarang->save();
             } catch (\Exception $e) {
                 return redirect()->route('your-form-route.edit', $id)
-                    ->with('error', 'Gagal menyimpan StockBarang baru: ' . $e->getMessage());
+                ->session()->flash('error', 'Data Gagal')
+                ->with('error', 'Gagal menyimpan StockBarang baru: ' . $e->getMessage());
             }
         }
 

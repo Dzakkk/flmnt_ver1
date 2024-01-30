@@ -32,4 +32,9 @@ class StockBarang extends Model
         return $this->BelongsTo(Barang::class, 'FAI_code', 'FAI_code');
     }
 
+    public function stockLots()
+    {
+        return $this->hasMany(Stock::class, 'FAI_code', 'FAI_code');
+    }
+
 }

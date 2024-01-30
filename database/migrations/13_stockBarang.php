@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('stock_barang', function (Blueprint $table) {
             $table->string('FAI_code')->primary();
+            $table->string('FINA_code');
             $table->string('product_name');
             $table->string('common_name');
             $table->string('aspect');
             $table->string('category');
-            $table->float('quantity', 8, 2);
             $table->string('unit');
             $table->timestamps();
         });

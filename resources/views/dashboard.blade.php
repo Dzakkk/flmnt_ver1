@@ -259,7 +259,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/gudang">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="ri-archive-drawer-line"></i>
                     <span>Gudang</span>
                 </a>
             </li>

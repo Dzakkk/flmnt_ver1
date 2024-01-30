@@ -58,7 +58,6 @@ class ProductsController extends Controller
             'created_by' => 'required',
             'note' => 'required',
             'target_order' => 'required',
-            'storage' => 'required',
             'unit' => 'required',
         ]);
 
@@ -81,7 +80,6 @@ class ProductsController extends Controller
             'release_date' => $request->release_date,
             'created_by' => $request->created_by,
             'note' => $request->note,
-            'storage' => $request->storage,
             'target_order' => $request->target_order,
             'unit' => $request->unit,
         ]);
@@ -107,6 +105,10 @@ class ProductsController extends Controller
 
         return redirect('product');
     }
+
+
+
+
 
     public function updateProduct(Request $request, $id)
     {
@@ -150,7 +152,6 @@ class ProductsController extends Controller
             'release_date' => $request->release_date,
             'created_by' => $request->created_by,
             'note' => $request->note,
-            'storage' => $request->storage,
             'target_order' => $request->target_order,
             'unit' => $request->unit,
         ]);

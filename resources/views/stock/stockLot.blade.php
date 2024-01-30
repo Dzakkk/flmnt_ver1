@@ -19,11 +19,11 @@
       <tr>
         <th scope="row">{{ $i->FAI_code }}</th>
         <td>{{ $i->no_LOT }}</td>
-        <td>{{ $i->weight }}</td>
+        <td>{{ $i->quantity }}</td>
         <td>{{ $i->unit }}</td>
         <td>{{ $i->tanggal_produksi }}</td>
         <td>{{ $i->tanggal_expire }}</td>
-        <td>{{ $i->brgMasuk->id_rak }}</td>
+        <td>{{ $i->id_rak }}</td>
       </tr>
       @endforeach
     </tbody>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_lot');
             $table->string('FAI_code');
             $table->string('no_LOT');
-            $table->float('weight', 8, 2);
+            $table->float('quantity', 8, 2);
             $table->string('unit');
             $table->date('tanggal_produksi');
             $table->date('tanggal_expire');
