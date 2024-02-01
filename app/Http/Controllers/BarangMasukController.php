@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\BarangMasuk;
+use App\Models\Packaging;
 use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\Supplier;
-use Dotenv\Validator as DotenvValidator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
-use Illuminate\Validation\Validator as ValidationValidator;
 
 class BarangMasukController extends Controller
 {
@@ -228,6 +226,8 @@ class BarangMasukController extends Controller
                 'unit' => $request->unit,
                 'quantity' => $request->qty_masuk_LOT,
                 'id_rak' => $request->id_rak,
+                'jumlah_kemasan' => $request->total_QTY_kemasan,
+                'jenis_kemasan' => $request->jenis_kemasan,
 
             ]);
 
@@ -420,5 +420,58 @@ class BarangMasukController extends Controller
 
         session()->flash('success', 'Data telah diperbarui!');
         return redirect('barangMasuk')->with('success', 'Data barang masuk berhasil diperbarui.');
+    }
+
+
+
+
+
+    public function storePackage (Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'FAI_code' => 'required',
+            'nama_kemasan' => 'required',
+            'quantity' => 'required',
+            'supplier' => 'required',
+            'price' => 'required',
+            'id_rak' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('barang')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $existStock = Packaging::where('nama_kemasan', $request->nama_kemasan)->first();
+        $tambah = Packaging::where('FAI_code', $request->FAI_code)->value('quantity');
+
+        if ($existStock) {
+            $jumlah = $tambah + $request->quantity;
+            $existStock->update([
+                'quantity' => $jumlah,
+                'price' => $request->price,
+            ]);
+        } elseif (!$existStock) {
+            $package = new Packaging([
+                'FAI_code' => $request->FAI_code,
+                'nama_kemasan' => $request->nama_kemasan,
+                'supplier' => $request->supplier,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'id_rak' => $request->id_rak,
+            ]);
+
+            try {
+                $package->save();
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Failed to save Packaging: ' . $e->getMessage());
+            }
+        } else {
+            session()->flash('error', 'Kapasitas Rak tidak mencukupi');
+            return redirect('barangMasuk');
+        }
+        session()->flash('success', 'Data telah Ditambahkan!');
+        return redirect('barangMasuk')->with('success', 'Barang masuk successfully.');
     }
 }

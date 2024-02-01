@@ -44,6 +44,7 @@ Route::delete('supplier/delete', [SupplierController::class, 'delete'])->name('s
 
 Route::get('barangMasuk', [BarangMasukController::class, 'dataMasuk']);
 Route::post('barang/masuk', [BarangMasukController::class, 'brgMasuk']);
+Route::post('package/masuk', [BarangMasukController::class, 'storePackage']);
 
 Route::get('barangKeluar', [BarangKeluarController::class, 'dataKeluar']);
 Route::post('barang/keluar', [BarangKeluarController::class, 'brgKeluar']);
@@ -68,6 +69,7 @@ Route::post('/produksi/product', [StockProductController::class, 'storeProductio
 Route::get('stock/lot', [StockController::class, 'lot']);
 Route::get('stock/barang', [StockController::class, 'stock']);
 Route::get('stock/product', [StockProductController::class, 'stock']);
+Route::get('stock/kemasan', [StockController::class, 'packaging']);
 
 
 Route::get('/manufacturer', [ManufacturerController::class, 'dataManufacturer']);
@@ -88,6 +90,9 @@ Livewire::component('/product-form', [FormulaProduct::class]);
 
 
 Route::get('/search',[BarangController::class, 'search'])->name('search.index');
+
+Route::get('/search/stock',[StockController::class, 'search'])->name('search.stock');
+
 
 
 

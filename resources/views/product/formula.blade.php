@@ -91,6 +91,42 @@
                                             <input type="text" class="form-control" name="unit">
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="" class="form-label">jumlah_kemasan</label>
+                                            <input type="number" class="form-control" name="jumlah_kemasan">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="unit">Jenis Kemasan</label>
+                                            <div class="input-group">
+                                                <select class="form-select" id="golongan_select" name="jenis_kemasan">
+                                                    <option value="{{ $i->jenis_kemasan }}">{{ $i->jenis_kemasan }}
+                                                    </option>
+                                                    <option value="Alumunium Bottle">Alumunium Bottle</option>
+                                                    <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
+                                                    <option value="Bag">Bag</option>
+                                                    <option value="Box with Alumunium Bottle">Box with Alumunium Bottle
+                                                    </option>
+                                                    <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch
+                                                        Pack
+                                                    </option>
+                                                    <option value="Carton">Carton</option>
+                                                    <option value="Fiber Box">Fiber Box</option>
+                                                    <option value="Fiber Drum">Fiber Drum</option>
+                                                    <option value="Glass Bottle">Glass Bottle</option>
+                                                    <option value="Jerry Can">Jerry Can</option>
+                                                    <option value="Metal Can">Metal Can</option>
+                                                    <option value="Metal Drum">Metal Drum</option>
+                                                    <option value="Plastic Bottle">Plastic Bottle</option>
+                                                    <option value="Plastic Container with Polyethylene Inner Bag">Plastic
+                                                        Container
+                                                        with Polyethylene Inner Bag</option>
+                                                    <option value="Plastic Drum">Plastic Drum</option>
+                                                    <option value="Plastic Jar">Plastic Jar</option>
+                                                    <option value="Sacks">Sacks</option>
+                                                    <option value="Goody Bag">Goody Bag</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <label for="" class="form-label">no_LOT</label>
                                             <input type="text" class="form-control" name="no_LOT">
                                         </div>
@@ -118,4 +154,33 @@
             @endforeach
         </tbody>
     </table>
+
+    <script>
+        $(document).ready(function() {
+            $('#barang').change(function() {
+                var FAI_code = $(this).val();
+                // Send AJAX request to fetch Rak options
+                $.ajax({
+                    url: '/getRakOption',
+                    type: 'GET',
+                    data: {
+                        FAI_code: FAI_code
+                    },
+                    success: function(response) {
+                        // Clear existing options
+                        $('#rak').empty();
+                        // Append new options based on the response
+                        $.each(response.options, function(index, option) {
+                            $('#rak').append('<option value="' + option.id_rak + '">' +
+                                option.id_rak + '</option>');
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

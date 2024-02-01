@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\BarangKeluar;
 use App\Models\Customer;
+use App\Models\Packaging;
 use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
@@ -128,13 +129,13 @@ class BarangKeluarController extends Controller
     private function isStockSufficient(Request $request)
     {
         $requestedWeight = $request->total_qty_keluar_LOT;
-        $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('weight');
+        $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('quantity');
 
-        $requestedWeight2 = $request->total_qty_keluar_LOT;
-        $availableStock2 = StockBarang::where('FAI_code', $request->FAI_code)->sum('quantity');
+        // $requestedWeight2 = $request->total_qty_keluar_LOT;
+        // $availableStock2 = StockBarang::where('FAI_code', $request->FAI_code)->sum('quantity');
 
         return $requestedWeight <= $availableStock;
-        $requestedWeight2 <= $availableStock2;
+        // $requestedWeight2 <= $availableStock2;
     }
 
     public function brgKeluar(Request $request)
@@ -219,6 +220,20 @@ class BarangKeluarController extends Controller
             session()->flash('error', 'Gagal');
         }
 
+        $kemasan = Packaging::where('nama_kemasan', $request->jenis_kemasan)->first();
+        if (!$kemasan) {
+            session()->flash('error', 'mau pake apa?');
+            return redirect('formula')->with('error', 'Mau diwadahin apaan?');
+        }
+
+        $kemasan->quantity -= $request->total_QTY_kemasan;
+
+        try {
+            $kemasan->save();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal');
+        }
+
         try {
             $barangKeluar->save();
         } catch (\Exception $e) {
@@ -229,12 +244,9 @@ class BarangKeluarController extends Controller
 
 
         $requestedWeight = $request->total_qty_keluar_LOT;
-        $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('weight');
+        $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('quantity');
 
-        $requestedWeight2 = $request->total_qty_keluar_LOT;
-        $availableStock2 = StockBarang::where('FAI_code', $request->FAI_code)->sum('quantity');
-
-        if ($requestedWeight > $availableStock && $requestedWeight2 > $availableStock2) {
+        if ($requestedWeight > $availableStock) {
             // If requested quantity is more than available stock
             return redirect('barangKeluar')->with('warning', 'Partial stock issued. Requested quantity exceeds available stock.');
             session()->flash('error', 'Gagal');
@@ -243,7 +255,6 @@ class BarangKeluarController extends Controller
             // If requested quantity is within available stock
             try {
                 $this->decreaseStock($request->FAI_code, $requestedWeight);
-                $this->decreaseStockBarang($request->FAI_code, $requestedWeight2);
             } catch (\Exception $e) {
                 return redirect('barangKeluar')
                     ->with('error', 'Failed to decrease stock: ' . $e->getMessage());
@@ -271,23 +282,23 @@ class BarangKeluarController extends Controller
         }
     }
 
-    private function decreaseStockBarang($FAI_code, $requestedWeight)
-    {
-        $stocks = StockBarang::where('FAI_code', $FAI_code)->orderBy('created_at')->get();
+    // private function decreaseStockBarang($FAI_code, $requestedWeight)
+    // {
+    //     $stocks = StockBarang::where('FAI_code', $FAI_code)->orderBy('created_at')->get();
 
-        foreach ($stocks as $stock) {
-            if ($requestedWeight >= $stock->quantity) {
-                // If requested weight is greater than or equal to current stock weight, delete the stock entry
-                session()->flash('error', 'Quantity Kurang');
-                $stock->update(['quantity' => 0]);
-                $requestedWeight -= $stock->quantity;
-            } else {
-                // If requested weight is less than the current stock weight, update the stock entry
-                $stock->update(['quantity' => $stock->quantity - $requestedWeight]);
-                break;
-            }
-        }
-    }
+    //     foreach ($stocks as $stock) {
+    //         if ($requestedWeight >= $stock->quantity) {
+    //             // If requested weight is greater than or equal to current stock weight, delete the stock entry
+    //             session()->flash('error', 'Quantity Kurang');
+    //             $stock->update(['quantity' => 0]);
+    //             $requestedWeight -= $stock->quantity;
+    //         } else {
+    //             // If requested weight is less than the current stock weight, update the stock entry
+    //             $stock->update(['quantity' => $stock->quantity - $requestedWeight]);
+    //             break;
+    //         }
+    //     }
+    // }
 
 
 public function getRakOptions(Request $request)
@@ -295,9 +306,9 @@ public function getRakOptions(Request $request)
     $FAI_code = $request->FAI_code;
     
     // Retrieve Rak options based on the FAI_code from the Barang Masuk table
-    $rakOptions = DB::table('barang_masuk')
-                    ->join('rak_gudang', 'barang_masuk.id_rak', '=', 'rak_gudang.id_rak')
-                    ->where('barang_masuk.FAI_code', $FAI_code)
+    $rakOptions = DB::table('stock_lot')
+                    ->join('rak_gudang', 'stock_lot.id_rak', '=', 'rak_gudang.id_rak')
+                    ->where('stock_lot.FAI_code', $FAI_code)
                     ->select('rak_gudang.id_rak')
                     ->distinct()
                     ->get();

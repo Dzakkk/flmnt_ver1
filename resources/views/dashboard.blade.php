@@ -229,6 +229,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/stock/kemasan">
+                            <i class="bi bi-circle"></i><span>Stock Kemasan</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/stock/lot">
                             <i class="bi bi-circle"></i><span>Stock/LOT</span>
                         </a>
@@ -343,6 +348,7 @@
             @yield('manufacturer')
             @yield('stock_product')
             @yield('updateProduct')
+            @yield('kemasan')
 
 
 
