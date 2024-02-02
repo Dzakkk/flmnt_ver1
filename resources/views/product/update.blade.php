@@ -1,8 +1,7 @@
 @extends('dashboard')
 
 @section('updateProduct')
-    
-@livewireStyles
+    @livewireStyles
     <div class="container shadow pt-2 mt-2" style="width: 800px">
         <form class="row g-3 d-flex" action="/product/update/{{ $prd->FAI_code }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -42,7 +41,8 @@
             </div>
             <div class="col-md-6">
                 <label for="product_name" class="form-label">Product Name</label>
-                <input type="text" name="product_name" id="product_name" class="form-control" value="{{ $prd->product_name }}">
+                <input type="text" name="product_name" id="product_name" class="form-control"
+                    value="{{ $prd->product_name }}">
             </div>
             <div class="col-md-6">
                 <label for="build_product" class="form-label">Build Product</label>
@@ -58,7 +58,7 @@
                 <label for="formula_id" class="form-label">Formula id</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="formula_id">
-                        <option value="{{ $prd->formula_id }}" >Pilih Kategori</option>
+                        <option value="{{ $prd->formula_id }}">Pilih Kategori</option>
                         <option value="ALT1">ALT1</option>
                         <option value="ALT2">ALT2</option>
                         <option value="ALT3">ALT3</option>
@@ -82,7 +82,7 @@
                 <label for="solubility" class="form-label">Solubility</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="solubility">
-                        <option value="{{ $prd->solubility }}" >Pilih Kategori</option>
+                        <option value="{{ $prd->solubility }}">Pilih Kategori</option>
                         <option value="OS">OS</option>
                         <option value="WS">WS</option>
                     </select>
@@ -90,15 +90,18 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="created_date">Created Date</label>
-                <input type="date" name="created_date" class="form-control" id="created_date" value="{{ $prd->created_date }}">
+                <input type="date" name="created_date" class="form-control" id="created_date"
+                    value="{{ $prd->created_date }}">
             </div>
             <div class="col-md-6">
                 <label for="release_date" class="form-label">Release Date</label>
-                <input type="date" name="release_date" id="release_date" class="form-control" value="{{ $prd->release_date }}">
+                <input type="date" name="release_date" id="release_date" class="form-control"
+                    value="{{ $prd->release_date }}">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="created_by">Created by</label>
-                <input type="text" name="created_by" class="form-control" id="created_by" value="{{ $prd->created_by }}">
+                <input type="text" name="created_by" class="form-control" id="created_by"
+                    value="{{ $prd->created_by }}">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="note">Note</label>
@@ -117,7 +120,8 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="target_order">Target Order</label>
-                <input type="number" name="target_order" class="form-control" id="target_order" value="{{ $prd->target_order }}">
+                <input type="number" name="target_order" class="form-control" id="target_order"
+                    value="{{ $prd->target_order }}">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="unit">Unit</label>
@@ -135,28 +139,10 @@
                 <h3 class="pt-3">
                     FORMULA PRODUCT ===========================
                 </h3>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label" for="persentase-0">Persentase:</label>
-                <input type="text" id="persentase-0" name="persentase[]" required class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label" for="kandungan-0">Kandungan:</label>
-                <select name="FAI_code_barang[]" id="kandungan-0" class="form-control select2" required>
-                    <option value="{{ $prd->FAI_code_barang }}" >{{ $prd->FAI_code_barang }}</option>
-                    @foreach ($brg as $c)
-                        <option value="{{ $c->FAI_code }}">{{ $c->FAI_code }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-
-            @livewire('formula-product')
+            @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code]) 
             <button type="submit" class="btn btn-primary" id="add-input">buat</button>
             @livewireScripts
 
         </form>
     </div>
-
-
 @endsection

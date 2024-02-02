@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('packaging', function (Blueprint $table) {
-            $table->string('FAI_code')->primary();
-            $table->string('nama_kemasan');
-            $table->string('supplier');
-            $table->string('id_rak');
+        Schema::create('tanki', function (Blueprint $table) {
+            $table->string('id_tanki')->primary();
+            $table->string('capacity');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packaging');
+        Schema::dropIfExists('tanki');
     }
 };

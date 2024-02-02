@@ -8,12 +8,7 @@ use Illuminate\Http\Request;
 
 class GudangController extends Controller
 {
-    // public function dataGudang()
-    // {
-    //     $gudang = Gudang::all();
-    //     $rak = RakGudang::all();
-    //     return view('gudang.dataGudang', ['gudang' => $gudang, 'rak' => $rak]);
-    // }
+
 
     public function dataGudang()
     {

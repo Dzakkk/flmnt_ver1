@@ -332,10 +332,6 @@
                     <input type="text" name="quantity" id="quantity" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <label for="price" class="form-label">price</label>
-                    <input type="text" name="price" id="price" class="form-control">
-                </div>
-                <div class="col-md-6">
                     <label for="id_rak" class="form-label">id_rak</label>
                     <input type="text" name="id_rak" id="id_rak" class="form-control">
                 </div>

@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('packaging', function (Blueprint $table) {
-            $table->string('FAI_code')->primary();
-            $table->string('nama_kemasan');
-            $table->string('supplier');
-            $table->string('id_rak');
+        Schema::create('cust_list', function (Blueprint $table) {
+            $table->id();
+            $table->string('customer_name');
+            $table->string('customer_code');
+            $table->string('PO_customer');
+            $table->string('FAI_code');
+            $table->string('id_customer');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packaging');
+        Schema::dropIfExists('cust_list');
     }
 };

@@ -26,17 +26,24 @@ class ProductsController extends Controller
     }
 
     public function updateProductForm($id)
-    {
-        $prd = Products::find($id);
-        $brg = Barang::all();
-        $gdg = Gudang::all();
-        return view('product.update', compact('prd', 'brg', 'gdg'));
-    }
+{
+    $prd = Products::find($id);
+    $brg = Barang::all();
+    $gdg = Gudang::all();
+
+    // Ambil nilai persentase dan FAI_code dari entitas ProductFormula
+    $productFormula = ProductFormula::find($id);
+    $persentase = json_decode($productFormula->persentase, true);
+    $FAI_code = json_decode($productFormula->FAI_code_barang, true);
+
+    return view('product.update', compact('prd', 'brg', 'gdg', 'persentase', 'FAI_code'));
+}
 
     public function newProductForm()
     {
         $brg = Barang::all();
         $gdg = Gudang::all();
+
         return view('product.inputProduct', ['brg' => $brg, 'gdg' => $gdg]);
     }
 

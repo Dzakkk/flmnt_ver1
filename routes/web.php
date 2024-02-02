@@ -59,8 +59,9 @@ Route::get('product', [ProductsController::class, 'dataProduct']);
 Route::get('product/store', [ProductsController::class, 'newProductForm']);
 Route::post('product/store', [ProductsController::class, 'newProduct']);
 Route::delete('product/delete/{id}', [ProductsController::class, 'delete'])->name('product.delete');
-Route::get('product/update/{id}', [ProductsController::class, 'updateProductForm']);
-Route::PUT('product/update/{id}', [ProductsController::class, 'updateProduct']);
+Route::get('/product/update/{id}', [ProductsController::class, 'updateProductForm'])->name('product.update');
+Route::put('/product/update/{id}', [ProductsController::class, 'updateProduct']);
+
 
 
 Route::get('formula', [ProductsController::class, 'formula']);

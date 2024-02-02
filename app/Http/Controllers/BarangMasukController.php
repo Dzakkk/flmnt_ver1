@@ -433,7 +433,6 @@ class BarangMasukController extends Controller
             'nama_kemasan' => 'required',
             'quantity' => 'required',
             'supplier' => 'required',
-            'price' => 'required',
             'id_rak' => 'required',
         ]);
 
@@ -450,14 +449,12 @@ class BarangMasukController extends Controller
             $jumlah = $tambah + $request->quantity;
             $existStock->update([
                 'quantity' => $jumlah,
-                'price' => $request->price,
             ]);
         } elseif (!$existStock) {
             $package = new Packaging([
                 'FAI_code' => $request->FAI_code,
                 'nama_kemasan' => $request->nama_kemasan,
                 'supplier' => $request->supplier,
-                'price' => $request->price,
                 'quantity' => $request->quantity,
                 'id_rak' => $request->id_rak,
             ]);

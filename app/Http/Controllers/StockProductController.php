@@ -206,6 +206,13 @@ class StockProductController extends Controller
             'no_LOT' => 'required',
             'jumlah_kemasan' => 'required',
             'jenis_kemasan' => 'required',
+            'customer_name' => 'required',
+            'customer_code' => 'required',
+            'no_production' => 'required',
+            'no_work_order' => 'required',
+            'jumlah_kemasan' => 'required',
+            'jenis_kemasan' => 'required',
+            'PO_customer' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -229,6 +236,8 @@ class StockProductController extends Controller
             'id_rak' => $request->id_rak,
             'jumlah_kemasan' => $request->jumlah_kemasan,
             'jenis_kemasan' => $request->jenis_kemasan,
+            'no_production' => $request->no_production,
+            'no_work_order' => $request->no_work_order,
         ]);
 
         $rakGudang = RakGudang::where('id_rak', $request->id_rak)->first();

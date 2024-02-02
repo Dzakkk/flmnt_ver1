@@ -127,8 +127,28 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="" class="form-label">no_production</label>
+                                            <input type="text" class="form-control" name="no_production">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">No.Work Order</label>
+                                            <input type="text" class="form-control" name="no_work_order">
+                                        </div>
+                                        <div class="col-md-6">
                                             <label for="" class="form-label">no_LOT</label>
                                             <input type="text" class="form-control" name="no_LOT">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">customer_name</label>
+                                            <input type="text" class="form-control" name="customer_name">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">customer_code</label>
+                                            <input type="text" class="form-control" name="customer_code">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">PO_customer</label>
+                                            <input type="text" class="form-control" name="PO_customer">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">tanggal Produksi</label>

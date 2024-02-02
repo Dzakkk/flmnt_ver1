@@ -20,6 +20,8 @@ return new class extends Migration
             $table->date('tanggal_produksi');
             $table->date('tanggal_expire');
             $table->string('id_rak');
+            $table->string('no_production')->nullable();
+            $table->string('no_work_order')->nullable();
             $table->timestamps();
         });
     }
