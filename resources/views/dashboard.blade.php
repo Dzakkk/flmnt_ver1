@@ -349,6 +349,7 @@
             @yield('stock_product')
             @yield('updateProduct')
             @yield('kemasan')
+            @yield('productionControl')
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Customer;
 use App\Models\Gudang;
 use App\Models\ProductFormula;
 use App\Models\Products;
@@ -22,7 +23,8 @@ class ProductsController extends Controller
     {
         $frm = ProductFormula::all();
         $rak = RakGudang::all();
-        return view('product.formula', ['frm' => $frm, 'rak' => $rak]);
+        $cust = Customer::all();
+        return view('product.formula', ['frm' => $frm, 'rak' => $rak, 'cust' => $cust]);
     }
 
     public function updateProductForm($id)

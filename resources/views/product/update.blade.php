@@ -142,7 +142,7 @@
             @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code]) 
             <button type="submit" class="btn btn-primary" id="add-input">buat</button>
             @livewireScripts
-
+            
         </form>
     </div>
 @endsection

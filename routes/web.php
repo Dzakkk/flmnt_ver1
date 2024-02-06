@@ -95,7 +95,7 @@ Route::get('/search',[BarangController::class, 'search'])->name('search.index');
 Route::get('/search/stock',[StockController::class, 'search'])->name('search.stock');
 
 
-
-
+Route::get('production/form', [StockProductController::class, 'productionControl'])->name('production.form');
+Route::post('production/control/store', [StockProductController::class, 'productProduction']);
 
 

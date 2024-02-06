@@ -59,7 +59,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="container">
+                                <div class="container shadow pt-2 mt-2" style="width: 800px">
                                     <form action="/produksi/product" class="row g-3 d-flex" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
@@ -141,6 +141,15 @@
                                         <div class="col-md-6">
                                             <label for="" class="form-label">customer_name</label>
                                             <input type="text" class="form-control" name="customer_name">
+                                         
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="supplier" class="form-label">customer_name</label>
+                                            <select name="customer_name" id="supplier" class="form-control select2" required>
+                                                @foreach ($cust as $r)
+                                                    <option value="{{ $r->customer_name }}">{{ $r->customer_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">customer_code</label>
@@ -174,33 +183,5 @@
             @endforeach
         </tbody>
     </table>
-
-    <script>
-        $(document).ready(function() {
-            $('#barang').change(function() {
-                var FAI_code = $(this).val();
-                // Send AJAX request to fetch Rak options
-                $.ajax({
-                    url: '/getRakOption',
-                    type: 'GET',
-                    data: {
-                        FAI_code: FAI_code
-                    },
-                    success: function(response) {
-                        // Clear existing options
-                        $('#rak').empty();
-                        // Append new options based on the response
-                        $.each(response.options, function(index, option) {
-                            $('#rak').append('<option value="' + option.id_rak + '">' +
-                                option.id_rak + '</option>');
-                        });
-                    },
-                    error: function(xhr) {
-                        console.log('Error:', xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>
 
 @endsection
