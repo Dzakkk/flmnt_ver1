@@ -28,6 +28,7 @@ class StockController extends Controller
         $package = Packaging::all();
         return view('stock.kemasan', compact('package'));
     }
+    
     public function search(Request $request)
     {
         try {
@@ -46,5 +47,14 @@ class StockController extends Controller
             // Handle errors and return a JSON response with status 500 (Internal Server Error)
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
+    }
+
+    public function view()
+    {
+        return view('form.pControl');
+    }
+    public function view2()
+    {
+        return view('form.formPDF');
     }
 }

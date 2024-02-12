@@ -99,3 +99,5 @@ Route::get('production/form', [StockProductController::class, 'productionControl
 Route::post('production/control/store', [StockProductController::class, 'productProduction']);
 
 
+// Route::get('pdf', [StockController::class, 'view']);
+Route::get('/pdf', [StockProductController::class, 'generatePDF']);

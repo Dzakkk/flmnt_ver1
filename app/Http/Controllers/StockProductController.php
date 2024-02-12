@@ -11,9 +11,12 @@ use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\stockProduct;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Formula;
 
 class StockProductController extends Controller
 {
@@ -643,5 +646,55 @@ class StockProductController extends Controller
         }
 
         return redirect('formula');
+    }
+
+    public function generatePDF() {
+        $FAI_code = session('FAI_code');
+        $product_name = session('product_name');
+        $no_LOT = session('no_LOT');
+        $quantity = session('quantity');
+        $unit = session('unit');
+        $customer_name = session('customer_name');
+        $customer_code = session('customer_code');
+        $PO_customer = session('PO_customer');
+        $tanggal_produksi = session('tanggal_produksi');
+        $tanggal_expire = session('tanggal_expire');
+        $id_rak = session('id_rak');
+        $jumlah_kemasan = session('jumlah_kemasan');
+        $jenis_kemasan = session('jenis_kemasan');
+        $no_production = session('no_production');
+        $no_work_order = session('no_work_order');
+
+        $formula = ProductFormula::where('FAI_code', $FAI_code)->first();
+
+        $nama_barang_array = [];
+
+        if ($formula) {
+            $FAI_code_barang_array = json_decode($formula->FAI_code_barang, true);
+            $persentase_array = json_decode($formula->persentase, true);
+
+            foreach ($FAI_code_barang_array as $FAI_code_barang) {
+                $stock_barang = StockBarang::where('FAI_code', $FAI_code_barang)->first();
+                $stock_LOT = Stock::where('FAI_code', $FAI_code_barang)->value('no_LOT');
+                $stock_product = StockProduct::where('FAI_code', $FAI_code_barang)->first();
+
+                if ($stock_barang) {
+                    $nama_barang = $stock_barang->product_name;
+                } elseif ($stock_product) {
+                    $nama_barang = $stock_product->product_name;
+                } else {
+                    $nama_barang = null;
+                }
+
+                $barang_array[] = [
+                    'FAI_code_barang' => $FAI_code_barang,
+                    'product_name' => $nama_barang,
+                    'no_LOT' => $stock_LOT,
+                ];
+            }
+        }
+        $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'unit', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'id_rak', 'jumlah_kemasan', 'jenis_kemasan', 'no_production', 'no_work_order', 'FAI_code_barang_array', 'persentase_array', 'barang_array'));
+    
+        return $pdf->stream();
     }
 }
