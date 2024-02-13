@@ -51,7 +51,7 @@
                 </tr>
                 <div class="modal fade" id="exampleModal-{{ $i->FAI_code }}" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Produksi</h5>
@@ -59,7 +59,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="container shadow pt-2 mt-2" style="width: 800px">
+                                <div class="container shadow pt-2 mt-2">
                                     <form action="/produksi/product" class="row g-3 d-flex" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
@@ -139,11 +139,6 @@
                                             <input type="text" class="form-control" name="no_LOT">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="" class="form-label">customer_name</label>
-                                            <input type="text" class="form-control" name="customer_name">
-                                         
-                                        </div>
-                                        <div class="col-md-6">
                                             <label for="supplier" class="form-label">customer_name</label>
                                             <select name="customer_name" id="supplier" class="form-control select2" required>
                                                 @foreach ($cust as $r)
@@ -167,12 +162,11 @@
                                             <label for="" class="form-label">tanggal expire</label>
                                             <input type="date" class="form-control" name="tanggal_expire">
                                         </div>
-                                        <div class="col-md-12 mt-2">
-                                            <button type="submit" class="btn btn-info">SUBMIT</button>
+                                        <div class="col-md-12 mt-2 mb-2">
+                                            <button type="submit" class="btn btn-info mb-2">SUBMIT</button>
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
                             <div class="modal-footer">
                               uhuh

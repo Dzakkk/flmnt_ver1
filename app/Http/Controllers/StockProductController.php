@@ -695,6 +695,6 @@ class StockProductController extends Controller
         }
         $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'unit', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'id_rak', 'jumlah_kemasan', 'jenis_kemasan', 'no_production', 'no_work_order', 'FAI_code_barang_array', 'persentase_array', 'barang_array'));
     
-        return $pdf->stream();
+        return $pdf->download('Production Control.pdf');
     }
 }

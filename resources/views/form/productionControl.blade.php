@@ -91,38 +91,7 @@
                     </div>
                 </div>
             </div>
-            Preparation
-            <div class="d-flex">
-                <div>
-                    <h4>TANK</h4>
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>CLEANLESS</td>
-                            <td>YES</td>
-                            <td>NO</td>
-                        </tr>
-                        <tr>
-                            <td>ODDORLESS</td>
-                            <td>YES</td>
-                            <td>NO</td>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <h4>TIME</h4>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>START</th>
-                            <th>FINISHED</th>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="form-control border-0"></td>
-                            <td><input type="text" value="" class="form-control border-0"></td>
-                        </tr>
-                    </table>
-                </div>
-
-            </div>
+            
             <div>
                 <h4>PRODUCT FORMULA</h4>
                 <table class="table table-bordered">
@@ -175,53 +144,6 @@
                         </tr>
                     </tfoot>
                 </table>
-            </div>
-            <div>
-                METHODE
-                <div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>NO</th>
-                                <th>PROCESS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            PACKAGING
-            <div>
-                <div>
-                    <h4>TIME</h4>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>START</th>
-                            <th>FINISHED</th>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="form-control border-0"></td>
-                            <td><input type="text" value="" class="form-control border-0"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>ITEM</th>
-                            <th>QTY</th>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="form-control border-0"></td>
-                            <td><input type="text" value="" class="form-control border-0"></td>
-                        </tr>
-                    </table>
-                </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="/pdf">export pdf</a>
