@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_kemasan');
             $table->string('supplier');
             $table->string('id_rak');
+            $table->string('quantity');
             $table->timestamps();
         });
     }

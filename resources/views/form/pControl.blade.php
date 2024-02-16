@@ -259,7 +259,7 @@
                     <div class="gen">
                         <div>
                             <p style="float: left">No.&nbsp;Production</p>
-                            <input type="text" value=":&nbsp;&nbsp;">
+                            <input type="text" value=":&nbsp;&nbsp;{{ $no_production }}">
                         </div>
                         <div>
                             <p style="float: left">Production&nbsp;Date</p>
@@ -267,7 +267,7 @@
                         </div>
                         <div>
                             <p style="float: left">No.&nbsp;Work&nbsp;Order</p>
-                            <input type="text" value=":&nbsp;&nbsp;">
+                            <input type="text" value=":&nbsp;&nbsp;{{ $no_work_order }}">
                         </div>
                         <div>
                             <p style="float: left">Product&nbsp;Name</p>
@@ -355,12 +355,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($barang_array as $index => $barang_data)
+                        @foreach ($dataArray as $index => $barang_data)
                             <tr>
                                 <td></td>
-                                <td>{{ $barang_data['FAI_code_barang'] }}</td>
-                                <td>{{ ($persentase_array[$index] / 100) * $quantity }}</td>
-                                <td>{{ $barang_data['no_LOT'] }}</td>
+                                <td>{{ $barang_data }}</td>
+                                <td>{{ $persentase_array[$index] }}</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>

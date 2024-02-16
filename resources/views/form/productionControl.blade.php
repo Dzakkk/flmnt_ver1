@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('productionControl')
+@section('productionControlBefore')
     <style>
         .short-input {
             width: 470px;
@@ -19,35 +19,35 @@
                     <div class="d-flex">
                         <label for="noProduction" class="col-sm-2 col-form-label custom-label">No. Production</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="noProduction"
+                            :<input type="text" class="form-control short-input border-0" id="noProduction" name="no_production"
                                 value="{{ $no_production }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="productionDate" class="col-sm-2 col-form-label custom-label">Production Date</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="date" class="form-control short-input border-0" id="productionDate"
+                            :<input type="date" class="form-control short-input border-0" id="productionDate" name="tanggal_produksi"
                                 value="{{ $tanggal_produksi }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="noWorkOrder" class="col-sm-2 col-form-label custom-label">No. Work Order</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="noWorkOrder"
+                            :<input type="text" class="form-control short-input border-0" id="noWorkOrder" name="no_work_order"
                                 value="{{ $no_work_order }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="productName" class="col-sm-2 col-form-label custom-label">Product Name</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0 " id="productName"
+                            :<input type="text" class="form-control short-input border-0 " id="productName" name="product_name"
                                 value="{{ $product_name }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="qtyProduction" class="col-sm-2 col-form-label custom-label">Qty. Production</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="qtyProduction"
+                            :<input type="text" class="form-control short-input border-0" id="qtyProduction" name="quantity"
                                 value="{{ $quantity }}">
                         </div>
                     </div>
@@ -57,35 +57,35 @@
                     <div class="d-flex">
                         <label for="lotNumber" class="col-sm-2 col-form-label custom-label">Lot. Number</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="lotNumber"
+                            :<input type="text" class="form-control short-input border-0" id="lotNumber" name="no_LOT"
                                 value="{{ $no_LOT }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="localCode" class="col-sm-2 col-form-label custom-label">Local Code</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="localCode"
+                            :<input type="text" class="form-control short-input border-0" id="localCode" name="FAI_code"
                                 value="{{ $FAI_code }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="customerName" class="col-sm-2 col-form-label custom-label">Customer Name</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="customerName"
+                            :<input type="text" class="form-control short-input border-0" id="customerName" name="customer_name"
                                 value="{{ $customer_name }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="customerCode" class="col-sm-2 col-form-label custom-label">Customer Code</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="customerCode"
+                            :<input type="text" class="form-control short-input border-0" id="customerCode" name="customer_code"
                                 value="{{ $customer_code }}">
                         </div>
                     </div>
                     <div class="d-flex">
                         <label for="poCustomer" class="col-sm-2 col-form-label custom-label">PO. Customer</label>
                         <div class="col-sm-10 d-flex">
-                            :<input type="text" class="form-control short-input border-0" id="poCustomer"
+                            :<input type="text" class="form-control short-input border-0" id="poCustomer" name="PO_customer"
                                 value="{{ $PO_customer }}">
                         </div>
                     </div>
@@ -145,8 +145,7 @@
                     </tfoot>
                 </table>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/pdf">export pdf</a>
+            <button type="submit" class="btn btn-primary">Export PDF</button>
         </form>
     </div>
 @endsection

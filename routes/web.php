@@ -11,6 +11,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Livewire\FormulaProduct;
+use App\Models\stockProduct;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -64,7 +65,7 @@ Route::put('/product/update/{id}', [ProductsController::class, 'updateProduct'])
 
 
 
-Route::get('formula', [ProductsController::class, 'formula']);
+Route::get('formula', [ProductsController::class, 'formula'])->name('formula');
 Route::post('/produksi/product', [StockProductController::class, 'storeProduction']);
 
 Route::get('stock/lot', [StockController::class, 'lot']);
@@ -101,3 +102,7 @@ Route::post('production/control/store', [StockProductController::class, 'product
 
 // Route::get('pdf', [StockController::class, 'view']);
 Route::get('/pdf', [StockProductController::class, 'generatePDF']);
+
+Route::get('production/control', [StockProductController::class, 'dataProductionControl']);
+Route::get('after/production/{id}', [StockProductController::class, 'afterProduction']);
+Route::put('after/production/control/{id}', [StockProductController::class, 'productionAfter']);

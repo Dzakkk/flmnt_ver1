@@ -45,7 +45,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 {{-- <img src="assets/img/logo.png" alt=""> --}}
-                <span class="d-none d-lg-block">Falmnot</span>
+                <span class="d-none d-lg-block">Falmont</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -269,6 +269,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/production/control">
+                    <i class="ri-archive-drawer-line"></i>
+                    <span>Production Control</span>
+                </a>
+            </li>
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/supplier ">
@@ -349,7 +356,10 @@
             @yield('stock_product')
             @yield('updateProduct')
             @yield('kemasan')
-            @yield('productionControl')
+            @yield('productionControlBefore')
+            @yield('productionControlAfter')
+            @yield('formAfterProduction')
+
 
 
 

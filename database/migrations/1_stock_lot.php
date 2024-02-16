@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('no_LOT');
             $table->float('quantity', 8, 2);
             $table->string('unit');
+            $table->float('jumlah_kemasan', 8, 2);
+            $table->string('jenis_kemasan');
             $table->date('tanggal_produksi');
             $table->date('tanggal_expire');
             $table->string('id_rak');
