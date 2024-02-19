@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductionControlExport;
 use App\Models\Barang;
+use App\Models\CustList;
 use App\Models\Customer;
 use App\Models\Gudang;
 use App\Models\ProductFormula;
@@ -11,6 +13,7 @@ use App\Models\Products;
 use App\Models\RakGudang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller
 {
@@ -25,7 +28,8 @@ class ProductsController extends Controller
         $frm = ProductFormula::all();
         $rak = RakGudang::all();
         $cust = Customer::all();
-        return view('product.formula', ['frm' => $frm, 'rak' => $rak, 'cust' => $cust]);
+        $custList = CustList::all();
+        return view('product.formula', ['frm' => $frm, 'rak' => $rak, 'cust' => $cust, 'customerCodes' => $custList]);
     }
 
     public function updateProductForm($id)
@@ -185,4 +189,11 @@ class ProductsController extends Controller
         $prd = ProductionControl::all();
         return view('production.ProductionData', ['prd' => $prd]);
     }
+
+
+    public function exportProductionControl()
+    {
+        return Excel::download(new ProductionControlExport, 'ProductionControl.xlsx');
+    }
+
 }

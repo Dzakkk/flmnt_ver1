@@ -246,12 +246,13 @@ class StockProductController extends Controller
                     ]);
                     $custList->save();
                 }
-            } else
+            } elseif (!$newCust) {
                 $custNew = new Customer([
                     'customer_name' => $request->customer_name,
                 ]);
-
             $custNew->save();
+            }
+                
 
             $cust = CustList::where('customer_name', $request->customer_name)
                 ->first();
@@ -265,6 +266,21 @@ class StockProductController extends Controller
                     'id_customer' => Customer::where('customer_name', $request->customer_name)->value('id_customer'),
                 ]);
                 $custList->save();
+            }
+
+            $prd = stockProduct::where('FAI_code', $request->FAI_code)->first();
+            $aspect = Products::where('FAI_code', $request->FAI_code)->value('aspect');
+            $ctgry = Products::where('FAI_code', $request->FAI_code)->value('category');
+            if (!$prd) {
+                $prdNew = new stockProduct([
+                    'FAI_code' => $request->FAI_code,
+                    'FINA_code' => $request->FAI_code,
+                    'product_name' => $request->product_name,
+                    'aspect' => $aspect,
+                    'category' => $ctgry,
+                    'unit' => $unit,
+                ]);
+                $prdNew->save();
             }
 
             $production_control = new productionControl([
@@ -305,7 +321,7 @@ class StockProductController extends Controller
                 }
             }
 
-            $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'no_production', 'no_work_order', 'dataArray', 'persentase_array'));
+            $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'no_production', 'no_work_order', 'dataArray', 'persentase_array'));
             return $pdf->download('Production_Control.pdf');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal: ' . $e->getMessage());

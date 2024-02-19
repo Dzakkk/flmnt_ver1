@@ -199,7 +199,7 @@ class BarangKeluarController extends Controller
             'id_rak' => $request->id_rak,
         ]);
 
-       
+
 
         $FAI_code = $request->FAI_code;
         $rakGudang = RakGudang::whereHas('stocks', function ($query) use ($FAI_code) {
@@ -250,7 +250,6 @@ class BarangKeluarController extends Controller
             // If requested quantity is more than available stock
             return redirect('barangKeluar')->with('warning', 'Partial stock issued. Requested quantity exceeds available stock.');
             session()->flash('error', 'Gagal');
-
         } else {
             // If requested quantity is within available stock
             try {
@@ -301,19 +300,18 @@ class BarangKeluarController extends Controller
     // }
 
 
-public function getRakOptions(Request $request)
-{
-    $FAI_code = $request->FAI_code;
-    
-    // Retrieve Rak options based on the FAI_code from the Barang Masuk table
-    $rakOptions = DB::table('stock_lot')
-                    ->join('rak_gudang', 'stock_lot.id_rak', '=', 'rak_gudang.id_rak')
-                    ->where('stock_lot.FAI_code', $FAI_code)
-                    ->select('rak_gudang.id_rak')
-                    ->distinct()
-                    ->get();
+    public function getRakOptions(Request $request)
+    {
+        $FAI_code = $request->FAI_code;
 
-    return response()->json(['options' => $rakOptions]);
-}
+        // Retrieve Rak options based on the FAI_code from the Barang Masuk table
+        $rakOptions = DB::table('stock_lot')
+            ->join('rak_gudang', 'stock_lot.id_rak', '=', 'rak_gudang.id_rak')
+            ->where('stock_lot.FAI_code', $FAI_code)
+            ->select('rak_gudang.id_rak')
+            ->distinct()
+            ->get();
 
+        return response()->json(['options' => $rakOptions]);
+    }
 }

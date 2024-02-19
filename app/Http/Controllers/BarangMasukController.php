@@ -246,7 +246,6 @@ class BarangMasukController extends Controller
 
             // Retrieve additional information from the Barang table
             $barangAspect = Barang::where('FAI_code', $request->FAI_code)->value('aspect');
-            $commonName = Barang::where('FAI_code', $request->FAI_code)->value('common_name');
             $productName = Barang::where('FAI_code', $request->FAI_code)->value('name');
 
             // Check if the FAI_code already exists in the stock_barang table
@@ -256,7 +255,6 @@ class BarangMasukController extends Controller
             if ($existingStock) {
                 $existingStock->update([
                     'aspect' => $barangAspect,
-                    'common_name' => $commonName,
                     'product_name' => $productName,
                 ]);
             } else {
@@ -264,7 +262,6 @@ class BarangMasukController extends Controller
                     'FAI_code' => $request->FAI_code,
                     'FINA_code' => $request->FAI_code,
                     'product_name' => $productName,
-                    'common_name' => $commonName,
                     'aspect' => $barangAspect,
                     'category' => $request->kategori_barang,
                     'unit' => $request->unit,
@@ -378,7 +375,6 @@ class BarangMasukController extends Controller
 
         // Update StockBarang
         $barangAspect = Barang::where('FAI_code', $request->FAI_code)->value('aspect');
-        $commonName = Barang::where('FAI_code', $request->FAI_code)->value('common_name');
         $productName = Barang::where('FAI_code', $request->FAI_code)->value('name');
 
         $stockBarang = StockBarang::where('FAI_code', $request->FAI_code)->first();
@@ -386,7 +382,6 @@ class BarangMasukController extends Controller
         if ($stockBarang) {
             // Update properties
             $stockBarang->product_name = $productName;
-            $stockBarang->common_name = $commonName;
             $stockBarang->aspect = $barangAspect;
             $stockBarang->category = $request->kategori_barang;
             $stockBarang->unit = $request->unit;
@@ -403,7 +398,6 @@ class BarangMasukController extends Controller
                 'FAI_code' => $request->FAI_code,
                 'FINA_code' => $request->FAI_code,
                 'product_name' => $productName,
-                'common_name' => $commonName,
                 'aspect' => $barangAspect,
                 'category' => $request->kategori_barang,
                 'unit' => $request->unit,

@@ -75,5 +75,5 @@
         @endforeach
     </tbody>
 </table>
-
+<a href="/export/production/control" class="btn btn-primary">export excel</a>
 @endsection

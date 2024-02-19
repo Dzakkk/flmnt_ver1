@@ -1,18 +1,18 @@
 @extends('dashboard')
 
 @section('formula')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show">
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <table class="table table-hover">
         <thead>
             <tr>
@@ -146,24 +146,54 @@
                                             <label for="" class="form-label">no_LOT</label>
                                             <input type="text" class="form-control" name="no_LOT">
                                         </div>
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <label for="supplier" class="form-label">customer_name</label>
-                                            <select name="customer_name" id="supplier"  onchange="handleChange(this)" class="form-control select2" required>
+                                            <select name="customer_name" id="nama" onchange="handleChange(this)"
+                                                class="form-control select2" required>
                                                 <option value="">pilih atau buat</option>
                                                 <option value="other">Customer Baru</option>
                                                 @foreach ($cust as $r)
-                                                    <option value="{{ $r->customer_name }}">{{ $r->customer_name }}</option>
+                                                    <option value="{{ $r->customer_name }}">{{ $r->customer_name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-6" id="otherCustomer" style="display: none;">
-                                            <label for="otherCustomerInput" class="form-label">Masukkan nama pelanggan:</label>
-                                            <input type="text" id="otherCustomerInput" class="form-control" name="customer_name">
+                                            <label for="otherCustomerInput" class="form-label">Masukkan nama
+                                                pelanggan:</label>
+                                            <input type="text" id="otherCustomerInput" class="form-control"
+                                                name="customer_name">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">customer_code</label>
-                                            <input type="text" class="form-control" name="customer_code">
+                                            <input type="text" class="form-control"  id="customerCode" name="customer_code">
+                                        </div> --}}
+
+
+                                        <div class="col-md-6">
+                                            <label for="customerCode" class="form-label">Kode Pelanggan</label>
+                                            <select id="customerCode" class="form-control" onchange="handleCustomerCodeChange(this)">
+                                                <option value="">Pilih Kode Pelanggan</option>
+                                                @foreach ($customerCodes as $code)
+                                                    <option value="{{ $code->customer_code }}">{{ $code->customer_code }}</option>
+                                                @endforeach
+                                                <option value="new">Tambah Pelanggan Baru</option>
+                                            </select>
                                         </div>
+                                        
+                                        <div id="customerNameSection" class="col-md-6" style="display: none;">
+                                            <label for="customerName" class="form-label">Nama Pelanggan</label>
+                                            <input type="text" id="customerName" name="customer_name" class="form-control" readonly>
+                                        </div>
+                                        
+                                        <div id="newCustomerSection" class="col-md-6" style="display: none;">
+                                            <label for="newCustomerCode" class="form-label">Kode Pelanggan Baru</label>
+                                            <input type="text" name="customer_code" id="newCustomerCode" class="form-control">
+                                            <label for="newCustomerName" class="form-label">Nama Pelanggan Baru</label>
+                                            <input type="text" name="customer_name" id="newCustomerName" class="form-control">
+                                        </div>
+                                        
+
                                         <div class="col-md-6">
                                             <label for="" class="form-label">PO_customer</label>
                                             <input type="text" class="form-control" name="PO_customer">
@@ -183,7 +213,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              uhuh
+                                uhuh
                             </div>
                         </div>
                     </div>
@@ -192,7 +222,7 @@
         </tbody>
     </table>
 
-    <script>
+    {{-- <script>
         function handleChange(select) {
             var otherCustomerDiv = document.getElementById("otherCustomer");
             var otherCustomerInput = document.getElementById("otherCustomerInput");
@@ -204,6 +234,44 @@
                 otherCustomerInput.required = false;
             }
         }
-    </script>
+    </script> --}}
 
+
+    <script>
+        function handleCustomerCodeChange(select) {
+            var customerNameSection = document.getElementById("customerNameSection");
+            var newCustomerSection = document.getElementById("newCustomerSection");
+            var customerNameInput = document.getElementById("customerName");
+            var newCustomerCodeInput = document.getElementById("newCustomerCode");
+            var newCustomerNameInput = document.getElementById("newCustomerName");
+    
+            if (select.value === "new") {
+                customerNameSection.style.display = "none";
+                newCustomerSection.style.display = "block";
+                customerNameInput.value = "";
+                customerNameInput.removeAttribute("readonly");
+            } else {
+                var selectedCustomerCode = select.value;
+                var customerData = {!! json_encode($customerCodes) !!};
+                var customer = customerData.find(function(item) {
+                    return item.customer_code == selectedCustomerCode;
+                });
+    
+                if (customer) {
+                    customerNameInput.value = customer.customer_name;
+                    customerNameSection.style.display = "block";
+                    newCustomerSection.style.display = "none";
+                    newCustomerCodeInput.value = "";
+                    newCustomerNameInput.value = "";
+                } else {
+                    customerNameSection.style.display = "none";
+                    newCustomerSection.style.display = "none";
+                }
+            }
+        }
+    </script>
+    
+
+
+    
 @endsection

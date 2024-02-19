@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('FAI_code')->primary();
             $table->string('FINA_code');
             $table->string('product_name');
-            $table->string('common_name');
             $table->string('aspect');
             $table->string('category');
             $table->string('unit');

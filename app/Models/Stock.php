@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Stock extends Model
 {
@@ -31,4 +32,14 @@ class Stock extends Model
     {
         return $this->belongsTo(Barang::class, 'FAI_code', 'FAI_code');
     }
+
+    // /**
+    //  * Get all of the production for the Stock
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function production(): BelongsTo
+    // {
+    //     return $this->belongsTo(ProductionControl::class, 'no_production', 'no_production');
+    // }
 }

@@ -311,7 +311,6 @@
         $(document).ready(function() {
             $('#barang').change(function() {
                 var FAI_code = $(this).val();
-                // Send AJAX request to fetch Rak options
                 $.ajax({
                     url: '/getRakOption',
                     type: 'GET',
@@ -319,9 +318,7 @@
                         FAI_code: FAI_code
                     },
                     success: function(response) {
-                        // Clear existing options
                         $('#rak').empty();
-                        // Append new options based on the response
                         $.each(response.options, function(index, option) {
                             $('#rak').append('<option value="' + option.id_rak + '">' +
                                 option.id_rak + '</option>');
@@ -341,17 +338,14 @@
             var customerForm = document.getElementById('customerForm');
 
             modalElement.addEventListener('shown.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditampilkan
             });
 
             modalElement.addEventListener('hidden.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditutup
                 customerForm.reset();
             });
 
             if (modalCloseButton && customerForm) {
                 modalCloseButton.addEventListener('click', function() {
-                    // Mengosongkan nilai formulir
                     customerForm.reset();
                 });
             }

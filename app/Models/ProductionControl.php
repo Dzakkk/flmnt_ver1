@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductionControl extends Model
 {
@@ -20,5 +22,16 @@ class ProductionControl extends Model
     protected $keyType = 'string';
 
     protected $guarded = [];
+
+
+    /**
+     * Get the stockl that owns the ProductionControl
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stockl()
+    {
+        return $this->belongsTo(Stock::class, 'no_production', 'no_production');
+    }
 
 }

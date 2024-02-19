@@ -367,7 +367,7 @@
                         @endforeach
                         <tr>
                             <td colspan="2">TOTAL</td>
-                            <td></td>
+                            <td>{{ $quantity }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -524,25 +524,25 @@
                                 <tbody>
                                     <tr>
                                         <td style="width: 130px">LOCAL CODE</td>
-                                        <td style="width: 140px"></td>
+                                        <td style="width: 140px">{{ $FAI_code }}</td>
                                         <td>OK</td>
                                         <td style="width: 40px">NOT OK</td>
                                     </tr>
                                     <tr>
                                         <td>CUSTOMER CODE</td>
-                                        <td></td>
+                                        <td>{{ $customer_code }}</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>EXPIRE DATE</td>
-                                        <td></td>
+                                        <td>{{ $tanggal_expire }}</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>PRODUCTION DATE</td>
-                                        <td></td>
+                                        <td>{{ $tanggal_produksi }}</td>
                                         <td></td>
                                         <td></td>
                                     </tr>

@@ -11,6 +11,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Livewire\FormulaProduct;
+use App\Models\ProductionControl;
 use App\Models\stockProduct;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -84,7 +85,7 @@ Route::delete('/manufacturer/delete/{id}', [ManufacturerController::class, 'dele
 
 
 Route::get('/barang/export', [BarangController::class, 'export']);
-
+Route::get('export/production/control', [ProductsController::class, 'exportProductionControl']);
 
 // Route::livewire('/product-form', [FormulaProduct::class]);
 Livewire::component('/product-form', [FormulaProduct::class]);
