@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\Customer;
 use App\Models\Gudang;
 use App\Models\ProductFormula;
+use App\Models\ProductionControl;
 use App\Models\Products;
 use App\Models\RakGudang;
 use Illuminate\Http\Request;
@@ -177,5 +178,11 @@ class ProductsController extends Controller
     }
 
         return redirect('product');
+    }
+
+    public function dataProduction()
+    {
+        $prd = ProductionControl::all();
+        return view('production.ProductionData', ['prd' => $prd]);
     }
 }

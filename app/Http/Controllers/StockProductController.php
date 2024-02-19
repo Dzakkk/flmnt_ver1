@@ -16,8 +16,10 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Formula;
+use Spatie\Backtrace\File;
 
 class StockProductController extends Controller
 {
@@ -28,197 +30,6 @@ class StockProductController extends Controller
         $stock = stockProduct::with('stockLot', 'product')->get();
         return view('stock.stockProduct', ['stock' => $stock]);
     }
-
-    // private function stockGudang($request)
-    // {
-    //     $formula = ProductFormula::where('FAI_code', $request->FAI_code)->first();
-
-    //     if ($formula) {
-    //         $FAI_code_barang_array = json_decode($formula->FAI_code_barang, true);
-    //         $persentase_array = json_decode($formula->persentase, true);
-
-    //         if (is_array($FAI_code_barang_array) && is_array($persentase_array)) {
-    //             foreach ($FAI_code_barang_array as $index => $FAI_code_barang) {
-    //                 $requestedWeight = $request->quantity;
-    //                 $percentage = floatval($persentase_array[$index]);
-
-    //                 $hasilPersen = $requestedWeight * ($percentage / 100);
-
-    //                 $available = Stock::where('FAI_code', $FAI_code_barang)->sum('quantity');
-
-    //                 if ($hasilPersen > $available) {
-    //                     return false; // Kembalikan false jika stok tidak mencukupi
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     return true; // Kembalikan true jika stok mencukupi
-    // }
-
-    // public function storeProduction(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'FAI_code' => 'required',
-    //         'product_name' => 'required',
-    //         'id_rak' => 'required',
-    //         'quantity' => 'required',
-    //         'unit' => 'required',
-    //         'tanggal_produksi' => 'required',
-    //         'tanggal_expire' => 'required',
-    //         'no_LOT' => 'required',
-    //         'jumlah_kemasan' => 'required',
-    //         'jenis_kemasan' => 'required',
-    //         'customer_name' => 'required',
-    //         'customer_code' => 'required',
-    //         'no_production' => 'required',
-    //         'no_work_order' => 'required',
-    //         'jumlah_kemasan' => 'required',
-    //         'jenis_kemasan' => 'required',
-    //         'PO_customer' => 'required',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return redirect('formula')
-    //             ->withErrors($validator)
-    //             ->withInput();
-    //     }
-
-    //     if (!$this->stockGudang($request)) {
-    //         return redirect('formula')
-    //             ->with('error', 'Stock tak ada mas');
-    //     }
-
-    //     $production = new Stock([
-    //         'FAI_code' => $request->FAI_code,
-    //         'no_LOT' => $request->no_LOT,
-    //         'quantity' => $request->quantity,
-    //         'unit' => $request->unit,
-    //         'tanggal_produksi' => $request->tanggal_produksi,
-    //         'tanggal_expire' => $request->tanggal_expire,
-    //         'id_rak' => $request->id_rak,
-    //         'jumlah_kemasan' => $request->jumlah_kemasan,
-    //         'jenis_kemasan' => $request->jenis_kemasan,
-    //         'no_production' => $request->no_production,
-    //         'no_work_order' => $request->no_work_order,
-    //     ]);
-
-    //     $rakGudang = RakGudang::where('id_rak', $request->id_rak)->first();
-
-    //     if (!$rakGudang) {
-    //         session()->flash('error', 'Gagal');
-
-    //         return redirect('formula')->with('error', 'Rak Gudang not found for the specified FAI_code.');
-    //     }
-    //     $rakGudang->kapasitas -= $request->quantity;
-
-    //     try {
-    //         $rakGudang->save();
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal');
-    //     }
-
-    //     $kemasan = Packaging::where('nama_kemasan', $request->jenis_kemasan)->first();
-    //     if (!$kemasan) {
-    //         session()->flash('error', 'mau pake apa?');
-    //         return redirect('formula')->with('error', 'Mau diwadahin apaan?');
-    //     }
-
-    //     $kemasan->quantity -= $request->quantity;
-
-    //     try {
-    //         $kemasan->save();
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal');
-    //     }
-
-    //     try {
-    //         $production->save();
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal');
-    //         return redirect('formula')
-    //             ->with('error', 'Failed to save formula: ' . $e->getMessage());
-    //     }
-
-    //     $formula = ProductFormula::where('FAI_code', $request->FAI_code)->first();
-
-    //     if ($formula) {
-    //         $FAI_code_barang_array = json_decode($formula->FAI_code_barang, true);
-    //         $persentase_array = json_decode($formula->persentase, true);
-
-    //         if (is_array($FAI_code_barang_array) && is_array($persentase_array)) {
-    //             foreach ($FAI_code_barang_array as $index => $FAI_code_barang) {
-    //                 $requestedWeight = $request->quantity;
-    //                 $percentage = floatval($persentase_array[$index]);
-
-    //                 $hasilPersen = $requestedWeight * ($percentage / 100);
-
-    //                 $avaible = Stock::where('FAI_code', $FAI_code_barang)->sum('quantity');
-    //             }
-    //         }
-    //     }
-
-    //     if ($hasilPersen > $avaible) {
-    //         return redirect('formula')->with('warning', 'Partial stock issued. Requested quantity exceeds available stock.');
-    //         session()->flash('error', 'Gagal');
-    //     } else {
-    //         try {
-    //             $this->decreaseStock($request);
-    //         } catch (\Exception $e) {
-    //             return redirect('formula')
-    //                 ->with('error', 'Gagal bro');
-    //         }
-    //         session()->flash('success', 'Berhasil');
-    //         return redirect('production/form')->with('success', 'Stock issued successfully.');
-    //     }
-    // }
-
-    // private function decreaseStock($request)
-    // {
-    //     $formula = ProductFormula::where('FAI_code', $request->FAI_code)->first();
-
-    //     if ($formula) {
-    //         $FAI_code_barang_array = json_decode($formula->FAI_code_barang, true);
-    //         $persentase_array = json_decode($formula->persentase, true);
-
-    //         if (is_array($FAI_code_barang_array) && is_array($persentase_array)) {
-    //             foreach ($FAI_code_barang_array as $index => $FAI_code_barang) {
-    //                 $requestedWeight = $request->quantity;
-    //                 $percentage = floatval($persentase_array[$index]);
-
-    //                 $hasilPersen = $requestedWeight * ($percentage / 100);
-
-    //                 $stl = Stock::where('FAI_code', $FAI_code_barang)->value('id_rak');
-    //                 $rakGudang = RakGudang::where('id_rak', $stl)->first();
-
-    //                 if ($rakGudang) {
-    //                     $rakGudang->kapasitas += $hasilPersen;
-    //                     $rakGudang->save();
-    //                 }
-
-    //                 // Kurangi stok lot sesuai persentase
-    //                 $lotStocks = Stock::where('FAI_code', $FAI_code_barang)->get();
-
-    //                 foreach ($lotStocks as $lotStock) {
-    //                     // Periksa apakah stok cukup untuk dikurangi
-    //                     if ($lotStock->quantity >= $hasilPersen) {
-    //                         $lotStock->quantity -= $hasilPersen;
-    //                         $lotStock->save();
-    //                         break; // Keluar dari loop setelah stok dikurangi
-    //                     } else {
-    //                         $hasilPersen -= $lotStock->quantity;
-    //                         $lotStock->quantity = 0;
-    //                         $lotStock->save();
-    //                     }
-    //                 }                    
-    //             }
-    //         }
-    //     }
-    // }
-
-
-
-
 
 
     private function stockGudang($request)
@@ -248,164 +59,6 @@ class StockProductController extends Controller
         return true; // Kembalikan true jika stok mencukupi
     }
 
-    // public function storeProduction(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'FAI_code' => 'required',
-    //         'product_name' => 'required',
-    //         'id_rak' => 'required',
-    //         'quantity' => 'required',
-    //         'unit' => 'required',
-    //         'tanggal_produksi' => 'required',
-    //         'tanggal_expire' => 'required',
-    //         'no_LOT' => 'required',
-    //         'jumlah_kemasan' => 'required',
-    //         'jenis_kemasan' => 'required',
-    //         'customer_name' => 'required',
-    //         'customer_code' => 'required',
-    //         'no_production' => 'required',
-    //         'no_work_order' => 'required',
-    //         'PO_customer' => 'required',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return redirect('formula')
-    //             ->withErrors($validator)
-    //             ->withInput();
-    //     }
-
-    //     // if (!$this->stockGudang($request)) {
-    //     //     return redirect('formula')
-    //     //         ->with('error', 'Stock tak ada mas');
-    //     // }
-
-    //     $production = new Stock([
-    //         'FAI_code' => $request->FAI_code,
-    //         'no_LOT' => $request->no_LOT,
-    //         'quantity' => $request->quantity,
-    //         'unit' => $request->unit,
-    //         'tanggal_produksi' => $request->tanggal_produksi,
-    //         'tanggal_expire' => $request->tanggal_expire,
-    //         'id_rak' => $request->id_rak,
-    //         'jumlah_kemasan' => $request->jumlah_kemasan,
-    //         'jenis_kemasan' => $request->jenis_kemasan,
-    //         'no_production' => $request->no_production,
-    //         'no_work_order' => $request->no_work_order,
-    //     ]);
-
-    //     session(['FAI_code' => $request->input('FAI_code')]);
-    //     session(['product_name' => $request->input('product_name')]);
-    //     session(['no_LOT' => $request->input('no_LOT')]);
-    //     session(['quantity' => $request->input('quantity')]);
-    //     session(['unit' => $request->input('unit')]);
-    //     session(['tanggal_produksi' => $request->input('tanggal_produksi')]);
-    //     session(['tanggal_expire' => $request->input('tanggal_expire')]);
-    //     session(['id_rak' => $request->input('id_rak')]);
-    //     session(['jumlah_kemasan' => $request->input('jumlah_kemasan')]);
-    //     session(['jenis_kemasan' => $request->input('jenis_kemasan')]);
-    //     session(['no_production' => $request->input('no_production')]);
-    //     session(['no_work_order' => $request->input('no_work_order')]);
-    //     session(['customer_name' => $request->input('customer_name')]);
-    //     session(['customer_code' => $request->input('customer_code')]);
-    //     session(['PO_customer' => $request->input('PO_customer')]);
-
-
-
-    //     $rakGudang = RakGudang::where('id_rak', $request->id_rak)->first();
-
-    //     if (!$rakGudang) {
-    //         session()->flash('error', 'Gagal');
-
-    //         return redirect('formula')->with('error', 'Rak Gudang not found for the specified FAI_code.');
-    //     }
-    //     $rakGudang->kapasitas -= $request->quantity;
-
-    //     try {
-    //         $rakGudang->save();
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal');
-    //     }
-
-    //     $cust = CustList::where('customer_name', $request->customer_name && 'customer_code', $request->customer_code)->first();
-    //     $custID = Customer::where('customer_name', $request->customer_name)->value('id_customer');
-
-    //     if ($cust) {
-    //         $cust->update([
-    //             'customer_name' => $request->customer_name,
-    //         ]);
-    //     } elseif (!$cust) {
-    //         $custList = new CustList([
-    //             'customer_name' => $request->customer_name,
-    //             'customer_code' => $request->customer_code,
-    //             'FAI_code' => $request->FAI_code,
-    //             'PO_customer' => $request->PO_customer,
-    //             'id_customer' => $custID,
-    //         ]);
-
-    //         try {
-    //             $custList->save();
-    //         } catch (\Exception $e) {
-    //             return redirect()->back()->with('error');
-    //         }
-    //     } else {
-    //         session()->flash('error', 'Kapasitas Rak tidak mencukupi');
-    //         return redirect('formula');
-    //     }
-
-    //     $kemasan = Packaging::where('nama_kemasan', $request->jenis_kemasan)->first();
-    //     if (!$kemasan) {
-    //         session()->flash('error', 'mau pake apa?');
-    //         return redirect('formula')->with('error', 'Mau diwadahin apaan?');
-    //     }
-
-    //     $kemasan->quantity -= $request->quantity;
-
-    //     try {
-    //         $kemasan->save();
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal');
-    //     }
-
-    //     try {
-    //         $production->save();
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', 'Gagal');
-    //         return redirect('formula')
-    //             ->with('error', 'Failed to save formula: ' . $e->getMessage());
-    //     }
-
-    //     // $formula = ProductFormula::where('FAI_code', $request->FAI_code)->first();
-
-    //     // if ($formula) {
-    //     //     $FAI_code_barang_array = json_decode($formula->FAI_code_barang, true);
-    //     //     $persentase_array = json_decode($formula->persentase, true);
-
-    //     //     if (is_array($FAI_code_barang_array) && is_array($persentase_array)) {
-    //     //         foreach ($FAI_code_barang_array as $index => $FAI_code_barang) {
-    //     //             $requestedWeight = $request->quantity;
-    //     //             $percentage = floatval($persentase_array[$index]);
-
-    //     //             $hasilPersen = $requestedWeight * ($percentage / 100);
-
-    //     //             $avaible = Stock::where('FAI_code', $FAI_code_barang)->sum('quantity');
-    //     //         }
-    //     //     }
-    //     // }
-
-    //     // if ($hasilPersen > $avaible) {
-    //     //     return redirect('formula')->with('warning', 'Partial stock issued. Requested quantity exceeds available stock.');
-    //     //     session()->flash('error', 'Gagal');
-    //     // } else {
-    //     //     try {
-    //     //         $this->decreaseStock($request);
-    //     //     } catch (\Exception $e) {
-    //     //         return redirect('formula')
-    //     //             ->with('error', 'Gagal bro');
-    //     //     }
-    //     session()->flash('success', 'Berhasil');
-    //     return redirect('production/form')->with('success', 'Stock issued successfully.');
-    // }
-
 
     public function storeProduction(Request $request)
     {
@@ -433,6 +86,10 @@ class StockProductController extends Controller
                 ->withInput();
         }
 
+
+
+
+
         session(['FAI_code' => $request->input('FAI_code')]);
         session(['product_name' => $request->input('product_name')]);
         session(['no_LOT' => $request->input('no_LOT')]);
@@ -449,57 +106,7 @@ class StockProductController extends Controller
         session(['customer_code' => $request->input('customer_code')]);
         session(['PO_customer' => $request->input('PO_customer')]);
 
-        // Create a new Stock instance
-        // $production = new Stock([
-        //     'FAI_code' => $request->FAI_code,
-        //     'no_LOT' => $request->no_LOT,
-        //     'quantity' => $request->quantity,
-        //     'unit' => $request->unit,
-        //     'tanggal_produksi' => $request->tanggal_produksi,
-        //     'tanggal_expire' => $request->tanggal_expire,
-        //     'id_rak' => $request->id_rak,
-        //     'jumlah_kemasan' => $request->jumlah_kemasan,
-        //     'jenis_kemasan' => $request->jenis_kemasan,
-        //     'no_production' => $request->no_production,
-        //     'no_work_order' => $request->no_work_order,
-        // ]);
-
-        // try {
-        //     // Save the production data
-        //     $production->save();
-
-        //     // Deduct quantity from the rack
-        //     $rakGudang = RakGudang::where('id_rak', $request->id_rak)->firstOrFail();
-        //     $rakGudang->kapasitas -= $request->quantity;
-        //     $rakGudang->save();
-
-        //     // Check and update customer details
-        //     $cust = CustList::where('customer_name', $request->customer_name)
-        //         ->where('customer_code', $request->customer_code)
-        //         ->first();
-
-        //     if (!$cust) {
-        //         $custList = new CustList([
-        //             'customer_name' => $request->customer_name,
-        //             'customer_code' => $request->customer_code,
-        //             'FAI_code' => $request->FAI_code,
-        //             'PO_customer' => $request->PO_customer,
-        //             'id_customer' => Customer::where('customer_name', $request->customer_name)->value('id_customer'),
-        //         ]);
-        //         $custList->save();
-        //     }
-
-        //     // Update packaging quantity
-        //     $kemasan = Packaging::where('nama_kemasan', $request->jenis_kemasan)->firstOrFail();
-        //     $kemasan->quantity -= $request->quantity;
-        //     $kemasan->save();
-
-        //     session()->flash('success', 'Berhasil');
         return redirect('production/form')->with('success', 'Stock issued successfully.');
-        // } catch (\Exception $e) {
-        //     session()->flash('error', 'Gagal: ' . $e->getMessage());
-        //     return redirect('formula')->with('error', 'Gagal: ' . $e->getMessage());
-        // }
     }
 
     public function productionControl()
@@ -621,8 +228,32 @@ class StockProductController extends Controller
             $rakGudang->kapasitas -= $request->quantity;
             $rakGudang->save();
 
+
+            $newCust = Customer::where('customer_name', $request->customer_name)->first();
+
+            if ($newCust) {
+                $cust = CustList::where('customer_name', $request->customer_name)
+                    ->where('customer_code', $request->customer_code)
+                    ->first();
+
+                if (!$cust) {
+                    $custList = new CustList([
+                        'customer_name' => $request->customer_name,
+                        'customer_code' => $request->customer_code,
+                        'FAI_code' => $request->FAI_code,
+                        'PO_customer' => $request->PO_customer,
+                        'id_customer' => Customer::where('customer_name', $request->customer_name)->value('id_customer'),
+                    ]);
+                    $custList->save();
+                }
+            } else
+                $custNew = new Customer([
+                    'customer_name' => $request->customer_name,
+                ]);
+
+            $custNew->save();
+
             $cust = CustList::where('customer_name', $request->customer_name)
-                ->where('customer_code', $request->customer_code)
                 ->first();
 
             if (!$cust) {
@@ -638,6 +269,7 @@ class StockProductController extends Controller
 
             $production_control = new productionControl([
                 'no_production' => $request->no_production,
+                'FAI_code' => $request->FAI_code,
             ]);
 
             $production_control->save();
@@ -686,13 +318,14 @@ class StockProductController extends Controller
 
     private function pindah()
     {
-       
+
         return view('formula');
     }
 
-    public function dataProductionControl ()
+    public function dataProductionControl()
     {
         $pc = ProductionControl::all();
+
         return view('production.productionControl', ['pc' => $pc]);
     }
 
@@ -707,8 +340,30 @@ class StockProductController extends Controller
 
     public function productionAfter(Request $request, $id)
     {
-        $data = ProductionControl::find($id);
-        $data->update($request->all());
-        return redirect('/formula')->with('DATA WAS UPDATED');
+        $request->validate([
+            'file' => 'nullable|file|max:10240', // Example: Max file size of 10MB
+        ]);
+
+        $data = ProductionControl::findOrFail($id);
+
+        $data->update($request->except('file'));
+        if ($request->hasFile('file')) {
+            if (FacadesFile::exists(public_path($data->file))) {
+                FacadesFile::delete(public_path($data->file));
+            }
+        }
+
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+
+            $file->move(public_path('images'), $fileName);
+
+            $data->file = '/images/' . $fileName;
+
+            $data->save();
+        }
+        return redirect('production/control');
     }
 }

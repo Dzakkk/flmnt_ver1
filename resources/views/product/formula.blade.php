@@ -87,8 +87,16 @@
                                             <input type="text" class="form-control" name="quantity">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="" class="form-label">unit</label>
-                                            <input type="text" class="form-control" name="unit">
+                                            <label class="form-label" for="unit">Unit</label>
+                                            <div class="input-group">
+                                                <select class="form-select" id="golongan_select" name="unit">
+                                                    <option value="">Pilih Kategori</option>
+                                                    <option value="Kg">Kg</option>
+                                                    <option value="Pcs">Pcs</option>
+                                                    <option value="ml">ml</option>
+                                                    <option value="gram">gram</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">jumlah_kemasan</label>
@@ -140,11 +148,17 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="supplier" class="form-label">customer_name</label>
-                                            <select name="customer_name" id="supplier" class="form-control select2" required>
+                                            <select name="customer_name" id="supplier"  onchange="handleChange(this)" class="form-control select2" required>
+                                                <option value="">pilih atau buat</option>
+                                                <option value="other">Customer Baru</option>
                                                 @foreach ($cust as $r)
                                                     <option value="{{ $r->customer_name }}">{{ $r->customer_name }}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-md-6" id="otherCustomer" style="display: none;">
+                                            <label for="otherCustomerInput" class="form-label">Masukkan nama pelanggan:</label>
+                                            <input type="text" id="otherCustomerInput" class="form-control" name="customer_name">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="" class="form-label">customer_code</label>
@@ -177,5 +191,19 @@
             @endforeach
         </tbody>
     </table>
+
+    <script>
+        function handleChange(select) {
+            var otherCustomerDiv = document.getElementById("otherCustomer");
+            var otherCustomerInput = document.getElementById("otherCustomerInput");
+            if (select.value === "other") {
+                otherCustomerDiv.style.display = "block";
+                otherCustomerInput.required = true;
+            } else {
+                otherCustomerDiv.style.display = "none";
+                otherCustomerInput.required = false;
+            }
+        }
+    </script>
 
 @endsection

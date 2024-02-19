@@ -104,5 +104,7 @@ Route::post('production/control/store', [StockProductController::class, 'product
 Route::get('/pdf', [StockProductController::class, 'generatePDF']);
 
 Route::get('production/control', [StockProductController::class, 'dataProductionControl']);
-Route::get('after/production/{id}', [StockProductController::class, 'afterProduction']);
-Route::put('after/production/control/{id}', [StockProductController::class, 'productionAfter']);
+Route::get('after/production/{id}', [StockProductController::class, 'afterProduction'])->where('id', '[\w\/]+');
+Route::put('after/production/control/{id}', [StockProductController::class, 'productionAfter'])->where('id', '[\w\/]+');
+
+Route::get('production/control/data', [ProductsController::class, 'dataProduction']);

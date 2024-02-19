@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('production_controls', function (Blueprint $table) {
             $table->string('no_production')->primary();
+            $table->string('FAI_code');
             $table->enum('cleanless', ['yes', 'no']);
             $table->enum('oddorless', ['yes', 'no']);
             $table->string('preparation_start');

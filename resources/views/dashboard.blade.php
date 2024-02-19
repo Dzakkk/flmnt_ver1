@@ -43,7 +43,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="/" class="logo d-flex align-items-center">
                 {{-- <img src="assets/img/logo.png" alt=""> --}}
                 <span class="d-none d-lg-block">Falmont</span>
             </a>
@@ -134,7 +134,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link" href="/petugas/dashboard">
+                <a class="nav-link" href="#">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -276,6 +276,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/production/control/data">
+                    <i class="ri-archive-drawer-line"></i>
+                    <span>Production Control</span>
+                </a>
+            </li>
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/supplier ">
@@ -359,6 +366,7 @@
             @yield('productionControlBefore')
             @yield('productionControlAfter')
             @yield('formAfterProduction')
+            @yield('dataProduction')
 
 
 

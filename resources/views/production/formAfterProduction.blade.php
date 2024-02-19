@@ -159,7 +159,7 @@
             <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">File</label>
                 <div class="col-sm-10 d-flex">
-                    <input type="file" class="form-control me-1" name="packaging_time_start" id="inputEmail3"
+                    <input type="file" class="form-control me-1" name="file" id="inputEmail3"
                         placeholder="Image Production Control">
                 </div>
             </div>

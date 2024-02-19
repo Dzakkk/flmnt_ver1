@@ -9,6 +9,7 @@
 
     <label for="inputType">Pilih Tipe Form:</label>
     <select id="inputType">
+        <option value="">Pilih Form</option>
         <option value="a">Barang</option>
         <option value="b">Kemasan</option>
     </select>
