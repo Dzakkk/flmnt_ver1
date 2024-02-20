@@ -259,6 +259,25 @@
                     </li>
                 </ul>
 
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
+                        href="#">
+                        <i class="bx bxs-flask"></i><span>Production Control</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="production-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    
+                        <li>
+                            <a href="/production/control/data">
+                                <i class="bi bi-circle"></i><span>Data Produksi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/production/control">
+                                <i class="bi bi-circle"></i><span>Form Control</span>
+                            </a>
+                        </li>
+                    </ul>
+
 
             <li class="nav-heading">Pages</li>
 
@@ -269,7 +288,7 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="/production/control">
                     <i class="ri-archive-drawer-line"></i>
                     <span>Production Control</span>
@@ -281,7 +300,7 @@
                     <i class="ri-archive-drawer-line"></i>
                     <span>Production Control</span>
                 </a>
-            </li>
+            </li> --}}
 
 
             <li class="nav-item">

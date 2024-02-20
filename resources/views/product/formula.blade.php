@@ -146,33 +146,9 @@
                                             <label for="" class="form-label">no_LOT</label>
                                             <input type="text" class="form-control" name="no_LOT">
                                         </div>
-                                        {{-- <div class="col-md-6">
-                                            <label for="supplier" class="form-label">customer_name</label>
-                                            <select name="customer_name" id="nama" onchange="handleChange(this)"
-                                                class="form-control select2" required>
-                                                <option value="">pilih atau buat</option>
-                                                <option value="other">Customer Baru</option>
-                                                @foreach ($cust as $r)
-                                                    <option value="{{ $r->customer_name }}">{{ $r->customer_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6" id="otherCustomer" style="display: none;">
-                                            <label for="otherCustomerInput" class="form-label">Masukkan nama
-                                                pelanggan:</label>
-                                            <input type="text" id="otherCustomerInput" class="form-control"
-                                                name="customer_name">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="" class="form-label">customer_code</label>
-                                            <input type="text" class="form-control"  id="customerCode" name="customer_code">
-                                        </div> --}}
-
-
                                         <div class="col-md-6">
                                             <label for="customerCode" class="form-label">Kode Pelanggan</label>
-                                            <select id="customerCode" class="form-control" onchange="handleCustomerCodeChange(this)">
+                                            <select id="customerCode-{{ $i->FAI_code }}" class="form-control customer-code-select" name="customer_code">
                                                 <option value="">Pilih Kode Pelanggan</option>
                                                 @foreach ($customerCodes as $code)
                                                     <option value="{{ $code->customer_code }}">{{ $code->customer_code }}</option>
@@ -181,17 +157,18 @@
                                             </select>
                                         </div>
                                         
-                                        <div id="customerNameSection" class="col-md-6" style="display: none;">
+                                        <div id="customerNameSection-{{ $i->FAI_code }}" class="col-md-6" style="display: none;">
                                             <label for="customerName" class="form-label">Nama Pelanggan</label>
-                                            <input type="text" id="customerName" name="customer_name" class="form-control" readonly>
+                                            <input type="text" id="customerName-{{ $i->FAI_code }}" name="customer_name" class="form-control">
                                         </div>
                                         
-                                        <div id="newCustomerSection" class="col-md-6" style="display: none;">
+                                        <div id="newCustomerSection-{{ $i->FAI_code }}" class="col-md-6" style="display: none;">
                                             <label for="newCustomerCode" class="form-label">Kode Pelanggan Baru</label>
-                                            <input type="text" name="customer_code" id="newCustomerCode" class="form-control">
+                                            <input type="text" name="customer_code" id="newCustomerCode-{{ $i->FAI_code }}" class="form-control">
                                             <label for="newCustomerName" class="form-label">Nama Pelanggan Baru</label>
-                                            <input type="text" name="customer_name" id="newCustomerName" class="form-control">
+                                            <input type="text" name="customer_name" id="newCustomerName-{{ $i->FAI_code }}" class="form-control">
                                         </div>
+                                        
                                         
 
                                         <div class="col-md-6">
@@ -218,60 +195,48 @@
                         </div>
                     </div>
                 </div>
+                
+                
             @endforeach
         </tbody>
     </table>
 
-    {{-- <script>
-        function handleChange(select) {
-            var otherCustomerDiv = document.getElementById("otherCustomer");
-            var otherCustomerInput = document.getElementById("otherCustomerInput");
-            if (select.value === "other") {
-                otherCustomerDiv.style.display = "block";
-                otherCustomerInput.required = true;
-            } else {
-                otherCustomerDiv.style.display = "none";
-                otherCustomerInput.required = false;
-            }
-        }
-    </script> --}}
-
-
     <script>
-        function handleCustomerCodeChange(select) {
-            var customerNameSection = document.getElementById("customerNameSection");
-            var newCustomerSection = document.getElementById("newCustomerSection");
-            var customerNameInput = document.getElementById("customerName");
-            var newCustomerCodeInput = document.getElementById("newCustomerCode");
-            var newCustomerNameInput = document.getElementById("newCustomerName");
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.customer-code-select').forEach(function (select) {
+                select.addEventListener('change', function () {
+                    var customerNameSection = document.getElementById("customerNameSection-" + select.id.split("-")[1]);
+                    var newCustomerSection = document.getElementById("newCustomerSection-" + select.id.split("-")[1]);
+                    var customerNameInput = document.getElementById("customerName-" + select.id.split("-")[1]);
+                    var newCustomerCodeInput = document.getElementById("newCustomerCode-" + select.id.split("-")[1]);
+                    var newCustomerNameInput = document.getElementById("newCustomerName-" + select.id.split("-")[1]);
     
-            if (select.value === "new") {
-                customerNameSection.style.display = "none";
-                newCustomerSection.style.display = "block";
-                customerNameInput.value = "";
-                customerNameInput.removeAttribute("readonly");
-            } else {
-                var selectedCustomerCode = select.value;
-                var customerData = {!! json_encode($customerCodes) !!};
-                var customer = customerData.find(function(item) {
-                    return item.customer_code == selectedCustomerCode;
+                    if (select.value === "new") {
+                        customerNameSection.style.display = "none";
+                        newCustomerSection.style.display = "block";
+                        customerNameInput.value = "";
+                        customerNameInput.removeAttribute("readonly");
+                    } else {
+                        var selectedCustomerCode = select.value;
+                        var customerData = {!! json_encode($customerCodes) !!};
+                        var customer = customerData.find(function (item) {
+                            return item.customer_code == selectedCustomerCode;
+                        });
+    
+                        if (customer) {
+                            customerNameInput.value = customer.customer_name;
+                            customerNameSection.style.display = "block";
+                            newCustomerSection.style.display = "none";
+                            newCustomerCodeInput.value = selectedCustomerCode;
+                            newCustomerNameInput.value = customer.customer_name;
+                        } else {
+                            customerNameSection.style.display = "none";
+                            newCustomerSection.style.display = "none";
+                        }
+                    }
                 });
-    
-                if (customer) {
-                    customerNameInput.value = customer.customer_name;
-                    customerNameSection.style.display = "block";
-                    newCustomerSection.style.display = "none";
-                    newCustomerCodeInput.value = "";
-                    newCustomerNameInput.value = "";
-                } else {
-                    customerNameSection.style.display = "none";
-                    newCustomerSection.style.display = "none";
-                }
-            }
-        }
+            });
+        });
     </script>
-    
-
-
     
 @endsection

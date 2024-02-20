@@ -56,7 +56,7 @@ class StockProductController extends Controller
             }
         }
 
-        return true; // Kembalikan true jika stok mencukupi
+        return true;
     }
 
 
@@ -79,13 +79,11 @@ class StockProductController extends Controller
             'no_work_order' => 'required',
             'PO_customer' => 'required',
         ]);
-
         if ($validator->fails()) {
             return redirect('formula')
                 ->withErrors($validator)
                 ->withInput();
         }
-
 
 
 
@@ -357,7 +355,7 @@ class StockProductController extends Controller
     public function productionAfter(Request $request, $id)
     {
         $request->validate([
-            'file' => 'nullable|file|max:10240', // Example: Max file size of 10MB
+            'file' => 'nullable|file|max:10240',
         ]);
 
         $data = ProductionControl::findOrFail($id);

@@ -109,3 +109,9 @@ Route::get('after/production/{id}', [StockProductController::class, 'afterProduc
 Route::put('after/production/control/{id}', [StockProductController::class, 'productionAfter'])->where('id', '[\w\/]+');
 
 Route::get('production/control/data', [ProductsController::class, 'dataProduction']);
+
+
+
+Route::get('test', function () {
+    return view('form.layoutExcel.productionControlLayout');
+});

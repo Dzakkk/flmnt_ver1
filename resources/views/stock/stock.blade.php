@@ -11,6 +11,7 @@
                 <th scope="col">Category</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Unit</th>
+                <th scope="col">penggunaan</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,16 @@
                     <td>{{ $item->category }}</td>
                     <td>{{ $totalQuantity }}</td>
                     <td>{{ $item->unit }}</td>
+                    <td>
+                        @php
+                            $monthlyUsage = $usageQuantity->where('FAI_code', $item->FAI_code)->first();
+                        @endphp
+                        @if($monthlyUsage)
+                            {{ $monthlyUsage->total_usage }}
+                        @else
+                            0
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
