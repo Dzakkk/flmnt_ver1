@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RekapExport;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Packaging;
 use App\Models\Stock;
 use App\Models\StockBarang;
+use App\Models\UsageData;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Events\TransactionBeginning;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockController extends Controller
 {
@@ -23,16 +27,40 @@ class StockController extends Controller
     {
         $stock = StockBarang::with('stockLots', 'barang')->get();
 
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+        $startDate = Carbon::today()->subWeek()->startOfMonth();
+        $endDate = Carbon::today()->subWeek()->endOfMonth();
 
-        $usageQuantity = Stock::whereBetween('created_at', [$startDate, $endDate])
-                    ->groupBy('FAI_code')
-                    ->selectRaw('FAI_code, SUM(quantity) as total_usage')
-                    ->get();
+        $usageQuantities = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
+            ->groupBy('FAI_code')
+            ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
+            ->get();
 
-        return view('stock.stock', compact('stock', 'usageQuantity'));
+        return view('stock.stock', compact('stock', 'usageQuantities'));
     }
+
+    public function rekap()
+{
+    $usages = UsageData::orderBy('tanggal_penggunaan')->get();
+
+    $monthlyUsages = [];
+
+    foreach ($usages as $usage) {
+        $month = Carbon::parse($usage->tanggal_penggunaan)->format('F');
+
+        if (!isset($monthlyUsages[$month])) {
+            $monthlyUsages[$month] = [];
+        }
+
+        if (!isset($monthlyUsages[$month][$usage->FAI_code])) {
+            $monthlyUsages[$month][$usage->FAI_code] = 0;
+        }
+
+        $monthlyUsages[$month][$usage->FAI_code] += $usage->pemakaian;
+    }
+    return view('barang.rekapPenggunaan', compact('monthlyUsages'));
+}
+
+
 
     public function packaging()
     {
@@ -64,4 +92,9 @@ class StockController extends Controller
     {
         return view('form.formPDF');
     }
+
+    public function exportDataPerMonth($month)
+{
+    return Excel::download(new RekapExport($month), 'rekap_penggunaan_' . $month . '.xlsx');
+}
 }

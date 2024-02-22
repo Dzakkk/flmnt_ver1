@@ -12,8 +12,10 @@ use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\stockProduct;
+use App\Models\UsageData;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File as FacadesFile;
@@ -293,8 +295,8 @@ class StockProductController extends Controller
             $kemasan->save();
 
             foreach ($dataArray as $index => $FAI_code_barang) {
-                $percentage = floatval($persentase_array[$index]);
-                $hasilPersen = $request->quantity * ($percentage / 100);
+                $hasilPersen = floatval($persentase_array[$index]);
+                // $hasilPersen = $request->quantity * ($percentage / 100);
 
                 $stl = Stock::where('FAI_code', $FAI_code_barang)->value('id_rak');
                 $rakGudang = RakGudang::where('id_rak', $stl)->first();
@@ -303,6 +305,15 @@ class StockProductController extends Controller
                     $rakGudang->kapasitas += $hasilPersen;
                     $rakGudang->save();
                 }
+
+                $usage = new UsageData([
+                    'pemakaian' => $hasilPersen,
+                    'FAI_code' => $FAI_code_barang,
+                    'tanggal_penggunaan' => $request->tanggal_produksi,
+                ]);
+                
+                 $usage->save();
+
 
                 $lotStocks = Stock::where('FAI_code', $FAI_code_barang)->get();
 

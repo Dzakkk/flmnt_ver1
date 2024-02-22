@@ -16,9 +16,6 @@ return new class extends Migration
             $table->string('FINA_code');
             $table->string('kategori_barang');
             $table->string('aspect');
-            $table->string('initial_code');
-            $table->string('number_code');
-            $table->string('alokasi_penyimpanan');
             $table->float('reOrder_qty', 8, 2);
             $table->string('unit');
             $table->string('supplier');

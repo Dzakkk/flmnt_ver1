@@ -34,9 +34,9 @@ class BarangController extends Controller
             'FINA_code' => 'required',
             'kategori_barang' => 'required',
             'aspect' => 'required',
-            'initial_code' => 'required',
-            'number_code' => 'required',
-            'alokasi_penyimpanan' => 'required',
+            // 'initial_code' => 'required',
+            // 'number_code' => 'required',
+            // 'alokasi_penyimpanan' => 'required',
             'reOrder_qty' => 'required',
             'unit' => 'required',
             'supplier' => 'required',
@@ -77,9 +77,9 @@ class BarangController extends Controller
             'FINA_code' => $request->FINA_code,
             'kategori_barang' => $request->kategori_barang,
             'aspect' => $request->aspect,
-            'initial_code' => $request->initial_code,
-            'number_code' => $request->number_code,
-            'alokasi_penyimpanan' => $request->alokasi_penyimpanan,
+            // 'initial_code' => $request->initial_code,
+            // 'number_code' => $request->number_code,
+            // 'alokasi_penyimpanan' => $request->alokasi_penyimpanan,
             'reOrder_qty' => $request->reOrder_qty,
             'unit' => $request->unit,
             'supplier' => $request->supplier,
@@ -109,6 +109,18 @@ class BarangController extends Controller
             'refractive_index_d25' => $request->refractive_index_d25,
             'berat_gram' => $request->berat_gram,
         ]);
+
+        $supp = new Supplier([
+            'supplier_name' => $request->supplier,
+        ]);
+        $supp->save();
+
+        $ex = new Manufacturer([
+            'manufacturer_name' => $request->ex_origin,
+        ]);
+
+        $ex->save();
+
         session()->flash('success', 'Data telah Ditambahkan');
         return redirect('/barang')->with('success', 'Barang berhasil ditambahkan');
     }
@@ -120,7 +132,7 @@ class BarangController extends Controller
             'FINA_code' => 'required',
             'kategori_barang' => 'required',
             'aspect' => 'required',
-            'alokasi_penyimpanan' => 'required',
+            // 'alokasi_penyimpanan' => 'required',
             'reOrder_qty' => 'required',
             'unit' => 'required',
             'supplier' => 'required',
@@ -165,7 +177,7 @@ class BarangController extends Controller
             'FINA_code' => $request->FINA_code,
             'kategori_barang' => $request->kategori_barang,
             'aspect' => $request->aspect,
-            'alokasi_penyimpanan' => $request->alokasi_penyimpanan,
+            // 'alokasi_penyimpanan' => $request->alokasi_penyimpanan,
             'reOrder_qty' => $request->reOrder_qty,
             'unit' => $request->unit,
             'supplier' => $request->supplier,

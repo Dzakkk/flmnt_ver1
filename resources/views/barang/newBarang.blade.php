@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('newBarang')
-    <style>
+    {{-- <style>
         .hidden {
             display: none
         }
@@ -12,7 +12,7 @@
         <option value="">Pilih Form</option>
         <option value="a">Barang</option>
         <option value="b">Kemasan</option>
-    </select>
+    </select> --}}
 
     <div class="hidden" id="formA">
         <div class="container shadow pt-2 mt-2" style="width: 800px">
@@ -49,7 +49,7 @@
                     <label class="form-label" for="aspect">aspect</label>
                     <div class="input-group">
 
-                        <select class="form-select" id="golongan_select" name="aspect">
+                        <select class="form-select" id="aspect" name="aspect">
                             <option value="">Pilih Kategori</option>
                             <option value="LIQUID">LIQUID</option>
                             <option value="POWDER">POWDER</option>
@@ -57,26 +57,6 @@
                             <option value="FLEXIBLE">FLEXIBLE</option>
                         </select>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="TMT">initial_code</label>
-                    <div class="input-group">
-                        <select class="form-select" id="golongan_select" name="initial_code">
-                            <option value="">Pilih Kategori</option>
-                            <option value="BFC">BFC</option>
-                            <option value="MKC">MKC</option>
-                            <option value="PIC">PIC</option>
-                            <option value="RMC">RMC</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="number_code" class="form-label">number_code</label>
-                    <input type="text" name="number_code" id="number_code" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="alokasi_penyimpanan">alokasi_penyimpanan</label>
-                    <input type="text" name="alokasi_penyimpanan" class="form-control" id="alokasi_penyimpanan">
                 </div>
                 <div class="col-md-6">
                     <label for="reOrder_qty" class="form-label">reOrder_qty</label>
@@ -95,14 +75,21 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="supplier" class="form-label">supplier</label>
+                    <label for="supplier" class="form-label">Supplier</label>
                     <select name="supplier" id="supplier" class="form-control select2" required>
                         <option value="" disabled selected>Select Supplier</option>
                         @foreach ($supp as $c)
                             <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
                         @endforeach
+                        <option value="new">Tambah Supplier</option>
                     </select>
                 </div>
+
+                <div id="supplierNameSection" class="col-md-6" style="display: none;">
+                    <label for="supplierName" class="form-label">Nama Supplier</label>
+                    <input type="text" id="supplierName" name="supplier" class="form-control">
+                </div>
+
                 <div class="col-md-6">
                     <label class="form-label" for="unit">Jenis Kemasan</label>
                     <div class="input-group">
@@ -176,14 +163,21 @@
                     <input type="text" name="CAS_number" class="form-control" id="CAS_number">
                 </div>
                 <div class="col-md-6">
-                    <label for="ex_origin" class="form-label">ex_origin</label>
-                    <select name="ex_origin" id="ex_origin" class="form-control select2" required>
-                        <option value="" disabled selected>Select ex_origin</option>
+                    <label for="manufacturer" class="form-label">Manufacturer</label>
+                    <select name="manufacturer" id="manufacturer" class="form-control select2" required>
+                        <option value="" disabled selected>Select Manufacturer</option>
                         @foreach ($ex as $c)
                             <option value="{{ $c->manufacturer_name }}">{{ $c->manufacturer_name }}</option>
                         @endforeach
+                        <option value="new">Add New Manufacturer</option>
                     </select>
                 </div>
+
+                <div id="manufacturerNameSection" class="col-md-6" style="display: none;">
+                    <label for="manufacturerName" class="form-label">Manufacturer Name</label>
+                    <input type="text" id="manufacturerName" name="manufacturer_name" class="form-control">
+                </div>
+
                 <div class="col-md-6">
                     <label class="form-label" for="initial_ex">initial_ex</label>
                     <input type="text" name="initial_ex" class="form-control" id="initial_ex">
@@ -221,27 +215,27 @@
                     <label for="color_rangeColor" class="form-label">color_rangeColor</label>
                     <input type="text" name="color_rangeColor" id="color_rangeColor" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="odour">
                     <label class="form-label" for="odour_taste">odour_taste</label>
                     <input type="text" name="odour_taste" class="form-control" id="odour_taste">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="material">
                     <label for="material" class="form-label">material</label>
                     <input type="text" name="material" id="material" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="gra20">
                     <label class="form-label" for="spesific_gravity_d20">spesific_gravity_d20</label>
                     <input type="text" name="spesific_gravity_d20" class="form-control" id="spesific_gravity_d20">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="gra25">
                     <label class="form-label" for="spesific_gravity_d25">spesific_gravity_d25</label>
                     <input type="text" name="spesific_gravity_d25" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="ind20">
                     <label for="refractive_index_d20" class="form-label">refractive_index_d20</label>
                     <input type="text" name="refractive_index_d20" id="refractive_index_d20" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="ind25">
                     <label class="form-label" for="refractive_index_d25">refractive_index_d25</label>
                     <input type="text" name="refractive_index_d25" class="form-control" id="refractive_index_d25">
                 </div>
@@ -249,118 +243,43 @@
                     <label for="berat_gram" class="form-label">berat_gram</label>
                     <input type="number" name="berat_gram" id="berat_gram" class="form-control">
                 </div>
-                {{-- <div class="col-md-6">
-                <label for="golongan" class="form-label">golongan :</label>
-                <div class="input-group">
-                    <select class="form-select" id="golongan_select" name="golongan">
-                        <option value="">Pilih golongan</option>
-                        <option value="I">I</option>
-                        <option value="II">II</option>
-                        <option value="III">III</option>
-                        <option value="IV">IV</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label for="tingkat" class="form-label">Tingkat :</label>
-                <div class="input-group">
-                    <select class="form-select" id="tingkat_select" name="tingkat">
-                        <option value="">Pilih tingkat</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                    </select>
-                </div>
-            </div> --}}
                 <div class="col-12 pb-4">
                     <button type="submit" class="btn btn-primary">Tambah Data</button>
                 </div>
             </form>
         </div>
     </div>
-    <div class="hidden" id="formB">
-        <div class="container shadow pt-2 mt-2" style="width: 800px">
-            <form class="row g-3 d-flex" action="/package/masuk/" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="col-md-12">
-                    <h5 for="nama_pendidikan" class="form-h5">Daftar Packaging</h5>
-                </div>
-                <div class="col-md-6">
-                    <label for="inpnip" class="form-label">FAI_code</label>
-                    <input type="text" name="FAI_code" class="form-control" id="inpFAI_code">
-                </div>
-                <div class="col-md-6">
-                    <label for="supplier" class="form-label">supplier</label>
-                    <select name="supplier" id="supplier" class="form-control select2" required>
-                        <option value="" disabled selected>Select Supplier</option>
-                        @foreach ($supp as $c)
-                            <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="unit">Jenis Kemasan</label>
-                    <div class="input-group">
-                        <select class="form-select" id="golongan_select" name="nama_kemasan">
-                            <option value="">Pilih Kemasan</option>
-                            <option value="Alumunium Bottle">Alumunium Bottle</option>
-                            <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
-                            <option value="Bag">Bag</option>
-                            <option value="Box with Alumunium Bottle">Box with Alumunium Bottle</option>
-                            <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch Pack
-                            </option>
-                            <option value="Carton">Carton</option>
-                            <option value="Fiber Box">Fiber Box</option>
-                            <option value="Fiber Drum">Fiber Drum</option>
-                            <option value="Glass Bottle">Glass Bottle</option>
-                            <option value="Jerry Can">Jerry Can</option>
-                            <option value="Metal Can">Metal Can</option>
-                            <option value="Metal Drum">Metal Drum</option>
-                            <option value="Plastic Bottle">Plastic Bottle</option>
-                            <option value="Plastic Container with Polyethylene Inner Bag">Plastic Container
-                                with Polyethylene Inner Bag</option>
-                            <option value="Plastic Drum">Plastic Drum</option>
-                            <option value="Plastic Jar">Plastic Jar</option>
-                            <option value="Sacks">Sacks</option>
-                            <option value="Goody Bag">Goody Bag</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="quantity" class="form-label">quantity</label>
-                    <input type="text" name="quantity" id="quantity" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="id_rak" class="form-label">id_rak</label>
-                    <input type="text" name="id_rak" id="id_rak" class="form-control">
-                </div>
-                <div class="col-12 pb-4">
-                    <button type="submit" class="btn btn-primary">Tambah Data</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <script>
-        // Ambil elemen-elemen formulir dan pilihan input
-        const inputType = document.getElementById('inputType');
-        const formA = document.getElementById('formA');
-        const formB = document.getElementById('formB');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.select2').forEach(function(select) {
+                select.addEventListener('change', function() {
+                    if (select.id === "supplier") {
+                        var supplierNameSection = document.getElementById("supplierNameSection");
 
-        // Tambahkan event listener untuk mendeteksi perubahan pilihan
-        inputType.addEventListener('change', function() {
-            // Semua formulir disembunyikan terlebih dahulu
-            formA.classList.add('hidden');
-            formB.classList.add('hidden');
+                        if (select.value === "new") {
+                            supplierNameSection.style.display = "block";
+                        } else {
+                            supplierNameSection.style.display = "none";
+                        }
+                    }
 
-            // Tampilkan formulir yang sesuai dengan pilihan
-            if (inputType.value === 'a') {
-                formA.classList.remove('hidden');
-            } else if (inputType.value === 'b') {
-                formB.classList.remove('hidden');
-            }
+                    if (select.id === "manufacturer") {
+                        var manufacturerNameSection = document.getElementById(
+                            "manufacturerNameSection");
+
+                        if (select.value === "new") {
+                            manufacturerNameSection.style.display = "block";
+                        } else {
+                            manufacturerNameSection.style.display = "none";
+                        }
+                    }
+                });
+            });
         });
+
+        document.getElementById('aspect').addEventListener('change', function () {
+            var selectedGolongan = this.value;
+            var 
+        })
     </script>
 @endsection

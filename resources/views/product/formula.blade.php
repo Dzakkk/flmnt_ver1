@@ -163,13 +163,11 @@
                                         </div>
                                         
                                         <div id="newCustomerSection-{{ $i->FAI_code }}" class="col-md-6" style="display: none;">
-                                            <label for="newCustomerCode" class="form-label">Kode Pelanggan Baru</label>
+                                            <label for="newCustomerCode" class="form-label">Customer Item Code</label>
                                             <input type="text" name="customer_code" id="newCustomerCode-{{ $i->FAI_code }}" class="form-control">
-                                            <label for="newCustomerName" class="form-label">Nama Pelanggan Baru</label>
+                                            <label for="newCustomerName" class="form-label">Customer Name</label>
                                             <input type="text" name="customer_name" id="newCustomerName-{{ $i->FAI_code }}" class="form-control">
                                         </div>
-                                        
-                                        
 
                                         <div class="col-md-6">
                                             <label for="" class="form-label">PO_customer</label>

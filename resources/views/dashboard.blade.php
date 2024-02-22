@@ -342,9 +342,9 @@
             </li><!-- End Register Page Nav --> --}}
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/histori">
+                <a class="nav-link collapsed" href="/rekap">
                     <i class="bi bi-archive"></i>
-                    <span>History</span>
+                    <span>Rekap Penggunaan Barang</span>
                 </a>
             </li><!-- End Login Page Nav -->
         </ul>
@@ -386,6 +386,7 @@
             @yield('productionControlAfter')
             @yield('formAfterProduction')
             @yield('dataProduction')
+            @yield('rekap_barang')
 
 
 

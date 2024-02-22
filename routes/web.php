@@ -110,7 +110,8 @@ Route::put('after/production/control/{id}', [StockProductController::class, 'pro
 
 Route::get('production/control/data', [ProductsController::class, 'dataProduction']);
 
-
+Route::get('rekap', [StockController::class, 'rekap']);
+Route::get('export/usage/{month}', [StockController::class, 'exportDataPerMonth']);
 
 Route::get('test', function () {
     return view('form.layoutExcel.productionControlLayout');
