@@ -7,6 +7,7 @@ use App\Models\Barang;
 use App\Models\CustList;
 use App\Models\Customer;
 use App\Models\Gudang;
+use App\Models\Packaging;
 use App\Models\ProductFormula;
 use App\Models\ProductionControl;
 use App\Models\Products;
@@ -29,7 +30,8 @@ class ProductsController extends Controller
         $rak = RakGudang::all();
         $cust = Customer::all();
         $custList = CustList::all();
-        return view('product.formula', ['frm' => $frm, 'rak' => $rak, 'cust' => $cust, 'customerCodes' => $custList]);
+        $kemasan = Packaging::all();
+        return view('product.formula', ['frm' => $frm, 'rak' => $rak, 'cust' => $cust, 'customerCodes' => $custList, 'kemasan' => $kemasan]);
     }
 
     public function updateProductForm($id)

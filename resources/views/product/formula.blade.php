@@ -98,17 +98,19 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <label for="" class="form-label">jumlah_kemasan</label>
                                             <input type="number" class="form-control" name="jumlah_kemasan">
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-6">
                                             <label class="form-label" for="unit">Jenis Kemasan</label>
                                             <div class="input-group">
                                                 <select class="form-select" id="golongan_select" name="jenis_kemasan">
-                                                    <option value="{{ $i->jenis_kemasan }}">{{ $i->jenis_kemasan }}
-                                                    </option>
-                                                    <option value="Alumunium Bottle">Alumunium Bottle</option>
+                                                    
+                                                    @foreach ($kemasan as $i)
+                                                        <option value="{{ $i->FAI_code }}">{{ $i->nama_kemasan }} - {{ $i->capacity }} Stock&nbsp;{{ $i->quantity }}</option>
+                                                    @endforeach
+                                                    {{-- <option value="Alumunium Bottle">Alumunium Bottle</option>
                                                     <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
                                                     <option value="Bag">Bag</option>
                                                     <option value="Box with Alumunium Bottle">Box with Alumunium Bottle
@@ -130,7 +132,7 @@
                                                     <option value="Plastic Drum">Plastic Drum</option>
                                                     <option value="Plastic Jar">Plastic Jar</option>
                                                     <option value="Sacks">Sacks</option>
-                                                    <option value="Goody Bag">Goody Bag</option>
+                                                    <option value="Goody Bag">Goody Bag</option> --}}
                                                 </select>
                                             </div>
                                         </div>

@@ -20,9 +20,6 @@
             <th scope="col">Rekap 
                 {{ $currentYear }}
             </th>
-            <th>
-                
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -38,14 +35,13 @@
                                     @foreach ($usages as $FAI_code => $pemakaian)
                                     <li>Local Code {{ $FAI_code }} - Usage {{ $pemakaian }} Kg</li>
                                 @endforeach
+                                <a href="/export/usage/{{ $month }}" class="btn btn-sm btn-success">Export Data {{ $month }}</a>
+
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </td>
-                <td>
-                    <a href="/export/usage/{{ $month }}" class="btn btn-sm btn-success">Export Data {{ $month }}</a>
-                </td>
+                </td>  
             </tr>
         @endforeach
     </tbody>

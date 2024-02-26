@@ -19,6 +19,9 @@
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Masuk
     </button>
+    <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+        Kemasan Masuk
+    </button>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -94,7 +97,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Barang Masuk</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -481,6 +484,92 @@
         </div>
     </div>
 
+
+
+
+
+
+
+    <div class="modal fade modal-dialog-scrollable" id="staticBackdrop2" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Packaging</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container shadow pt-2 mt-2">
+                        <form action="/kemasan/masuk" method="POST" enctype="multipart/form-data" id="customerForm"
+                            class="resettable-form">
+                            @csrf
+                           
+                            <div class="col-md-6">
+                                <label class="form-label" for="unit">Jenis Kemasan</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="golongan_select" name="packaging_type">
+                                        <option value="">Nama Kemasan</option>
+                                        <option value="Alumunium Bottle">Alumunium Bottle</option>
+                                        <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
+                                        <option value="Bag">Bag</option>
+                                        <option value="Box with Alumunium Bottle">Box with Alumunium Bottle
+                                        </option>
+                                        <option value="Box with Alumunium Pouch Pack">Box with Alumunium
+                                            Pouch
+                                            Pack
+                                        </option>
+                                        <option value="Carton">Carton</option>
+                                        <option value="Fiber Box">Fiber Box</option>
+                                        <option value="Fiber Drum">Fiber Drum</option>
+                                        <option value="Glass Bottle">Glass Bottle</option>
+                                        <option value="Jerry Can">Jerry Can</option>
+                                        <option value="Metal Can">Metal Can</option>
+                                        <option value="Metal Drum">Metal Drum</option>
+                                        <option value="Plastic Bottle">Plastic Bottle</option>
+                                        <option value="Plastic Container with Polyethylene Inner Bag">
+                                            Plastic
+                                            Container
+                                            with Polyethylene Inner Bag</option>
+                                        <option value="Plastic Drum">Plastic Drum</option>
+                                        <option value="Plastic Jar">Plastic Jar</option>
+                                        <option value="Sacks">Sacks</option>
+                                        <option value="Goody Bag">Goody Bag</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Capacity Packaging</label>
+                                <input type="text" name="capacity" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="supplier" class="form-label">supplier</label>
+                                <select name="id_supplier" id="supplier" class="form-control select2" required>
+                                    <option value="" disabled selected>Select Supplier</option>
+                                    @foreach ($supp as $c)
+                                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Quantity</label>
+                                <input type="text" name="quantity" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Penyimpanan</label>
+                                <input type="text" name="id_rak" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            <button type="submit" class="btn btn-primary m-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

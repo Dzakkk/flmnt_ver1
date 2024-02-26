@@ -73,7 +73,7 @@ class StockProductController extends Controller
             'tanggal_produksi' => 'required',
             'tanggal_expire' => 'required',
             'no_LOT' => 'required',
-            'jumlah_kemasan' => 'required',
+            // 'jumlah_kemasan' => 'required',
             'jenis_kemasan' => 'required',
             'customer_name' => 'required',
             'customer_code' => 'required',
@@ -88,6 +88,10 @@ class StockProductController extends Controller
         }
 
 
+        $kms = Packaging::where('FAI_code', $request->jenis_kemasan)->value('nama_kemasan');
+        $cpc = Packaging::where('FAI_code', $request->jenis_kemasan)->value('capacity');
+
+        $jmlKs = $request->quantity / $cpc;
 
 
         session(['FAI_code' => $request->input('FAI_code')]);
@@ -98,8 +102,8 @@ class StockProductController extends Controller
         session(['tanggal_produksi' => $request->input('tanggal_produksi')]);
         session(['tanggal_expire' => $request->input('tanggal_expire')]);
         session(['id_rak' => $request->input('id_rak')]);
-        session(['jumlah_kemasan' => $request->input('jumlah_kemasan')]);
-        session(['jenis_kemasan' => $request->input('jenis_kemasan')]);
+        session(['jumlah_kemasan' => $jmlKs]);
+        session(['jenis_kemasan' => $kms]);
         session(['no_production' => $request->input('no_production')]);
         session(['no_work_order' => $request->input('no_work_order')]);
         session(['customer_name' => $request->input('customer_name')]);

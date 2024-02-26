@@ -7,9 +7,9 @@
                 <th scope="col">FAI code</th>
                 <th scope="col">Product Name</th>
                 <th scope="col">FINA code</th>
-                <th scope="col">storage</th>
-                <th scope="col">quantity</th>
-                <th scope="col">unit</th>
+                <th scope="col">Aspect</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit</th>
             </tr>
         </thead>
         <tbody>

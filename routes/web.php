@@ -46,7 +46,7 @@ Route::delete('supplier/delete', [SupplierController::class, 'delete'])->name('s
 
 Route::get('barangMasuk', [BarangMasukController::class, 'dataMasuk']);
 Route::post('barang/masuk', [BarangMasukController::class, 'brgMasuk']);
-Route::post('package/masuk', [BarangMasukController::class, 'storePackage']);
+Route::post('kemasan/masuk', [BarangMasukController::class, 'storePackage']);
 
 Route::get('barangKeluar', [BarangKeluarController::class, 'dataKeluar']);
 Route::post('barang/keluar', [BarangKeluarController::class, 'brgKeluar']);

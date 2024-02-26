@@ -36,9 +36,6 @@
                 <th scope="col">FINA_code</th>
                 <th scope="col">kategori_barang</th>
                 <th scope="col">aspect</th>
-                <th scope="col">initial_code</th>
-                <th scope="col">number_code</th>
-                <th scope="col">alokasi_penyimpanan</th>
                 <th scope="col">reOrder_qty</th>
                 <th scope="col">unit</th>
                 <th scope="col">supplier</th>
@@ -78,9 +75,6 @@
                     <td style="font-size: 13px;">{{ $item->FINA_code }}</td>
                     <td style="font-size: 13px;">{{ $item->kategori_barang }}</td>
                     <td style="font-size: 13px;">{{ $item->aspect }}</td>
-                    <td style="font-size: 13px;">{{ $item->initial_code }}</td>
-                    <td style="font-size: 13px;">{{ $item->number_code }}</td>
-                    <td style="font-size: 13px;">{{ $item->alokasi_penyimpanan }}</td>
                     <td style="font-size: 13px;">{{ $item->reOrder_qty }}</td>
                     <td style="font-size: 13px;">{{ $item->unit }}</td>
                     <td style="font-size: 13px;">{{ $item->supplier }}</td>

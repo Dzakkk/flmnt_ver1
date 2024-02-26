@@ -213,11 +213,9 @@ class BarangMasukController extends Controller
         $rakGudang = RakGudang::find($request->id_rak);
 
         if ($rakGudang->kapasitas >= $request->qty_masuk_LOT) {
-            // Deduct capacity from the rack
             $rakGudang->kapasitas -= $request->qty_masuk_LOT;
             $rakGudang->save();
 
-            // Create or update the stock entry
             $stock = new Stock([
                 'FAI_code' => $request->FAI_code,
                 'no_LOT' => $request->no_LOT,
@@ -423,7 +421,6 @@ class BarangMasukController extends Controller
     public function storePackage (Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'FAI_code' => 'required',
             'nama_kemasan' => 'required',
             'quantity' => 'required',
             'supplier' => 'required',
@@ -438,8 +435,9 @@ class BarangMasukController extends Controller
 
         $existStock = Packaging::where('nama_kemasan', $request->nama_kemasan)->first();
         $tambah = Packaging::where('FAI_code', $request->FAI_code)->value('quantity');
+        $capacity = Packaging::where('capacity', $request->capacity)->first();
 
-        if ($existStock) {
+        if ($existStock && $capacity) {
             $jumlah = $tambah + $request->quantity;
             $existStock->update([
                 'quantity' => $jumlah,
@@ -448,6 +446,7 @@ class BarangMasukController extends Controller
             $package = new Packaging([
                 'FAI_code' => $request->FAI_code,
                 'nama_kemasan' => $request->nama_kemasan,
+                'capacity' => $request->capacity,
                 'supplier' => $request->supplier,
                 'quantity' => $request->quantity,
                 'id_rak' => $request->id_rak,

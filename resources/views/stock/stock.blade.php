@@ -6,7 +6,6 @@
             <tr>
                 <th scope="col">FAI code</th>
                 <th scope="col">Product Name</th>
-                <th scope="col">Common Name</th>
                 <th scope="col">Aspect</th>
                 <th scope="col">Category</th>
                 <th scope="col">Quantity|Unit</th>
@@ -23,7 +22,6 @@
                 <tr class="{{ $reOrderQty !== null && $totalQuantity <= $reOrderQty ? 'table-danger' : '' }}">
                     <th scope="row">{{ $item->FAI_code }}</th>
                     <td>{{ $item->product_name }}</td>
-                    <td>{{ $item->common_name }}</td>
                     <td>{{ $item->aspect }}</td>
                     <td>{{ $item->category }}</td>
                     <td>{{ $totalQuantity }}&nbsp;{{ $item->unit }}</td>

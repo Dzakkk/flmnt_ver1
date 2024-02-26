@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                     <label for="kategori_barang" class="form-label">kategori_barang</label>
                     <div class="input-group">
-                        <select class="form-select" id="golongan_select" name="kategori_barang">
+                        <select class="form-select" id="category" name="kategori_barang">
                             <option value="">Pilih Kategori</option>
                             <option value="BASE(RM)">BASE(RM)</option>
                             <option value="FLAVOR(RM)">FLAVOR(RM)</option>
@@ -48,7 +48,6 @@
                 <div class="col-md-6">
                     <label class="form-label" for="aspect">aspect</label>
                     <div class="input-group">
-
                         <select class="form-select" id="aspect" name="aspect">
                             <option value="">Pilih Kategori</option>
                             <option value="LIQUID">LIQUID</option>
@@ -90,7 +89,7 @@
                     <input type="text" id="supplierName" name="supplier" class="form-control">
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6" id="jenis_kemasan" style="display: none">
                     <label class="form-label" for="unit">Jenis Kemasan</label>
                     <div class="input-group">
                         <select class="form-select" id="golongan_select" name="packaging_type">
@@ -117,6 +116,39 @@
                             <option value="Goody Bag">Goody Bag</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="col-md-6" id="kemasan" style="display: none">
+                    <label class="form-label" for="unit">Nama Kemasan</label>
+                    <div class="input-group">
+                        <select class="form-select" id="golongan_select" name="nama_kemasan">
+                            <option value="">Pilih Kemasan</option>
+                            <option value="Alumunium Bottle">Alumunium Bottle</option>
+                            <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
+                            <option value="Bag">Bag</option>
+                            <option value="Box with Alumunium Bottle">Box with Alumunium Bottle</option>
+                            <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch Pack
+                            </option>
+                            <option value="Carton">Carton</option>
+                            <option value="Fiber Box">Fiber Box</option>
+                            <option value="Fiber Drum">Fiber Drum</option>
+                            <option value="Glass Bottle">Glass Bottle</option>
+                            <option value="Jerry Can">Jerry Can</option>
+                            <option value="Metal Can">Metal Can</option>
+                            <option value="Metal Drum">Metal Drum</option>
+                            <option value="Plastic Bottle">Plastic Bottle</option>
+                            <option value="Plastic Container with Polyethylene Inner Bag">Plastic Container
+                                with Polyethylene Inner Bag</option>
+                            <option value="Plastic Drum">Plastic Drum</option>
+                            <option value="Plastic Jar">Plastic Jar</option>
+                            <option value="Sacks">Sacks</option>
+                            <option value="Goody Bag">Goody Bag</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6" id="capacity" style="display: none">
+                    <label class="form-label" for="capacity">capacity</label>
+                    <input type="text" name="capacity" class="form-control" id="capacity">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">documentation</label>
@@ -154,17 +186,17 @@
                     <label for="brandProduct_code" class="form-label">brandProduct_code</label>
                     <input type="text" name="brandProduct_code" id="brandProduct_code" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="cmc" style="display: none;">
                     <label class="form-label" for="chemical_IUPACname">chemical_IUPACname</label>
                     <input type="text" name="chemical_IUPACname" class="form-control" id="chemical_IUPACname">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="cas" style="display: none;">
                     <label class="form-label" for="CAS_number">CAS_number</label>
                     <input type="text" name="CAS_number" class="form-control" id="CAS_number">
                 </div>
                 <div class="col-md-6">
                     <label for="manufacturer" class="form-label">Manufacturer</label>
-                    <select name="manufacturer" id="manufacturer" class="form-control select2" required>
+                    <select name="ex_origin" id="manufacturer" class="form-control select2" required>
                         <option value="" disabled selected>Select Manufacturer</option>
                         @foreach ($ex as $c)
                             <option value="{{ $c->manufacturer_name }}">{{ $c->manufacturer_name }}</option>
@@ -175,7 +207,7 @@
 
                 <div id="manufacturerNameSection" class="col-md-6" style="display: none;">
                     <label for="manufacturerName" class="form-label">Manufacturer Name</label>
-                    <input type="text" id="manufacturerName" name="manufacturer_name" class="form-control">
+                    <input type="text" id="manufacturerName" name="ex_origin" class="form-control">
                 </div>
 
                 <div class="col-md-6">
@@ -215,7 +247,7 @@
                     <label for="color_rangeColor" class="form-label">color_rangeColor</label>
                     <input type="text" name="color_rangeColor" id="color_rangeColor" class="form-control">
                 </div>
-                <div class="col-md-6" id="odour">
+                <div class="col-md-6" id="odour" style="display: none;">
                     <label class="form-label" for="odour_taste">odour_taste</label>
                     <input type="text" name="odour_taste" class="form-control" id="odour_taste">
                 </div>
@@ -223,19 +255,19 @@
                     <label for="material" class="form-label">material</label>
                     <input type="text" name="material" id="material" class="form-control">
                 </div>
-                <div class="col-md-6" id="gra20">
+                <div class="col-md-6" id="gra20" style="display: none;">
                     <label class="form-label" for="spesific_gravity_d20">spesific_gravity_d20</label>
                     <input type="text" name="spesific_gravity_d20" class="form-control" id="spesific_gravity_d20">
                 </div>
-                <div class="col-md-6" id="gra25">
+                <div class="col-md-6" id="gra25" style="display: none;">
                     <label class="form-label" for="spesific_gravity_d25">spesific_gravity_d25</label>
                     <input type="text" name="spesific_gravity_d25" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-6" id="ind20">
+                <div class="col-md-6" id="ind20" style="display: none;">
                     <label for="refractive_index_d20" class="form-label">refractive_index_d20</label>
                     <input type="text" name="refractive_index_d20" id="refractive_index_d20" class="form-control">
                 </div>
-                <div class="col-md-6" id="ind25">
+                <div class="col-md-6" id="ind25" style="display: none;">
                     <label class="form-label" for="refractive_index_d25">refractive_index_d25</label>
                     <input type="text" name="refractive_index_d25" class="form-control" id="refractive_index_d25">
                 </div>
@@ -255,31 +287,82 @@
                 select.addEventListener('change', function() {
                     if (select.id === "supplier") {
                         var supplierNameSection = document.getElementById("supplierNameSection");
+                        var supplierNameInput = document.getElementById("supplierName");
+                        var selectedSupplier = select.value;
 
-                        if (select.value === "new") {
+                        if (selectedSupplier === "new") {
                             supplierNameSection.style.display = "block";
+                            supplierNameInput.value = "";
                         } else {
                             supplierNameSection.style.display = "none";
+                            supplierNameInput.value = selectedSupplier;
                         }
                     }
 
                     if (select.id === "manufacturer") {
                         var manufacturerNameSection = document.getElementById(
                             "manufacturerNameSection");
+                        var manufacturerNameInput = document.getElementById("manufacturerName");
+                        var selectedManufacturer = select.value;
 
                         if (select.value === "new") {
                             manufacturerNameSection.style.display = "block";
+                            manufacturerNameInput.value = "";
                         } else {
                             manufacturerNameSection.style.display = "none";
+                            manufacturerNameInput.value = selectedManufacturer;
                         }
                     }
                 });
             });
         });
 
-        document.getElementById('aspect').addEventListener('change', function () {
-            var selectedGolongan = this.value;
-            var 
+        document.getElementById('aspect').addEventListener('change', function() {
+            var selectedAspect = this.value;
+            var odourTaste = document.getElementById('odour');
+            var gravity20 = document.getElementById('gra20');
+            var gravity25 = document.getElementById('gra25');
+            var index20 = document.getElementById('ind20');
+            var index25 = document.getElementById('ind25');
+
+            if (selectedAspect === 'LIQUID') {
+                odourTaste.style.display = 'block';
+                gravity20.style.display = 'block';
+                gravity25.style.display = 'block';
+                index20.style.display = 'block';
+                index25.style.display = 'block';
+
+            } else {
+
+                odourTaste.style.display = 'none';
+                gravity20.style.display = 'none';
+                gravity25.style.display = 'none';
+                index20.style.display = 'none';
+                index25.style.display = 'none';
+            }
+        })
+
+        document.getElementById('category').addEventListener('change', function() {
+            var celectedCategory = this.value;
+            var chemical = document.getElementById('cmc');
+            var casNumber = document.getElementById('cas');
+            var kemasan = document.getElementById('kemasan')
+            var capacity = document.getElementById('capacity');
+            var jenisKemasan = document.getElementById('jenis_kemasan');
+
+            if (celectedCategory === 'PACKAGING') {
+                chemical.style.display = 'none';
+                casNumber.style.display = 'none';
+                jenisKemasan.style.display = 'none';
+                kemasan.style.display = 'block';
+                capacity.style.display = 'block';
+            } else {
+                chemical.style.display = 'block';
+                casNumber.style.display = 'block';
+                jenisKemasan.style.display = 'block';
+                kemasan.style.display = 'none';
+                capacity.style.display = 'none';
+            }
         })
     </script>
 @endsection

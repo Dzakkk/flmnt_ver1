@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('packaging', function (Blueprint $table) {
             $table->string('FAI_code')->primary();
             $table->string('nama_kemasan');
+            $table->string('capacity');
             $table->string('supplier');
             $table->string('id_rak');
             $table->string('quantity');

@@ -344,7 +344,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/rekap">
                     <i class="bi bi-archive"></i>
-                    <span>Rekap Penggunaan Barang</span>
+                    <span>Rekap Barang</span>
                 </a>
             </li><!-- End Login Page Nav -->
         </ul>
