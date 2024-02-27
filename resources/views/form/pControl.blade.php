@@ -340,6 +340,9 @@
                     </div>
                 </div>
             </div>
+            @php
+                $no = 1;
+            @endphp
             <div class="float"></div>
             <div class="product-formula">
                 <b>PRODUCT FORMULA</b>
@@ -357,13 +360,16 @@
                     <tbody>
                         @foreach ($dataArray as $index => $barang_data)
                             <tr>
-                                <td></td>
+                                <td>{{ $no }}</td>
                                 <td>{{ $barang_data }}</td>
                                 <td>{{ $persentase_array[$index] }}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
+                            @php
+                            $no++;   
+                        @endphp
                         @endforeach
                         <tr>
                             <td colspan="2">TOTAL</td>
@@ -506,8 +512,8 @@
                                         <td>QTY</td>
                                     </tr>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $jenis_kemasan }}</td>
+                                        <td>{{ $jumlah_kemasan }}</td>
                                     </tr>
                                     <tr>
                                         <td></td>

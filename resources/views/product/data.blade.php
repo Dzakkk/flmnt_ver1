@@ -17,6 +17,8 @@
         </div>
     @endif
     <a href="/product/store" class="btn btn-info mt-1 mb-1">Tambah Product Baru</a>
+    <a href="/formula" class="btn btn-info mt-1 mb-1">Produksi</a>
+
     <table class="table table-hover">
         <thead>
             <tr>

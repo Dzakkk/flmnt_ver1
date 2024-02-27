@@ -142,6 +142,7 @@ class StockProductController extends Controller
             foreach ($FAI_code_barang_array as $FAI_code_barang) {
                 $stock_barang = StockBarang::where('FAI_code', $FAI_code_barang)->first();
                 $stock_LOT = Stock::where('FAI_code', $FAI_code_barang)->value('no_LOT');
+                $stock = Stock::where('FAI_code', $FAI_code_barang)->sum('quantity');
                 $stock_product = StockProduct::where('FAI_code', $FAI_code_barang)->first();
 
                 if ($stock_barang) {
@@ -156,6 +157,7 @@ class StockProductController extends Controller
                     'FAI_code_barang' => $FAI_code_barang,
                     'product_name' => $nama_barang,
                     'no_LOT' => $stock_LOT,
+                    'stock' => $stock,
                 ];
             }
         }
@@ -163,7 +165,7 @@ class StockProductController extends Controller
         $prd = StockBarang::all();
         $brg = stockProduct::all();
 
-        return view('form.productionControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'unit', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'id_rak', 'jumlah_kemasan', 'jenis_kemasan', 'no_production', 'no_work_order', 'FAI_code_barang_array', 'persentase_array', 'barang_array', 'prd', 'brg'));
+        return view('form.productionControl', compact('FAI_code', 'product_name', 'no_LOT', 'stock', 'quantity', 'unit', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'id_rak', 'jumlah_kemasan', 'jenis_kemasan', 'no_production', 'no_work_order', 'FAI_code_barang_array', 'persentase_array', 'barang_array', 'prd', 'brg'));
     }
 
 
@@ -326,15 +328,13 @@ class StockProductController extends Controller
                         $lotStock->quantity -= $hasilPersen;
                         $lotStock->save();
                         break;
-                    } else {
-                        $hasilPersen -= $lotStock->quantity;
-                        $lotStock->quantity = 0;
-                        $lotStock->save();
+                    } elseif ($lotStock->quantity <= $hasilPersen) {
+                        return redirect('/production/form')->with('error', 'stock tidak mencukupi');
                     }
                 }
             }
 
-            $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'no_production', 'no_work_order', 'dataArray', 'persentase_array'));
+            $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'no_production', 'no_work_order', 'dataArray', 'persentase_array', 'jenis_kemasan', 'jumlah_kemasan'));
             return $pdf->download('Production_Control.pdf');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal: ' . $e->getMessage());

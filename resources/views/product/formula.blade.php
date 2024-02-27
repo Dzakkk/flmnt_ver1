@@ -150,7 +150,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="customerCode" class="form-label">Kode Pelanggan</label>
-                                            <select id="customerCode-{{ $i->FAI_code }}" class="form-control customer-code-select" name="customer_code">
+                                            <select id="customerCode" class="form-control customer-code-select" name="customer_code">
                                                 <option value="">Pilih Kode Pelanggan</option>
                                                 @foreach ($customerCodes as $code)
                                                     <option value="{{ $code->customer_code }}">{{ $code->customer_code }}</option>
@@ -159,17 +159,18 @@
                                             </select>
                                         </div>
                                         
-                                        <div id="customerNameSection-{{ $i->FAI_code }}" class="col-md-6" style="display: none;">
+                                        <div id="customerNameSection" class="col-md-6 customer-name-section" style="display: none;">
                                             <label for="customerName" class="form-label">Nama Pelanggan</label>
-                                            <input type="text" id="customerName-{{ $i->FAI_code }}" name="customer_name" class="form-control">
+                                            <input type="text" name="customer_name" class="form-control customer-name-input">
                                         </div>
                                         
-                                        <div id="newCustomerSection-{{ $i->FAI_code }}" class="col-md-6" style="display: none;">
+                                        <div id="newCustomerSection" class="col-md-6 new-customer-section" style="display: none;">
                                             <label for="newCustomerCode" class="form-label">Customer Item Code</label>
-                                            <input type="text" name="customer_code" id="newCustomerCode-{{ $i->FAI_code }}" class="form-control">
+                                            <input type="text" name="customer_code" class="form-control new-customer-code-input">
                                             <label for="newCustomerName" class="form-label">Customer Name</label>
-                                            <input type="text" name="customer_name" id="newCustomerName-{{ $i->FAI_code }}" class="form-control">
+                                            <input type="text" name="customer_name" class="form-control new-customer-name-input">
                                         </div>
+                                        
 
                                         <div class="col-md-6">
                                             <label for="" class="form-label">PO_customer</label>
@@ -205,11 +206,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.customer-code-select').forEach(function (select) {
                 select.addEventListener('change', function () {
-                    var customerNameSection = document.getElementById("customerNameSection-" + select.id.split("-")[1]);
-                    var newCustomerSection = document.getElementById("newCustomerSection-" + select.id.split("-")[1]);
-                    var customerNameInput = document.getElementById("customerName-" + select.id.split("-")[1]);
-                    var newCustomerCodeInput = document.getElementById("newCustomerCode-" + select.id.split("-")[1]);
-                    var newCustomerNameInput = document.getElementById("newCustomerName-" + select.id.split("-")[1]);
+                    var modal = select.closest('.modal-content'); // Temukan modal terdekat yang mengandung select yang dipilih
+                    var customerNameSection = modal.querySelector('.customer-name-section');
+                    var newCustomerSection = modal.querySelector('.new-customer-section');
+                    var customerNameInput = modal.querySelector('.customer-name-input');
+                    var newCustomerCodeInput = modal.querySelector('.new-customer-code-input');
+                    var newCustomerNameInput = modal.querySelector('.new-customer-name-input');
     
                     if (select.value === "new") {
                         customerNameSection.style.display = "none";
@@ -238,5 +240,6 @@
             });
         });
     </script>
+    
     
 @endsection

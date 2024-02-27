@@ -69,6 +69,7 @@
                             <option value="Kg">Kg</option>
                             <option value="Pcs">Pcs</option>
                             <option value="ml">ml</option>
+                            <option value="Liter">Liter</option>
                             <option value="gram">gram</option>
                         </select>
                     </div>

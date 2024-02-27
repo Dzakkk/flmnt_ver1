@@ -28,7 +28,7 @@ use Livewire\Livewire;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('home');
 });
 
 Route::get('gudang', [GudangController::class, 'dataGudang']);

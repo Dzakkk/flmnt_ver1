@@ -23,7 +23,7 @@
             <tr class="{{ $reOrderQty !== null && $totalQuantity <= $reOrderQty ? 'table-danger' : '' }}"> --}}
             <tr>
                 <th scope="row">{{ $item->FAI_code }}</th>
-                <td>{{ $item->nama_kemasan }}</td>
+                <td>{{ $item->nama_kemasan }} - {{ $item->capacity }}</td>
                 <td>{{ $item->quantity }}&nbsp;Pcs</td>
                 <td>{{ $item->price }}</td>
                 <td>{{ $item->id_rak }}</td>

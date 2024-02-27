@@ -28,6 +28,7 @@
     <a class="btn btn-info m-1" href="/newBarang">
         Pendaftaran Barang
     </a>
+    <a href="/barangMasuk" class="btn btn-info m-1">Barang Masuk</a>
     <table class="table table-hover shadow mt-3">
         <thead>
             <tr>

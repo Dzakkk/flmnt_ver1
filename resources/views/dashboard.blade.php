@@ -387,6 +387,7 @@
             @yield('formAfterProduction')
             @yield('dataProduction')
             @yield('rekap_barang')
+            @yield('home')
 
 
 
