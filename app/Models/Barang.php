@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Barang extends Model
 {
     use HasFactory;
+
+    use LogsActivity;
 
     protected $dates = ['created_at'];
 
@@ -22,6 +26,12 @@ class Barang extends Model
     protected $keyType = 'string';
 
     protected $guarded = [];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly([]);
+    }
 
     public function stock(): HasOne
     {

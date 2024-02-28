@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
@@ -27,9 +28,7 @@ use Livewire\Livewire;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [ActivityController::class, 'activity']);
 
 Route::get('gudang', [GudangController::class, 'dataGudang']);
 Route::post('rak/store', [GudangController::class, 'storeRak']);

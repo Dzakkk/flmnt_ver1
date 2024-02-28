@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Queue\Events\Looping;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Stock extends Model
 {
@@ -18,6 +21,40 @@ class Stock extends Model
     protected $primaryKey = 'id_lot';
     protected $guarded = [];
 
+    // public function setQuantityAttribute($value)
+    // {
+    //     switch ($this->unit) {
+    //         case 'Kg':
+    //             $this->attributes['quantity'] = $value * 1000; // Kg ke gram
+    //             break;
+    //         case 'Liter':
+    //             $this->attributes['quantity'] = $value * 1000; // Liter ke mililiter
+    //             break;
+    //         default:
+    //             $this->attributes['quantity'] = $value; // Tidak perlu konversi
+    //     }
+    // }
+
+    // // Accessor untuk menampilkan quantity sebagai kilogram
+    // public function getQuantityAttribute($value)
+    // {
+    //     switch ($this->unit) {
+    //         case 'Kg':
+    //             return $value; // Nilai sudah dalam kilogram
+    //         case 'Liter':
+    //             return $value; // Nilai liter tetap
+    //         default:
+    //             return $value / 1000; // Konversi gram ke kilogram
+    //     }
+    // }
+
+
+    use LogsActivity;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly([]);
+    }
     /**
      * Get the brgMasuk that owns the Stock
      *

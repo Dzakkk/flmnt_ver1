@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Customer extends Model
 {
@@ -35,14 +37,21 @@ class Customer extends Model
         'sales_name'
     ];
 
-    protected static function boot()
-{
-    parent::boot();
+    use LogsActivity;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly([]);
+    }
 
-    static::creating(function ($model) {
-        $latestId = static::max('id_customer');
-        $newIdNumber = ($latestId) ? (int) substr($latestId, 4) + 1 : 1;
-        $model->id_customer = 'CID-' . str_pad($newIdNumber, 4, '0', STR_PAD_LEFT);
-    });
-}
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $latestId = static::max('id_customer');
+            $newIdNumber = ($latestId) ? (int) substr($latestId, 4) + 1 : 1;
+            $model->id_customer = 'CID-' . str_pad($newIdNumber, 4, '0', STR_PAD_LEFT);
+        });
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Gudang extends Model
 {
@@ -16,6 +18,13 @@ class Gudang extends Model
 
     protected $primaryKey = 'id_gudang';
     protected $guarded = [];
+
+    use LogsActivity;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly([]);
+    }
 
     /**
      * Get all of the rak for the Gudang

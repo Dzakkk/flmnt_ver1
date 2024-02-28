@@ -28,8 +28,11 @@
     <a class="btn btn-info m-1" href="/newBarang">
         Pendaftaran Barang
     </a>
+    @php
+        $row = 1;
+    @endphp
     <a href="/barangMasuk" class="btn btn-info m-1">Barang Masuk</a>
-    <table class="table table-hover shadow mt-3">
+    <table class="table table-hover table-striped shadow mt-3">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -69,9 +72,9 @@
             </tr>
         </thead>
         <tbody id="search-results">
-            @foreach ($brg as $index => $item)
+            @foreach ($brg as $item)
                 <tr>
-                    <th scope="row" style="font-size: 13px;">{{ $index + 1 }}</th>
+                    <th scope="row" style="font-size: 13px;">{{ $row }}</th>
                     <td style="font-size: 13px;">{{ $item->FAI_code }}</td>
                     <td style="font-size: 13px;">{{ $item->FINA_code }}</td>
                     <td style="font-size: 13px;">{{ $item->kategori_barang }}</td>
@@ -106,7 +109,7 @@
                     <td style="font-size: 13px;">{{ $item->berat_gram }}</td>
                     <td>
                         <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop">
+                            data-bs-target="#staticBackdrop-{{ $item->FAI_code }}">
                             Update
                         </button>
                     </td>
@@ -115,7 +118,7 @@
                 $row++;
                 ?>
 
-                <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static"
+                <div class="modal fade modal-dialog-scrollable" id="staticBackdrop-{{ $item->FAI_code }}" data-bs-backdrop="static"
                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -208,10 +211,10 @@
                                         <div class="col-md-6">
                                             <label for="supplier" class="form-label">supplier</label>
                                             <select name="supplier" id="supplier" class="form-control select2" required>
-                                                <option value="{{ $item->id_supplier }}">{{ $item->supplier_name }}
+                                                <option value="{{ $item->supplier_name }}">{{ $item->supplier_name }}
                                                 </option>
                                                 @foreach ($supp as $c)
-                                                    <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}
+                                                    <option value="{{ $c->supplier_name }}">{{ $c->supplier_name }}
                                                     </option>
                                                 @endforeach
                                             </select>

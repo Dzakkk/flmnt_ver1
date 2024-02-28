@@ -34,31 +34,30 @@ class StockController extends Controller
             ->groupBy('FAI_code')
             ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
             ->get();
-
         return view('stock.stock', compact('stock', 'usageQuantities'));
     }
 
     public function rekap()
-{
-    $usages = UsageData::orderBy('tanggal_penggunaan')->get();
+    {
+        $usages = UsageData::orderBy('tanggal_penggunaan')->get();
 
-    $monthlyUsages = [];
+        $monthlyUsages = [];
 
-    foreach ($usages as $usage) {
-        $month = Carbon::parse($usage->tanggal_penggunaan)->format('F');
+        foreach ($usages as $usage) {
+            $month = Carbon::parse($usage->tanggal_penggunaan)->format('F');
 
-        if (!isset($monthlyUsages[$month])) {
-            $monthlyUsages[$month] = [];
+            if (!isset($monthlyUsages[$month])) {
+                $monthlyUsages[$month] = [];
+            }
+
+            if (!isset($monthlyUsages[$month][$usage->FAI_code])) {
+                $monthlyUsages[$month][$usage->FAI_code] = 0;
+            }
+
+            $monthlyUsages[$month][$usage->FAI_code] += $usage->pemakaian;
         }
-
-        if (!isset($monthlyUsages[$month][$usage->FAI_code])) {
-            $monthlyUsages[$month][$usage->FAI_code] = 0;
-        }
-
-        $monthlyUsages[$month][$usage->FAI_code] += $usage->pemakaian;
+        return view('barang.rekapPenggunaan', compact('monthlyUsages'));
     }
-    return view('barang.rekapPenggunaan', compact('monthlyUsages'));
-}
 
 
 
@@ -94,7 +93,7 @@ class StockController extends Controller
     }
 
     public function exportDataPerMonth($month)
-{
-    return Excel::download(new RekapExport($month), 'rekap_penggunaan_' . $month . '.xlsx');
-}
+    {
+        return Excel::download(new RekapExport($month), 'rekap_penggunaan_' . $month . '.xlsx');
+    }
 }

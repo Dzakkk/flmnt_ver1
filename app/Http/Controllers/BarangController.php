@@ -6,6 +6,8 @@ use App\Exports\BarangExport;
 use App\Models\Barang;
 use App\Models\Manufacturer;
 use App\Models\Packaging;
+use App\Models\Stock;
+use App\Models\StockBarang;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -195,6 +197,8 @@ class BarangController extends Controller
 
         // Find the Barang model instance
         $barang = Barang::find($id);
+        $stockBarang = StockBarang::find($id);
+        $stockLot = Stock::where('FAI_code', $id)->first();
 
         // Update the fields
         $barang->update([
@@ -231,6 +235,18 @@ class BarangController extends Controller
             'refractive_index_d20' => $request->refractive_index_d20,
             'refractive_index_d25' => $request->refractive_index_d25,
             'berat_gram' => $request->berat_gram,
+        ]);
+
+        $stockBarang->update([
+            'FAI_code' => $request->FAI_code,
+            'FINA_code' => $request->FAI_code,
+            'aspect' => $request->aspect,
+            'category' => $request->kategori_barang,
+            'product_name' => $request->name
+        ]);
+
+        $stockLot->update([
+            'FAI_code' => $request->FAI_code,
         ]);
 
         return redirect('/barang')->with('success', 'Data berhasil diperbarui');

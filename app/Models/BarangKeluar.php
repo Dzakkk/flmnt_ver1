@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class BarangKeluar extends Model
 {
@@ -15,6 +17,15 @@ class BarangKeluar extends Model
 
     protected $primaryKey = 'id_pengeluaran';
     protected $guarded = [];
+
+
+    use LogsActivity;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly([]);
+    }
+
 
     public function stock()
     {
