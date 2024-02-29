@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Exports\RekapExport;
-use App\Models\Barang;
-use App\Models\BarangMasuk;
 use App\Models\Packaging;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\UsageData;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-use Illuminate\Database\Events\TransactionBeginning;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -58,8 +54,6 @@ class StockController extends Controller
         }
         return view('barang.rekapPenggunaan', compact('monthlyUsages'));
     }
-
-
 
     public function packaging()
     {

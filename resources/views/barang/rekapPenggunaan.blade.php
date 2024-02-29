@@ -27,7 +27,8 @@
             <tr>
                 <td data-bs-toggle="collapse" data-bs-target="#collapseExample-{{ $month }}"
                     aria-expanded="false" aria-controls="collapseExample-{{ $month }}"
-                    style="cursor: pointer">{{ $month }}
+                    style="cursor: pointer">{{ $month }} - <a href="/export/usage/{{ $month }}-{{ $currentYear }}" class="btn btn-sm btn-success">Export </a>
+
                     <div class="collapse multi-collapse" id="collapseExample-{{ $month }}">
                         <div class="">
                             <div>
@@ -35,13 +36,11 @@
                                     @foreach ($usages as $FAI_code => $pemakaian)
                                     <li>Local Code {{ $FAI_code }} - Usage {{ $pemakaian }} Kg</li>
                                 @endforeach
-                                <a href="/export/usage/{{ $month }}-{{ $currentYear }}" class="btn btn-sm btn-success">Export Data {{ $month }}</a>
-
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </td>  
+                </td>
             </tr>
         @endforeach
     </tbody>

@@ -4,9 +4,7 @@
     <style>
         .pagination-links svg {
             width: 16px !important;
-            /* Adjust the icon width */
             height: 16px !important;
-            /* Adjust the icon height */
         }
 
         .flex-1.sm\:hidden {
@@ -95,20 +93,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @if ($usage->isEmpty())
+                            <tr>
+                                <td colspan="3">Belum ada data penggunaan untuk bulan {{ $thisMonth }}.</td>
+                            </tr>
+                        @else
                             @foreach ($usage as $i)
                                 @php
                                     $usageDate = Carbon\Carbon::parse($i->tanggal_penggunaan);
                                 @endphp
 
-                                @if ($usageDate->month == now()->month)
-                     
-                            <th scope="row">1</th>
-                            <td>{{ $i->FAI_code }}</td>
-                            <td>{{ $i->total_usage }}</td>
+                                <tr>
+                                    @if ($usageDate->month == now()->month)
+                                        <th scope="row">1</th>
+                                        <td>{{ $i->FAI_code }}</td>
+                                        <td>{{ $i->total_usage }}</td>
+                                    @endif
+                                </tr>
+                                {{ $usage->links() }}
+                            @endforeach
                         @endif
-                        @endforeach
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
