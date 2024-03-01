@@ -30,7 +30,7 @@ class ActivityController extends Controller
             ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
             ->paginate('10');
 
-        $out = BarangKeluar::orderByDesc('created_at')->take(3);
+        $out = BarangKeluar::orderBy('created_at', 'desc')->take(3)->get();
 
         $stocksTerbesar = Stock::select('FAI_code', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('FAI_code')

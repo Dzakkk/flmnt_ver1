@@ -17,17 +17,17 @@ class CustomerController extends Controller
     {
         $request->validate([
             'customer_name' => 'required',
-            'telephone' => 'required',
-            'contact_name' => 'required',
-            'status' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'provinces' => 'required',
-            'postal_code' => 'required',
-            'country' => 'required',
-            'email' => 'required',
-            'note' => 'required',
-            'sales_name' => 'required',
+            // 'telephone' => 'required',
+            // 'contact_name' => 'required',
+            // 'status' => 'required',
+            // 'address' => 'required',
+            // 'city' => 'required',
+            // 'provinces' => 'required',
+            // 'postal_code' => 'required',
+            // 'country' => 'required',
+            // 'email' => 'required',
+            // 'note' => 'required',
+            // 'sales_name' => 'required',
         ]);
 
         Customer::create([

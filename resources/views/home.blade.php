@@ -189,7 +189,13 @@
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>{{ $i->tanggal_keluar }}</td>
-                                    <td>{{ $i->customer }}</td>
+                                    <td>
+                                        @if ($i->id_customer)
+                                        {{ \App\Models\Customer::find($i->id_customer)->customer_name }}
+                                        @else
+                                        {{ $i->id_customer }}
+                                        @endif
+                                    </td>
                                     <td>{{ $i->FAI_code }}</td>
 
                                 </tr>

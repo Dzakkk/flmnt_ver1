@@ -30,7 +30,7 @@ class BarangKeluarController extends Controller
     // private function isStockSufficient(Request $request)
     // {
     //     $requestedWeight = $request->total_qty_keluar_LOT;
-    //     $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('weight');
+    //     $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('quantity');
 
     //     return $requestedWeight <= $availableStock;
     // }
@@ -112,7 +112,7 @@ class BarangKeluarController extends Controller
     //     }        
 
     //     $requestedWeight = $request->total_qty_keluar_LOT;
-    //     $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('weight');
+    //     $availableStock = Stock::where('FAI_code', $request->FAI_code)->sum('quantity');
 
     //     if ($requestedWeight > $availableStock) {
     //         $barangKeluar->decreaseStock($availableStock);
@@ -268,14 +268,13 @@ class BarangKeluarController extends Controller
         $stocks = Stock::where('FAI_code', $FAI_code)->orderBy('created_at')->get();
 
         foreach ($stocks as $stock) {
-            if ($requestedWeight >= $stock->weight) {
-                // If requested weight is greater than or equal to current stock weight, delete the stock entry
+            if ($requestedWeight >= $stock->quantity) {
+                // If requested quantity is greater than or equal to current stock quantity, delete the stock entry
                 session()->flash('error', 'Quantity Kurang');
-                $stock->delete();
-                $requestedWeight -= $stock->weight;
+                $requestedWeight -= $stock->quantity;
             } else {
-                // If requested weight is less than the current stock weight, update the stock entry
-                $stock->update(['weight' => $stock->weight - $requestedWeight]);
+                // If requested quantity is less than the current stock quantity, update the stock entry
+                $stock->update(['quantity' => $stock->quantity - $requestedWeight]);
                 break;
             }
         }
@@ -287,12 +286,12 @@ class BarangKeluarController extends Controller
 
     //     foreach ($stocks as $stock) {
     //         if ($requestedWeight >= $stock->quantity) {
-    //             // If requested weight is greater than or equal to current stock weight, delete the stock entry
+    //             // If requested quantity is greater than or equal to current stock quantity, delete the stock entry
     //             session()->flash('error', 'Quantity Kurang');
     //             $stock->update(['quantity' => 0]);
     //             $requestedWeight -= $stock->quantity;
     //         } else {
-    //             // If requested weight is less than the current stock weight, update the stock entry
+    //             // If requested quantity is less than the current stock quantity, update the stock entry
     //             $stock->update(['quantity' => $stock->quantity - $requestedWeight]);
     //             break;
     //         }

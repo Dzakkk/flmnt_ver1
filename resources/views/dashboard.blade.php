@@ -28,7 +28,8 @@
     <link href="{{ asset('template/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/table.css') }}" rel="stylesheet">
 
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet">
 </head>
 
@@ -38,7 +39,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="/" class="logo d-flex align-items-center">
+            <a href="/login" class="logo d-flex align-items-center">
                 {{-- <img src="assets/img/logo.png" alt=""> --}}
                 <span class="d-none d-lg-block">Falmont</span>
             </a>
@@ -129,7 +130,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/login">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -367,7 +368,7 @@
             <h1>Dashboard</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/login">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
             </nav>

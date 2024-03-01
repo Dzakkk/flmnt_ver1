@@ -309,46 +309,44 @@
     </div>
     <script>
         $(document).ready(function() {
-            $('#barang').change(function() {
-                var FAI_code = $(this).val();
-                $.ajax({
-                    url: '/getRakOption',
-                    type: 'GET',
-                    data: {
-                        FAI_code: FAI_code
-                    },
-                    success: function(response) {
-                        $('#rak').empty();
-                        $.each(response.options, function(index, option) {
-                            $('#rak').append('<option value="' + option.id_rak + '">' +
-                                option.id_rak + '</option>');
-                        });
-                    },
-                    error: function(xhr) {
-                        console.log('Error:', xhr.responseText);
-                    }
+    $('#barang').change(function() {
+        var FAI_code = $(this).val();
+        $.ajax({
+            url: '/getRakOption', // Pastikan URL ini sesuai dengan rute yang ditentukan di sisi server
+            type: 'GET',
+            data: {
+                FAI_code: FAI_code
+            },
+            success: function(response) {
+                $('#rak').empty(); // Kosongkan opsi-opsi yang sudah ada sebelumnya
+                // Tambahkan opsi-opsi baru berdasarkan respons dari server
+                $.each(response.options, function(index, option) {
+                    $('#rak').append('<option value="' + option.id_rak + '">' + option.id_rak + '</option>');
                 });
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modalElement = document.getElementById('staticBackdrop');
-            var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
-            var customerForm = document.getElementById('customerForm');
-
-            modalElement.addEventListener('shown.bs.modal', function() {
-            });
-
-            modalElement.addEventListener('hidden.bs.modal', function() {
-                customerForm.reset();
-            });
-
-            if (modalCloseButton && customerForm) {
-                modalCloseButton.addEventListener('click', function() {
-                    customerForm.reset();
-                });
+            },
+            error: function(xhr) {
+                console.log('Error:', xhr.responseText);
             }
         });
+    });
+
+    // Menambahkan event listener untuk reset form pada modal
+    document.addEventListener('DOMContentLoaded', function() {
+        var modalElement = document.getElementById('staticBackdrop');
+        var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
+        var customerForm = document.getElementById('customerForm');
+
+        modalElement.addEventListener('hidden.bs.modal', function() {
+            customerForm.reset();
+        });
+
+        if (modalCloseButton && customerForm) {
+            modalCloseButton.addEventListener('click', function() {
+                customerForm.reset();
+            });
+        }
+    });
+});
+
     </script>
 @endsection
