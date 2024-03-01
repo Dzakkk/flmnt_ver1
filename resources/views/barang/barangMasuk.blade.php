@@ -7,14 +7,20 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#barang').select2({
-                placeholder: "Select a FAI",
-                allowClear: true
+                dropdownparent: 
             });
         });
-    </script> 
+    </script>
+    
+    
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -391,15 +397,16 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="barang" class="form-label">FAI</label>
-                                <select name="FAI_code" id="barang" class="form-control" required>
-                                    <option value="" selected>Select FAI</option>
+                                <label for="barang" class="form-label">FAI Code</label>
+                                <select name="FAI_code" id="barang" class="form-control yep">
+                                    <option value="" disabled>Select FAI</option>
                                     @foreach ($brg as $r)
-                                        <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                        <option value="{{ $r->FAI_code }}">{{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
                                     @endforeach
                                 </select>
+                                
                             </div>
+
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">no_LOT</label>
                                 <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
@@ -577,7 +584,8 @@
         </div>
     </div>
 
-   
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -586,17 +594,14 @@
             var customerForm = document.getElementById('customerForm');
 
             modalElement.addEventListener('shown.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditampilkan
             });
 
             modalElement.addEventListener('hidden.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditutup
                 customerForm.reset();
             });
 
             if (modalCloseButton && customerForm) {
                 modalCloseButton.addEventListener('click', function() {
-                    // Mengosongkan nilai formulir
                     customerForm.reset();
                 });
             }

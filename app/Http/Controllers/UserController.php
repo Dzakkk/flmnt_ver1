@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,6 +38,34 @@ class UserController extends Controller
         } else {
             return redirect('/login')->withErrors('NIP atau Password anda salah')->withInput();
         }
+    }
+
+    public function user ()
+    {
+        return view('user.register');
+    }
+
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'password' => 'required',
+            'divisi' => 'required',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+            'divisi' => $request->divisi,
+        ]);
+
+        return redirect('/')->with('success', 'Pegawai created successfully.');
+    }
+
+    public function userData()
+    {
+        $data = User::all();
+        return view('user.user', compact('data'));
     }
 
     public function logout()

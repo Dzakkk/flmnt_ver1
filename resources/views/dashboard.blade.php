@@ -28,14 +28,7 @@
     <link href="{{ asset('template/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/table.css') }}" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Kemudian sertakan Select2 setelah jQuery -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
-    <!-- Template Main CSS File -->
     <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet">
 </head>
 
@@ -261,24 +254,25 @@
                     </li>
                 </ul>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
-                        href="#">
-                        <i class="bx bxs-flask"></i><span>Production Control</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="production-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-    
-                        <li>
-                            <a href="/production/control/data">
-                                <i class="bi bi-circle"></i><span>Data Produksi</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/production/control">
-                                <i class="bi bi-circle"></i><span>Form Control</span>
-                            </a>
-                        </li>
-                    </ul>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bx bxs-flask"></i><span>Production Control</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="production-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                    <li>
+                        <a href="/production/control/data">
+                            <i class="bi bi-circle"></i><span>Data Produksi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/production/control">
+                            <i class="bi bi-circle"></i><span>Form Control</span>
+                        </a>
+                    </li>
+                </ul>
 
 
             <li class="nav-heading">Pages</li>
@@ -323,6 +317,13 @@
                 <a class="nav-link collapsed" href="/manufacturer ">
                     <i class="bi bi-people-fill"></i>
                     <span>Manufacturer</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/data/user">
+                    <i class="bi bi-people-fill"></i>
+                    <span>User</span>
                 </a>
             </li>
 
@@ -390,6 +391,8 @@
             @yield('dataProduction')
             @yield('rekap_barang')
             @yield('home')
+            @yield('register_user')
+            @yield('user')
 
 
 

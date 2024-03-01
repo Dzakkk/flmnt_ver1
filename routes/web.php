@@ -36,6 +36,10 @@ Route::get('login', [UserController::class, 'loginform']);
 Route::post('loginUser', [UserController::class, 'login']);
 Route::get('logout', [UserController::class, 'logout']);
 
+Route::get('data/user', [UserController::class, 'userData']);
+Route::get('user', [UserController::class, 'user']);
+Route::post('storeUser', [GudangController::class, 'storeUser']);
+
 Route::get('gudang', [GudangController::class, 'dataGudang']);
 Route::post('rak/store', [GudangController::class, 'storeRak']);
 
