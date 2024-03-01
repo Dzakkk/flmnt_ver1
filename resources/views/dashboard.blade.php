@@ -327,6 +327,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/logout">
+                    <i class="bi bi-people-fill"></i>
+                    <span>LOGOUT</span>
+                </a>
+            </li>
+
 
             <!-- End F.A.Q Page Nav -->
 
@@ -393,6 +400,7 @@
             @yield('home')
             @yield('register_user')
             @yield('user')
+            
 
 
 

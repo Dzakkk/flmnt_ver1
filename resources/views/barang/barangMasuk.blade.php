@@ -8,17 +8,46 @@
         </div>
     @endif
     
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- Memuat CSS Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <script>
-        $(document).ready(function() {
-            $('#barang').select2({
-                dropdownparent: 
-            });
+<!-- Memuat jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Memuat Select2 setelah jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Skrip JavaScript kustom Anda -->
+<script>
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var modalElement = document.getElementById('staticBackdrop');
+        var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
+        var customerForm = document.getElementById('customerForm');
+
+        modalElement.addEventListener('shown.bs.modal', function() {
         });
-    </script>
+
+        modalElement.addEventListener('hidden.bs.modal', function() {
+            customerForm.reset();
+        });
+
+        if (modalCloseButton && customerForm) {
+            modalCloseButton.addEventListener('click', function() {
+                customerForm.reset();
+            });
+        }
+    });
+
+    $(document).ready(function() {
+        $("#barang").select2({
+            dropdownParent: $("#staticBackdrop")
+        });
+    });
+</script>
+
+    
     
     
     @if (session('error'))
@@ -311,7 +340,7 @@
         </tbody>
     </table>
     <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static"
-        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -587,7 +616,9 @@
 
 
 
-    <script>
+    {{-- <script>
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
         document.addEventListener('DOMContentLoaded', function() {
             var modalElement = document.getElementById('staticBackdrop');
             var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
@@ -606,5 +637,5 @@
                 });
             }
         });
-    </script>
+    </script> --}}
 @endsection

@@ -29,10 +29,10 @@ use Livewire\Livewire;
 |
 */
 
-Route::get('/', [ActivityController::class, 'activity']);
+Route::get('login', [ActivityController::class, 'activity']);
 
 
-Route::get('login', [UserController::class, 'loginform']);
+Route::get('/', [UserController::class, 'loginform']);
 Route::post('loginUser', [UserController::class, 'login']);
 Route::get('logout', [UserController::class, 'logout']);
 
