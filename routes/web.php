@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use App\Http\Livewire\FormulaProduct;
 use App\Models\ProductionControl;
 use App\Models\stockProduct;
@@ -30,6 +31,11 @@ use Livewire\Livewire;
 
 Route::get('/', [ActivityController::class, 'activity']);
 
+
+Route::get('login', [UserController::class, 'loginform']);
+Route::post('loginUser', [UserController::class, 'login']);
+Route::get('logout', [UserController::class, 'logout']);
+
 Route::get('gudang', [GudangController::class, 'dataGudang']);
 Route::post('rak/store', [GudangController::class, 'storeRak']);
 
@@ -41,7 +47,7 @@ Route::put('/barang/update/{id}', [BarangController::class, 'updateBarang']);
 
 Route::get('supplier', [SupplierController::class, 'dataSupplier']);
 Route::post('supplier/store', [SupplierController::class, 'storeSupplier']);
-Route::delete('supplier/delete', [SupplierController::class, 'delete'])->name('supplier.delete');
+Route::delete('supplier/delete/{id}', [SupplierController::class, 'delete'])->name('supplier.delete');
 
 Route::get('barangMasuk', [BarangMasukController::class, 'dataMasuk']);
 Route::post('barang/masuk', [BarangMasukController::class, 'brgMasuk']);

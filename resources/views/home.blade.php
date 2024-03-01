@@ -12,7 +12,7 @@
         }
     </style>
 
-    <div class="col-lg-8 d-flex">
+    <div class="col-lg-9 d-flex">
         <div class="col-xxl-8 col-md-12">
             <div class="d-flex me-2">
                 <div class="col-xxl-8 col-md-6">
@@ -30,10 +30,10 @@
                             </ul>
                         </div>
                         <a href="/customer" class="card-body">
-                            <h5 class="card-title">Customer <span>| Today</span></h5>
+                            <h5 class="card-title">Bahan Baku Terdaftar <span>| Today</span></h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
+                                    <i class="ri-leaf-line"></i>
                                 </div>
                                 <div class="ps-3">
                                     <h6>{{ $cust }}</h6>
@@ -60,10 +60,10 @@
                         </div>
 
                         <a href="/supplier" class="card-body">
-                            <h5 class="card-title">Supplier <span>| Today</span></h5>
+                            <h5 class="card-title">Product Terdaftar <span>| Today</span></h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
+                                    <i class="bx bxs-flask"></i>
                                 </div>
                                 <div class="ps-3">
                                     <h6>{{ $supp }}</h6>
@@ -79,7 +79,7 @@
                 $thisMonth = \Carbon\Carbon::now()->format('F');
             @endphp
             <div class="shadow">
-                <table class="table table-striped">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <td colspan="3">
@@ -117,8 +117,89 @@
                     </tbody>
                 </table>
             </div>
+            <div class="shadow">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="3">
+                                Stock Terbesar
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">FAI Code</th>
+                            <th scope="col">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach ($stocksTerbesar as $i)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{ $i->FAI_code }}</td>
+                                    <td>{{ $i->total_quantity }}</td>
+                                </tr>
+                            @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="shadow">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="3">
+                                Stock Terkecil
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">FAI Code</th>
+                            <th scope="col">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach ($stocksTerkecil as $i)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{ $i->FAI_code }}</td>
+                                    <td>{{ $i->total_quantity }}</td>
+                                </tr>
+                            @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="shadow">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="4">
+                                Pengiriman Terakhir
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tanggal</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">FAI Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach ($out as $i)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{ $i->tanggal_keluar }}</td>
+                                    <td>{{ $i->customer }}</td>
+                                    <td>{{ $i->FAI_code }}</td>
+
+                                </tr>
+                            @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-lg-6 ms-2">
+        <div class="col-lg-4 ms-2">
             <div class="card">
                 <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -137,25 +218,29 @@
                     <div class="activity">
                         @foreach ($lastActivity as $i)
                             <div class="activity-item d-flex">
-                                <div class="activite-label" style="width: 7rem">{{ $i->created_at->diffForHumans() }}</div>
+                                <div class="activite-label" style="width: 3rem; font-size: 9">{{ $i->created_at->diffForHumans() }}</div>
                                 @if ($i->event == 'created')
                                     <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
                                 @elseif ($i->event == 'update')
                                     <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
-                                @elseif ($i->event == 'delete')
+                                @elseif ($i->event == 'deleted')
                                     <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
                                 @else
                                     <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
                                 @endif
 
                                 <div class="ms-1 activity-content">
-                                    {{ $i->event }} - {{ $i->subject_id }}
+                                    {{ $i->event }} - {{ $i->subject_id }} by @if ($i->causer_id)
+                                        {{ \App\Models\User::find($i->causer_id)->name }}
+                                    @else
+                                        System
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
                     </div>
                     <div class="pagination-links mt-3">
-                        {{ $lastActivity->links() }} <!-- Pagination links -->
+                        {{-- {{ $lastActivity->onEachSide(1)->links() }} --}}
                     </div>
                 </div>
             </div>

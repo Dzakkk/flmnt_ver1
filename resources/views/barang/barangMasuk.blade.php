@@ -1,7 +1,5 @@
 @extends('dashboard')
 
-
-
 @section('barangMasuk')
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -9,7 +7,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-
+    <script>
+        $(document).ready(function() {
+            $('#barang').select2({
+                placeholder: "Select a FAI",
+                allowClear: true
+            });
+        });
+    </script> 
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -185,14 +190,16 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="barang" class="form-label">FAI</label>
-                                            <select name="FAI_code" id="barang" class="form-control select2" required>
-                                                <option value="{{ $i->FAI_code }}">{{ $i->FAI_code }}</option>
+                                            <label for="barang" class="form-label">FAI Code</label>
+                                            <select name="FAI_code" id="barang" class="form-control" required>
+                                                {{-- <option value="{{ $i->FAI_code }}">{{ $i->FAI_code }}</option> --}}
                                                 @foreach ($brg as $r)
                                                     <option value="{{ $r->FAI_code }}">
                                                         {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
                                                 @endforeach
                                             </select>
+                                            <input type="text" id="search" class="form-control mt-2"
+                                                placeholder="Search...">
                                         </div>
                                         <div class="mb-3">
                                             <label for="exampleInputPassword1" class="form-label">no_LOT</label>
@@ -223,6 +230,7 @@
                                                     <option value="Pcs">Pcs</option>
                                                     <option value="ml">ml</option>
                                                     <option value="gram">gram</option>
+                                                    <option value="Liter">Liter</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -384,8 +392,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="barang" class="form-label">FAI</label>
-                                <select name="FAI_code" id="barang" class="form-control select2" required>
-                                    <option value="" disabled selected>Select FAI</option>
+                                <select name="FAI_code" id="barang" class="form-control" required>
+                                    <option value="" selected>Select FAI</option>
                                     @foreach ($brg as $r)
                                         <option value="{{ $r->FAI_code }}">
                                             {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
@@ -503,7 +511,7 @@
                         <form action="/kemasan/masuk" method="POST" enctype="multipart/form-data" id="customerForm"
                             class="resettable-form">
                             @csrf
-                           
+
                             <div class="col-md-6">
                                 <label class="form-label" for="unit">Jenis Kemasan</label>
                                 <div class="input-group">
@@ -539,8 +547,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Capacity Packaging</label>
-                                <input type="text" name="capacity" class="form-control"
-                                    id="exampleInputPassword1">
+                                <input type="text" name="capacity" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="col-md-6">
                                 <label for="supplier" class="form-label">supplier</label>
@@ -553,8 +560,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Quantity</label>
-                                <input type="text" name="quantity" class="form-control"
-                                    id="exampleInputPassword1">
+                                <input type="text" name="quantity" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Penyimpanan</label>
@@ -571,12 +577,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
+   
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

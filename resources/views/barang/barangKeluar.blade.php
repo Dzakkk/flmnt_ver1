@@ -21,12 +21,12 @@
     <table class="table table-hover shadow">
         <thead>
             <tr>
-                <th scope="col" style="font-size: 14px;">Jenis Penerimaan</th>
-                <th scope="col" style="font-size: 14px;">Tanggal Masuk</th>
-                <th scope="col" style="font-size: 14px;">Supplier</th>
-                <th scope="col" style="font-size: 14px;">No Produksi</th>
+                <th scope="col" style="font-size: 14px;">Jenis Pengeluaran</th>
+                <th scope="col" style="font-size: 14px;">Tanggal Keluar</th>
+                <th scope="col" style="font-size: 14px;">shipment</th>
+                <th scope="col" style="font-size: 14px;">Customer</th>
                 <th scope="col" style="font-size: 14px;">NO PO/WO</th>
-                <th scope="col" style="font-size: 14px;">Kategori Barang</th>
+                <th scope="col" style="font-size: 14px;">Surat Jalan</th>
                 <th scope="col" style="font-size: 14px;">Dokumen</th>
                 <th scope="col" style="font-size: 14px;">FAI code</th>
                 <th scope="col" style="font-size: 14px;">no LOT</th>

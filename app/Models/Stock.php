@@ -21,27 +21,29 @@ class Stock extends Model
     protected $primaryKey = 'id_lot';
     protected $guarded = [];
 
-    // public function setQuantityAttribute($value)
-    // {
-    //     switch ($this->unit) {
-    //         case 'Kg':
-    //             $this->attributes['quantity'] = $value * 1000; // Kg ke gram
-    //             break;
-    //         case 'Liter':
-    //             $this->attributes['quantity'] = $value * 1000; // Liter ke mililiter
-    //             break;
-    //         default:
-    //             $this->attributes['quantity'] = $value; // Tidak perlu konversi
-    //     }
-    // }
+    public function setQuantityAttribute($value)
+    {
+        switch ($this->unit) {
+            case 'ml':
+                $this->attributes['quantity'] = $value / 1000;
+                $this->attributes['unit'] = 'Liter';
+                break;
+            case 'gram':
+                $this->attributes['quantity'] = $value / 1000;
+                $this->attributes['unit'] = 'Kg';
+                break;
+            default:
+                $this->attributes['quantity'] = $value;
+        }
+    }
 
     // // Accessor untuk menampilkan quantity sebagai kilogram
     // public function getQuantityAttribute($value)
     // {
     //     switch ($this->unit) {
-    //         case 'Kg':
+    //         case 'gram':
     //             return $value; // Nilai sudah dalam kilogram
-    //         case 'Liter':
+    //         case 'ml':
     //             return $value; // Nilai liter tetap
     //         default:
     //             return $value / 1000; // Konversi gram ke kilogram
