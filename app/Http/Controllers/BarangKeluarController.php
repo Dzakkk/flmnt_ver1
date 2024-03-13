@@ -122,10 +122,6 @@ class BarangKeluarController extends Controller
     //         return redirect('barangKeluar')->with('success', 'Stock issued successfully.');
     //     }
 
-
-
-
-
     private function isStockSufficient(Request $request)
     {
         $requestedWeight = $request->total_qty_keluar_LOT;

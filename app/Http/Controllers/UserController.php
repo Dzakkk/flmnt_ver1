@@ -23,20 +23,18 @@ class UserController extends Controller
             'password.required' => 'Please input your Password',
         ]);
 
-        $infologin = [
-            'name' => $request->name,
-            'password' => $request->password,
-        ];
-        if (Auth::attempt($infologin)) {
+        $credentials = $request->only('name', 'password');
+
+        if (Auth::attempt($credentials)) {
             if (Auth::user()->divisi == 'operasional') {
-                return redirect('/');
+                return redirect('/activity');
             } elseif (Auth::user()->divisi == 'produksi') {
-                return redirect('/');
+                return redirect('/activity');
             // } elseif (Auth::user()->divisi == 'kepala_sekolah') {
             //     return redirect('kepala/dashboard');
             }
         } else {
-            return redirect('/login')->withErrors('NIP atau Password anda salah')->withInput();
+            return redirect('/')->withErrors('nama atau Password anda salah')->withInput();
         }
     }
 
@@ -71,6 +69,6 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }

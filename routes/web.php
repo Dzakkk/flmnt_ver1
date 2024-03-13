@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Livewire\FormulaProduct;
 use App\Models\ProductionControl;
 use App\Models\stockProduct;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -29,12 +30,18 @@ use Livewire\Livewire;
 |
 */
 
-Route::get('login', [ActivityController::class, 'activity']);
 
 
-Route::get('/', [UserController::class, 'loginform']);
+Route::get('/', [UserController::class, 'loginform'])->name('home');
 Route::post('loginUser', [UserController::class, 'login']);
 Route::get('logout', [UserController::class, 'logout']);
+
+Route::middleware(['auth'])->group(function (){
+
+    Route::get('activity', [ActivityController::class, 'activity'])->middleware('userAkses:produksi, operasional');
+
+});
+
 
 Route::get('data/user', [UserController::class, 'userData']);
 Route::get('user', [UserController::class, 'user']);
@@ -101,9 +108,9 @@ Livewire::component('/product-form', [FormulaProduct::class]);
 
 
 
-Route::get('/search',[BarangController::class, 'search'])->name('search.index');
+Route::get('/search', [BarangController::class, 'search'])->name('search.index');
 
-Route::get('/search/stock',[StockController::class, 'search'])->name('search.stock');
+Route::get('/search/stock', [StockController::class, 'search'])->name('search.stock');
 
 
 Route::get('production/form', [StockProductController::class, 'productionControl'])->name('production.form');
