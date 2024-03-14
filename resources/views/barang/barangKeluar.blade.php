@@ -93,13 +93,13 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Barang Keluar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container shadow pt-2 mt-2">
                         <form action="/barang/keluar" method="POST" enctype="multipart/form-data" id="customerForm"
-                            class="resettable-form">
+                            class="resettable-form row g-3">
                             @csrf
                             <div class="col-md-6">
                                 <label class="form-label" for="TMT">jenis_pengeluaran</label>
@@ -113,7 +113,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">Tanggal Keluar</label>
                                 <input type="date" name="tanggal_keluar" class="form-control"
                                     id="exampleInputPassword1">
@@ -218,26 +218,26 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">no_LOT</label>
                                 <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-6">
                                 <label for="exampleInputEmail1" class="form-label">Tanggal Produksi</label>
                                 <input type="date" name="tanggal_produksi" class="form-control"
                                     id="exampleInputEmail1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">tanggal_expire</label>
                                 <input type="date" name="tanggal_expire" class="form-control"
                                     id="exampleInputPassword1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-9">
                                 <label for="exampleInputEmail1" class="form-label">total_qty_keluar_LOT</label>
                                 <input type="number" name="total_qty_keluar_LOT" class="form-control"
                                     id="exampleInputEmail1">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label class="form-label" for="unit">unit</label>
                                 <div class="input-group">
                                     <select class="form-select" id="golongan_select" name="unit">
@@ -277,25 +277,25 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-3">
                                 <label for="exampleInputPassword1" class="form-label">berat_per_kemasan_KG</label>
                                 <input type="number" name="berat_per_kemasan_KG" class="form-control"
                                     id="exampleInputPassword1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-3">
                                 <label for="exampleInputEmail1" class="form-label">total_QTY_kemasan</label>
                                 <input type="number" name="total_QTY_kemasan" class="form-control"
                                     id="exampleInputEmail1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">status</label>
-                                <input type="text" name="status" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="col-md-6">
                                 <label for="rak" class="form-label">Rak</label>
                                 <select name="id_rak" id="rak" class="form-control select2" required>
                                     <option value="" disabled selected>Select Rak</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1" class="form-label">status</label>
+                                <input type="text" name="status" class="form-control" id="exampleInputPassword1">
                             </div>
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
                         </form>

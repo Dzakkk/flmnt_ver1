@@ -117,7 +117,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="shadow">
+            {{-- <div class="shadow">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -132,43 +132,108 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach ($stocksTerbesar as $i)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>{{ $i->FAI_code }}</td>
-                                    <td>{{ $i->total_quantity }}</td>
-                                </tr>
-                            @endforeach
+                        @foreach ($stocksTerbesar as $i)
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>{{ $i->FAI_code }}</td>
+                                <td>{{ $i->total_quantity }}</td>
+                            </tr>
+                        @endforeach
 
                     </tbody>
                 </table>
-            </div>
-            <div class="shadow">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <td colspan="3">
-                                Stock Terkecil
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">FAI Code</th>
-                            <th scope="col">Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @foreach ($stocksTerkecil as $i)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>{{ $i->FAI_code }}</td>
-                                    <td>{{ $i->total_quantity }}</td>
-                                </tr>
-                            @endforeach
+            </div> --}}
+            <div class="col-xxl-8 col-md-12">
+                <div class="d-flex me-2">
+                    <div class="col-lg-6 me-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Stock Terbesar</h5>
+                                <div id="barChart1"></div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#barChart1"), {
+                                            series: [{
+                                                data: [
+                                                    @foreach ($stocksTerbesar as $i)
+                                                        {{ $i->total_quantity }},
+                                                    @endforeach
 
-                    </tbody>
-                </table>
+                                                ]
+                                            }],
+                                            chart: {
+                                                type: 'bar',
+                                                height: 350
+                                            },
+                                            plotOptions: {
+                                                bar: {
+                                                    borderRadius: 4,
+                                                    horizontal: true,
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: true
+                                            },
+                                            xaxis: {
+                                                categories: [
+                                                    @foreach ($stocksTerbesar as $i)
+                                                        '{{ $i->FAI_code }}',
+                                                    @endforeach
+                                                ],
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Bar Chart -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 ms-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Stock Terkecil</h5>
+                                <div id="barChart"></div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#barChart"), {
+                                            series: [{
+                                                data: [
+                                                    @foreach ($stocksTerkecil as $i)
+                                                        {{ $i->total_quantity }},
+                                                    @endforeach
+
+                                                ]
+                                            }],
+                                            chart: {
+                                                type: 'bar',
+                                                height: 350
+                                            },
+                                            plotOptions: {
+                                                bar: {
+                                                    borderRadius: 4,
+                                                    horizontal: true,
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: true
+                                            },
+                                            xaxis: {
+                                                categories: [
+                                                    @foreach ($stocksTerkecil as $i)
+                                                        '{{ $i->FAI_code }}',
+                                                    @endforeach
+                                                ],
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div class="shadow">
                 <table class="table table-hover">
                     <thead>
@@ -185,21 +250,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach ($out as $i)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>{{ $i->tanggal_keluar }}</td>
-                                    <td>
-                                        @if ($i->id_customer)
+                        @foreach ($out as $i)
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>{{ $i->tanggal_keluar }}</td>
+                                <td>
+                                    @if ($i->id_customer)
                                         {{ \App\Models\Customer::find($i->id_customer)->customer_name }}
-                                        @else
+                                    @else
                                         {{ $i->id_customer }}
-                                        @endif
-                                    </td>
-                                    <td>{{ $i->FAI_code }}</td>
+                                    @endif
+                                </td>
+                                <td>{{ $i->FAI_code }}</td>
 
-                                </tr>
-                            @endforeach
+                            </tr>
+                        @endforeach
 
                     </tbody>
                 </table>
@@ -224,7 +289,8 @@
                     <div class="activity">
                         @foreach ($lastActivity as $i)
                             <div class="activity-item d-flex">
-                                <div class="activite-label" style="width: 3rem; font-size: 9">{{ $i->created_at->diffForHumans() }}</div>
+                                <div class="activite-label" style="width: 3rem; font-size: 9">
+                                    {{ $i->created_at->diffForHumans() }}</div>
                                 @if ($i->event == 'created')
                                     <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
                                 @elseif ($i->event == 'update')

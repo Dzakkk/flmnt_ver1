@@ -137,14 +137,14 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Barang Masuk</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Barang Masuk Edit</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="container shadow pt-2 mt-2">
                                     <form action="/barang/masuk" method="POST" enctype="multipart/form-data"
-                                        id="customerForm" class="resettable-form">
+                                        id="customerForm" class="resettable-form row g-3">
                                         @csrf
                                         <div class="col-md-6">
                                             <label class="form-label" for="TMT">jenis_penerimaan</label>
@@ -160,7 +160,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-6">
                                             <label for="exampleInputPassword1" class="form-label">Tanggal Masuk</label>
                                             <input type="date" name="tanggal_masuk" class="form-control"
                                                 id="exampleInputPassword1" value="{{ $i->tanggal_masuk }}">
@@ -236,22 +236,22 @@
                                             <input type="text" id="search" class="form-control mt-2"
                                                 placeholder="Search...">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-6">
                                             <label for="exampleInputPassword1" class="form-label">no_LOT</label>
                                             <input type="text" name="no_LOT" class="form-control"
                                                 id="exampleInputPassword1" value="{{ $i->no_LOT }}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-6">
                                             <label for="exampleInputEmail1" class="form-label">Tanggal Produksi</label>
                                             <input type="date" name="tanggal_produksi" class="form-control"
                                                 id="exampleInputEmail1" value="{{ $i->tanggal_produksi }}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-6">
                                             <label for="exampleInputPassword1" class="form-label">tanggal_expire</label>
                                             <input type="date" name="tanggal_expire" class="form-control"
                                                 id="exampleInputPassword1" value="{{ $i->tanggal_expire }}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-6">
                                             <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
                                             <input type="number" name="qty_masuk_LOT" class="form-control"
                                                 id="exampleInputEmail1" value="{{ $i->qty_masuk_LOT }}">
@@ -301,18 +301,18 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-3">
                                             <label for="exampleInputPassword1"
                                                 class="form-label">satuan_QTY_kemasan</label>
                                             <input type="number" name="satuan_QTY_kemasan" class="form-control"
                                                 id="exampleInputPassword1" value="{{ $i->satuan_QTY_kemasan }}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-3">
                                             <label for="exampleInputEmail1" class="form-label">total_QTY_kemasan</label>
                                             <input type="number" name="total_QTY_kemasan" class="form-control"
                                                 id="exampleInputEmail1" value="{{ $i->total_QTY_kemasan }}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="col-md-6">
                                             <label for="exampleInputPassword1" class="form-label">status</label>
                                             <input type="text" name="status" class="form-control"
                                                 id="exampleInputPassword1" value="{{ $i->status }}">
@@ -344,13 +344,13 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Barang Masuk</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container shadow pt-2 mt-2">
                         <form action="/barang/masuk" method="POST" enctype="multipart/form-data" id="customerForm"
-                            class="resettable-form">
+                            class="resettable-form row g-3">
                             @csrf
                             <div class="col-md-6">
                                 <label class="form-label" for="TMT">jenis_penerimaan</label>
@@ -366,7 +366,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">Tanggal Masuk</label>
                                 <input type="date" name="tanggal_masuk" class="form-control"
                                     id="exampleInputPassword1">
@@ -379,15 +379,6 @@
                                         <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Surat Jalan</label>
-                                <input type="text" name="NoSuratJalanMasuk_NoProduksi" class="form-control"
-                                    id="exampleInputPassword1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">NO PO/WO</label>
-                                <input type="text" name="NoPO_NoWO" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="col-md-6">
                                 <label for="kategori_barang" class="form-label">kategori_barang</label>
@@ -405,7 +396,42 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="mb-2">
+                                <label for="exampleInputPassword1" class="form-label">Surat Jalan</label>
+                                <input type="text" name="NoSuratJalanMasuk_NoProduksi" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">NO PO/WO</label>
+                                <input type="text" name="NoPO_NoWO" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            
+
+                            <div class="col-md-8">
+                                <label for="barang" class="form-label">FAI Code</label>
+                                <select name="FAI_code" id="barang" class="form-control yep">
+                                    <option value="" disabled>Select FAI</option>
+                                    @foreach ($brg as $r)
+                                        <option value="{{ $r->FAI_code }}">{{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="exampleInputPassword1" class="form-label">no_LOT</label>
+                                <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
+                            </div>
                             <div class="col-md-6">
+                                <label for="exampleInputEmail1" class="form-label">Tanggal Produksi</label>
+                                <input type="date" name="tanggal_produksi" class="form-control"
+                                    id="exampleInputEmail1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1" class="form-label">tanggal_expire</label>
+                                <input type="date" name="tanggal_expire" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-5">
                                 <label class="form-label">documentation</label>
                                 <div>
                                     <div class="form-check form-check-inline">
@@ -425,36 +451,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="barang" class="form-label">FAI Code</label>
-                                <select name="FAI_code" id="barang" class="form-control yep">
-                                    <option value="" disabled>Select FAI</option>
-                                    @foreach ($brg as $r)
-                                        <option value="{{ $r->FAI_code }}">{{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
-                                    @endforeach
-                                </select>
-                                
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">no_LOT</label>
-                                <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Tanggal Produksi</label>
-                                <input type="date" name="tanggal_produksi" class="form-control"
-                                    id="exampleInputEmail1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">tanggal_expire</label>
-                                <input type="date" name="tanggal_expire" class="form-control"
-                                    id="exampleInputPassword1">
-                            </div>
-                            <div class="mb-3">
+                            <div class="col-md-4">
                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
                                 <input type="number" name="qty_masuk_LOT" class="form-control" id="exampleInputEmail1">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label class="form-label" for="unit">unit</label>
                                 <div class="input-group">
                                     <select class="form-select" id="golongan_select" name="unit">
@@ -494,17 +495,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-3">
                                 <label for="exampleInputPassword1" class="form-label">satuan_QTY_kemasan</label>
                                 <input type="number" name="satuan_QTY_kemasan" class="form-control"
                                     id="exampleInputPassword1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-3">
                                 <label for="exampleInputEmail1" class="form-label">total_QTY_kemasan</label>
                                 <input type="number" name="total_QTY_kemasan" class="form-control"
                                     id="exampleInputEmail1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">status</label>
                                 <input type="text" name="status" class="form-control" id="exampleInputPassword1">
                             </div>
@@ -545,10 +546,10 @@
                 <div class="modal-body">
                     <div class="container shadow pt-2 mt-2">
                         <form action="/kemasan/masuk" method="POST" enctype="multipart/form-data" id="customerForm"
-                            class="resettable-form">
+                            class="resettable-form row g-3">
                             @csrf
 
-                            <div class="col-md-6">
+                            <div class="col-md-9">
                                 <label class="form-label" for="unit">Jenis Kemasan</label>
                                 <div class="input-group">
                                     <select class="form-select" id="golongan_select" name="packaging_type">
@@ -581,11 +582,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-3">
                                 <label for="exampleInputPassword1" class="form-label">Capacity Packaging</label>
                                 <input type="text" name="capacity" class="form-control" id="exampleInputPassword1">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <label for="supplier" class="form-label">supplier</label>
                                 <select name="id_supplier" id="supplier" class="form-control select2" required>
                                     <option value="" disabled selected>Select Supplier</option>
@@ -594,11 +595,11 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-4">
                                 <label for="exampleInputPassword1" class="form-label">Quantity</label>
                                 <input type="text" name="quantity" class="form-control" id="exampleInputPassword1">
                             </div>
-                            <div class="mb-3">
+                            <div class="col-md-12">
                                 <label for="exampleInputEmail1" class="form-label">Penyimpanan</label>
                                 <input type="text" name="id_rak" class="form-control" id="exampleInputEmail1">
                             </div>
