@@ -38,13 +38,12 @@ Route::middleware(['guest'])->group(function (){
 
 });
 
-
 Route::middleware(['auth'])->group(function (){
 
     Route::get('logout', [UserController::class, 'logout']);
 
-    Route::get('activity', [ActivityController::class, 'activity'])->middleware('userAkses:produksi, operasional');
-    Route::get('data/user', [UserController::class, 'userData'])->middleware('userAkses:operasional');
+    Route::get('activity', [ActivityController::class, 'activity']);
+    Route::get('data/user', [UserController::class, 'userData']);
     Route::get('user', [UserController::class, 'user']);
     Route::post('storeUser', [GudangController::class, 'storeUser']);
     
@@ -99,10 +98,11 @@ Route::middleware(['auth'])->group(function (){
     Route::delete('/manufacturer/delete/{id}', [ManufacturerController::class, 'delete'])->name('manufacturer.delete');
     
     
-    
-    
+
     Route::get('/barang/export', [BarangController::class, 'export']);
     Route::get('export/production/control', [ProductsController::class, 'exportProductionControl']);
+
+    Route::post('import', [BarangController::class, 'import']);
     
     // Route::livewire('/product-form', [FormulaProduct::class]);
     Livewire::component('/product-form', [FormulaProduct::class]);
@@ -132,9 +132,15 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('profile', [UserController::class, 'profile']);
 
+    Route::get('error', function () {
+        return view('error')->name('error');
+    });
+
 });
 
 
-Route::get('test', function () {
-    return view('form.layoutExcel.productionControlLayout');
-});
+// Route::get('test', function () {
+//     return view('form.layoutExcel.productionControlLayout');
+// });
+
+

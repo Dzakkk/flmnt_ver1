@@ -7,55 +7,20 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    
-<!-- Memuat CSS Select2 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- Memuat jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Memuat Select2 setelah jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<!-- Skrip JavaScript kustom Anda -->
-<script>
-    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var modalElement = document.getElementById('staticBackdrop');
-        var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
-        var customerForm = document.getElementById('customerForm');
-
-        modalElement.addEventListener('shown.bs.modal', function() {
-        });
-
-        modalElement.addEventListener('hidden.bs.modal', function() {
-            customerForm.reset();
-        });
-
-        if (modalCloseButton && customerForm) {
-            modalCloseButton.addEventListener('click', function() {
-                customerForm.reset();
-            });
-        }
-    });
-
-    $(document).ready(function() {
-        $("#barang").select2({
-            dropdownParent: $("#staticBackdrop")
-        });
-    });
-</script>
-
-    
-    
-    
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
         </div>
     @endif
-
+    <script>
+        $(document).ready(function(){
+            $('#barang1').select2({
+                dropdownParent: $('#ehe'),
+                theme: 'bootstrap'
+            });
+        });
+    </script>
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Masuk
     </button>
@@ -66,7 +31,7 @@
         <thead>
             <tr>
                 <th scope="col">Jenis Penerimaan</th>
-                <th scope="col">Tanggal Masuk</th>
+                <th scope="col">Tanggal&nbsp;Masuk</th>
                 <th scope="col">Supplier</th>
                 <th scope="col">No Produksi</th>
                 <th scope="col">NO PO/WO</th>
@@ -226,15 +191,15 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="barang" class="form-label">FAI Code</label>
-                                            <select name="FAI_code" id="barang" class="form-control" required>
-                                                {{-- <option value="{{ $i->FAI_code }}">{{ $i->FAI_code }}</option> --}}
-                                                @foreach ($brg as $r)
-                                                    <option value="{{ $r->FAI_code }}">
-                                                        {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <input type="text" id="search" class="form-control mt-2"
-                                                placeholder="Search...">
+                                            <div id="ehe" class="form-control">
+                                                <select name="FAI_code" id="barang1" class="form-control" style="width: 450px">
+                                                    <option value="{{ $i->FAI_code }}">{{ $i->FAI_code }}</option>
+                                                    @foreach ($brg as $r)
+                                                        <option value="{{ $r->FAI_code }}">
+                                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="exampleInputPassword1" class="form-label">no_LOT</label>
@@ -405,17 +370,22 @@
                                 <label for="exampleInputEmail1" class="form-label">NO PO/WO</label>
                                 <input type="text" name="NoPO_NoWO" class="form-control" id="exampleInputEmail1">
                             </div>
-                            
 
+                            
+                            {{-- ini harus ada search --}}
                             <div class="col-md-8">
                                 <label for="barang" class="form-label">FAI Code</label>
-                                <select name="FAI_code" id="barang" class="form-control yep">
-                                    <option value="" disabled>Select FAI</option>
-                                    @foreach ($brg as $r)
-                                        <option value="{{ $r->FAI_code }}">{{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
-                                    @endforeach
-                                </select>
+                                <div id="ehe" class="form-control">
+                                    <select name="FAI_code" id="barang1" class="form-control" style="width: 450px">
+                                        <option value="">Select FAI Code</option>
+                                        @foreach ($brg as $r)
+                                            <option value="{{ $r->FAI_code }}">
+                                                {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+
 
                             <div class="col-md-4">
                                 <label for="exampleInputPassword1" class="form-label">no_LOT</label>
@@ -617,8 +587,7 @@
 
 
 
-    {{-- <script>
-        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+    <script>
 
         document.addEventListener('DOMContentLoaded', function() {
             var modalElement = document.getElementById('staticBackdrop');
@@ -638,5 +607,7 @@
                 });
             }
         });
-    </script> --}}
+    </script>
+
+    
 @endsection

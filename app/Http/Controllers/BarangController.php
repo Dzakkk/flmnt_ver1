@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\BarangExport;
+use App\Imports\BarangImport;
 use App\Models\Barang;
 use App\Models\Manufacturer;
 use App\Models\Packaging;
@@ -21,6 +22,13 @@ class BarangController extends Controller
         $supp = Supplier::all();
         $ex = Manufacturer::all();
         return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);
+    }
+
+    public function import()
+    {
+        Excel::import(new BarangImport, request()->file('file'));
+
+        return redirect()->back()->with('success', 'Users imported successfully!');
     }
 
     public function newBarangForm()

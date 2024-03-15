@@ -14,6 +14,12 @@
         <option value="b">Kemasan</option>
     </select> --}}
 
+    <form action="/import" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file">
+        <button type="submit">Import</button>
+    </form>
+    
     <div class="hidden" id="formA">
         <div class="container shadow pt-2 mt-2" style="width: 800px">
             <form class="row g-3 d-flex" action="/newBarang" method="POST" enctype="multipart/form-data">

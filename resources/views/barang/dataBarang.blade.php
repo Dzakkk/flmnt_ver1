@@ -38,6 +38,8 @@
                 <th scope="col">#</th>
                 <th scope="col">FAI_code</th>
                 <th scope="col">FINA_code</th>
+                <th scope="col" colspan="2">Name</th>
+                <th scope="col">common_name</th>
                 <th scope="col">kategori_barang</th>
                 <th scope="col">aspect</th>
                 <th scope="col">reOrder_qty</th>
@@ -46,8 +48,6 @@
                 <th scope="col">packaging_type</th>
                 <th scope="col">documentation</th>
                 <th scope="col">halal_certification</th>
-                <th scope="col">name</th>
-                <th scope="col">common_name</th>
                 <th scope="col">brandProduct_code</th>
                 <th scope="col">chemical_IUPACname</th>
                 <th scope="col">CAS_number</th>
@@ -77,6 +77,8 @@
                     <th scope="row" style="font-size: 13px;">{{ $row }}</th>
                     <td style="font-size: 13px;">{{ $item->FAI_code }}</td>
                     <td style="font-size: 13px;">{{ $item->FINA_code }}</td>
+                    <td style="font-size: 13px;">{!! str_replace(' ', '&nbsp;', $item->name) !!}</td>
+                    <td style="font-size: 13px;">{{ $item->common_name }}</td>
                     <td style="font-size: 13px;">{{ $item->kategori_barang }}</td>
                     <td style="font-size: 13px;">{{ $item->aspect }}</td>
                     <td style="font-size: 13px;">{{ $item->reOrder_qty }}</td>
@@ -85,8 +87,6 @@
                     <td style="font-size: 13px;">{{ $item->packaging_type }}</td>
                     <td style="font-size: 13px;">{{ $item->documentation }}</td>
                     <td style="font-size: 13px;">{{ $item->halal_certification }}</td>
-                    <td style="font-size: 13px;">{{ $item->name }}</td>
-                    <td style="font-size: 13px;">{{ $item->common_name }}</td>
                     <td style="font-size: 13px;">{{ $item->brandProduct_code }}</td>
                     <td style="font-size: 13px;">{{ $item->chemical_IUPACname }}</td>
                     <td style="font-size: 13px;">{{ $item->CAS_number }}</td>
@@ -462,19 +462,16 @@
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + item.FAI_code + '</td>' +
                                 '<td>' + item.FINA_code + '</td>' +
+                                '<td>' + item.name + '</td>' +
+                                '<td>' + item.common_name + '</td>' +
                                 '<td>' + item.kategori_barang + '</td>' +
                                 '<td>' + item.aspect + '</td>' +
-                                '<td>' + item.initial_code + '</td>' +
-                                '<td>' + item.number_code + '</td>' +
-                                '<td>' + item.alokasi_penyimpanan + '</td>' +
                                 '<td>' + item.reOrder_qty + '</td>' +
                                 '<td>' + item.unit + '</td>' +
                                 '<td>' + item.supplier + '</td>' +
                                 '<td>' + item.packaging_type + '</td>' +
                                 '<td>' + item.documentation + '</td>' +
                                 '<td>' + item.halal_certification + '</td>' +
-                                '<td>' + item.name + '</td>' +
-                                '<td>' + item.common_name + '</td>' +
                                 '<td>' + item.brandProduct_code + '</td>' +
                                 '<td>' + item.chemical_IUPACname + '</td>' +
                                 '<td>' + item.CAS_number + '</td>' +

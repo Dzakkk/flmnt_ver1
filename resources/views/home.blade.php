@@ -11,9 +11,8 @@
             display: none;
         }
     </style>
-
     <div class="col-lg-9 d-flex">
-        <div class="col-xxl-8 col-md-12">
+        <div class="col-md-12">
             <div class="d-flex me-2">
                 <div class="col-xxl-8 col-md-6">
                     <div class="card info-card sales-card">
@@ -316,6 +315,216 @@
                     </div>
                 </div>
             </div>
+            <div id="donat" class="shadow"></div>
+            <script>
+                var options = {
+                    series: [44, 55, 13, 43, 22],
+                    chart: {
+                        width: 250,
+                        type: 'pie',
+                    },
+                    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 150
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+
+                var chart = new ApexCharts(document.querySelector("#donat"), options);
+                chart.render();
+            </script>
         </div>
     </div>
+    <div class="shadow">
+        <div class="card p-2">
+            <div class="card-title">Data Barang Tahunan</div>
+            <div>
+                <div id="chart-months"></div>
+                <div class="cmeta"><span class="commits"></span></div>
+                <div id="chart-years"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        var dataSeries = [{
+                name: 'Production',
+                data: [
+                    @foreach ($production as $entry)
+                        {
+                            x: new Date('{{ $entry->date }}').getTime(),
+                            y: {{ $entry->count }}
+                        },
+                    @endforeach
+                ]
+            },
+            {
+                name: 'Masuk Barang',
+                data: [
+                    @foreach ($in as $entry)
+                        {
+                            x: new Date('{{ $entry->date }}').getTime(),
+                            y: {{ $entry->count }}
+                        },
+                    @endforeach
+                ]
+            },
+            {
+                name: 'Pengeluaran Barang',
+                data: [
+                    @foreach ($out2 as $entry)
+                        {
+                            x: new Date('{{ $entry->date }}').getTime(),
+                            y: {{ $entry->count }}
+                        },
+                    @endforeach
+                ]
+            }
+        ];
+
+        var options = {
+            series: dataSeries,
+            chart: {
+                id: 'chartyear',
+                type: 'area',
+                height: 160,
+                background: '#F6F8FA',
+                toolbar: {
+                    show: false,
+                    autoSelected: 'pan'
+                },
+                events: {
+                    mounted: function(chart) {
+                        var commitsEl = document.querySelector('.cmeta span.commits');
+                        var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
+                        commitsEl.innerHTML = commits
+                    },
+                    updated: function(chart) {
+                        var commitsEl = document.querySelector('.cmeta span.commits');
+                        var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
+                        commitsEl.innerHTML = commits
+                    }
+                }
+            },
+            colors: ['#FF7F00', '#00FF00', 'blue'],
+            stroke: {
+                width: 0,
+                curve: 'smooth'
+            },
+            dataLabels: {
+                enabled: true
+            },
+            fill: {
+                opacity: 0.5,
+                type: 'solid'
+            },
+            yaxis: {
+                show: true,
+                tickAmount: 3,
+            },
+            xaxis: {
+                type: 'datetime',
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-months"), options);
+        chart.render();
+
+        var production = {!! json_encode($production) !!};
+        var inData = {!! json_encode($in) !!};
+        var outData = {!! json_encode($out) !!};
+
+        function groupDataByYear(data) {
+            const groupedData = {};
+            data.forEach(entry => {
+                const year = new Date(entry.date).getFullYear();
+                if (!groupedData[year]) {
+                    groupedData[year] = {
+                        production: 0,
+                        in: 0,
+                        out: 0
+                    };
+                }
+                groupedData[year].production += entry.count;
+            });
+            return groupedData;
+        }
+
+        const allData = production.concat(inData, outData);
+
+        const groupedData = groupDataByYear(allData);
+
+        const dataYears = Object.keys(groupedData).map(year => ({
+            x: new Date(year, 0).getTime(),
+            y: groupedData[year].production
+        }));
+
+        var optionsYears = {
+            series: [{
+                name: 'Production',
+                data: dataYears
+            }],
+            chart: {
+                height: 200,
+                type: 'area',
+                background: '#F6F8FA',
+                toolbar: {
+                    autoSelected: 'selection',
+                },
+                brush: {
+                    enabled: true,
+                    target: 'chartyear'
+                },
+                selection: {
+                    enabled: true,
+                    xaxis: {
+                        type: 'datetime',
+                        min: new Date('2024-01-01').getTime(),
+                        max: new Date('2024-12-31').getTime(),
+                        labels: {
+                            datetimeUTC: false,
+                            formatter: function(value) {
+                                return new Date(value).toLocaleDateString();
+                            }
+                        }
+                    }
+                },
+            },
+            colors: ['#7BD39A'],
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 0,
+                curve: 'smooth'
+            },
+            fill: {
+                opacity: 1,
+                type: 'solid'
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left'
+            },
+            xaxis: {
+                type: 'datetime'
+            },
+        };
+
+        // Render grafik tahunan
+        var chartYears = new ApexCharts(document.querySelector("#chart-years"), optionsYears);
+        chartYears.render();
+    </script>
+
+
 @endsection

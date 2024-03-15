@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class UserAkses
+class RevalidateBackHistori
 {
     /**
      * Handle an incoming request.
@@ -14,12 +14,11 @@ class UserAkses
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle($request, Closure $next)
     {
-        if (auth()->user()->divisi == $role) {
-           return $next($request);
-        }
-        // return response()->json(['Gak boleh kamu yaa']);
-        return response()->view('error');
+        $response = $next($request);
+        return $response->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
+            ->header('Pragma','no-cache')
+            ->header('Expires','Fri, 01 Jan 1990 00:00:00 GMT');
     }
 }
