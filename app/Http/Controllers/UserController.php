@@ -77,4 +77,15 @@ class UserController extends Controller
         $user = Auth::user();
         return view('user.profile', compact('user'));
     }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect('data/user')->with('error', '404 data not found');
+        }
+        $user->delete();
+        return redirect('data/user');
+    }
 }

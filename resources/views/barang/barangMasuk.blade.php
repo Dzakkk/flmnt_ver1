@@ -27,7 +27,7 @@
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
         Kemasan Masuk
     </button>
-    <table class="table table-hover">
+    <table class="table table-hover shadow">
         <thead>
             <tr>
                 <th scope="col">Jenis Penerimaan</th>
@@ -49,7 +49,7 @@
                 <tr>
                     <th scope="row" style="font-size: 14px;">{{ $i->jenis_penerimaan }}</th>
                     <td style="font-size: 14px;">{{ $i->tanggal_masuk }}</td>
-                    <td style="font-size: 14px;">{{ $i->supplier_name }}</td>
+                    <td style="font-size: 14px;">{{ \App\Models\Supplier::find($i->id_supplier)->supplier_name }}</td>
                     <td style="font-size: 14px;">{{ $i->NoSuratJalanMasuk_NoProduksi }}</td>
                     <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
                     <td style="font-size: 14px;">{{ $i->kategori_barang }}</td>
@@ -62,10 +62,10 @@
                         <div class="d-flex">
                             <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop-{{ $i->id_penerimaan }}">
-                                ubah
+                                <i class="ri-edit-line"></i>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal-{{ $i->id_penerimaan }}">Delete</button>
+                                data-bs-target="#confirmDeleteModal-{{ $i->id_penerimaan }}"><i class="bi bi-trash"></i></button>
                         </div>
                     </td>
                 </tr>

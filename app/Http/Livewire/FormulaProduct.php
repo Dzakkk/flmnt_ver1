@@ -23,13 +23,16 @@ class FormulaProduct extends Component
     public function addInput()
     {
         $this->inputs[] = count($this->inputs);
-        $this->faicodeOptions[] = null; // Change to null to avoid JSON issue
+        $this->faicodeOptions[] = null;
+        $this->emit('initialize-select2');
     }
 
     public function removeInput($index)
     {
         unset($this->inputs[$index]);
         unset($this->faicodeOptions[$index]);
+        $this->emit('initialize-select2');
+
     }
 
     public function render()

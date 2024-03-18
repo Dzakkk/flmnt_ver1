@@ -18,7 +18,7 @@ class BarangController extends Controller
 {
     public function dataBarang()
     {
-        $brg = Barang::with('stock')->get();
+        $brg = Barang::with('stock')->paginate(25);
         $supp = Supplier::all();
         $ex = Manufacturer::all();
         return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);

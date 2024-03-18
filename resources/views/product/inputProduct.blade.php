@@ -1,19 +1,19 @@
 @extends('dashboard')
 
 @section('product_form')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show">
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
-@livewireStyles
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    @livewireStyles
     <div class="container shadow pt-2 mt-2" style="width: 800px">
         <form class="row g-3 d-flex" action="/product/store" method="POST" enctype="multipart/form-data">
             @csrf
@@ -137,11 +137,12 @@
                     FORMULA PRODUCT ===========================
                 </h3>
             </div>
+            
             <div class="col-md-6">
                 <label class="form-label" for="persentase-0">Persentase:</label>
                 <input type="text" id="persentase-0" name="persentase[]" required class="form-control">
             </div>
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <label class="form-label" for="kandungan-0">Kandungan:</label>
                 <select name="FAI_code_barang[]" id="kandungan-0" class="form-control select2" required>
                     <option value="" disabled selected>Select FAI code</option>
@@ -149,13 +150,36 @@
                         <option value="{{ $c->FAI_code }}">{{ $c->FAI_code }}</option>
                     @endforeach
                 </select>
+            </div> --}}
+            <div class="col-md-6">
+                <label for="kandungan" class="form-label">FAI Code</label>
+                <div id="ehe" class="form-control">
+                    <select name="FAI_code_barang[]" id="kandungan" class="form-control select2">
+                        <option value="" selected>Select FAI Code</option>
+                        @foreach ($brg as $c)
+                            <option value="{{ $c->FAI_code }}">
+                                {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
+                        @endforeach
+                        @foreach ($prd as $c)
+                            <option value="{{ $c->FAI_code }}">
+                                {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
 
             @livewire('formula-product')
             <button type="submit" class="btn btn-primary" id="add-input">buat</button>
             @livewireScripts
-
+            <script>
+                document.addEventListener('livewire:load', function () {
+                    Livewire.on('initialize-select2', function () {
+                        $('.select2').select2();
+                    });
+                });
+            </script>
         </form>
     </div>
 @endsection
+

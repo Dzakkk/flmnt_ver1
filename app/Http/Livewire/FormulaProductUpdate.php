@@ -49,6 +49,8 @@ class FormulaProductUpdate extends Component
         $this->inputs[] = count($this->inputs);
         $this->faicodeOptions[] = null;
         $this->persenOptions[] = null;
+        $this->emit('initialize-select2');
+
 
     }
 
@@ -57,6 +59,8 @@ class FormulaProductUpdate extends Component
         unset($this->inputs[$index]);
         unset($this->faicodeOptions[$index]);
         unset($this->persenOptions[$index]);
+        $this->emit('initialize-select2');
+
     }
 
     public function render()

@@ -43,9 +43,11 @@ Route::middleware(['auth'])->group(function (){
     Route::get('logout', [UserController::class, 'logout']);
 
     Route::get('activity', [ActivityController::class, 'activity']);
+
     Route::get('data/user', [UserController::class, 'userData']);
     Route::get('user', [UserController::class, 'user']);
     Route::post('storeUser', [GudangController::class, 'storeUser']);
+    Route::post('user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     
     Route::get('gudang', [GudangController::class, 'dataGudang']);
     Route::post('rak/store', [GudangController::class, 'storeRak']);
@@ -53,7 +55,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('barang', [BarangController::class, 'dataBarang']);
     Route::get('newBarang', [BarangController::class, 'newBarangForm']);
     Route::post('newBarang', [BarangController::class, 'newBarang']);
-    Route::put('/barang/update/{id}', [BarangController::class, 'updateBarang']);
+    Route::put('/barang/update/{id}', [BarangController::class, 'updateBarang'])->where('id', '[\w\/]+');
     
     
     Route::get('supplier', [SupplierController::class, 'dataSupplier']);

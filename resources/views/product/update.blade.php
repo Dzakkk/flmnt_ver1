@@ -2,7 +2,7 @@
 
 @section('updateProduct')
     @livewireStyles
-    <div class="container shadow pt-2 mt-2" style="width: 800px">
+    <div class="container shadow pt-2 mt-2 pb-2" style="width: 800px">
         <form class="row g-3 d-flex" action="/product/update/{{ $prd->FAI_code }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -139,10 +139,17 @@
                 <h3 class="pt-3">
                     FORMULA PRODUCT ===========================
                 </h3>
+            </div>
             @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code]) 
-            <button type="submit" class="btn btn-primary" id="add-input">buat</button>
+                <button type="submit" class="btn btn-primary" id="add-input">Edit Formula</button>
             @livewireScripts
-            
+            <script>
+                document.addEventListener('livewire:load', function () {
+                    Livewire.on('initialize-select2', function () {
+                        $('.select2').select2();
+                    });
+                });
+            </script>
         </form>
     </div>
 @endsection

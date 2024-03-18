@@ -41,7 +41,7 @@
                     <th scope="row" style="font-size: 14px;">{{ $i->jenis_pengeluaran }}</th>
                     <td style="font-size: 14px;">{{ $i->tanggal_keluar }}</td>
                     <td style="font-size: 14px;">{{ $i->shipment }}</td>
-                    <td style="font-size: 14px;">{{ $i->customer }}</td>
+                    <td style="font-size: 14px;">{{ \App\Models\Customer::find($i->id_customer)->customer_name }}</td>
                     <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
                     <td style="font-size: 14px;">{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
                     <td style="font-size: 14px;">{{ $i->dokumen }}</td>
@@ -204,7 +204,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="barang" class="form-label">FAI</label>
                                 <select name="FAI_code" id="barang" class="form-control select2" required>
                                     <option value="" disabled selected>Select FAI</option>
@@ -217,6 +217,23 @@
                                             {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
                                     @endforeach
                                 </select>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <label for="barang" class="form-label">FAI Code</label>
+                                <div id="ehe" class="form-control">
+                                    <select name="FAI_code" id="barang1" class="form-control" style="width: 450px">
+                                        <option value="" disabled selected>Select FAI</option>
+
+                                        @foreach ($brg as $r)
+                                        <option value="{{ $r->FAI_code }}">
+                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                    @endforeach
+                                    @foreach ($prd as $r)
+                                        <option value="{{ $r->FAI_code }}">
+                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">no_LOT</label>

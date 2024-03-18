@@ -108,8 +108,8 @@
                     <td style="font-size: 13px;">{{ $item->refractive_index_d25 }}</td>
                     <td style="font-size: 13px;">{{ $item->berat_gram }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop-{{ $item->FAI_code }}">
+                        <button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop-{{ $item->FAI_code }}" data-item-id="{{ $item->FAI_code }}">
                             Update
                         </button>
                     </td>
@@ -118,12 +118,13 @@
                 $row++;
                 ?>
 
-                <div class="modal fade modal-dialog-scrollable" id="staticBackdrop-{{ $item->FAI_code }}" data-bs-backdrop="static"
-                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade modal-dialog-scrollable" id="staticBackdrop-{{ $item->FAI_code }}"
+                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Edit</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -413,34 +414,16 @@
                     </div>
                 </div>
             @endforeach
-
         </tbody>
+        <tr>
+            <td>
+                {{ $brg->links() }}
+            </td>
+        </tr>
     </table>
+
     <a href="/barang/export" class="btn btn-success">export excel <i class="ri-file-excel-2-fill"></i></a>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modalElement = document.getElementById('staticBackdrop');
-            var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
-            var customerForm = document.getElementById('customerForm');
-
-            modalElement.addEventListener('shown.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditampilkan
-            });
-
-            modalElement.addEventListener('hidden.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditutup
-                customerForm.reset();
-            });
-
-            if (modalCloseButton && customerForm) {
-                modalCloseButton.addEventListener('click', function() {
-                    // Mengosongkan nilai formulir
-                    customerForm.reset();
-                });
-            }
-        });
-    </script>
     <script>
         $(document).ready(function() {
             $('#search').on('input', function() {
@@ -453,10 +436,8 @@
                         search: searchTerm
                     },
                     success: function(response) {
-                        // Clear previous search results
                         $('#search-results').empty();
 
-                        // Iterate over the search results and append them to the table
                         $.each(response.brg, function(index, item) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
@@ -492,12 +473,14 @@
                                 '<td>' + item.refractive_index_d20 + '</td>' +
                                 '<td>' + item.refractive_index_d25 + '</td>' +
                                 '<td>' + item.berat_gram + '</td>' +
-                                '<td><button type = "button" class = "btn btn-primary m-3" data-bs-toggle = "modal" data-bs-target = "#staticBackdrop" >Update</button></td>'+
+                                '<td><button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal" data-bs-target="#staticBackdrop-' + {{ $item->FAI_code }} + '">Update</button></td>'
                             '</tr>';
-
 
                             $('#search-results').append(row);
                         });
+
+                        // Update modal targets after new search results are loaded
+                        updateModalTargets($('#search-results'));
                     },
                     error: function(xhr) {
                         console.log(xhr.responseText);
@@ -505,5 +488,123 @@
                 });
             });
         });
+
+        function updateModalTargets(searchResults) {
+            $('.btn-update').each(function() {
+                var itemId = $(this).data('bs-target'); // Mengambil nilai dari data-bs-target
+                var modalTarget = searchResults.find(itemId); // Mencari modal dengan ID yang sesuai
+                $(this).attr('data-bs-target', itemId);
+            });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var customerForm = document.getElementById('customerForm');
+
+            $('#staticBackdrop').on('hidden.bs.modal', function() {
+                if (customerForm) {
+                    customerForm.reset();
+                }
+            });
+        });
     </script>
+
+
+    {{-- <script>
+       $(document).ready(function() {
+    $('#search').on('input', function() {
+        var searchTerm = $(this).val();
+
+        $.ajax({
+            url: "{{ route('search.index') }}",
+            type: "GET",
+            data: {
+                search: searchTerm
+            },
+            success: function(response) {
+                $('#search-results').empty();
+
+                $.each(response.brg, function(index, item) {
+                    var row = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + item.FAI_code + '</td>' +
+                        '<td>' + item.FINA_code + '</td>' +
+                        '<td>' + item.name + '</td>' +
+                        '<td>' + item.common_name + '</td>' +
+                        '<td>' + item.kategori_barang + '</td>' +
+                        '<td>' + item.aspect + '</td>' +
+                        '<td>' + item.reOrder_qty + '</td>' +
+                        '<td>' + item.unit + '</td>' +
+                        '<td>' + item.supplier + '</td>' +
+                        '<td>' + item.packaging_type + '</td>' +
+                        '<td>' + item.documentation + '</td>' +
+                        '<td>' + item.halal_certification + '</td>' +
+                        '<td>' + item.brandProduct_code + '</td>' +
+                        '<td>' + item.chemical_IUPACname + '</td>' +
+                        '<td>' + item.CAS_number + '</td>' +
+                        '<td>' + item.ex_origin + '</td>' +
+                        '<td>' + item.initial_ex + '</td>' +
+                        '<td>' + item.country_of_origin + '</td>' +
+                        '<td>' + item.remark + '</td>' +
+                        '<td>' + item.usage_level + '</td>' +
+                        '<td>' + item.harga_ex_work_USD + '</td>' +
+                        '<td>' + item.harga_CIF_USD + '</td>' +
+                        '<td>' + item.harga_MOQ_USD + '</td>' +
+                        '<td>' + item.appearance + '</td>' +
+                        '<td>' + item.color_rangeColor + '</td>' +
+                        '<td>' + item.odour_taste + '</td>' +
+                        '<td>' + item.material + '</td>' +
+                        '<td>' + item.spesific_gravity_d20 + '</td>' +
+                        '<td>' + item.spesific_gravity_d25 + '</td>' +
+                        '<td>' + item.refractive_index_d20 + '</td>' +
+                        '<td>' + item.refractive_index_d25 + '</td>' +
+                        '<td>' + item.berat_gram + '</td>' +
+                        '<td><button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal" data-bs-target="#staticBackdrop-' + item.FAI_code + '">Update</button></td>' +
+                        '</tr>';
+
+                    $('#search-results').append(row);
+                });
+
+                // Update modal targets after new search results are loaded
+                updateModalTargets($('#search-results'));
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+});
+
+function updateModalTargets(searchResults) {
+    $('.btn-update').each(function() {
+        var itemId = $(this).data('item-id');
+        var modalTarget = searchResults.find('#staticBackdrop-' + itemId);
+        $(this).attr('data-bs-target', '#staticBackdrop-' + itemId);
+    });
+}
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var modalElement = document.getElementById('staticBackdrop');
+            var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
+            var customerForm = document.getElementById('customerForm');
+
+            modalElement.addEventListener('shown.bs.modal', function() {
+                // Tindakan yang dijalankan ketika modal ditampilkan
+            });
+
+            modalElement.addEventListener('hidden.bs.modal', function() {
+                // Tindakan yang dijalankan ketika modal ditutup
+                customerForm.reset();
+            });
+
+            if (modalCloseButton && customerForm) {
+                modalCloseButton.addEventListener('click', function() {
+                    // Mengosongkan nilai formulir
+                    customerForm.reset();
+                });
+            }
+        });
+    </script> --}}
 @endsection

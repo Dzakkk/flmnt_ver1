@@ -23,18 +23,17 @@ $row = 1;
                 <td>{{ $item->divisi }}</td>
 
                 <td>
-                    for edit and delete. belum bikin
-                    {{-- <div class="d-flex">
+                    <div class="d-flex">
                         <a href="/petugas/updateUser/{{ $item->id }}" class="btn btn-outline-primary btn-sm me-1">Ubah</a>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $item->id }}">Delete</button>
-                    </div> --}}
+                    </div>
                 </td>
             </tr>
             <?php
             $row++;
             ?>
-            {{-- <div class="modal fade" id="confirmDeleteModal-{{ $item->id }}" tabindex="-1"
+            <div class="modal fade" id="confirmDeleteModal-{{ $item->id }}" tabindex="-1"
                 aria-labelledby="confirmDeleteModalLabel-{{ $item->id }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -45,12 +44,12 @@ $row = 1;
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Are you sure you want to delete this record?
+                            Are you sure want to delete {{ $item->name }}?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
-                            <form action="{{ route('pegawai.delete', $item->id) }}" method="POST">
+                            <form action="{{ route('user.delete', $item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Confirm Delete</button>
@@ -59,7 +58,7 @@ $row = 1;
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         @endforeach
     </tbody>
 </table>

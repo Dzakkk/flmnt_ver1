@@ -19,6 +19,10 @@
         rel="stylesheet"> --}}
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <!-- Vendor CSS Files -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <link href="{{ asset('template/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('template/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('template/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
@@ -28,7 +32,6 @@
     <link href="{{ asset('template/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/table.css') }}" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -37,6 +40,15 @@
 
 
     <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet">
+
+    <script>
+        $(document).ready(function(){
+            $('#barang1').select2({
+                dropdownParent: $('#ehe'),
+                theme: 'bootstrap',
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -72,14 +84,15 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <img src="{{ asset('images/falmont.png') }}" alt="Profile">
-                        {{-- <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama }}</span> --}}
+                        {{-- <img src="{{ asset('images/falmont.png') }}" alt="Profile"> --}}
+                        <i class="ri-account-circle-line"></i>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            {{-- <h6>{{ Auth::user()->nama }}</h6>
-                            <span>{{ Auth::user()->role }}</span> --}}
+                            <h6>{{ Auth::user()->name }}</h6>
+                            <span>{{ Auth::user()->divisi }}</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -114,7 +127,6 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="/logout">
                                 <i class="bi bi-box-arrow-right"></i>
@@ -217,7 +229,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#stock-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-box-seam"></i><span>Persediaan</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="ri-stock-line"></i><span>Persediaan</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="stock-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -245,7 +257,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#product-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bx bxs-flask"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="ri-flask-line"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="product-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
@@ -264,7 +276,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bx bxs-flask"></i><span>Production Control</span><i
+                    <i class="ri-flask-line"></i><span>Production Control</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="production-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -333,11 +345,16 @@
                     <span>User</span>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/rekap">
+                    <i class="bi bi-archive"></i>
+                    <span>Rekap Barang</span>
+                </a>
+            </li><!-- End Login Page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/logout">
-                    <i class="bi bi-people-fill"></i>
-                    <span>LOGOUT</span>
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
                 </a>
             </li>
 
@@ -358,12 +375,7 @@
                 </a>
             </li><!-- End Register Page Nav --> --}}
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/rekap">
-                    <i class="bi bi-archive"></i>
-                    <span>Rekap Barang</span>
-                </a>
-            </li><!-- End Login Page Nav -->
+            
         </ul>
 
     </aside><!-- End Sidebar-->

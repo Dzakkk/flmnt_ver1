@@ -52,8 +52,8 @@ class ProductsController extends Controller
     {
         $brg = Barang::all();
         $gdg = Gudang::all();
-
-        return view('product.inputProduct', ['brg' => $brg, 'gdg' => $gdg]);
+        $prd = Products::all();
+        return view('product.inputProduct', ['brg' => $brg, 'gdg' => $gdg, 'prd' => $prd]);
     }
 
     public function newProduct(Request $request)
