@@ -1,6 +1,10 @@
 @extends('dashboard')
 
 @section('stock')
+<div class="form-floating mb-3">
+    <input type="text" id="search" name="search" placeholder="Search..." class="form-control">
+    <label for="search" class="form-label"><i class="bi bi-search"></i>&nbsp;&nbsp;&nbsp;Search</label>
+</div>
     <table class="table table-hover shadow">
         <thead>
             <tr>
@@ -37,4 +41,5 @@
             @endforeach
         </tbody>
     </table>
+    {{ $stock->links() }}
 @endsection

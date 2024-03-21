@@ -18,7 +18,7 @@ class BarangController extends Controller
 {
     public function dataBarang()
     {
-        $brg = Barang::with('stock')->paginate(25);
+        $brg = Barang::with('stock')->paginate(8);
         $supp = Supplier::all();
         $ex = Manufacturer::all();
         return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);
@@ -27,7 +27,6 @@ class BarangController extends Controller
     public function import()
     {
         Excel::import(new BarangImport, request()->file('file'));
-
         return redirect()->back()->with('success', 'Users imported successfully!');
     }
 
@@ -147,10 +146,21 @@ class BarangController extends Controller
                 'color_rangeColor' => $request->color_rangeColor,
                 'odour_taste' => $request->odour_taste,
                 'material' => $request->material,
-                'spesific_gravity_d20' => $request->spesific_gravity_d20,
-                'spesific_gravity_d25' => $request->spesific_gravity_d25,
-                'refractive_index_d20' => $request->refractive_index_d20,
-                'refractive_index_d25' => $request->refractive_index_d25,
+                'sg_d20_min' => $request->sg_d20_min,
+                'sg_d20_max' => $request->sg_d20_max,
+                'sg_d20_target' => $request->sg_d20_target,
+
+                'sg_d25_min' => $request->sg_d25_min,
+                'sg_d25_max' => $request->sg_d25_max,
+                'sg_d25_target' => $request->sg_d25_target,
+
+                'ri_d20_min' => $request->ri_d20_min,
+                'ri_d20_max' => $request->ri_d20_max,
+                'ri_d20_target' => $request->ri_d20_target,
+
+                'ri_d25_min' => $request->ri_d25_min,
+                'ri_d25_max' => $request->ri_d25_max,
+                'ri_d25_target' => $request->ri_d25_target,
                 'berat_gram' => $request->berat_gram,
             ]);
 

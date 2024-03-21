@@ -11,10 +11,10 @@
             display: none;
         }
     </style>
-    <div class="col-lg-9 d-flex">
-        <div class="col-md-12">
-            <div class="d-flex me-2">
-                <div class="col-xxl-8 col-md-6">
+    <div class="d-flex section container-fluid main-container">
+        <div class="">
+            <div class="d-flex section-header">
+                <div class="barang-section container-fluid">
                     <div class="card info-card sales-card">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -28,8 +28,8 @@
                                 <li><a class="dropdown-item" href="#">This Year</a></li>
                             </ul>
                         </div>
-                        <a href="/customer" class="card-body">
-                            <h5 class="card-title">Bahan Baku Terdaftar <span>| Today</span></h5>
+                        <a href="/barang" class="card-body">
+                            <h5 class="card-title">Bahan Baku Terdaftar</h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="ri-leaf-line"></i>
@@ -43,7 +43,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xxl-8 col-md-6 ms-2">
+                <div class="product-section container-fluid">
                     <div class="card info-card revenue-card">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -58,8 +58,8 @@
                             </ul>
                         </div>
 
-                        <a href="/supplier" class="card-body">
-                            <h5 class="card-title">Product Terdaftar <span>| Today</span></h5>
+                        <a href="/product" class="card-body">
+                            <h5 class="card-title">Product Terdaftar</h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bx bxs-flask"></i>
@@ -77,8 +77,8 @@
             @php
                 $thisMonth = \Carbon\Carbon::now()->format('F');
             @endphp
-            <div class="shadow">
-                <table class="table table-hover">
+            <div class="container-fluid">
+                <table class="table table-hover shadow">
                     <thead>
                         <tr>
                             <td colspan="3">
@@ -116,125 +116,97 @@
                     </tbody>
                 </table>
             </div>
-            {{-- <div class="shadow">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <td colspan="3">
-                                Stock Terbesar
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">FAI Code</th>
-                            <th scope="col">Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($stocksTerbesar as $i)
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{{ $i->FAI_code }}</td>
-                                <td>{{ $i->total_quantity }}</td>
-                            </tr>
-                        @endforeach
+            <div class="d-flex stock">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Stock Terbesar</h5>
+                            <div id="barChart1"></div>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    new ApexCharts(document.querySelector("#barChart1"), {
+                                        series: [{
+                                            data: [
+                                                @foreach ($stocksTerbesar as $i)
+                                                    {{ $i->total_quantity }},
+                                                @endforeach
 
-                    </tbody>
-                </table>
-            </div> --}}
-            <div class="col-xxl-8 col-md-12">
-                <div class="d-flex me-2">
-                    <div class="col-lg-6 me-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Stock Terbesar</h5>
-                                <div id="barChart1"></div>
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#barChart1"), {
-                                            series: [{
-                                                data: [
-                                                    @foreach ($stocksTerbesar as $i)
-                                                        {{ $i->total_quantity }},
-                                                    @endforeach
-
-                                                ]
-                                            }],
-                                            chart: {
-                                                type: 'bar',
-                                                height: 350
-                                            },
-                                            plotOptions: {
-                                                bar: {
-                                                    borderRadius: 4,
-                                                    horizontal: true,
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: true
-                                            },
-                                            xaxis: {
-                                                categories: [
-                                                    @foreach ($stocksTerbesar as $i)
-                                                        '{{ $i->FAI_code }}',
-                                                    @endforeach
-                                                ],
+                                            ]
+                                        }],
+                                        chart: {
+                                            type: 'bar',
+                                            height: 200
+                                        },
+                                        plotOptions: {
+                                            bar: {
+                                                borderRadius: 2,
+                                                horizontal: true,
                                             }
-                                        }).render();
-                                    });
-                                </script>
-                                <!-- End Bar Chart -->
+                                        },
+                                        dataLabels: {
+                                            enabled: true
+                                        },
+                                        xaxis: {
+                                            categories: [
+                                                @foreach ($stocksTerbesar as $i)
+                                                    '{{ $i->FAI_code }}',
+                                                @endforeach
+                                            ],
+                                        }
+                                    }).render();
+                                });
+                            </script>
+                            <!-- End Bar Chart -->
 
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 ms-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Stock Terkecil</h5>
-                                <div id="barChart"></div>
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#barChart"), {
-                                            series: [{
-                                                data: [
-                                                    @foreach ($stocksTerkecil as $i)
-                                                        {{ $i->total_quantity }},
-                                                    @endforeach
+                </div>
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Stock Terkecil</h5>
+                            <div id="barChart"></div>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    new ApexCharts(document.querySelector("#barChart"), {
+                                        series: [{
+                                            data: [
+                                                @foreach ($stocksTerkecil as $i)
+                                                    {{ $i->total_quantity }},
+                                                @endforeach
 
-                                                ]
-                                            }],
-                                            chart: {
-                                                type: 'bar',
-                                                height: 350
-                                            },
-                                            plotOptions: {
-                                                bar: {
-                                                    borderRadius: 4,
-                                                    horizontal: true,
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: true
-                                            },
-                                            xaxis: {
-                                                categories: [
-                                                    @foreach ($stocksTerkecil as $i)
-                                                        '{{ $i->FAI_code }}',
-                                                    @endforeach
-                                                ],
+                                            ]
+                                        }],
+                                        chart: {
+                                            type: 'bar',
+                                            height: 200
+                                        },
+                                        plotOptions: {
+                                            bar: {
+                                                borderRadius: 4,
+                                                horizontal: true,
                                             }
-                                        }).render();
-                                    });
-                                </script>
-                            </div>
+                                        },
+                                        dataLabels: {
+                                            enabled: true
+                                        },
+                                        xaxis: {
+                                            categories: [
+                                                @foreach ($stocksTerkecil as $i)
+                                                    '{{ $i->FAI_code }}',
+                                                @endforeach
+                                            ],
+                                        }
+                                    }).render();
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="shadow">
-                <table class="table table-hover">
+            <div class="container-fluid">
+                <table class="table table-hover shadow ">
                     <thead>
                         <tr>
                             <td colspan="4">
@@ -269,7 +241,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-lg-4 ms-2">
+        <div class="w-3 samping">
             <div class="card">
                 <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -311,7 +283,6 @@
                         @endforeach
                     </div>
                     <div class="pagination-links mt-3">
-                        {{-- {{ $lastActivity->onEachSide(1)->links() }} --}}
                     </div>
                 </div>
             </div>
@@ -342,7 +313,7 @@
             </script>
         </div>
     </div>
-    <div class="shadow">
+    {{-- <div class="shadow">
         <div class="card p-2">
             <div class="card-title">Data Barang Tahunan</div>
             <div>
@@ -524,7 +495,7 @@
         // Render grafik tahunan
         var chartYears = new ApexCharts(document.querySelector("#chart-years"), optionsYears);
         chartYears.render();
-    </script>
+    </script> --}}
 
 
 @endsection

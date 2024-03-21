@@ -23,7 +23,7 @@ class FormulaProduct extends Component
     public function addInput()
     {
         $this->inputs[] = count($this->inputs);
-        $this->faicodeOptions[] = null;
+        $this->faicodeOptions[] = '';
         $this->emit('initialize-select2');
     }
 

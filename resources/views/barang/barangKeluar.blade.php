@@ -18,7 +18,9 @@
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Keluar
     </button>
-    <table class="table table-hover shadow">
+    <div class="table-responsive shadow">
+
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col" style="font-size: 14px;">Jenis Pengeluaran</th>
@@ -88,6 +90,8 @@
             @endforeach
         </tbody>
     </table>
+</div>
+
     <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -204,20 +208,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <label for="barang" class="form-label">FAI</label>
-                                <select name="FAI_code" id="barang" class="form-control select2" required>
-                                    <option value="" disabled selected>Select FAI</option>
-                                    @foreach ($brg as $r)
-                                        <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
-                                    @endforeach
-                                    @foreach ($prd as $r)
-                                        <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
                             <div class="col-md-6">
                                 <label for="barang" class="form-label">FAI Code</label>
                                 <div id="ehe" class="form-control">
@@ -226,11 +216,11 @@
 
                                         @foreach ($brg as $r)
                                         <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
                                     @endforeach
                                     @foreach ($prd as $r)
                                         <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;&nbsp;{{ $r->name }}</option>
+                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
                                     @endforeach
                                     </select>
                                 </div>

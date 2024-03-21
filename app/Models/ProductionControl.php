@@ -41,6 +41,16 @@ class ProductionControl extends Model
         return $this->belongsTo(Stock::class, 'no_production', 'no_production');
     }
 
+    public function product()
+    {
+        return $this->belongsTo(Products::class, 'FAI_code', 'FAI_code' );
+    }
+
+    public function qc_check()
+    {
+        return $this->belongsTo(QualityControl::class, 'FAI_code', 'FAI_code');
+    }
+
     public function cust()
     {
         return $this->belongsTo(CustList::class, 'FAI_code', 'FAI_code');

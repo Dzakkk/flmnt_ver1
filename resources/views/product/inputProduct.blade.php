@@ -13,12 +13,11 @@
             {{ session('error') }}
         </div>
     @endif
+
     @livewireStyles
     <div class="container shadow pt-2 mt-2" style="width: 800px">
         <form class="row g-3 d-flex" action="/product/store" method="POST" enctype="multipart/form-data">
             @csrf
-
-
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Daftar Product Baru</h5>
             </div>
@@ -120,6 +119,69 @@
                 <label class="form-label" for="target_order">Target Order</label>
                 <input type="number" name="target_order" class="form-control" id="target_order">
             </div>
+
+            <div class="col-md-6">
+                <label for="range" class="form-label">Range Color</label>
+                <input type="text" name="range_color" id="range" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="odour_taste" class="form-label">Odour & Taste</label>
+                <input type="text" name="odour_taste" id="odour_taste" class="form-control">
+            </div>
+
+            <div class="col-md-4">
+                <label for="sg_d20_min" class="form-label">SG d20 Min</label>
+                <input type="text" name="sg_d20_min" id="sg_d20_min" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="sg_d20_max" class="form-label">SG d20 Max</label>
+                <input type="text" name="sg_d20_max" id="sg_d20_max" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="sg_d20_target" class="form-label">SG d20 Target</label>
+                <input type="text" name="sg_d20_target" id="sg_d20_target" class="form-control">
+            </div>
+
+            <div class="col-md-4">
+                <label for="sg_d25_min" class="form-label">SG d25 Min</label>
+                <input type="text" name="sg_d25_min" id="sg_d25_min" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="sg_d25_max" class="form-label">SG d25 Max</label>
+                <input type="text" name="sg_d25_max" id="sg_d25_max" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="sg_d25_target" class="form-label">SG d25 Target</label>
+                <input type="text" name="sg_d25_target" id="sg_d25_target" class="form-control">
+            </div>
+
+            <div class="col-md-4">
+                <label for="ri_d20_min" class="form-label">RI d20 Min</label>
+                <input type="text" name="ri_d20_min" id="ri_d20_min" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="ri_d20_max" class="form-label">RI d20 Max</label>
+                <input type="text" name="ri_d20_max" id="ri_d20_max" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="ri_d20_target" class="form-label">RI d20 Target</label>
+                <input type="text" name="ri_d20_target" id="ri_d20_target" class="form-control">
+            </div>
+
+            <div class="col-md-4">
+                <label for="ri_d25_min" class="form-label">RI d25 Min</label>
+                <input type="text" name="ri_d25_min" id="ri_d25_min" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="ri_d25_max" class="form-label">RI d25 Max</label>
+                <input type="text" name="ri_d25_max" id="ri_d25_max" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="ri_d25_target" class="form-label">RI d25 Target</label>
+                <input type="text" name="ri_d25_target" id="ri_d25_target" class="form-control">
+            </div>
+
+
             <div class="col-md-6">
                 <label class="form-label" for="unit">Unit</label>
                 <div class="input-group">
@@ -137,24 +199,23 @@
                     FORMULA PRODUCT ===========================
                 </h3>
             </div>
-            
+
             <div class="col-md-6">
                 <label class="form-label" for="persentase-0">Persentase:</label>
                 <input type="text" id="persentase-0" name="persentase[]" required class="form-control">
             </div>
-            {{-- <div class="col-md-6">
-                <label class="form-label" for="kandungan-0">Kandungan:</label>
-                <select name="FAI_code_barang[]" id="kandungan-0" class="form-control select2" required>
-                    <option value="" disabled selected>Select FAI code</option>
-                    @foreach ($brg as $c)
-                        <option value="{{ $c->FAI_code }}">{{ $c->FAI_code }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
+            <script>
+                $(document).ready(function() {
+                    $('#kandungan').select2({
+                        dropdownParent: $('#ehe'),
+                        theme: 'bootstrap'
+                    });
+                });
+            </script>
             <div class="col-md-6">
                 <label for="kandungan" class="form-label">FAI Code</label>
                 <div id="ehe" class="form-control">
-                    <select name="FAI_code_barang[]" id="kandungan" class="form-control select2">
+                    <select name="FAI_code_barang[]" id="kandungan" class="form-control">
                         <option value="" selected>Select FAI Code</option>
                         @foreach ($brg as $c)
                             <option value="{{ $c->FAI_code }}">
@@ -173,8 +234,8 @@
             <button type="submit" class="btn btn-primary" id="add-input">buat</button>
             @livewireScripts
             <script>
-                document.addEventListener('livewire:load', function () {
-                    Livewire.on('initialize-select2', function () {
+                document.addEventListener('livewire:load', function() {
+                    Livewire.on('initialize-select2', function() {
                         $('.select2').select2();
                     });
                 });
@@ -182,4 +243,3 @@
         </form>
     </div>
 @endsection
-

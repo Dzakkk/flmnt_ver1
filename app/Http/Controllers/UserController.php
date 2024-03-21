@@ -30,8 +30,8 @@ class UserController extends Controller
                 return redirect('/activity');
             } elseif (Auth::user()->divisi == 'produksi') {
                 return redirect('/activity');
-            // } elseif (Auth::user()->divisi == 'kepala_sekolah') {
-            //     return redirect('kepala/dashboard');
+            } elseif (Auth::user()->divisi == 'quality') {
+                return redirect('/activity');
             }
         } else {
             return redirect('/')->withErrors('nama atau Password anda salah')->withInput();
@@ -57,7 +57,7 @@ class UserController extends Controller
             'divisi' => $request->divisi,
         ]);
 
-        return redirect('/')->with('success', 'Pegawai created successfully.');
+        return redirect('data/user')->with('success', 'Pegawai created successfully.');
     }
 
     public function userData()

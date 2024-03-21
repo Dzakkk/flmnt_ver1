@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('stock_lot', function (Blueprint $table) {
             $table->id('id_lot');
             $table->string('FAI_code');
-            $table->string('no_LOT');
+            $table->string('no_LOT')->nullable();
             $table->float('quantity', 8, 2);
-            $table->string('unit');
-            $table->float('jumlah_kemasan', 8, 2);
-            $table->string('jenis_kemasan');
-            $table->date('tanggal_produksi');
-            $table->date('tanggal_expire');
-            $table->string('id_rak');
+            $table->string('unit')->nullable();
+            $table->float('jumlah_kemasan', 8, 2)->nullable();
+            $table->string('jenis_kemasan')->nullable();
+            $table->date('tanggal_produksi')->nullable();
+            $table->date('tanggal_expire')->nullable();
+            $table->string('id_rak')->nullable();
             $table->string('no_production')->nullable();
             $table->string('no_work_order')->nullable();
             $table->timestamps();

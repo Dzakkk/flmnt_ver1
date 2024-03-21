@@ -15,9 +15,9 @@ return new class extends Migration
             $table->string('FAI_code')->primary();
             $table->string('FINA_code');
             $table->string('product_name');
-            $table->string('aspect');
-            $table->string('category');
-            $table->string('unit');
+            $table->string('aspect')->nullable();
+            $table->string('category')->nullable();
+            $table->string('unit')->nullable();
             $table->timestamps();
         });
     }

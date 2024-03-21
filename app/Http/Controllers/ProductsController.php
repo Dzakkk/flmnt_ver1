@@ -72,7 +72,6 @@ class ProductsController extends Controller
             'created_date' => 'required',
             'release_date' => 'required',
             'created_by' => 'required',
-            'note' => 'required',
             'target_order' => 'required',
             'unit' => 'required',
         ]);
@@ -98,6 +97,26 @@ class ProductsController extends Controller
             'note' => $request->note,
             'target_order' => $request->target_order,
             'unit' => $request->unit,
+
+            'range_color' => $request->range_color,
+            'odour_taste' => $request->odour_taste,
+        
+
+            'sg_d20_min' => $request->sg_d20_min,
+            'sg_d20_max' => $request->sg_d20_max,
+            'sg_d20_target' => $request->sg_d20_target,
+
+            'sg_d25_min' => $request->sg_d25_min,
+            'sg_d25_max' => $request->sg_d25_max,
+            'sg_d25_target' => $request->sg_d25_target,
+
+            'ri_d20_min' => $request->ri_d20_min,
+            'ri_d20_max' => $request->ri_d20_max,
+            'ri_d20_target' => $request->ri_d20_target,
+
+            'ri_d25_min' => $request->ri_d25_min,
+            'ri_d25_max' => $request->ri_d25_max,
+            'ri_d25_target' => $request->ri_d25_target,
         ]);
 
         try {
@@ -115,6 +134,7 @@ class ProductsController extends Controller
 
         try {
             $formula->save();
+            // dd($formula);
         } catch (\Exception $e) {
             dd($e->getMessage());
         }

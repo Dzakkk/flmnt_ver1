@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\QualityControlController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
@@ -46,7 +47,7 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('data/user', [UserController::class, 'userData']);
     Route::get('user', [UserController::class, 'user']);
-    Route::post('storeUser', [GudangController::class, 'storeUser']);
+    Route::post('storeUser', [UserController::class, 'storeUser']);
     Route::post('user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     
     Route::get('gudang', [GudangController::class, 'dataGudang']);
@@ -137,6 +138,13 @@ Route::middleware(['auth'])->group(function (){
     Route::get('error', function () {
         return view('error')->name('error');
     });
+
+
+    Route::get('qc/check/data', [QualityControlController::class, 'qc_check']);
+    Route::get('qc/check/form/{id}', [QualityControlController::class, 'qc_form'])->where('id', '(.*)');
+    Route::get('qc/check/product', [QualityControlController::class, 'qc_product']);
+
+    Route::post('qc/post', [QualityControlController::class, 'qc_post']);
 
 });
 

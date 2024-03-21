@@ -18,7 +18,7 @@ class BarangKeluarController extends Controller
 {
     public function dataKeluar()
     {
-        $brgkeluar = BarangKeluar::all();
+        $brgkeluar = BarangKeluar::paginate(10);
         $cust = Customer::all();
         $brg = Barang::all();
         $rak = RakGudang::all();

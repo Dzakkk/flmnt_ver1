@@ -28,7 +28,6 @@
 
                                 <form action="/loginUser" method="POST">
                                         @csrf
-
                                         <h1>Login</h1>
                                         <p>Please login to your account</p>
 

@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-12">
             <label for="nama" class="form-label">Nama Lengkap</label>
-            <input type="text" name="nama" class="form-control" id="nama" placeholder="Udin syamsudin">
+            <input type="text" name="name" class="form-control" id="nama" placeholder="Udin syamsudin">
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Password</label>
@@ -20,10 +20,11 @@
         <div class="col-md-6">
             <label for="role" class="form-label">role :</label>
             <div class="input-group">
-                <select class="form-select" id="role_select" name="role">
+                <select class="form-select" id="role_select" name="divisi">
                     <option value="">Pilih Divisi</option>
-                    <option value="operasional">operasional</option>
-                    <option value="produksi">produksi</option>
+                    <option value="operasional">Operasional</option>
+                    <option value="produksi">Produksi</option>
+                    <option value="quality">Quality Control</option>
                 </select>
             </div>
         </div> 

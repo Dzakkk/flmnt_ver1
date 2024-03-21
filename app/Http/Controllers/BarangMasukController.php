@@ -16,7 +16,7 @@ class BarangMasukController extends Controller
 {
     public function dataMasuk()
     {
-        $brgmasuk = BarangMasuk::all();
+        $brgmasuk = BarangMasuk::paginate(15);
         $supp = Supplier::all();
         $brg = Barang::all();
         $rak = RakGudang::all();

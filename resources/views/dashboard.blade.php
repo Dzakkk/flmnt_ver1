@@ -32,14 +32,13 @@
     <link href="{{ asset('template/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/table.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/assets/css/responsive.css') }}" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-
-    <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet">
 
     <script>
         $(document).ready(function(){
@@ -64,21 +63,8 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        {{-- <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="GET" action="/petugas/search">
-                <input type="search" name="search" placeholder="Search" title="Enter search keyword">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar --> --}}
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
 
                 <li class="nav-item dropdown pe-3">
 
@@ -272,6 +258,25 @@
                         </a>
                     </li>
                 </ul>
+            
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#Quality-nav" data-bs-toggle="collapse"
+                        href="#">
+                        <i class="ri-flask-line"></i><span>Quality Control</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="Quality-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    
+                        <li>
+                            <a href="/qc/check/data">
+                                <i class="bi bi-circle"></i><span>Inhouse Product</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/qc/check/product">
+                                <i class="bi bi-circle"></i><span>Form QC</span>
+                            </a>
+                        </li>
+                    </ul>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
@@ -420,6 +425,9 @@
             @yield('register_user')
             @yield('user')
             @yield('profile')
+            @yield('qc_check')
+            @yield('qc_form')
+            @yield('qc_product')
 
 
 

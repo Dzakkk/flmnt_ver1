@@ -15,13 +15,13 @@ class StockController extends Controller
 {
     public function lot()
     {
-        $stlot = Stock::with('brgMasuk')->get();
+        $stlot = Stock::with('brgMasuk')->paginate(15);
         return view('stock.stockLot', ['stlot' => $stlot]);
     }
 
     public function stock()
     {
-        $stock = StockBarang::with('stockLots', 'barang')->get();
+        $stock = StockBarang::with('stockLots', 'barang')->paginate(15);
 
         $startDate = Carbon::today()->subWeek()->startOfMonth();
         $endDate = Carbon::today()->subWeek()->endOfMonth();
