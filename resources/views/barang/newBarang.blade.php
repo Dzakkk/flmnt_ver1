@@ -258,26 +258,70 @@
                     <label class="form-label" for="odour_taste">odour_taste</label>
                     <input type="text" name="odour_taste" class="form-control" id="odour_taste">
                 </div>
+            
+
+
+
+
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d20">sg_d20_min</label>
+                    <input type="text" name="sg_d20_min" class="form-control" id="spesific_gravity_d20">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d25">sg_d20_max</label>
+                    <input type="text" name="sg_d20_max" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label for="refractive_index_d20" class="form-label">sg_d20_target</label>
+                    <input type="text" name="sg_d20_target" id="refractive_index_d20" class="form-control">
+                </div>
+
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d20">sg_d25_min</label>
+                    <input type="text" name="sg_d25_min" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d25">sg_d25_max</label>
+                    <input type="text" name="sg_d25_max" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label for="refractive_index_d25" class="form-label">sg_d25_target</label>
+                    <input type="text" name="sg_d25_target" id="refractive_index_d25" class="form-control">
+                </div>
+
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d20">ri_d20_min</label>
+                    <input type="text" name="ri_d20_min" class="form-control" id="spesific_gravity_d20">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d25">ri_d20_max</label>
+                    <input type="text" name="ri_d20_max" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label for="refractive_index_d20" class="form-label">ri_d20_target</label>
+                    <input type="text" name="ri_d20_target" id="refractive_index_d20" class="form-control">
+                </div>
+
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d20">ri_d25_min</label>
+                    <input type="text" name="ri_d25_min" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label class="form-label" for="spesific_gravity_d25">ri_d25_max</label>
+                    <input type="text" name="ri_d25_max" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="rigra" >
+                    <label for="refractive_index_d25" class="form-label">ri_d25_target</label>
+                    <input type="text" name="ri_d25_target" id="refractive_index_d25" class="form-control">
+                </div>
+                
+
+
                 <div class="col-md-6" id="material">
                     <label for="material" class="form-label">material</label>
                     <input type="text" name="material" id="material" class="form-control">
                 </div>
-                <div class="col-md-6" id="gra20" style="display: none;">
-                    <label class="form-label" for="spesific_gravity_d20">spesific_gravity_d20</label>
-                    <input type="text" name="spesific_gravity_d20" class="form-control" id="spesific_gravity_d20">
-                </div>
-                <div class="col-md-6" id="gra25" style="display: none;">
-                    <label class="form-label" for="spesific_gravity_d25">spesific_gravity_d25</label>
-                    <input type="text" name="spesific_gravity_d25" class="form-control" id="spesific_gravity_d25">
-                </div>
-                <div class="col-md-6" id="ind20" style="display: none;">
-                    <label for="refractive_index_d20" class="form-label">refractive_index_d20</label>
-                    <input type="text" name="refractive_index_d20" id="refractive_index_d20" class="form-control">
-                </div>
-                <div class="col-md-6" id="ind25" style="display: none;">
-                    <label class="form-label" for="refractive_index_d25">refractive_index_d25</label>
-                    <input type="text" name="refractive_index_d25" class="form-control" id="refractive_index_d25">
-                </div>
+
                 <div class="col-md-6">
                     <label for="berat_gram" class="form-label">berat_gram</label>
                     <input type="number" name="berat_gram" id="berat_gram" class="form-control">

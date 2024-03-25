@@ -21,6 +21,7 @@
                 <th scope="col">tanggal_produksi</th>
                 <th scope="col">tanggal_expire</th>
                 <th scope="col">Rak</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody id="search-results">
@@ -34,6 +35,7 @@
                     <td>{{ $i->tanggal_produksi }}</td>
                     <td>{{ $i->tanggal_expire }}</td>
                     <td>{{ $i->id_rak }}</td>
+                    <td>{{ $i->qc_check->status ?? 'Need Verification' }}</td>
                 </tr>
             @endforeach
         </tbody>

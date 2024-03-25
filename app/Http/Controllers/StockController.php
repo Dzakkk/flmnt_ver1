@@ -15,7 +15,7 @@ class StockController extends Controller
 {
     public function lot()
     {
-        $stlot = Stock::with('brgMasuk')->orderBy('created_at', 'desc')->paginate(15);
+        $stlot = Stock::with('brgMasuk', 'qc_check')->orderBy('created_at', 'desc')->paginate(15);
         return view('stock.stockLot', ['stlot' => $stlot]);
     }
 

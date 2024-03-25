@@ -21,7 +21,7 @@
                 <label for="category" class="form-label">Category</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="category">
-                        <option value="{{ $prd->category }}">Pilih Kategori</option>
+                        <option value="{{ $prd->category }}">{{ $prd->category }}</option>
                         <option value="PRODUCT BASE">PRODUCT BASE</option>
                         <option value="PRODUCT FLAVOR">PRODUCT FLAVOR</option>
                     </select>
@@ -31,7 +31,7 @@
                 <label class="form-label" for="aspect">Aspect</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="aspect">
-                        <option value="{{ $prd->aspect }}">Pilih Kategori</option>
+                        <option value="{{ $prd->aspect }}">{{ $prd->aspect }}</option>
                         <option value="LIQUID">LIQUID</option>
                         <option value="POWDER">POWDER</option>
                         <option value="SOLID">SOLID</option>
@@ -48,7 +48,7 @@
                 <label for="build_product" class="form-label">Build Product</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="build_product">
-                        <option value="{{ $prd->build_product }}">Pilih Kategori</option>
+                        <option value="{{ $prd->build_product }}">{{ $prd->build_product }}</option>
                         <option value="OSF">OSF</option>
                         <option value="FAI">FAI</option>
                     </select>
@@ -58,7 +58,7 @@
                 <label for="formula_id" class="form-label">Formula id</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="formula_id">
-                        <option value="{{ $prd->formula_id }}">Pilih Kategori</option>
+                        <option value="{{ $prd->formula_id }}">{{ $prd->formula_id }}</option>
                         <option value="ALT1">ALT1</option>
                         <option value="ALT2">ALT2</option>
                         <option value="ALT3">ALT3</option>
@@ -72,7 +72,7 @@
                 <label for="segment" class="form-label">Segment</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="segment">
-                        <option value="{{ $prd->segment }}">Pilih Kategori</option>
+                        <option value="{{ $prd->segment }}">{{ $prd->segment }}</option>
                         <option value="SAVORY">SAVORY</option>
                         <option value="SWEET">SWEET</option>
                     </select>
@@ -82,7 +82,7 @@
                 <label for="solubility" class="form-label">Solubility</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="solubility">
-                        <option value="{{ $prd->solubility }}">Pilih Kategori</option>
+                        <option value="{{ $prd->solubility }}">{{ $prd->solubility }}</option>
                         <option value="OS">OS</option>
                         <option value="WS">WS</option>
                     </select>
@@ -127,7 +127,7 @@
                 <label class="form-label" for="unit">Unit</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="unit">
-                        <option value="{{ $prd->unit }}">Pilih Kategori</option>
+                        <option value="{{ $prd->unit }}">{{ $prd->unit }}</option>
                         <option value="Kg">Kg</option>
                         <option value="Pcs">Pcs</option>
                         <option value="ml">ml</option>
@@ -140,12 +140,17 @@
                     FORMULA PRODUCT ===========================
                 </h3>
             </div>
-            @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code]) 
-                <button type="submit" class="btn btn-primary" id="add-input">Edit Formula</button>
+
+
+
+
+
+            @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code])
+            <button type="submit" class="btn btn-primary" id="add-input">Edit Formula</button>
             @livewireScripts
             <script>
-                document.addEventListener('livewire:load', function () {
-                    Livewire.on('initialize-select2', function () {
+                document.addEventListener('livewire:load', function() {
+                    Livewire.on('initialize-select2', function() {
                         $('.select2').select2();
                     });
                 });

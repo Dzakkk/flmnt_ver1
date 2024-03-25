@@ -72,6 +72,11 @@ class Stock extends Model
         return $this->belongsTo(Barang::class, 'FAI_code', 'FAI_code');
     }
 
+    public function qc_check(): BelongsTo
+    {
+        return $this->belongsTo(QualityControl::class, 'FAI_code', 'FAI_code');
+    }
+
     // /**
     //  * Get all of the production for the Stock
     //  *

@@ -188,12 +188,13 @@
                                             }
                                         },
                                         dataLabels: {
-                                            enabled: true
+                                            enabled: true,
+                                            
                                         },
                                         xaxis: {
                                             categories: [
                                                 @foreach ($stocksTerkecil as $i)
-                                                    '{{ $i->FAI_code }}',
+                                                    '{{ \App\Models\Barang::find($i->FAI_code)->name }}',
                                                 @endforeach
                                             ],
                                         }

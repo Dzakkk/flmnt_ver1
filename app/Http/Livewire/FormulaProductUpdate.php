@@ -17,22 +17,22 @@ class FormulaProductUpdate extends Component
     public $brg;
 
     public function mount($persentase, $FAI_code)
-{
-    $this->brg = Barang::all();
-    $this->prd = Products::all();
-    $this->persentase = $persentase;
-    $this->FAI_code = $FAI_code;
+    {
+        $this->brg = Barang::all();
+        $this->prd = Products::all();
+        $this->persentase = $persentase;
+        $this->FAI_code = $FAI_code;
 
-    // Inisialisasi properti faicodeOptions dan persenOptions dengan nilai dari FAI_code dan persentase
-    foreach ($this->FAI_code as $key => $value) {
-        $this->faicodeOptions[$key] = $value;
-    }
-    foreach ($this->persentase as $key => $value) {
-        $this->persenOptions[$key] = $value;
-    }
+        // Inisialisasi properti faicodeOptions dan persenOptions dengan nilai dari FAI_code dan persentase
+        foreach ($this->FAI_code as $key => $value) {
+            $this->faicodeOptions[$key] = $value;
+        }
+        foreach ($this->persentase as $key => $value) {
+            $this->persenOptions[$key] = $value;
+        }
 
-    $this->addInput();
-}
+        $this->addInput();
+    }
 
     public function updatePersentaseAndFaiCodes()
     {
@@ -50,8 +50,6 @@ class FormulaProductUpdate extends Component
         $this->faicodeOptions[] = null;
         $this->persenOptions[] = null;
         $this->emit('initialize-select2');
-
-
     }
 
     public function removeInput($index)
@@ -60,7 +58,6 @@ class FormulaProductUpdate extends Component
         unset($this->faicodeOptions[$index]);
         unset($this->persenOptions[$index]);
         $this->emit('initialize-select2');
-
     }
 
     public function render()

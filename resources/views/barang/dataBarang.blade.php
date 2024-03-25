@@ -115,19 +115,21 @@
                         <td style="font-size: 13px;">{{ $item->berat_gram }}</td>
                         <td>
                             <button type="button" class="btn btn-primary m-1 btn-update" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop-{{ $item->FAI_code }}"
+                                data-bs-target="#staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
                                 data-item-id="{{ $item->FAI_code }}">
                                 Update
                             </button>
+
                         </td>
                     </tr>
                     <?php
                     $row++;
                     ?>
 
-                    <div class="modal fade modal-dialog-scrollable" id="staticBackdrop-{{ $item->FAI_code }}"
-                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade modal-dialog-scrollable"
+                        id="staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -219,8 +221,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="supplier" class="form-label">supplier</label>
-                                                <select name="supplier" id="supplier" class="form-control select2"
-                                                    required>
+                                                <select name="supplier" id="supplier" class="form-control select2">
                                                     <option value="{{ $item->supplier_name }}">{{ $item->supplier_name }}
                                                     </option>
                                                     @foreach ($supp as $c)
@@ -319,8 +320,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="ex_origin" class="form-label">ex_origin</label>
-                                                <select name="ex_origin" id="ex_origin" class="form-control select2"
-                                                    required>
+                                                <select name="ex_origin" id="ex_origin" class="form-control select2">
                                                     <option value="{{ $item->ex_origin }}">{{ $item->ex_origin }}
                                                     </option>
                                                     @foreach ($ex as $c)
@@ -384,36 +384,77 @@
                                                 <input type="text" name="odour_taste" class="form-control"
                                                     id="odour_taste" value="{{ $item->odour_taste }}">
                                             </div>
+
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d20">sg_d20_min</label>
+                                                <input type="text" name="sg_d20_min" class="form-control"
+                                                    id="spesific_gravity_d20">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d25">sg_d20_max</label>
+                                                <input type="text" name="sg_d20_max" class="form-control"
+                                                    id="spesific_gravity_d25">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label for="refractive_index_d20" class="form-label">sg_d20_target</label>
+                                                <input type="text" name="sg_d20_target" id="refractive_index_d20"
+                                                    class="form-control">
+                                            </div>
+
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d20">sg_d25_min</label>
+                                                <input type="text" name="sg_d25_min" class="form-control"
+                                                    id="spesific_gravity_d25">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d25">sg_d25_max</label>
+                                                <input type="text" name="sg_d25_max" class="form-control"
+                                                    id="spesific_gravity_d25">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label for="refractive_index_d25" class="form-label">sg_d25_target</label>
+                                                <input type="text" name="sg_d25_target" id="refractive_index_d25"
+                                                    class="form-control">
+                                            </div>
+
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d20">ri_d20_min</label>
+                                                <input type="text" name="ri_d20_min" class="form-control"
+                                                    id="spesific_gravity_d20">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d25">ri_d20_max</label>
+                                                <input type="text" name="ri_d20_max" class="form-control"
+                                                    id="spesific_gravity_d25">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label for="refractive_index_d20" class="form-label">ri_d20_target</label>
+                                                <input type="text" name="ri_d20_target" id="refractive_index_d20"
+                                                    class="form-control">
+                                            </div>
+
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d20">ri_d25_min</label>
+                                                <input type="text" name="ri_d25_min" class="form-control"
+                                                    id="spesific_gravity_d25">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label class="form-label" for="spesific_gravity_d25">ri_d25_max</label>
+                                                <input type="text" name="ri_d25_max" class="form-control"
+                                                    id="spesific_gravity_d25">
+                                            </div>
+                                            <div class="col-md-4" id="rigra">
+                                                <label for="refractive_index_d25" class="form-label">ri_d25_target</label>
+                                                <input type="text" name="ri_d25_target" id="refractive_index_d25"
+                                                    class="form-control">
+                                            </div>
+
                                             <div class="col-md-6">
                                                 <label for="material" class="form-label">material</label>
                                                 <input type="text" name="material" id="material"
                                                     class="form-control" value="{{ $item->material }}">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label"
-                                                    for="spesific_gravity_d20">spesific_gravity_d20</label>
-                                                <input type="text" name="spesific_gravity_d20" class="form-control"
-                                                    id="spesific_gravity_d20" value="{{ $item->spesific_gravity_d20 }}">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label"
-                                                    for="spesific_gravity_d25">spesific_gravity_d25</label>
-                                                <input type="text" name="spesific_gravity_d25" class="form-control"
-                                                    id="spesific_gravity_d25" value="{{ $item->spesific_gravity_d25 }}">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="refractive_index_d20"
-                                                    class="form-label">refractive_index_d20</label>
-                                                <input type="text" name="refractive_index_d20"
-                                                    id="refractive_index_d20" class="form-control"
-                                                    value="{{ $item->refractive_index_d20 }}">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label"
-                                                    for="refractive_index_d25">refractive_index_d25</label>
-                                                <input type="text" name="refractive_index_d25" class="form-control"
-                                                    id="refractive_index_d25" value="{{ $item->refractive_index_d25 }}">
-                                            </div>
+
                                             <div class="col-md-6">
                                                 <label for="berat_gram" class="form-label">berat_gram</label>
                                                 <input type="number" name="berat_gram" id="berat_gram"

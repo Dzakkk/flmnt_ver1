@@ -42,16 +42,21 @@
                     <label for="kandungan-{{ $key }}" class="form-label">FAI Code</label>
                     <div id="ehe" class="form-control">
                         <select name="FAI_code_barang[]" id="kandungan-{{ $key }}" id="barang1"
-                            class="form-control select2" wire:model="faicodeOptions.{{ $key }}" wire:ignore>
-                            <option value="" selected>Select FAI Code</option>
+                            class="form-control select2" wire:model="faicodeOptions.{{ $key }}"
+                            wire:ignore>
+                            <option value="">Select</option>
                             @foreach ($brg as $c)
+                              
                                 <option value="{{ $c->FAI_code }}">
                                     {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
                             @endforeach
+
                             @foreach ($prd as $c)
+                               
                                 <option value="{{ $c->FAI_code }}">
                                     {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
                             @endforeach
+
                         </select>
                     </div>
                 </div>
@@ -78,4 +83,3 @@
 
 
 </div>
-

@@ -60,6 +60,19 @@ class UserController extends Controller
         return redirect('data/user')->with('success', 'Pegawai created successfully.');
     }
 
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->update([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+            'divisi' => $request->divisi,
+        ]);
+
+        return redirect('/data/user');
+    }
+
     public function userData()
     {
         $data = User::all();

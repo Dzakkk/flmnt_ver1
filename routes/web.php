@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('user', [UserController::class, 'user']);
     Route::post('storeUser', [UserController::class, 'storeUser']);
     Route::post('user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    Route::post('user/update/{id}', [UserController::class, 'update'])->name('user.update');
+
     
     Route::get('gudang', [GudangController::class, 'dataGudang']);
     Route::post('rak/store', [GudangController::class, 'storeRak']);
@@ -120,8 +122,6 @@ Route::middleware(['auth'])->group(function (){
     Route::get('production/form', [StockProductController::class, 'productionControl'])->name('production.form');
     Route::post('production/control/store', [StockProductController::class, 'productProduction']);
     
-    
-    // Route::get('pdf', [StockController::class, 'view']);
     Route::get('/pdf', [StockProductController::class, 'generatePDF']);
     
     Route::get('production/control', [StockProductController::class, 'dataProductionControl']);
