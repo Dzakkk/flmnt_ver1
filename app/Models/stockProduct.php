@@ -48,4 +48,9 @@ class stockProduct extends Model
     {
         return $this->belongsTo(Products::class, 'FAI_code', 'FAI_code');
     }
+
+    public function qc_check(): BelongsTo
+    {
+        return $this->belongsTo(QualityControl::class, 'FAI_code', 'FAI_code');
+    }
 }

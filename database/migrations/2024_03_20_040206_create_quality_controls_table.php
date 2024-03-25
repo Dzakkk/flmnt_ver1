@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('ri_d25_min')->nullable();
             $table->string('ri_d25_max')->nullable();
             $table->string('ri_d25_target')->nullable();
-            $table->string('sg_d20_value')->nullable();
+            $table->float('sg_d20_value', 8, 3)->nullable();
             $table->float('sg_d25_value', 8, 3)->nullable();
             $table->float('ri_d20_value', 8, 3)->nullable();
             $table->float('ri_d25_value', 8, 3)->nullable();
@@ -46,9 +46,6 @@ return new class extends Migration
             $table->string('sg_d25_result')->nullable();
             $table->string('ri_d20_result')->nullable();
             $table->string('ri_d25_result')->nullable();
-            $table->string('color_parameter')->nullable();
-            $table->string('odour_parameter')->nullable();
-            $table->string('taste_parameter')->nullable();
             $table->string('color_value')->nullable();
             $table->string('odour_value')->nullable();
             $table->string('taste_value')->nullable();

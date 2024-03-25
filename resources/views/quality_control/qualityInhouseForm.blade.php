@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('qc_form')
+@section('qc_form_inhouse')
     <style>
         /* Default styling for text */
         .demo {

@@ -268,12 +268,12 @@
     
                         <li>
                             <a href="/qc/check/data">
-                                <i class="bi bi-circle"></i><span>Inhouse Product</span>
+                                <i class="bi bi-circle"></i><span>Checked Product</span>
                             </a>
                         </li>
                         <li>
                             <a href="/qc/check/product">
-                                <i class="bi bi-circle"></i><span>Form QC</span>
+                                <i class="bi bi-circle"></i><span>Un-Checked QC</span>
                             </a>
                         </li>
                     </ul>
@@ -426,7 +426,8 @@
             @yield('user')
             @yield('profile')
             @yield('qc_check')
-            @yield('qc_form')
+            @yield('qc_form_inhouse')
+            @yield('qc_form_incoming')
             @yield('qc_product')
 
 

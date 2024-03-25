@@ -10,6 +10,8 @@
                 <th scope="col">Aspect</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Unit</th>
+                <th scope="col">Status</th>
+
             </tr>
         </thead>
         <tbody>
@@ -25,6 +27,7 @@
                     <td>{{ $i->aspect }}</td>
                     <td>{{ $totalQuantity }}</td>
                     <td>{{ $i->unit }}</td>
+                    <td>{{ $i->qc_check->status ?? 'Need Verification' }}</td>
                 </tr>
             @endforeach
         </tbody>

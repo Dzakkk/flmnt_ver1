@@ -20,21 +20,25 @@
 
 
     <div class="form-floating mb-4">
-        <input type="text" id="search" name="search" placeholder="Search..." class="form-control">
-
-        <label for="search" class="form-label"><i class="bi bi-search"></i>&nbsp;&nbsp;&nbsp;Search</label>
+        <form action="/barang/cari" method="GET" class="form-floating mb-3 d-flex">
+            <div class="form-floating container-fluid">
+                <input type="text" id="search" name="search" placeholder="Search..." class="form-control">
+                <label for="search" class="form-label ms-3"><i class="bi bi-search"></i>&nbsp;&nbsp;&nbsp;Search</label>
+            </div>
+            <button type="submit" class="btn"><i class="bi bi-search"></i></button>
+        </form>
     </div>
 
-    <a class="btn btn-info m-1" href="/newBarang">
+    <a class="btn btn-info shadow m-2" href="/newBarang">
         Pendaftaran Barang
     </a>
     @php
         $row = 1;
     @endphp
-    <a href="/barangMasuk" class="btn btn-info m-1">Barang Masuk</a>
-    <div class="table-responsive respon-table">
+    <a href="/barangMasuk" class="btn btn-info shadow m-2">Barang Masuk</a>
+    <div class="table-responsive respon-table shadow">
 
-        <table class="table table-hover table-striped shadow mt-3">
+        <table class="table table-hover table-striped mt-3">
             <thead>
                 <tr>
                     <th scope="col">#</th>

@@ -29,7 +29,7 @@ class StockProductController extends Controller
     public function stock()
     {
         // $stock = stockProduct::all();
-        $stock = stockProduct::with('stockLot', 'product')->get();
+        $stock = stockProduct::with('stockLot', 'qc_check', 'product')->get();
         return view('stock.stockProduct', ['stock' => $stock]);
     }
 
@@ -110,7 +110,7 @@ class StockProductController extends Controller
         session(['customer_code' => $request->input('customer_code')]);
         session(['PO_customer' => $request->input('PO_customer')]);
 
-        return redirect('production/form')->with('success', 'Stock issued successfully.');
+        return redirect('production/form')->with('success', 'redirect.');
     }
 
     public function productionControl()
@@ -231,9 +231,15 @@ class StockProductController extends Controller
             $production->save();
 
             $rakGudang = RakGudang::where('id_rak', $id_rak)->firstOrFail();
-            $rakGudang->kapasitas -= $request->quantity;
-            $rakGudang->save();
 
+            if ($rakGudang->kapasitas >= $request->quantity) {
+                $rakGudang->kapasitas -= $request->quantity;
+                $rakGudang->save();
+            } else {
+                session()->flash('error', 'gudang Penuh');
+                return redirect('production/form')->with('error', 'Gudang Penuh');
+                
+            }
 
             $newCust = Customer::where('customer_name', $request->customer_name)->first();
 
@@ -259,7 +265,6 @@ class StockProductController extends Controller
             $custNew->save();
             }
                 
-
             $cust = CustList::where('customer_name', $request->customer_name)
                 ->first();
 
@@ -328,8 +333,9 @@ class StockProductController extends Controller
                         $lotStock->quantity -= $hasilPersen;
                         $lotStock->save();
                         break;
-                    } elseif ($lotStock->quantity <= $hasilPersen) {
+                    } elseif ($lotStock->quantity < $hasilPersen) {
                         return redirect('/production/form')->with('error', 'stock tidak mencukupi');
+                        session()->flash('error', 'Stock Tidak mencukupi');
                     }
                 }
             }
@@ -348,7 +354,7 @@ class StockProductController extends Controller
     private function pindah()
     {
 
-        return view('formula');
+        return redirect('formula');
     }
 
     public function dataProductionControl()

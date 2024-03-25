@@ -206,17 +206,27 @@
             </div>
             <script>
                 $(document).ready(function() {
-                    $('#kandungan').select2({
-                        dropdownParent: $('#ehe'),
-                        theme: 'bootstrap'
+
+                    $("select").select2({
+                        tags: true
+                    });
+
+                    $("select").on("select2:select", function(evt) {
+                        var element = evt.params.data.element;
+                        var $element = $(element);
+
+                        $element.detach();
+                        $(this).append($element);
+                        $(this).trigger("change");
                     });
                 });
             </script>
+
             <div class="col-md-6">
                 <label for="kandungan" class="form-label">FAI Code</label>
                 <div id="ehe" class="form-control">
-                    <select name="FAI_code_barang[]" id="kandungan" class="form-control">
-                        <option value="" selected>Select FAI Code</option>
+                    <select name="FAI_code_barang[]" id="kandungan" multiple="multiple" class="form-control">
+                        <option value="">Select FAI Code</option>
                         @foreach ($brg as $c)
                             <option value="{{ $c->FAI_code }}">
                                 {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
@@ -233,13 +243,13 @@
             @livewire('formula-product')
             <button type="submit" class="btn btn-primary" id="add-input">buat</button>
             @livewireScripts
-            <script>
+            {{-- <script>
                 document.addEventListener('livewire:load', function() {
                     Livewire.on('initialize-select2', function() {
                         $('.select2').select2();
                     });
                 });
-            </script>
+            </script> --}}
         </form>
     </div>
 @endsection

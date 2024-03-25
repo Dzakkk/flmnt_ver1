@@ -141,10 +141,20 @@ Route::middleware(['auth'])->group(function (){
 
 
     Route::get('qc/check/data', [QualityControlController::class, 'qc_check']);
-    Route::get('qc/check/form/{id}', [QualityControlController::class, 'qc_form'])->where('id', '(.*)');
+    Route::get('qc/check/form/inhouse/{id}', [QualityControlController::class, 'qc_form_inhouse'])->where('id', '(.*)');
+    Route::get('qc/check/form/incoming/{id}', [QualityControlController::class, 'qc_form_incoming'])->where('id', '(.*)');
+
     Route::get('qc/check/product', [QualityControlController::class, 'qc_product']);
 
     Route::post('qc/post', [QualityControlController::class, 'qc_post']);
+
+
+
+    Route::get('stock/cari', [StockController::class, 'search']);
+    Route::get('barang/cari', [BarangController::class, 'search']);
+    Route::get('lot/cari', [StockController::class, 'search_lot']);
+
+
 
 });
 

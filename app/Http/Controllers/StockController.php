@@ -15,13 +15,20 @@ class StockController extends Controller
 {
     public function lot()
     {
-        $stlot = Stock::with('brgMasuk')->paginate(15);
+        $stlot = Stock::with('brgMasuk')->orderBy('created_at', 'desc')->paginate(15);
         return view('stock.stockLot', ['stlot' => $stlot]);
     }
 
     public function stock()
     {
-        $stock = StockBarang::with('stockLots', 'barang')->paginate(15);
+        $stock = StockBarang::with(['stockLots' => function ($query) {
+            $query->where('FAI_code', 'FAI_code') // Replace 'FAI_code' with the actual code
+                ->latest()
+                ->take(1); // Retrieve only the latest stockLots for each StockBarang
+        }, 'barang'])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(15);
+
 
         $startDate = Carbon::today()->subWeek()->startOfMonth();
         $endDate = Carbon::today()->subWeek()->endOfMonth();
@@ -66,14 +73,38 @@ class StockController extends Controller
         try {
             $searchTerm = $request->input('search');
 
-            $stlot = Stock::where('FAI_code', 'like', '%' . $searchTerm . '%')
-                ->orWhere('no_LOT', 'like', '%' . $searchTerm . '%')
-                ->orWhere('id_rak', 'like', '%' . $searchTerm . '%')
+            $stock = StockBarang::where('FAI_code', 'like', '%' . $searchTerm . '%')
+                ->orWhere('product_name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
+                ->paginate(8);
+
+            $startDate = Carbon::today()->subWeek()->startOfMonth();
+            $endDate = Carbon::today()->subWeek()->endOfMonth();
+
+            $usageQuantities = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
+                ->groupBy('FAI_code')
+                ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
                 ->get();
 
-            return response()->json(['stlot' => $stlot]);
+            return view('stock.stock', ['stock' => $stock, 'usageQuantities' => $usageQuantities]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error'], 500);
+            return redirect('stock/barang');
+        }
+    }
+
+    public function search_lot(Request $request)
+    {
+        try {
+            $searchTerm = $request->input('search');
+
+            $stlot = Stock::with('brgMasuk')->where('FAI_code', 'like', '%' . $searchTerm . '%')
+                ->orWhere('no_LOT', 'like', '%' . $searchTerm . '%')
+                ->orWhere('quantity', 'like', '%' . $searchTerm . '%')
+                ->paginate(8);
+
+            return view('stock.stockLot', ['stlot' => $stlot]);
+        } catch (\Exception $e) {
+            return redirect('stock/barang');
         }
     }
 

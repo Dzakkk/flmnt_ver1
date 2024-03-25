@@ -7,7 +7,7 @@
                     wire:model="inputs.{{ $key }}" class="form-control">
             </div>
             <div class="col-md-7 d-flex">
-                <div class="me-2">
+                {{-- <div class="me-2">
                     <label for="kandungan-{{ $key }}" class="form-label">FAI Code</label>
                     <div id="ehe" class="form-control">
                         <select name="FAI_code_barang[]" id="kandungan-{{ $key }}" id="barang1"
@@ -23,7 +23,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div>
                     <label for="" class="form-label">&nbsp;</label>
                     <button wire:click.prevent="removeInput({{ $key }})" class="btn btn-danger form-control"
@@ -37,7 +37,7 @@
     <button wire:click.prevent="addInput" class="btn btn-primary" type="button" id="add-input">Add Input</button>
 </div>
 
-@push('scripts')
+{{-- @push('scripts')
 <script>
     $(document).ready(function() {
         $('.select2').select2();
@@ -47,7 +47,7 @@
         });
     });
 </script>
-@endpush
+@endpush --}}
 {{-- @push('sss')
 <script>
     $(document).ready(function() {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Customer;
 use App\Models\ProductionControl;
@@ -19,7 +20,7 @@ class QualityControlController extends Controller
         return view('quality_control.qualityCheck', compact('qc'));
     }
 
-    public function qc_form($id)
+    public function qc_form_inhouse($id)
     {
         $parts = explode('_', $id, 2);
 
@@ -38,12 +39,36 @@ class QualityControlController extends Controller
 
         // dd($no_production,$no_LOT, $nl, $fai, $prd);
 
-        return view('quality_control.qualityForm', compact('nl', 'prd', 'cust'));
+        return view('quality_control.qualityInhouseForm', compact('nl', 'prd', 'cust'));
+    }
+
+    public function qc_form_incoming($id)
+    {
+        $parts = explode('_', $id, 3);
+
+        $tanggal = $parts[0] ?? null;
+        $no_LOT = $parts[1] ?? null;
+        $brg = $parts[2] ?? null;
+
+
+        // dd($no_production, $no_LOT);
+
+        $cust = Customer::all();
+
+        $nl = Stock::where('no_LOT', $no_LOT)->where('created_at', $tanggal)->first();
+
+        $fai = Stock::where('no_LOT', $no_LOT)->where('created_at', $tanggal)->value('FAI_code');
+
+        $prd = Barang::where('FAI_code', $fai)->first();
+
+        // dd($no_production,$no_LOT, $nl, $fai, $prd);
+
+        return view('quality_control.qualityIncomingForm', compact('nl', 'prd', 'cust'));
     }
 
     public function qc_product()
     {
-        $brg = BarangMasuk::all();
+        $brg = BarangMasuk::with('stockL','barang' ,'qc_check')->get();
         $pro = ProductionControl::with('stockl', 'product', 'qc_check')->get();
 
         return view('quality_control.productCheck', compact('brg', 'pro'));

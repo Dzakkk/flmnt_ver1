@@ -93,49 +93,49 @@
                                 <input type="text" name="id_supplier" class="form-control" id="exampleInputEmail1">
                             </div> --}}
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">SUPPLIER NAME</label>
-                                <input type="text" name="supplier_name" class="form-control" id="exampleInputPassword1">
+                                <label for="name" class="form-label">SUPPLIER NAME</label>
+                                <input type="text" name="supplier_name" class="form-control" id="name">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">TELEPHONE</label>
-                                <input type="text" name="telephone" class="form-control" id="exampleInputEmail1">
+                                <label for="telephone" class="form-label">TELEPHONE</label>
+                                <input type="text" name="telephone" class="form-control" id="telephone">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">CONTACT NAME</label>
+                                <label for="contact" class="form-label">CONTACT NAME</label>
                                 <input type="text" name="contact_name" class="form-control"
-                                    id="exampleInputPassword1">
+                                    id="contact">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">STATUS</label>
-                                <input type="text" name="status" class="form-control" id="exampleInputEmail1">
+                                <label for="status" class="form-label">STATUS</label>
+                                <input type="text" name="status" class="form-control" id="status">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">ADDRESS</label>
-                                <input type="text" name="address" class="form-control" id="exampleInputPassword1">
+                                <label for="address" class="form-label">ADDRESS</label>
+                                <input type="text" name="address" class="form-control" id="address">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">CITY</label>
-                                <input type="text" name="city" class="form-control" id="exampleInputEmail1">
+                                <label for="city" class="form-label">CITY</label>
+                                <input type="text" name="city" class="form-control" id="city">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">PROVINCES</label>
-                                <input type="text" name="provinces" class="form-control" id="exampleInputPassword1">
+                                <label for="provinces" class="form-label">PROVINCES</label>
+                                <input type="text" name="provinces" class="form-control" id="provinces">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">POSTAL CODE</label>
-                                <input type="text" name="postal_code" class="form-control" id="exampleInputEmail1">
+                                <label for="post_code" class="form-label">POSTAL CODE</label>
+                                <input type="text" name="postal_code" class="form-control" id="post_code">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">COUNTRY</label>
-                                <input type="text" name="country" class="form-control" id="exampleInputPassword1">
+                                <label for="country" class="form-label">COUNTRY</label>
+                                <input type="text" name="country" class="form-control" id="country">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">EMAIL</label>
                                 <input type="email" name="email" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">NOTE</label>
-                                <input type="text" name="note" class="form-control" id="exampleInputPassword1">
+                                <label for="note" class="form-label">NOTE</label>
+                                <input type="text" name="note" class="form-control" id="note">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

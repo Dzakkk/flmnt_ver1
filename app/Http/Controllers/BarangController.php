@@ -24,6 +24,23 @@ class BarangController extends Controller
         return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);
     }
 
+    public function search(Request $request)
+    {
+        try {
+            $searchTerm = $request->input('search');
+
+            $brg = Barang::where('FAI_code', 'like', '%' . $searchTerm . '%')
+                ->orWhere('name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
+                ->paginate(8);
+                $supp = Supplier::all();
+                $ex = Manufacturer::all();
+            return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);
+        } catch (\Exception $e) {
+            return redirect('/barang');
+        }
+    }
+
     public function import()
     {
         Excel::import(new BarangImport, request()->file('file'));
@@ -56,22 +73,22 @@ class BarangController extends Controller
             'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
             'halal_certification' => 'required',
             'name' => 'required',
-            'common_name' => 'required',
+            // 'common_name' => 'required',
             // 'brandProduct_code' => 'required',
             // 'chemical_IUPACname' => 'required',
             // 'CAS_number' => 'required',
             'ex_origin' => 'required',
             'initial_ex' => 'required',
-            'country_of_origin' => 'required',
-            'remark' => 'required',
-            'usage_level' => 'required',
+            // 'country_of_origin' => 'required',
+            // 'remark' => 'required',
+            // 'usage_level' => 'required',
             'harga_ex_work_USD' => 'required',
             'harga_CIF_USD' => 'required',
             'harga_MOQ_USD' => 'required',
-            'appearance' => 'required',
-            'color_rangeColor' => 'required',
+            // 'appearance' => 'required',
+            // 'color_rangeColor' => 'required',
             // 'odour_taste' => 'required',
-            'material' => 'required',
+            // 'material' => 'required',
             // 'spesific_gravity_d20' => 'required',
             // 'spesific_gravity_d25' => 'required',
             // 'refractive_index_d20' => 'required',
@@ -203,10 +220,10 @@ class BarangController extends Controller
             'color_rangeColor' => 'required',
             'odour_taste' => 'required',
             'material' => 'required',
-            'spesific_gravity_d20' => 'required',
-            'spesific_gravity_d25' => 'required',
-            'refractive_index_d20' => 'required',
-            'refractive_index_d25' => 'required',
+            // 'spesific_gravity_d20' => 'required',
+            // 'spesific_gravity_d25' => 'required',
+            // 'refractive_index_d20' => 'required',
+            // 'refractive_index_d25' => 'required',
             'berat_gram' => 'required',
         ]);
 
@@ -248,10 +265,23 @@ class BarangController extends Controller
             'color_rangeColor' => $request->color_rangeColor,
             'odour_taste' => $request->odour_taste,
             'material' => $request->material,
-            'spesific_gravity_d20' => $request->spesific_gravity_d20,
-            'spesific_gravity_d25' => $request->spesific_gravity_d25,
-            'refractive_index_d20' => $request->refractive_index_d20,
-            'refractive_index_d25' => $request->refractive_index_d25,
+            'odour_taste' => $request->odour_taste,
+            'material' => $request->material,
+            'sg_d20_min' => $request->sg_d20_min,
+            'sg_d20_max' => $request->sg_d20_max,
+            'sg_d20_target' => $request->sg_d20_target,
+
+            'sg_d25_min' => $request->sg_d25_min,
+            'sg_d25_max' => $request->sg_d25_max,
+            'sg_d25_target' => $request->sg_d25_target,
+
+            'ri_d20_min' => $request->ri_d20_min,
+            'ri_d20_max' => $request->ri_d20_max,
+            'ri_d20_target' => $request->ri_d20_target,
+
+            'ri_d25_min' => $request->ri_d25_min,
+            'ri_d25_max' => $request->ri_d25_max,
+            'ri_d25_target' => $request->ri_d25_target,
             'berat_gram' => $request->berat_gram,
         ]);
 
@@ -277,25 +307,5 @@ class BarangController extends Controller
     }
 
 
-    public function search(Request $request)
-    {
-        try {
-            $searchTerm = $request->input('search');
-
-            // Perform search using $searchTerm
-            $brg = Barang::where('FAI_code', 'like', '%' . $searchTerm . '%')
-                ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
-                ->orWhere('documentation', 'like', '%' . $searchTerm . '%')
-                ->orWhere('name', 'like', '%' . $searchTerm . '%')
-                ->orWhere('common_name', 'like', '%' . $searchTerm . '%')
-                ->orWhere('country_of_origin', 'like', '%' . $searchTerm . '%')->get();
-
-
-            // Return JSON response with search results
-            return response()->json(['brg' => $brg]);
-        } catch (\Exception $e) {
-            // Handle errors and return a JSON response with status 500 (Internal Server Error)
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
-    }
+    
 }

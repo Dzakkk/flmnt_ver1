@@ -250,7 +250,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
-                                                <input type="number" name="qty_masuk_LOT" class="form-control"
+                                                <input type="string" name="qty_masuk_LOT" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->qty_masuk_LOT }}">
                                             </div>
                                             <div class="col-md-6">
@@ -462,7 +462,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
-                                <input type="number" name="qty_masuk_LOT" class="form-control" id="exampleInputEmail1">
+                                <input type="string" name="qty_masuk_LOT" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label" for="unit">unit</label>
