@@ -20,8 +20,41 @@ class ProductsController extends Controller
 {
     public function dataProduct()
     {
-        $prd = Products::all();
-        return view('product.data', ['prd' => $prd]);
+        $prd = Products::with('formula')->paginate(8);
+        $frm = ProductFormula::all();
+        $rak = RakGudang::all();
+        $cust = Customer::all();
+        $custList = CustList::all();
+        $kemasan = Packaging::all();
+        return view('product.data', compact('prd', 'rak', 'cust', 'custList', 'kemasan'));
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            $searchTerm = $request->input('search');
+
+            $prd = Products::with('formula')->where('FAI_code', 'like', '%' . $searchTerm . '%')
+                ->orWhere('product_name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
+                ->orWhere('segment', 'like', '%' . $searchTerm . '%')
+                ->orWhere('category', 'like', '%' . $searchTerm . '%')
+                ->orWhere('formula_id', 'like', '%' . $searchTerm . '%')
+
+                ->paginate(8);
+
+                $frm = ProductFormula::all();
+                $rak = RakGudang::all();
+                $cust = Customer::all();
+                $custList = CustList::all();
+                $kemasan = Packaging::all();    
+        
+        
+                
+            return view('product.data', compact('prd', 'rak', 'custList', 'kemasan', 'cust'));
+        } catch (\Exception $e) {
+            return redirect('/product');
+        }
     }
 
     public function formula()
@@ -121,6 +154,7 @@ class ProductsController extends Controller
 
         try {
             $Products->save();
+            // dd($Products);
         } catch (\Exception $e) {
             dd($e->getMessage());
         }

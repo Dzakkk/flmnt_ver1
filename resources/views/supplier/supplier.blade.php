@@ -4,6 +4,8 @@
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Tambah Supplier
     </button>
+    <div class="table-responsive">
+
     <table class="table table-hover">
         <thead>
             <tr>
@@ -75,6 +77,7 @@
             @endforeach
         </tbody>
     </table>
+</div>
     <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -156,17 +159,14 @@
             var customerForm = document.getElementById('customerForm');
 
             modalElement.addEventListener('shown.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditampilkan
             });
 
             modalElement.addEventListener('hidden.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditutup
                 customerForm.reset();
             });
 
             if (modalCloseButton && customerForm) {
                 modalCloseButton.addEventListener('click', function() {
-                    // Mengosongkan nilai formulir
                     customerForm.reset();
                 });
             }

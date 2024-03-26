@@ -43,14 +43,14 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">FAI_code</th>
-                    <th scope="col">FINA_code</th>
-                    <th scope="col" colspan="2">Name</th>
-                    <th scope="col">common_name</th>
-                    <th scope="col">kategori_barang</th>
+                    {{-- <th scope="col">FINA_code</th> --}}
+                    <th scope="col">Name</th>
+                    {{-- <th scope="col">common_name</th> --}}
+                    <th scope="col">kategori barang</th>
                     <th scope="col">aspect</th>
-                    <th scope="col">reOrder_qty</th>
+                    <th scope="col">reOrder qty</th>
                     <th scope="col">unit</th>
-                    <th scope="col">supplier</th>
+                    {{-- <th scope="col">supplier</th>
                     <th scope="col">packaging_type</th>
                     <th scope="col">documentation</th>
                     <th scope="col">halal_certification</th>
@@ -73,7 +73,7 @@
                     <th scope="col">spesific_gravity_d25</th>
                     <th scope="col">refractive_index_d20</th>
                     <th scope="col">refractive_index_d25</th>
-                    <th scope="col">berat_gram</th>
+                    <th scope="col">berat_gram</th> --}}
                     <th scope="col">#</th>
                 </tr>
             </thead>
@@ -82,14 +82,14 @@
                     <tr>
                         <th scope="row" style="font-size: 13px;">{{ $row }}</th>
                         <td style="font-size: 13px;">{{ $item->FAI_code }}</td>
-                        <td style="font-size: 13px;">{{ $item->FINA_code }}</td>
+                        {{-- <td style="font-size: 13px;">{{ $item->FINA_code }}</td> --}}
                         <td style="font-size: 13px;">{!! str_replace(' ', '&nbsp;', $item->name) !!}</td>
-                        <td style="font-size: 13px;">{{ $item->common_name }}</td>
+                        {{-- <td style="font-size: 13px;">{{ $item->common_name }}</td> --}}
                         <td style="font-size: 13px;">{{ $item->kategori_barang }}</td>
                         <td style="font-size: 13px;">{{ $item->aspect }}</td>
                         <td style="font-size: 13px;">{{ $item->reOrder_qty }}</td>
                         <td style="font-size: 13px;">{{ $item->unit }}</td>
-                        <td style="font-size: 13px;">{{ $item->supplier }}</td>
+                        {{-- <td style="font-size: 13px;">{{ $item->supplier }}</td>
                         <td style="font-size: 13px;">{{ $item->packaging_type }}</td>
                         <td style="font-size: 13px;">{{ $item->documentation }}</td>
                         <td style="font-size: 13px;">{{ $item->halal_certification }}</td>
@@ -112,24 +112,82 @@
                         <td style="font-size: 13px;">{{ $item->spesific_gravity_d25 }}</td>
                         <td style="font-size: 13px;">{{ $item->refractive_index_d20 }}</td>
                         <td style="font-size: 13px;">{{ $item->refractive_index_d25 }}</td>
-                        <td style="font-size: 13px;">{{ $item->berat_gram }}</td>
+                        <td style="font-size: 13px;">{{ $item->berat_gram }}</td> --}}
                         <td>
-                            <button type="button" class="btn btn-primary m-1 btn-update" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-success m-1 btn-update" data-bs-toggle="modal" title="Edit"
+                                data-bs-target="#viewBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
+                                data-item-id="{{ $item->FAI_code }}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning m-1 btn-update" data-bs-toggle="modal" title="View"
                                 data-bs-target="#staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
                                 data-item-id="{{ $item->FAI_code }}">
-                                Update
+                                <i class="ri-edit-line"></i>
                             </button>
-
                         </td>
                     </tr>
                     <?php
                     $row++;
                     ?>
 
+                    {{-- View Modal --}}
+
+                    <div class="modal fade" id="viewBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ $item->FAI_code }} -
+                                        {{ $item->name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        @php
+                                            $reOrderQty = $item->reOrder_qty;
+                                            $totalQuantity = $item->stock->where('FAI_code', $item->FAI_code)->sum('quantity');
+                                            $lot = $item->stock->where('FAI_code', $item->FAI_code)->get();
+
+                                            $weekUsage = $usageQuantities->where('FAI_code', $item->FAI_code)->first();
+                                        @endphp
+                                        <div>
+                                            Total Quantity = {{ $totalQuantity }}&nbsp;{{ $item->Kg }}
+                                        </div>
+                                        <div>
+                                            Usage Month
+                                            @if ($weekUsage)
+                                                {{ $weekUsage->total_usage }}
+                                            @else
+                                                0
+                                            @endif
+                                            kg
+                                        </div>
+                                       
+                                        <div>
+                                            <ul>
+                                                <li>Lot - Qty - Rak</li>
+                                            @foreach ($lot as $i)
+                                                <li>{{ $i->no_LOT }} - {{ $i->quantity }} - {{ $i->id_rak }}</li>
+                                            @endforeach
+                                        </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    {{-- edit modal --}}
                     <div class="modal fade modal-dialog-scrollable"
                         id="staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                        aria-hidden="true">
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -474,8 +532,9 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $brg->links() }}
+
     </div>
-    {{ $brg->links() }}
 
 
     <a href="/barang/export" class="btn btn-success">export excel <i class="ri-file-excel-2-fill"></i></a>

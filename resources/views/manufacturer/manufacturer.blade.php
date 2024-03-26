@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Tambah Manufacturer
     </button>
-
+<div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
@@ -76,7 +76,7 @@
             @endforeach
         </tbody>
     </table>
-
+</div>
     <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

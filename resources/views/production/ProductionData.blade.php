@@ -9,14 +9,14 @@
             <th scope="col">FAI Code</th>
             <th scope="col">cleanless</th>
             <th scope="col">oddorless</th>
-            <th scope="col">preparation_start</th>
-            <th scope="col">preparation_finish</th>
-            <th scope="col">wheiging_start</th>
-            <th scope="col">wheiging_finish</th>
-            <th scope="col">RPM</th>
-            <th scope="col">Temperature</th>
+            <th scope="col">Tanggal Produksi</th>
+            <th scope="col">Tanggal Expire</th>
+            <th scope="col">QC Checked</th>
+            <th scope="col">Status</th>
+            <th scope="col">Note</th>
+            {{-- <th scope="col">Temperature</th>
             <th scope="col">Setting Time Mixing</th>
-            <th scope="col">QC Checked </th>
+            <th scope="col">QC Checked </th> --}}
             <th scope="col">Warehouse</th>
             <th scope="col">ACTION</th>
         </tr>
@@ -28,21 +28,21 @@
                 <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
                 <td style="font-size: 14px;">{{ $i->cleanless }}</td>
                 <td style="font-size: 14px;">{{ $i->oddorless }}</td>
-                <td style="font-size: 14px;">{{ $i->preparation_start }}</td>
-                <td style="font-size: 14px;">{{ $i->preparation_finish }}</td>
-                <td style="font-size: 14px;">{{ $i->wheiging_start }}</td>
-                <td style="font-size: 14px;">{{ $i->wheiging_finish }}</td>
-                <td style="font-size: 14px;">{{ $i->rpm }}</td>
-                <td style="font-size: 14px;">{{ $i->temperature }}</td>
-                <td style="font-size: 14px;">{{ $i->setting_time_mixing }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->tanggal_produksi }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->tanggal_expire }}</td>
                 <td style="font-size: 14px;">{{ $i->QC_checked }}</td>
+                <td style="font-size: 14px;">{{ $i->qc_check->status }}</td>
+                <td style="font-size: 14px;">{{ $i->qc_check->note }}</td>
+                {{-- <td style="font-size: 14px;">{{ $i->temperature }}</td>
+                <td style="font-size: 14px;">{{ $i->setting_time_mixing }}</td>
+                <td style="font-size: 14px;">{{ $i->QC_checked }}</td> --}}
                 <td style="font-size: 14px;">{{ $i->warehouse }}</td>
                 <td>
                     <div class="d-flex">
-                        <a href="/product/update/{{ $i->FAI_code }}"
-                            class="btn btn-outline-primary btn-sm me-1">Ubah</a>
+                        <a href="/after/production/{{ $i->no_production }}" class="btn btn-primary btn-sm me-1"><i class="ri-edit-line"></i></a>
+
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}">Delete</button>
+                            data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}"><i class="bi bi-trash"></i></button>
                     </div>
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('updateProduct')
-    @livewireStyles
+    {{-- @livewireStyles --}}
     <div class="container shadow pt-2 mt-2 pb-2" style="width: 800px">
         <form class="row g-3 d-flex" action="/product/update/{{ $prd->FAI_code }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -142,10 +142,71 @@
             </div>
 
 
+            <div id="inputContainer">
+                <!-- Container for dynamic inputs -->
+                @foreach ($persentase as $index => $persen)
+                    <div class="d-flex">
+                        <input type="text" class="me-1" name="persentase[]" id="persentase-{{ $index + 1 }}" value="{{ $persen }}" placeholder="Persentase"/>
+                        <select class="select2 me-1" name="FAI_code_barang[]" id="FAI_code_barang-{{ $index + 1 }}">
+                            <option value="">Select FAI Code</option>
+                            @foreach ($brg as $barang)
+                                <option value="{{ $barang->FAI_code }}" {{ ($FAI_code[$index] == $barang->FAI_code) ? 'selected' : '' }}>
+                                    {{ $barang->FAI_code }}&nbsp;&nbsp;{{ $barang->name }}</option>
+                            @endforeach
+                        </select>
+                        <button type="button" class="btn btn-info" onclick="removeInput('persentase-{{ $index + 1 }}', 'FAI_code_barang-{{ $index + 1 }}')">Hapus</button>
+                    </div>
+                @endforeach
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addInput()">Tambah Input</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <script>
+                $(document).ready(function() {
+                    $('.select2').select2({
+                        theme: 'bootstrap',
+                    });
+                });
+        
+                let inputCount = {{ count($persentase) }};
+        
+                function addInput() {
+                    inputCount++;
+        
+                    const inputContainer = document.getElementById('inputContainer');
+        
+                    const inputGroup = document.createElement('div');
+                    inputGroup.innerHTML = `
+                        <div class="d-flex">
+                            <input type="text" class="me-1" name="persentase[]" id="persentase-${inputCount}" placeholder="Persentase"/>
+                            <select class="select2 form-control me-1" name="FAI_code_barang[]" id="FAI_code_barang-${inputCount}">
+                                <option value="">Select FAI Code</option>
+                                @foreach ($brg as $barang)
+                                    <option value="{{ $barang->FAI_code }}">
+                                        {{ $barang->FAI_code }}&nbsp;&nbsp;{{ $barang->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="btn btn-info" onclick="removeInput('persentase-${inputCount}', 'FAI_code_barang-${inputCount}')">Hapus</button>
+                        </div>
+                    `;
+        
+                    inputContainer.appendChild(inputGroup);
+                    $('.select2').select2(); // Initialize Select2 for new inputs
+                }
+        
+                function removeInput(persentaseId, FAI_codeId) {
+                    const persentaseToRemove = document.getElementById(persentaseId);
+                    const FAI_codeToRemove = document.getElementById(FAI_codeId);
+                    persentaseToRemove.parentElement.remove();
+                    FAI_codeToRemove.parentElement.remove();
+                }
+            </script>
+            
+            
 
 
 
-            @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code])
+            {{-- @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code])
             <button type="submit" class="btn btn-primary" id="add-input">Edit Formula</button>
             @livewireScripts
             <script>
@@ -154,7 +215,7 @@
                         $('.select2').select2();
                     });
                 });
-            </script>
+            </script> --}}
         </form>
     </div>
 @endsection

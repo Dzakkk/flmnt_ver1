@@ -30,7 +30,7 @@
                         </div>
                         <a href="/barang" class="card-body">
                             <h5 class="card-title">Bahan Baku Terdaftar</h5>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center gh">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="ri-leaf-line"></i>
                                 </div>
@@ -60,7 +60,7 @@
 
                         <a href="/product" class="card-body">
                             <h5 class="card-title">Product Terdaftar</h5>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center gh">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bx bxs-flask"></i>
                                 </div>

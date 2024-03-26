@@ -262,7 +262,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#Quality-nav" data-bs-toggle="collapse"
                         href="#">
-                        <i class="ri-flask-line"></i><span>Quality Control</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-clipboard-check"></i><span>Quality Control</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="Quality-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
     
@@ -281,7 +281,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="ri-flask-line"></i><span>Production Control</span><i
+                    <i class="bi bi-gear"></i><span>Production Control</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="production-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -339,14 +339,14 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/manufacturer ">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="ri-building-3-line"></i>
                     <span>Manufacturer</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/data/user">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bi bi-person"></i>
                     <span>User</span>
                 </a>
             </li>

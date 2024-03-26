@@ -10,6 +10,8 @@ use App\Models\Packaging;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\Supplier;
+use App\Models\UsageData;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,10 +20,28 @@ class BarangController extends Controller
 {
     public function dataBarang()
     {
-        $brg = Barang::with('stock')->paginate(8);
+        $brg = Barang::with('stock')->paginate(15);
         $supp = Supplier::all();
         $ex = Manufacturer::all();
-        return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);
+
+        // $stock = StockBarang::with(['stockLots' => function ($query) {
+        //     $query->where('FAI_code', 'FAI_code') // Replace 'FAI_code' with the actual code
+        //         ->latest()
+        //         ->take(1); // Retrieve only the latest stockLots for each StockBarang
+        // }, 'barang'])
+        //     ->orderBy('updated_at', 'desc')
+        //     ->paginate(15);
+
+
+        $startDate = Carbon::today()->subWeek()->startOfMonth();
+        $endDate = Carbon::today()->subWeek()->endOfMonth();
+
+        $usageQuantities = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
+            ->groupBy('FAI_code')
+            ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
+            ->get();
+
+        return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex, 'usageQuantities' => $usageQuantities]);
     }
 
     public function search(Request $request)
@@ -29,13 +49,30 @@ class BarangController extends Controller
         try {
             $searchTerm = $request->input('search');
 
-            $brg = Barang::where('FAI_code', 'like', '%' . $searchTerm . '%')
+            $brg = Barang::with('stock')->where('FAI_code', 'like', '%' . $searchTerm . '%')
                 ->orWhere('name', 'like', '%' . $searchTerm . '%')
                 ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
                 ->paginate(8);
                 $supp = Supplier::all();
                 $ex = Manufacturer::all();
-            return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex]);
+            
+                // $stock = StockBarang::with(['stockLots' => function ($query) {
+                //     $query->where('FAI_code', 'FAI_code') // Replace 'FAI_code' with the actual code
+                //         ->latest()
+                //         ->take(1); // Retrieve only the latest stockLots for each StockBarang
+                // }, 'barang'])
+                //     ->orderBy('updated_at', 'desc')
+                //     ->paginate(15);
+        
+        
+                $startDate = Carbon::today()->subWeek()->startOfMonth();
+                $endDate = Carbon::today()->subWeek()->endOfMonth();
+        
+                $usageQuantities = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
+                    ->groupBy('FAI_code')
+                    ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
+                    ->get();
+            return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex, 'usageQuantities' => $usageQuantities]);
         } catch (\Exception $e) {
             return redirect('/barang');
         }
@@ -300,12 +337,9 @@ class BarangController extends Controller
         return redirect('/barang')->with('success', 'Data berhasil diperbarui');
     }
 
-
     public function export()
     {
         return Excel::download(new BarangExport, 'BarangTerdaftar.xlsx');
     }
 
-
-    
 }

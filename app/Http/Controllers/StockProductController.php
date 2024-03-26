@@ -359,7 +359,7 @@ class StockProductController extends Controller
 
     public function dataProductionControl()
     {
-        $pc = ProductionControl::all();
+        $pc = ProductionControl::with('product', 'stockl', 'qc_check')->get();
 
         return view('production.productionControl', ['pc' => $pc]);
     }

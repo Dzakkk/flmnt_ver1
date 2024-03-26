@@ -199,8 +199,73 @@
                     FORMULA PRODUCT ===========================
                 </h3>
             </div>
+            {{-- <script>
+                $(document).ready(function() {
+                    $('.select2').select2();
+                });
+            </script> --}}
 
-            <div class="col-md-6">
+            <div id="inputContainer">
+                <!-- Container for dynamic inputs -->
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addInput()">Tambah Input</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <script>
+                $(document).ready(function() {
+                    // Initialize Select2 for existing inputs
+                    $('.select2').select2({
+                        theme: 'bootstrap',    
+                    });
+                });
+            
+                let inputCount = 0;
+            
+                function addInput() {
+                    inputCount++;
+            
+                    const inputContainer = document.getElementById('inputContainer');
+            
+                    const inputGroup = document.createElement('div');
+                    inputGroup.innerHTML = `
+                        <div class="d-flex">
+                            <input type="text" class="me-1" name="persentase[]" id="persentase-${inputCount}" placeholder="Persentase"/>
+                            <select class="select2 form-control me-1" name="FAI_code_barang[]" id="FAI_code_barang-${inputCount}">
+                                <option value="">Select FAI Code</option>
+                                @foreach ($brg as $c)
+                                    <option value="{{ $c->FAI_code }}">
+                                        {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
+                                @endforeach
+                                @foreach ($prd as $c)
+                                    <option value="{{ $c->FAI_code }}">
+                                        {{ $c->FAI_code }}&nbsp;&nbsp;{{ $c->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="btn btn-info" onclick="removeInput('persentase-${inputCount}', 'FAI_code_barang-${inputCount}')">Hapus</button>
+                        </div>
+                    `;
+            
+                    inputContainer.appendChild(inputGroup);
+                    
+                    // Initialize Select2 for new inputs
+                    $('.select2').select2();
+                }
+            
+                function removeInput(persentaseId, FAI_codeId) {
+                    const persentaseToRemove = document.getElementById(persentaseId);
+                    const FAI_codeToRemove = document.getElementById(FAI_codeId);
+                    persentaseToRemove.parentElement.remove();
+                    FAI_codeToRemove.parentElement.remove();
+                }
+            </script>
+            
+            
+
+
+
+
+
+            {{-- <div class="col-md-6">
                 <label class="form-label" for="persentase-0">Persentase:</label>
                 <input type="text" id="persentase-0" name="persentase[]" required class="form-control">
             </div>
@@ -242,7 +307,7 @@
 
             @livewire('formula-product')
             <button type="submit" class="btn btn-primary" id="add-input">buat</button>
-            @livewireScripts
+            @livewireScripts --}}
             {{-- <script>
                 document.addEventListener('livewire:load', function() {
                     Livewire.on('initialize-select2', function() {
@@ -250,6 +315,8 @@
                     });
                 });
             </script> --}}
+
+
         </form>
     </div>
 @endsection

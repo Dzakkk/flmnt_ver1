@@ -39,7 +39,7 @@
                     <label for="kategori_barang" class="form-label">kategori_barang</label>
                     <div class="input-group">
                         <select class="form-select" id="category" name="kategori_barang">
-                            <option value="">Pilih Kategori</option>
+                            <option value="" selected>Pilih Kategori</option>
                             <option value="BASE(RM)">BASE(RM)</option>
                             <option value="FLAVOR(RM)">FLAVOR(RM)</option>
                             <option value="DILUTION">DILUTION</option>
@@ -181,15 +181,15 @@
                     <label class="form-label" for="halal_certification">halal_certification</label>
                     <input type="text" name="halal_certification" class="form-control" id="halal_certification">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra1" style="display: none">
                     <label for="name" class="form-label">name</label>
                     <input type="text" name="name" id="name" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra2" style="display: none">
                     <label class="form-label" for="common_name">common_name</label>
                     <input type="text" name="common_name" class="form-control" id="common_name">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra3" style="display: none">
                     <label for="brandProduct_code" class="form-label">brandProduct_code</label>
                     <input type="text" name="brandProduct_code" id="brandProduct_code" class="form-control">
                 </div>
@@ -201,7 +201,7 @@
                     <label class="form-label" for="CAS_number">CAS_number</label>
                     <input type="text" name="CAS_number" class="form-control" id="CAS_number">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra4" style="display: none">
                     <label for="manufacturer" class="form-label">Manufacturer</label>
                     <select name="ex_origin" id="manufacturer" class="form-control select2" required>
                         <option value="" disabled selected>Select Manufacturer</option>
@@ -221,36 +221,36 @@
                     <label class="form-label" for="initial_ex">initial_ex</label>
                     <input type="text" name="initial_ex" class="form-control" id="initial_ex">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra5" style="display: none">
                     <label for="country_of_origin" class="form-label">country_of_origin</label>
                     <input type="text" name="country_of_origin" id="country_of_origin" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra6" style="display: none">
                     <label class="form-label" for="remark">remark</label>
                     <input type="text" name="remark" class="form-control" id="remark">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra7" style="display: none">
                     <label for="usage_level" class="form-label">usage_level</label>
                     <input type="text" name="usage_level" id="usage_level" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra8" style="display: none">
                     <label class="form-label" for="harga_ex_work_USD">harga_ex_work_USD</label>
                     <input type="number" step="0.01" name="harga_ex_work_USD" class="form-control"
                         id="harga_ex_work_USD">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra9" style="display: none">
                     <label class="form-label" for="harga_CIF_USD">harga_CIF_USD</label>
                     <input type="number" step="0.01" name="harga_CIF_USD" class="form-control" id="harga_CIF_USD">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra10" style="display: none">
                     <label for="harga_MOQ_USD" class="form-label">harga_MOQ_USD</label>
                     <input type="number" step="0.01" name="harga_MOQ_USD" id="harga_MOQ_USD" class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra11" style="display: none">
                     <label class="form-label" for="appearance">appearance</label>
                     <input type="text" name="appearance" class="form-control" id="appearance">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="rigra12" style="display: none">
                     <label for="color_rangeColor" class="form-label">color_rangeColor</label>
                     <input type="text" name="color_rangeColor" id="color_rangeColor" class="form-control">
                 </div>
@@ -263,66 +263,66 @@
 
 
 
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra13" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d20">sg_d20_min</label>
                     <input type="text" name="sg_d20_min" class="form-control" id="spesific_gravity_d20">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra14" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d25">sg_d20_max</label>
                     <input type="text" name="sg_d20_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra15" style="display: none" >
                     <label for="refractive_index_d20" class="form-label">sg_d20_target</label>
                     <input type="text" name="sg_d20_target" id="refractive_index_d20" class="form-control">
                 </div>
 
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra16" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d20">sg_d25_min</label>
                     <input type="text" name="sg_d25_min" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra17" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d25">sg_d25_max</label>
                     <input type="text" name="sg_d25_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra18" style="display: none" >
                     <label for="refractive_index_d25" class="form-label">sg_d25_target</label>
                     <input type="text" name="sg_d25_target" id="refractive_index_d25" class="form-control">
                 </div>
 
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra19" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d20">ri_d20_min</label>
                     <input type="text" name="ri_d20_min" class="form-control" id="spesific_gravity_d20">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra20" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d25">ri_d20_max</label>
                     <input type="text" name="ri_d20_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra21" style="display: none" >
                     <label for="refractive_index_d20" class="form-label">ri_d20_target</label>
                     <input type="text" name="ri_d20_target" id="refractive_index_d20" class="form-control">
                 </div>
 
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra22" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d20">ri_d25_min</label>
                     <input type="text" name="ri_d25_min" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra23" style="display: none" >
                     <label class="form-label" for="spesific_gravity_d25">ri_d25_max</label>
                     <input type="text" name="ri_d25_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra" >
+                <div class="col-md-4" id="rigra24" style="display: none" >
                     <label for="refractive_index_d25" class="form-label">ri_d25_target</label>
                     <input type="text" name="ri_d25_target" id="refractive_index_d25" class="form-control">
                 </div>
                 
 
 
-                <div class="col-md-6" id="material">
+                <div class="col-md-6" id="material" style="display: none">
                     <label for="material" class="form-label">material</label>
                     <input type="text" name="material" id="material" class="form-control">
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6" style="display: none">
                     <label for="berat_gram" class="form-label">berat_gram</label>
                     <input type="number" name="berat_gram" id="berat_gram" class="form-control">
                 </div>
@@ -371,10 +371,10 @@
         document.getElementById('aspect').addEventListener('change', function() {
             var selectedAspect = this.value;
             var odourTaste = document.getElementById('odour');
-            var gravity20 = document.getElementById('gra20');
-            var gravity25 = document.getElementById('gra25');
-            var index20 = document.getElementById('ind20');
-            var index25 = document.getElementById('ind25');
+            var rig = document.getElementById('rigra');
+            // var gravity25 = document.getElementById('gra25');
+            // var index20 = document.getElementById('ind20');
+            // var index25 = document.getElementById('ind25');
 
             if (selectedAspect === 'LIQUID') {
                 odourTaste.style.display = 'block';
@@ -385,7 +385,7 @@
 
             } else {
 
-                odourTaste.style.display = 'none';
+                rig.style.display = 'none';
                 gravity20.style.display = 'none';
                 gravity25.style.display = 'none';
                 index20.style.display = 'none';
@@ -400,6 +400,28 @@
             var kemasan = document.getElementById('kemasan')
             var capacity = document.getElementById('capacity');
             var jenisKemasan = document.getElementById('jenis_kemasan');
+            var rigra1 = document.getElementById('rigra1');
+            var rigra2 = document.getElementById('rigra2');
+            var rigra3 = document.getElementById('rigra3');
+            var rigra4 = document.getElementById('rigra4');
+            var rigra5 = document.getElementById('rigra5');
+            var rigra7 = document.getElementById('rigra7');
+            var rigra8 = document.getElementById('rigra8');
+            var rigra9 = document.getElementById('rigra9');
+            var rigra10 = document.getElementById('rigra10');
+            var rigra11 = document.getElementById('rigra11');
+            var rigra12 = document.getElementById('rigra12');
+            var rigra14 = document.getElementById('rigra14');
+            var rigra15 = document.getElementById('rigra15');
+            var rigra16 = document.getElementById('rigra16');
+            var rigra17 = document.getElementById('rigra17');
+            var rigra18 = document.getElementById('rigra18');
+            var rigra19 = document.getElementById('rigra19');
+            var rigra20 = document.getElementById('rigra20');
+            var rigra21 = document.getElementById('rigra21');
+            var rigra22 = document.getElementById('rigra22');
+            var rigra23 = document.getElementById('rigra23');
+            var rigra24 = document.getElementById('rigra24');
 
             if (celectedCategory === 'PACKAGING') {
                 chemical.style.display = 'none';
@@ -407,12 +429,61 @@
                 jenisKemasan.style.display = 'none';
                 kemasan.style.display = 'block';
                 capacity.style.display = 'block';
+                rigra1.style.display = 'none';
+                rigra2.style.display = 'none';
+                rigra3.style.display = 'none';
+                rigra4.style.display = 'none';
+                rigra5.style.display = 'none';
+                rigra6.style.display = 'none';
+                rigra7.style.display = 'none';
+                rigra8.style.display = 'none';
+                rigra9.style.display = 'none';
+                rigra10.style.display = 'none';
+                rigra11.style.display = 'none';
+                rigra12.style.display = 'none';
+                rigra13.style.display = 'none';
+                rigra14.style.display = 'none';
+                rigra15.style.display = 'none';
+                rigra16.style.display = 'none';
+                rigra17.style.display = 'none';
+                rigra18.style.display = 'none';
+                rigra19.style.display = 'none';
+                rigra20.style.display = 'none';
+                rigra21.style.display = 'none';
+                rigra22.style.display = 'none';
+                rigra23.style.display = 'none';
+                rigra24.style.display = 'none';
+
             } else {
                 chemical.style.display = 'block';
                 casNumber.style.display = 'block';
                 jenisKemasan.style.display = 'block';
                 kemasan.style.display = 'none';
                 capacity.style.display = 'none';
+                rigra1.style.display = 'block';
+                rigra2.style.display = 'block';
+                rigra3.style.display = 'block';
+                rigra4.style.display = 'block';
+                rigra5.style.display = 'block';
+                rigra6.style.display = 'block';
+                rigra7.style.display = 'block';
+                rigra8.style.display = 'block';
+                rigra9.style.display = 'block';
+                rigra10.style.display = 'block';
+                rigra11.style.display = 'block';
+                rigra12.style.display = 'block';
+                rigra13.style.display = 'block';
+                rigra14.style.display = 'block';
+                rigra15.style.display = 'block';
+                rigra16.style.display = 'block';
+                rigra17.style.display = 'block';
+                rigra18.style.display = 'block';
+                rigra19.style.display = 'block';
+                rigra20.style.display = 'block';
+                rigra21.style.display = 'block';
+                rigra22.style.display = 'block';
+                rigra23.style.display = 'block';
+                rigra24.style.display = 'block';
             }
         })
     </script>

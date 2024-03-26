@@ -12,12 +12,12 @@
     table-layout:fixed;
   } */
 
-
+ .underline {
+    border-bottom: grey 1px solid;
+ }
 
 @media (max-width: 768px) {
-    body {
-        background-color: blue;
-    }
+
     text {
         font-size: 15px;
     }
@@ -38,16 +38,26 @@
         display: none;
     }
 
-    .section {
+    /* .section {
         background-color: red;        
-    }
+    } */
     .section-header {
         display: flex;
     } 
     .barang-section, .product-section{
         height: auto;
+        font-size: 12px;
         margin: 0;
         padding: 0;
+    }
+
+    .sales-card, .revenue-card {
+        width: 150px !important;
+        margin: 0 2px 5px 2px;
+    }
+
+    .gh {
+        flex-direction: column;
     }
 
 

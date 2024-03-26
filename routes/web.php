@@ -153,6 +153,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('stock/cari', [StockController::class, 'search']);
     Route::get('barang/cari', [BarangController::class, 'search']);
     Route::get('lot/cari', [StockController::class, 'search_lot']);
+    Route::get('product/cari', [ProductsController::class, 'search']);
 
 
 
