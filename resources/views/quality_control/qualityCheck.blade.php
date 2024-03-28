@@ -11,18 +11,18 @@
                     <td rowspan="2">Qty</td>
                     <td rowspan="2">Customer</td>
                     <td rowspan="2">Tanggal Produksi</td>
-                    <td rowspan="2">Test Methode</td>
+                    {{-- <td rowspan="2">Test Methode</td>
                     <td colspan="3">Appereance</td>
                     <td colspan="3">Range Color</td>
                     <td colspan="3">Odour Taste</td>
                     <td colspan="5">Spesific Gravity d20</td>
                     <td colspan="5">Spesific Gravity d25</td>
                     <td colspan="5">Refractive Index d20</td>
-                    <td colspan="5">Refractive Index d25</td>
+                    <td colspan="5">Refractive Index d25</td> --}}
                     <td rowspan="2">Note</td>
                     <td rowspan="2">status</td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>Parameter</td>
                     <td>Value</td>
                     <td>Result</td>
@@ -52,7 +52,7 @@
                     <td>Target</td>
                     <td>Value</td>
                     <td>Result</td>
-                </tr>
+                </tr> --}}
             </thead>
             <tbody>
                 @foreach ($qc as $i)
@@ -64,7 +64,7 @@
                     <td>{{ $i->qty }}</td>
                     <td>{{ $i->customer }}</td>
                     <td>{{ $i->tanggal_produksi }}</td>
-                    <td>{{ $i->test_methode }}</td>
+                    {{-- <td>{{ $i->test_methode }}</td>
                     <td>{{ $i->appereance }}</td>
                     <td>{{ $i->color_value }}</td>
                     <td>{{ $i->color_result }}</td>
@@ -93,7 +93,7 @@
                     <td>{{ $i->ri_d25_max }}</td>
                     <td>{{ $i->ri_d25_target }}</td>
                     <td>{{ $i->ri_d25_value }}</td>
-                    <td>{{ $i->ri_d25_result }}</td>
+                    <td>{{ $i->ri_d25_result }}</td> --}}
                     <td>{{ $i->note }}</td>
                     <td>{{ $i->status }}</td>
                 </tr>

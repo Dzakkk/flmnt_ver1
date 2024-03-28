@@ -7,8 +7,8 @@
         <tr>
             <th scope="col">no_production</th>
             <th scope="col">FAI Code</th>
-            <th scope="col">cleanless</th>
-            <th scope="col">oddorless</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">LOT</th>
             <th scope="col">Tanggal Produksi</th>
             <th scope="col">Tanggal Expire</th>
             <th scope="col">QC Checked</th>
@@ -26,8 +26,8 @@
             <tr>
                 <th scope="row" style="font-size: 14px;">{{ $i->no_production }}</th>
                 <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
-                <td style="font-size: 14px;">{{ $i->cleanless }}</td>
-                <td style="font-size: 14px;">{{ $i->oddorless }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->quantity }}&nbsp;{{ $i->stockl->unit }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->no_LOT }}</td>
                 <td style="font-size: 14px;">{{ $i->stockl->tanggal_produksi }}</td>
                 <td style="font-size: 14px;">{{ $i->stockl->tanggal_expire }}</td>
                 <td style="font-size: 14px;">{{ $i->QC_checked }}</td>
@@ -40,6 +40,7 @@
                 <td>
                     <div class="d-flex">
                         <a href="/after/production/{{ $i->no_production }}" class="btn btn-primary btn-sm me-1"><i class="ri-edit-line"></i></a>
+                        <a href="/produksi/product/update/form/{{ $i->no_production }}" class="btn btn-warning btn-sm me-1"><i class="ri-edit-line"></i></a>
 
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}"><i class="bi bi-trash"></i></button>

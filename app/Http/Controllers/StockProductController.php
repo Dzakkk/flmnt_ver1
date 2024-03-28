@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Formula;
 use Spatie\Backtrace\File;
+use Svg\Gradient\Stop;
 
 class StockProductController extends Controller
 {
@@ -75,7 +76,7 @@ class StockProductController extends Controller
             'no_LOT' => 'required',
             // 'jumlah_kemasan' => 'required',
             'jenis_kemasan' => 'required',
-            'customer_name' => 'required',
+            // 'customer_name' => 'required',
             'customer_code' => 'required',
             'no_production' => 'required',
             'no_work_order' => 'required',
@@ -93,6 +94,7 @@ class StockProductController extends Controller
 
         $jmlKs = $request->quantity / $cpc;
 
+        $cust = CustList::where('customer_code', $request->customer_code)->value('customer_name');
 
         session(['FAI_code' => $request->input('FAI_code')]);
         session(['product_name' => $request->input('product_name')]);
@@ -367,9 +369,11 @@ class StockProductController extends Controller
     public function afterProduction($id)
     {
         $prc = ProductionControl::find($id);
+
+        $stockl = Stock::with('product')->where('no_production', $prc->no_production)->first();
         $rak = RakGudang::all();
         $packaging_qty = json_decode($prc->packaging_qty, true);
-        return view('production.formAfterProduction', ['rak' => $rak, 'prc' => $prc, 'packaging_qty' => $packaging_qty]);
+        return view('production.formAfterProduction', ['rak' => $rak, 'prc' => $prc, 'packaging_qty' => $packaging_qty, 'stockl' => $stockl]);
     }
 
 
@@ -400,5 +404,99 @@ class StockProductController extends Controller
             $data->save();
         }
         return redirect('production/control');
+    }
+
+
+    public function updateProductionForm($id) {
+
+        $prc = ProductionControl::find($id);
+
+        $stockl = Stock::with('product')->where('no_production', $prc->no_production)->first();
+        $rak = RakGudang::all();
+        $kemasan = Packaging::all();
+        $custList = CustList::all();
+        $cust = Customer::all();
+// dd($prc, $stockl);
+        return view('production.formUpdateProduction', compact('stockl', 'rak', 'kemasan', 'custList', 'cust'));
+    }
+
+    public function updateDataProduction1(Request $request, $id) {
+        $prc = ProductionControl::find($id);
+
+        $prc->update([
+            'no_production' => $request->no_production,
+        ]);
+
+        $stockL = Stock::where('no_production', $prc->no_production)->first();
+        
+        $stockL->update([
+            'no_production' => $request->no_production,
+            'tanggal_produksi' => $request->tanggal_produksi,
+            'tanggal_expire' => $request->tanggal_expire,
+            'no_LOT' => $request->no_LOT,
+            'quantity' => $request->quantity,
+            'id_rak' => $request->id_rak,
+            'jumlah_Kemasan' => $request->jumlah_kemasan,
+            'jenis_kemasan' => $request->jenis_kemasan,
+        ]);
+
+        $custList = CustList::where('customer_code', $request->customer_code)
+                                    ->where('customer_name', $request->customer_name)
+                                    ->first();
+        
+        if (!$custList) {
+            $cust = new Customer([
+                'customer_name' => $request->customer_name,
+            ]);
+            $cust->save();
+            $custl = new CustList([
+                'customer_code' => $request->customer_code,
+                'customer_name' => $request->customer_name,
+                'PO_customer' => $request->PO_Customer,
+                'FAI_code' => $request->FAI_code,
+                'id_customer' => Customer::where('customer_name', $request->customer_name)->value('id_customer'),
+            ]);
+            $custl->save();
+        } else {
+            $custList->update($request->all());
+        }
+
+        return redirect('/production/control/data');
+        
+    }
+
+    public function updateDataProduction2(Request $request, $id) {
+        $prc = ProductionControl::find($id);
+
+        $prc->update([
+            'no_production' => $request->no_production,
+        ]);
+
+        $stockL = Stock::where('no_production', $prc->no_production)->first();
+        
+        $stockL->update($request->all());
+
+        $custList = CustList::where('customer_code', $request->customer_code)
+                                    ->where('customer_name', $request->customer_name)
+                                    ->first();
+        
+        if (!$custList) {
+            $cust = new Customer([
+                'customer_name' => $request->customer_name,
+            ]);
+            $cust->save();
+            $custl = new CustList([
+                'customer_code' => $request->customer_code,
+                'customer_name' => $request->customer_name,
+                'PO_customer' => $request->PO_Customer,
+                'FAI_code' => $request->FAI_code,
+                'id_customer' => Customer::where('customer_name', $request->customer_name)->value('id_customer'),
+            ]);
+            $custl->save();
+        } else {
+            $custList->update($request->all());
+        }
+
+        return redirect('/after/production/'. $id);
     }
 }

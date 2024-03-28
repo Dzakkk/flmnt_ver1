@@ -89,7 +89,11 @@ Route::middleware(['auth'])->group(function (){
     
     Route::get('formula', [ProductsController::class, 'formula'])->name('formula');
     Route::post('/produksi/product', [StockProductController::class, 'storeProduction']);
-    
+    Route::get('/produksi/product/update/form/{id}', [StockProductController::class, 'updateProductionForm'])->where('id', '[\w\/]+');
+    Route::put('/produksi/product/update/{id}', [StockProductController::class, 'updateDataProduction1'])->where('id', '[\w\/]+');
+    Route::put('/produksi/product/update/redirect/{id}', [StockProductController::class, 'updateDataProduction2'])->where('id', '[\w\/]+');
+
+
     Route::get('stock/lot', [StockController::class, 'lot']);
     Route::get('stock/barang', [StockController::class, 'stock']);
     Route::get('stock/product', [StockProductController::class, 'stock']);

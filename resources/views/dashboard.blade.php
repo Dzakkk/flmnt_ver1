@@ -240,7 +240,7 @@
                     </li>
                 </ul>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#product-nav" data-bs-toggle="collapse"
                     href="#">
                     <i class="ri-flask-line"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -252,12 +252,7 @@
                             <i class="bi bi-circle"></i><span>Product</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/formula">
-                            <i class="bi bi-circle"></i><span>Formula</span>
-                        </a>
-                    </li>
-                </ul>
+                </ul> --}}
             
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#Quality-nav" data-bs-toggle="collapse"
@@ -300,6 +295,13 @@
 
 
             <li class="nav-heading">Pages</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/product">
+                    <i class="ri-flask-line"></i>
+                    <span>Product</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/gudang">
@@ -429,6 +431,7 @@
             @yield('qc_form_inhouse')
             @yield('qc_form_incoming')
             @yield('qc_product')
+            @yield('update_data_production')
 
 
 

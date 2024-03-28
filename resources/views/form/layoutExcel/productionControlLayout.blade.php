@@ -55,6 +55,7 @@
             <tr>
                 <td>{{ $i->no_production }}</td>
                 <td>{{ $i->stockl->tanggal_produksi }}</td>
+                <td>{{ $i->stockl->tanggal_expire }}</td>
                 <td>{{ $i->stockl->no_work_order }}</td>
                 <td>{{ $i->stockl->nama_product }}</td>
                 <td>{{ $i->stockl->quantity }}</td>

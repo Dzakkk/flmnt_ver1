@@ -107,7 +107,8 @@
                                         @if ($FAI_codes && $persentases)
                                             @for ($index = 0; $index < count($FAI_codes) && $index < count($persentases); $index++)
                                                 <li class="underline">{{ $persentases[$index] }}% -
-                                                    {{ $FAI_codes[$index] }} - {{  \App\Models\Barang::find($FAI_codes[$index])->name }}
+                                                    {{ $FAI_codes[$index] }} -
+                                                    {{ \App\Models\Barang::find($FAI_codes[$index])->name }}
                                                 </li>
                                             @endfor
                                         @else
@@ -261,14 +262,14 @@
                                                 <label for="" class="form-label">no_LOT</label>
                                                 <input type="text" class="form-control" name="no_LOT">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 boo">
                                                 <label for="customerCode" class="form-label">Kode Pelanggan</label>
                                                 <select id="customerCode" class="form-control customer-code-select"
                                                     name="customer_code">
                                                     <option value="">Pilih Kode Pelanggan</option>
                                                     @foreach ($custList as $code)
                                                         <option value="{{ $code->customer_code }}">
-                                                            {{ $code->customer_code }}
+                                                            {{ $code->customer_code }} - {{ $code->customer_name }}
                                                         </option>
                                                     @endforeach
                                                     <option value="new">Tambah Pelanggan Baru</option>
@@ -326,43 +327,48 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.customer-code-select').forEach(function(select) {
-                select.addEventListener('change', function() {
-                    var modal = select.closest(
-                        '.modal-content'
-                        ); // Temukan modal terdekat yang mengandung select yang dipilih
-                    var customerNameSection = modal.querySelector('.customer-name-section');
-                    var newCustomerSection = modal.querySelector('.new-customer-section');
-                    var customerNameInput = modal.querySelector('.customer-name-input');
-                    var newCustomerCodeInput = modal.querySelector('.new-customer-code-input');
-                    var newCustomerNameInput = modal.querySelector('.new-customer-name-input');
-
-                    if (select.value === "new") {
-                        customerNameSection.style.display = "none";
-                        newCustomerSection.style.display = "block";
-                        customerNameInput.value = "";
-                        customerNameInput.removeAttribute("readonly");
-                    } else {
-                        var selectedCustomerCode = select.value;
-                        var customerData = {!! json_encode($cust) !!};
-                        var customer = customerData.find(function(item) {
-                            return item.customer_code == selectedCustomerCode;
-                        });
-
-                        if (customer) {
-                            customerNameInput.value = customer.customer_name;
-                            customerNameSection.style.display = "block";
-                            newCustomerSection.style.display = "none";
-                            newCustomerCodeInput.value = selectedCustomerCode;
-                            newCustomerNameInput.value = customer.customer_name;
-                        } else {
-                            customerNameSection.style.display = "none";
-                            newCustomerSection.style.display = "none";
-                        }
-                    }
-                });
-            });
+        $(document).ready(function() {
+    // Initialize Select2 for all customer code selects
+    $('.customer-code-select').each(function() {
+        $(this).select2({
+            dropdownParent: $(this).closest('.boo')
         });
+    });
+
+    // Add event listener for select change
+    $('.customer-code-select').on('change', function() {
+        var modal = $(this).closest('.modal-content');
+        var customerNameSection = modal.find('.customer-name-section');
+        var newCustomerSection = modal.find('.new-customer-section');
+        var customerNameInput = modal.find('.customer-name-input');
+        var newCustomerCodeInput = modal.find('.new-customer-code-input');
+        var newCustomerNameInput = modal.find('.new-customer-name-input');
+
+        if ($(this).val() === "new") {
+            customerNameSection.hide();
+            newCustomerSection.show();
+            customerNameInput.val("");
+            customerNameInput.removeAttr("readonly");
+        } else {
+            var selectedCustomerCode = $(this).val();
+            var customerData = {!! json_encode($custList) !!};
+            var customer = customerData.find(function(item) {
+                return item.customer_code == selectedCustomerCode;
+            });
+
+            if (customer) {
+                customerNameInput.val(customer.customer_name);
+                customerNameSection.show();
+                newCustomerSection.hide();
+                newCustomerCodeInput.val(selectedCustomerCode);
+                newCustomerNameInput.val(customer.customer_name);
+            } else {
+                customerNameSection.hide();
+                newCustomerSection.hide();
+            }
+        }
+    });
+});
+
     </script>
 @endsection

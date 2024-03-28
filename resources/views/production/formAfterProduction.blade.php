@@ -1,8 +1,25 @@
 @extends('dashboard')
 
 @section('formAfterProduction')
-@livewireStyles
-    <div class="bg-light shadow p-3 pt-2">
+    @livewireStyles
+    <div class="mb-2 shadow">
+        <div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ $stockl->FAI_code }} - {{ $stockl->product->product_name }}
+                    </h5>
+                    <p class="card-text">{{ $prc->no_production }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">LOT : {{ $stockl->no_LOT }} || QTY : {{ $stockl->quantity }}</li>
+                    <li class="list-group-item">Production Date : {{ $stockl->tanggal_produksi }}</li>
+                    <li class="list-group-item">Production Expire : {{ $stockl->tanggal_expire }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class=" shadow p-3 pt-2">
         <form class="row g-3 d-flex mt-3" action="/after/production/control/{{ $prc->no_production }}" method="POST"
             enctype="multipart/form-data">
             @csrf
@@ -88,14 +105,14 @@
                 <div class="col-sm-10">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="QC_checked" id="gridRadios1"
-                            value="yes" checked>
+                            value="yes">
                         <label class="form-check-label" for="gridRadios1">
                             yes
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="QC_checked" id="gridRadios2"
-                            value="no">
+                            value="no" checked>
                         <label class="form-check-label" for="gridRadios2">
                             no
                         </label>
@@ -147,7 +164,7 @@
                             <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
                         @endforeach
                     </select>
-                </div>      
+                </div>
             </div>
 
             <div class="row mb-3">

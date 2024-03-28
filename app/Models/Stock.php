@@ -77,6 +77,22 @@ class Stock extends Model
         return $this->belongsTo(QualityControl::class, 'FAI_code', 'FAI_code');
     }
 
+    public function custlist(): BelongsTo
+    {
+        return $this->belongsTo(CustList::class, 'FAI_code', 'FAI_code');
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Products::class, 'FAI_code', 'FAI_code');
+    }
+
+    // public function kemasan(): BelongsTo
+    // {
+    //     return $this->belongsTo(Packaging::class, 'jenis_kemasan', 'nama_kemasan');
+    // }
+
+
     // /**
     //  * Get all of the production for the Stock
     //  *
