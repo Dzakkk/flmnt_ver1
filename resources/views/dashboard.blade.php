@@ -432,6 +432,8 @@
             @yield('qc_form_incoming')
             @yield('qc_product')
             @yield('update_data_production')
+            @yield('update_incoming')
+            @yield('update_inhouse')
 
 
 

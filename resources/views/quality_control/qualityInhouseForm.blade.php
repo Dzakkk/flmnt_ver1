@@ -285,7 +285,11 @@
                 <div class="mb-3 row">
                     <label for="3" class="col-sm-2 col-form-label">Status</label>
                     <div class="col-sm-10">
-                        <input type="text" name="status" class="form-control" id="3" value="">
+                       <select name="status" id="3" class="form-control">
+                        <option value="PASS">PASS</option>
+                        <option value="REJECT">REJECT</option>
+                        <option value="Undefined">Undefined</option>
+                       </select>
                     </div>
                 </div>
                 <div class="mb-3 row">

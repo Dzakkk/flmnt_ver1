@@ -91,6 +91,9 @@
                             <th scope="col">Jumlah</th>
                         </tr>
                     </thead>
+                    @php
+                        $row = 1;
+                    @endphp
                     <tbody>
                         @if ($usage->isEmpty())
                             <tr>
@@ -104,16 +107,18 @@
 
                                 <tr>
                                     @if ($usageDate->month == now()->month)
-                                        <th scope="row">1</th>
-                                        <td>{{ $i->FAI_code }}</td>
+                                        <th scope="row">{{ $row }}</th>
+                                        <td>{{ $i->FAI_code }} - {{ \App\Models\Barang::find($i->FAI_code)->name }}</td>
                                         <td>{{ $i->total_usage }}</td>
                                     @endif
                                 </tr>
                                 {{ $usage->links() }}
                             @endforeach
                         @endif
-
                     </tbody>
+                    @php
+                    $row++;
+                @endphp
                 </table>
             </div>
             <div class="d-flex stock">

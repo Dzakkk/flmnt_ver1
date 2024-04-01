@@ -148,6 +148,9 @@ Route::middleware(['auth'])->group(function (){
     Route::get('qc/check/form/inhouse/{id}', [QualityControlController::class, 'qc_form_inhouse'])->where('id', '(.*)');
     Route::get('qc/check/form/incoming/{id}', [QualityControlController::class, 'qc_form_incoming'])->where('id', '(.*)');
 
+    Route::get('qc/check/update/inhouse/{id}', [QualityControlController::class, 'qc_form_inhouse_update'])->where('id', '(.*)');
+    Route::get('qc/check/update/incoming/{id}', [QualityControlController::class, 'qc_form_incoming_update'])->where('id', '(.*)');
+
     Route::get('qc/check/product', [QualityControlController::class, 'qc_product']);
 
     Route::post('qc/post', [QualityControlController::class, 'qc_post']);
