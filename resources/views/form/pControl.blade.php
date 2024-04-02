@@ -206,7 +206,7 @@
             <table>
                 <tbody>
                     <tr style="height: 12px">
-                        <td rowspan="5" style="width: 20%;"><img src="" alt="logo" width="150rem"></td>
+                        <td rowspan="5" style="width: 20%;"><img src="https://media.licdn.com/dms/image/D560BAQFbx5tbiiF1bw/company-logo_200_200/0/1707282963482/falmont_flavors_logo?e=2147483647&v=beta&t=Lb2kimFauyZ2cc7briKT45MWYPquX4KpyyjbEqtMiBU" alt="logo" width="80rem"></td>
                         <td rowspan="2" style="text-align: center;"><b style="font-size: 18sp">FORM</b></td>
                         <td style="width: 16%;">
                             <p style="font-size: 11sp">Kode Dokumen</p>

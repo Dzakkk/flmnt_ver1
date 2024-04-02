@@ -41,7 +41,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#barang1').select2({
                 dropdownParent: $('#ehe'),
                 theme: 'bootstrap',
@@ -206,10 +206,24 @@
                             <i class="bi bi-circle"></i><span>Barang Masuk</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/barangKeluar">
-                            <i class="bi bi-circle"></i><span>Barang Keluar</span>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link collapsed" data-bs-target="#barang-nav-in" data-bs-toggle="collapse"
+                            href="#">
+                            <span>Barang Keluar</span><i class="bi bi-chevron-down ms-auto"></i>
                         </a>
+                        <ul id="barang-nav-in" class="nav-content collapse" data-bs-parent="#barang-nav">
+                            <li>
+                                <a href="/barangKeluar">
+                                    <i class="bi bi-circle"></i><span>Barang Keluar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/permintaan">
+                                    <i class="bi bi-circle"></i><span>Permintaan</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
 
@@ -240,7 +254,7 @@
                     </li>
                 </ul>
 
-            {{-- <li class="nav-item">
+                {{-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#product-nav" data-bs-toggle="collapse"
                     href="#">
                     <i class="ri-flask-line"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -253,25 +267,26 @@
                         </a>
                     </li>
                 </ul> --}}
-            
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#Quality-nav" data-bs-toggle="collapse"
-                        href="#">
-                        <i class="bi bi-clipboard-check"></i><span>Quality Control</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="Quality-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-    
-                        <li>
-                            <a href="/qc/check/data">
-                                <i class="bi bi-circle"></i><span>Checked Product</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/qc/check/product">
-                                <i class="bi bi-circle"></i><span>Un-Checked QC</span>
-                            </a>
-                        </li>
-                    </ul>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Quality-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-clipboard-check"></i><span>Quality Control</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Quality-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                    <li>
+                        <a href="/qc/check/data">
+                            <i class="bi bi-circle"></i><span>Checked Product</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/qc/check/product">
+                            <i class="bi bi-circle"></i><span>Un-Checked QC</span>
+                        </a>
+                    </li>
+                </ul>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#production-nav" data-bs-toggle="collapse"
@@ -382,7 +397,7 @@
                 </a>
             </li><!-- End Register Page Nav --> --}}
 
-            
+
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -435,6 +450,7 @@
             @yield('update_incoming')
             @yield('update_inhouse')
 
+            @yield('permintaan_data')
 
 
 

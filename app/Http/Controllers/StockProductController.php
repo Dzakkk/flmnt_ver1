@@ -343,7 +343,7 @@ class StockProductController extends Controller
             }
 
             $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'no_production', 'no_work_order', 'dataArray', 'persentase_array', 'jenis_kemasan', 'jumlah_kemasan'));
-            return $pdf->download('Production_Control.pdf');
+            return $pdf->stream('Production_Control.pdf');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal: ' . $e->getMessage());
             return redirect('formula')->with('error', 'Gagal: ' . $e->getMessage());

@@ -36,6 +36,8 @@
         $row = 1;
     @endphp
     <a href="/barangMasuk" class="btn btn-info shadow m-2">Barang Masuk</a>
+    <a href="/barangKeluar" class="btn btn-info shadow m-2">Barang keluar</a>
+
     <div class="table-responsive respon-table shadow">
 
         <table class="table table-hover table-striped mt-3">

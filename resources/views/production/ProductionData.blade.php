@@ -26,13 +26,13 @@
             <tr>
                 <th scope="row" style="font-size: 14px;">{{ $i->no_production }}</th>
                 <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
-                <td style="font-size: 14px;">{{ $i->stockl->quantity }}&nbsp;{{ $i->stockl->unit }}</td>
-                <td style="font-size: 14px;">{{ $i->stockl->no_LOT }}</td>
-                <td style="font-size: 14px;">{{ $i->stockl->tanggal_produksi }}</td>
-                <td style="font-size: 14px;">{{ $i->stockl->tanggal_expire }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->quantity ?? null }}&nbsp;{{ $i->stockl->unit ?? null }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->no_LOT ?? null}}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->tanggal_produksi ?? null }}</td>
+                <td style="font-size: 14px;">{{ $i->stockl->tanggal_expire ?? null }}</td>
                 <td style="font-size: 14px;">{{ $i->QC_checked }}</td>
-                <td style="font-size: 14px;">{{ $i->qc_check->status }}</td>
-                <td style="font-size: 14px;">{{ $i->qc_check->note }}</td>
+                <td style="font-size: 14px;">{{ $i->qc_check->status ?? null }}</td>
+                <td style="font-size: 14px;">{{ $i->qc_check->note ?? null }}</td>
                 {{-- <td style="font-size: 14px;">{{ $i->temperature }}</td>
                 <td style="font-size: 14px;">{{ $i->setting_time_mixing }}</td>
                 <td style="font-size: 14px;">{{ $i->QC_checked }}</td> --}}

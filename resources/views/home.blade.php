@@ -15,7 +15,7 @@
         <div class="">
             <div class="d-flex section-header">
                 <div class="barang-section container-fluid">
-                    <div class="card info-card sales-card">
+                    <div class="card info-card sales-card container-fluid">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i
                                     class="bi bi-three-dots"></i></a>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="product-section container-fluid">
-                    <div class="card info-card revenue-card">
+                    <div class="card info-card revenue-card container-fluid">
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i
                                     class="bi bi-three-dots"></i></a>
@@ -135,7 +135,6 @@
                                                 @foreach ($stocksTerbesar as $i)
                                                     {{ $i->total_quantity }},
                                                 @endforeach
-
                                             ]
                                         }],
                                         chart: {
@@ -199,7 +198,7 @@
                                         xaxis: {
                                             categories: [
                                                 @foreach ($stocksTerkecil as $i)
-                                                    '{{ \App\Models\Barang::find($i->FAI_code)->name }}',
+                                                    '{{ $i->FAI_code }}',
                                                 @endforeach
                                             ],
                                         }

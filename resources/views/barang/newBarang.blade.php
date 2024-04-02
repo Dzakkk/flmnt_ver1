@@ -201,7 +201,7 @@
                     <label class="form-label" for="CAS_number">CAS_number</label>
                     <input type="text" name="CAS_number" class="form-control" id="CAS_number">
                 </div>
-                <div class="col-md-6" id="rigra4" style="display: none">
+                <div class="col-md-6">
                     <label for="manufacturer" class="form-label">Manufacturer</label>
                     <select name="ex_origin" id="manufacturer" class="form-control select2" required>
                         <option value="" disabled selected>Select Manufacturer</option>
@@ -403,7 +403,7 @@
             var rigra1 = document.getElementById('rigra1');
             var rigra2 = document.getElementById('rigra2');
             var rigra3 = document.getElementById('rigra3');
-            var rigra4 = document.getElementById('rigra4');
+            // var rigra4 = document.getElementById('rigra4');
             var rigra5 = document.getElementById('rigra5');
             var rigra7 = document.getElementById('rigra7');
             var rigra8 = document.getElementById('rigra8');
@@ -432,7 +432,7 @@
                 rigra1.style.display = 'none';
                 rigra2.style.display = 'none';
                 rigra3.style.display = 'none';
-                rigra4.style.display = 'none';
+                // rigra4.style.display = 'none';
                 rigra5.style.display = 'none';
                 rigra6.style.display = 'none';
                 rigra7.style.display = 'none';

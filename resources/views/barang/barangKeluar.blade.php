@@ -18,6 +18,16 @@
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Barang Keluar
     </button>
+
+    <a href="/permintaan" class="btn btn-primary m-3">Permintaan</a>
+
+    <form action="/pengiriman" method="get" class="form d-flex m-2">
+    
+        <input type="date" name="tanggal" id="tanggal" class="form-control me-2">
+        <button type="submit" class="btn btn-success rounded-circle"><i class="bi bi-printer"></i></button>
+
+    </form>
+
     <div class="table-responsive shadow">
 
     <table class="table table-hover">
@@ -111,7 +121,7 @@
                                     <select class="form-select" id="golongan_select" name="jenis_pengeluaran">
                                         <option value="" disabled>Pilih Kategori</option>
                                         <option value="Pemakaian Produksi">Pemakaian Produksi</option>
-                                        <option value="Pemakaian Sample Lab">Pemakaian Sample Lab</option>
+                                        <option value="Pemakaian Sample Lab">Permintaan Bahan</option>
                                         <option value="Pemusnahan">Pemusnahan</option>
                                         <option value="Pengiriman">Pengiriman</option>
                                     </select>
@@ -226,8 +236,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="exampleInputPassword1" class="form-label">no_LOT</label>
-                                <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
+                                <label for="lotlah" class="form-label">LOT</label>
+                                <select name="LOT" class="form-control" id="lotlah">
+                                    <option value="" disabled selected>Select LOT</option>
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleInputEmail1" class="form-label">Tanggal Produksi</label>
@@ -314,9 +326,15 @@
             </div>
         </div>
     </div>
+
+
+    
+
+
+
     <script>
         $(document).ready(function() {
-    $('#barang').change(function() {
+    $('#barang1').change(function() {
         var FAI_code = $(this).val();
         $.ajax({
             url: '/getRakOption', // Pastikan URL ini sesuai dengan rute yang ditentukan di sisi server
@@ -356,4 +374,23 @@
 });
 
     </script>
+
+<script>
+    $(document).ready(function(){
+        $('#barang1').change(function(){
+            var kode = $(this).val();
+            $.ajax({
+                url: '/get-lot', // Ganti dengan URL endpoint Anda
+                method: 'GET',
+                data: { kode: kode },
+                success: function(response){
+                    $('#lotlah').empty();
+                    $.each(response, function(index, item){
+                        $('#lotlah').append('<option value="' + item.no_LOT + '">' + item.no_LOT + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

@@ -9,6 +9,7 @@ use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\Supplier;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,8 @@ class BarangMasukController extends Controller
         $supp = Supplier::all();
         $brg = Barang::all();
         $rak = RakGudang::all();
-        return view('barang.barangMasuk', ['brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg]);
+        $pcr = Packaging::all();
+        return view('barang.barangMasuk', ['brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg, 'pcr' => $pcr]);
     }
 
     //     public function brgMasuk(Request $request)
@@ -421,10 +423,29 @@ class BarangMasukController extends Controller
     public function storePackage (Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_kemasan' => 'required',
+            // 'nama_kemasan' => 'required',
             'quantity' => 'required',
-            'supplier' => 'required',
-            'id_rak' => 'required',
+            // 'supplier' => 'required',
+            'jenis_penerimaan' => 'required',
+            'tanggal_masuk' => 'required',
+            'id_supplier' => 'required',
+            'NoSuratJalanMasuk_NoProduksi' => 'required',
+            'NoPO_NoWO' => 'required',
+            'kategori_barang' => 'required',
+            'FAI_code' => 'required',
+            'no_LOT' => 'required',
+            'tanggal_produksi' => 'required',
+            'tanggal_expire' => 'required',
+            'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
+            'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
+            'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
+            // 'qty_masuk_LOT' => 'required',
+            'unit' => 'required',
+            // 'jenis_kemasan' => 'required',
+            // 'satuan_QTY_kemasan' => 'required',
+            // 'total_QTY_kemasan' => 'required',
+            'status' => 'required',
+            'id_rak' => 'required',        
         ]);
 
         if ($validator->fails()) {
@@ -433,9 +454,37 @@ class BarangMasukController extends Controller
             ->withInput();
         }
 
-        $existStock = Packaging::where('nama_kemasan', $request->nama_kemasan)->first();
+        $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
+
+
+        $barangMasuk = new BarangMasuk([
+            'jenis_penerimaan' => $request->jenis_penerimaan,
+            'tanggal_masuk' => $request->tanggal_masuk,
+            'id_supplier' => $request->id_supplier,
+            'NoSuratJalanMasuk_NoProduksi' => $request->NoSuratJalanMasuk_NoProduksi,
+            'NoPO_NoWO' => $request->NoPO_NoWO,
+            'kategori_barang' => $request->kategori_barang,
+            'FAI_code' => $request->FAI_code,
+            'no_LOT' => $request->no_LOT,
+            'tanggal_produksi' => $request->tanggal_produksi,
+            'tanggal_expire' => $request->tanggal_expire,
+            'dokumen' => $documentation,
+            'qty_masuk_LOT' => $request->qty_masuk_LOT,
+            'unit' => $request->unit,
+            'jenis_kemasan' => $request->jenis_kemasan,
+            'satuan_QTY_kemasan' => $request->satuan_QTY_kemasan,
+            'total_QTY_kemasan' => $request->quantity,
+            'status' => $request->status,
+            'id_rak' => $request->id_rak,
+        ]);
+
+        $namaKemasan = Packaging::where('FAI_code', $request->FAI_code)->first();
+
+        $existStock = Packaging::where($namaKemasan, $request->nama_kemasan)->first();
         $tambah = Packaging::where('FAI_code', $request->FAI_code)->value('quantity');
         $capacity = Packaging::where('capacity', $request->capacity)->first();
+
+        $capacity2 = Packaging::where('FAI_code', $request->FAI_code)->value('capacity');
 
         if ($existStock && $capacity) {
             $jumlah = $tambah + $request->quantity;
@@ -446,12 +495,16 @@ class BarangMasukController extends Controller
             $package = new Packaging([
                 'FAI_code' => $request->FAI_code,
                 'nama_kemasan' => $request->nama_kemasan,
-                'capacity' => $request->capacity,
+                'capacity' => $capacity2,
                 'supplier' => $request->supplier,
                 'quantity' => $request->quantity,
                 'id_rak' => $request->id_rak,
             ]);
-
+            try {
+                $barangMasuk->save();
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            }
             try {
                 $package->save();
             } catch (\Exception $e) {
@@ -464,4 +517,6 @@ class BarangMasukController extends Controller
         session()->flash('success', 'Data telah Ditambahkan!');
         return redirect('barangMasuk')->with('success', 'Barang masuk successfully.');
     }
+
+    
 }

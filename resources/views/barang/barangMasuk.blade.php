@@ -40,13 +40,26 @@
             {{ session('error') }}
         </div>
     @endif
+    <div class="container-fluid me-2">
 
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Barang Masuk
+        Bahan Baku Masuk
     </button>
     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-        Kemasan Masuk
+        Bahan Kemasan Masuk
     </button>
+
+
+        <form action="/kedatangan" method="get" class="form d-flex m-2">
+    
+            <input type="date" name="tanggal" id="tanggal" class="form-control me-2">
+            <button type="submit" class="btn btn-success rounded-circle"><i class="bi bi-printer"></i></button>
+    
+        </form>
+    
+    </div>
+
+    
     <div class="table-responsive">
         <table class="table table-hover shadow">
             <thead>
@@ -552,7 +565,7 @@
                             class="resettable-form row g-3">
                             @csrf
 
-                            <div class="col-md-9">
+                            {{-- <div class="col-md-9">
                                 <label class="form-label" for="unit">Jenis Kemasan</label>
                                 <div class="input-group">
                                     <select class="form-select" id="golongan_select" name="packaging_type">
@@ -605,7 +618,184 @@
                             <div class="col-md-12">
                                 <label for="exampleInputEmail1" class="form-label">Penyimpanan</label>
                                 <input type="text" name="id_rak" class="form-control" id="exampleInputEmail1">
+                            </div> --}}
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="TMT">jenis_penerimaan</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="golongan_select" name="jenis_penerimaan">
+                                        <option value="" disabled>Pilih Kategori</option>
+                                        <option value="Barang Hasil Produksi">Barang Hasil Produksi</option>
+                                        <option value="Bahan Baku Produksi">Bahan Baku Produksi</option>
+                                        <option value="PSS">PSS</option>
+                                        <option value="Sample">Sample</option>
+                                        <option value="Barang Lainnya">Barang Lainnya</option>
+                                        <option value="Stock Opname">Stock Opname</option>
+                                    </select>
+                                </div>
                             </div>
+
+
+                            <div class="col-md-8">
+                                <label for="barang" class="form-label">FAI Code</label>
+                                <div id="ehe2" class="form-control">
+                                    <select name="FAI_code" id="barang-masuk" class="form-control" style="width: 450px">
+                                        <option value="" disabled selected>Select FAI code</option>
+                                        @foreach ($pcr as $r)
+                                            <option value="{{ $r->FAI_code }}">
+                                                {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->nama_kemasan }}&nbsp;-&nbsp;{{ $r->capacity }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1" class="form-label">Tanggal Masuk</label>
+                                <input type="date" name="tanggal_masuk" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="supplier" class="form-label">supplier</label>
+                                <select name="id_supplier" id="supplier" class="form-control select2" required>
+                                    <option value="" disabled selected>Select Supplier</option>
+                                    @foreach ($supp as $c)
+                                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="kategori_barang" class="form-label">kategori_barang</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="golongan_select" name="kategori_barang">
+                                        <option value="">Pilih Kategori</option>
+                                        <option value="BASE(RM)">BASE(RM)</option>
+                                        <option value="FLAVOR(RM)">FLAVOR(RM)</option>
+                                        <option value="DILUTION">DILUTION</option>
+                                        <option value="PACKAGING">PACKAGING</option>
+                                        <option value="PRODUCT BASE">PRODUCT BASE</option>
+                                        <option value="PRODUCT FLAVOR">PRODUCT FLAVOR</option>
+                                        <option value="RM">RM</option>
+                                        <option value="LAIN LAIN">LAIN LAIN</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label for="exampleInputPassword1" class="form-label">Surat Jalan</label>
+                                <input type="text" name="NoSuratJalanMasuk_NoProduksi" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">NO PO/WO</label>
+                                <input type="text" name="NoPO_NoWO" class="form-control" id="exampleInputEmail1">
+                            </div>
+
+
+                            
+
+
+                            <div class="col-md-4">
+                                <label for="exampleInputPassword1" class="form-label">no_LOT</label>
+                                <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputEmail1" class="form-label">Tanggal Produksi</label>
+                                <input type="date" name="tanggal_produksi" class="form-control"
+                                    id="exampleInputEmail1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1" class="form-label">tanggal_expire</label>
+                                <input type="date" name="tanggal_expire" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">documentation</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="CoA"
+                                            name="coa_documentation" id="coa_checkbox">
+                                        <label class="form-check-label" for="coa_checkbox">CoA</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="TDS"
+                                            name="tds_documentation" id="tds_checkbox">
+                                        <label class="form-check-label" for="tds_checkbox">TDS</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="MSDS"
+                                            name="msds_documentation" id="msds_checkbox">
+                                        <label class="form-check-label" for="msds_checkbox">MSDS</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
+                                <input type="string" name="quantity" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="unit">unit</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="golongan_select" name="unit">
+                                        <option value="">Pilih Kategori</option>
+                                        <option value="Kg">Kg</option>
+                                        <option value="Pcs">Pcs</option>
+                                        <option value="ml">ml</option>
+                                        <option value="gram">gram</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- <div class="col-md-6">
+                                <label class="form-label" for="unit">Jenis Kemasan</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="golongan_select" name="jenis_kemasan">
+                                        <option value="">Pilih Kemasan</option>
+                                        <option value="Alumunium Bottle">Alumunium Bottle</option>
+                                        <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
+                                        <option value="Bag">Bag</option>
+                                        <option value="Box with Alumunium Bottle">Box with Alumunium Bottle</option>
+                                        <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch Pack
+                                        </option>
+                                        <option value="Carton">Carton</option>
+                                        <option value="Fiber Box">Fiber Box</option>
+                                        <option value="Fiber Drum">Fiber Drum</option>
+                                        <option value="Glass Bottle">Glass Bottle</option>
+                                        <option value="Jerry Can">Jerry Can</option>
+                                        <option value="Metal Can">Metal Can</option>
+                                        <option value="Metal Drum">Metal Drum</option>
+                                        <option value="Plastic Bottle">Plastic Bottle</option>
+                                        <option value="Plastic Container with Polyethylene Inner Bag">Plastic Container
+                                            with Polyethylene Inner Bag</option>
+                                        <option value="Plastic Drum">Plastic Drum</option>
+                                        <option value="Plastic Jar">Plastic Jar</option>
+                                        <option value="Sacks">Sacks</option>
+                                        <option value="Goody Bag">Goody Bag</option>
+                                    </select>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-md-3">
+                                <label for="exampleInputPassword1" class="form-label">satuan_QTY_kemasan</label>
+                                <input type="number" name="satuan_QTY_kemasan" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">total_QTY_kemasan</label>
+                                <input type="number" name="total_QTY_kemasan" class="form-control"
+                                    id="exampleInputEmail1">
+                            </div> --}}
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1" class="form-label">status</label>
+                                <input type="text" name="status" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="supplier" class="form-label">Rak</label>
+                                <select name="id_rak" id="supplier" class="form-control select2" required>
+                                    <option value="" disabled selected>Select Rak</option>
+                                    @foreach ($rak as $r)
+                                        <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
                         </form>
                     </div>

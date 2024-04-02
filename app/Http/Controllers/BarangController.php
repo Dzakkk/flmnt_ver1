@@ -109,7 +109,7 @@ class BarangController extends Controller
             'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
             'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
             'halal_certification' => 'required',
-            'name' => 'required',
+            // 'name' => 'required',
             // 'common_name' => 'required',
             // 'brandProduct_code' => 'required',
             // 'chemical_IUPACname' => 'required',
@@ -119,9 +119,9 @@ class BarangController extends Controller
             // 'country_of_origin' => 'required',
             // 'remark' => 'required',
             // 'usage_level' => 'required',
-            'harga_ex_work_USD' => 'required',
-            'harga_CIF_USD' => 'required',
-            'harga_MOQ_USD' => 'required',
+            // 'harga_ex_work_USD' => 'required',
+            // 'harga_CIF_USD' => 'required',
+            // 'harga_MOQ_USD' => 'required',
             // 'appearance' => 'required',
             // 'color_rangeColor' => 'required',
             // 'odour_taste' => 'required',
@@ -130,7 +130,7 @@ class BarangController extends Controller
             // 'spesific_gravity_d25' => 'required',
             // 'refractive_index_d20' => 'required',
             // 'refractive_index_d25' => 'required',
-            'berat_gram' => 'required',
+            // 'berat_gram' => 'required',
         ]);
         // dd($validator);
         if ($validator->fails()) {
@@ -166,6 +166,7 @@ class BarangController extends Controller
                 'supplier' => $request->supplier,
                 'capacity' => $request->capacity,
                 'quantity' => 0,
+                'id_rak' => 'LOADING DECK',
             ]);
             $kemasan->save();
         } else {

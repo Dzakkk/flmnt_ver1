@@ -5,8 +5,10 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FormPrintOutController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\QualityControlController;
 use App\Http\Controllers\StockController;
@@ -163,12 +165,18 @@ Route::middleware(['auth'])->group(function (){
     Route::get('product/cari', [ProductsController::class, 'search']);
 
 
+    Route::get('kedatangan', [FormPrintOutController::class, 'kedatangan']);
+    Route::get('pengiriman', [FormPrintOutController::class, 'pengiriman']);
+    Route::get('permintaan/print', [FormPrintOutController::class, 'permintaan_print']);
 
+    Route::get('permintaan', [PermintaanController::class, 'permintaan']);
+    Route::post('permintaan/store', [PermintaanController::class, 'permintaan_store']);
+    Route::get('get-lot', [PermintaanController::class, 'getlot']);
 });
 
 
-// Route::get('test', function () {
-//     return view('form.layoutExcel.productionControlLayout');
-// });
+Route::get('test', function () {
+    return view('form.pControl');
+});
 
 
