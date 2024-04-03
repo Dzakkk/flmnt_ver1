@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Permintaan;
 use App\Models\Products;
+use App\Models\QualityControl;
+use App\Models\RakGudang;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +18,8 @@ class PermintaanController extends Controller
         $pr = Permintaan::all();
         $brg = Barang::all();
         $prd = Products::all();
-        return view('barang.permintaanData', compact('pr', 'brg', 'prd'));
+        $stock = Stock::all();
+        return view('barang.permintaanData', compact('pr', 'brg', 'prd', 'stock'));
     }
 
 
@@ -54,6 +57,20 @@ class PermintaanController extends Controller
 
         $permintaan->save();
 
+        $lot = Stock::where('FAI_code', $request->kode)->where('no_LOT', $request->LOT)->first();
+        $qty = Stock::where('FAI_code', $request->kode)->where('no_LOT', $request->LOT)->value('quantity');
+        $lot->update([
+            'quantity' => $qty -= $request->quantity,
+        ]);
+
+        $lot->save();
+
+        $warehouse = Stock::where('FAI_code', $request->kode)->where('no_LOT', $request->LOT)->value('warehouse');
+        $rak = RakGudang::where('id_rak', $warehouse)->first();
+        $rak->kapasitas += $request->quantity;
+
+        $rak->save();
+
         return redirect('permintaan');
     }
 
@@ -63,5 +80,13 @@ class PermintaanController extends Controller
         $lots = Stock::where('FAI_code', $kode)->get(['no_LOT']);
 
         return response()->json($lots);
+    }
+
+    public function getStatus(Request $request)
+    {
+        $lot = $request->no_LOT;
+        $status = QualityControl::where('LOT', $lot)->value('status');
+        
+        return response()->json(['status' => $status]);
     }
 }

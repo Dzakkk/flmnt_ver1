@@ -114,11 +114,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">request_by</label>
-                                <input type="text" name="request_by" class="form-control" id="exampleInputPassword1">
+                                <input type="text" name="request_by" class="form-control" id="exampleInputPassword1" value="{{ Auth::user()->name }}">
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">departemen</label>
-                                <input type="text" name="departemen" class="form-control" id="exampleInputPassword1">
+                                <input type="text" name="departemen" class="form-control" id="exampleInputPassword1" value="{{ Auth::user()->divisi }}">
                             </div>
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
                         </form>

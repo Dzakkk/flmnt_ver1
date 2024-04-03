@@ -22,7 +22,7 @@
     <a href="/permintaan" class="btn btn-primary m-3">Permintaan</a>
 
     <form action="/pengiriman" method="get" class="form d-flex m-2">
-    
+
         <input type="date" name="tanggal" id="tanggal" class="form-control me-2">
         <button type="submit" class="btn btn-success rounded-circle"><i class="bi bi-printer"></i></button>
 
@@ -30,77 +30,77 @@
 
     <div class="table-responsive shadow">
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col" style="font-size: 14px;">Jenis Pengeluaran</th>
-                <th scope="col" style="font-size: 14px;">Tanggal Keluar</th>
-                <th scope="col" style="font-size: 14px;">shipment</th>
-                <th scope="col" style="font-size: 14px;">Customer</th>
-                <th scope="col" style="font-size: 14px;">NO PO/WO</th>
-                <th scope="col" style="font-size: 14px;">Surat Jalan</th>
-                <th scope="col" style="font-size: 14px;">Dokumen</th>
-                <th scope="col" style="font-size: 14px;">FAI code</th>
-                <th scope="col" style="font-size: 14px;">no LOT</th>
-                <th scope="col" style="font-size: 14px;">Jenis Kemasan</th>
-                <th scope="col" style="font-size: 14px;">Quantity/LOT</th>
-                <th scope="col" style="font-size: 14px;">ACTION</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($brgkeluar as $i)
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <th scope="row" style="font-size: 14px;">{{ $i->jenis_pengeluaran }}</th>
-                    <td style="font-size: 14px;">{{ $i->tanggal_keluar }}</td>
-                    <td style="font-size: 14px;">{{ $i->shipment }}</td>
-                    <td style="font-size: 14px;">{{ \App\Models\Customer::find($i->id_customer)->customer_name }}</td>
-                    <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
-                    <td style="font-size: 14px;">{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
-                    <td style="font-size: 14px;">{{ $i->dokumen }}</td>
-                    <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
-                    <td style="font-size: 14px;">{{ $i->no_LOT }}</td>
-                    <td style="font-size: 14px;">{{ $i->jenis_kemasan }}</td>
-                    <td style="font-size: 14px;">{{ $i->total_qty_keluar_LOT }}</td>
-                    <td style="font-size: 14px;">
-                        <div class="d-flex">
-                            <a href="/supplier/update/{{ $i->id_pengeluaran }}"
-                                class="btn btn-outline-primary btn-sm me-1">Ubah</a>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal-{{ $i->id_pengeluaran }}">Delete</button>
-                        </div>
-                    </td>
+                    <th scope="col" style="font-size: 14px;">Jenis Pengeluaran</th>
+                    <th scope="col" style="font-size: 14px;">Tanggal Keluar</th>
+                    <th scope="col" style="font-size: 14px;">shipment</th>
+                    <th scope="col" style="font-size: 14px;">Customer</th>
+                    <th scope="col" style="font-size: 14px;">NO PO/WO</th>
+                    <th scope="col" style="font-size: 14px;">Surat Jalan</th>
+                    <th scope="col" style="font-size: 14px;">Dokumen</th>
+                    <th scope="col" style="font-size: 14px;">FAI code</th>
+                    <th scope="col" style="font-size: 14px;">no LOT</th>
+                    <th scope="col" style="font-size: 14px;">Jenis Kemasan</th>
+                    <th scope="col" style="font-size: 14px;">Quantity/LOT</th>
+                    <th scope="col" style="font-size: 14px;">ACTION</th>
                 </tr>
-                <div class="modal fade" id="confirmDeleteModal-{{ $i->id_pengeluaran }}" tabindex="-1"
-                    aria-labelledby="confirmDeleteModalLabel-{{ $i->id_pengeluaran }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmDeleteModalLabel-{{ $i->id_pengeluaran }}">Confirm
-                                    Deletion
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+            </thead>
+            <tbody>
+                @foreach ($brgkeluar as $i)
+                    <tr>
+                        <th scope="row" style="font-size: 14px;">{{ $i->jenis_pengeluaran }}</th>
+                        <td style="font-size: 14px;">{{ $i->tanggal_keluar }}</td>
+                        <td style="font-size: 14px;">{{ $i->shipment }}</td>
+                        <td style="font-size: 14px;">{{ \App\Models\Customer::find($i->id_customer)->customer_name }}</td>
+                        <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
+                        <td style="font-size: 14px;">{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
+                        <td style="font-size: 14px;">{{ $i->dokumen }}</td>
+                        <td style="font-size: 14px;">{{ $i->FAI_code }}</td>
+                        <td style="font-size: 14px;">{{ $i->no_LOT }}</td>
+                        <td style="font-size: 14px;">{{ $i->jenis_kemasan }}</td>
+                        <td style="font-size: 14px;">{{ $i->total_qty_keluar_LOT }}</td>
+                        <td style="font-size: 14px;">
+                            <div class="d-flex">
+                                <a href="/supplier/update/{{ $i->id_pengeluaran }}"
+                                    class="btn btn-outline-primary btn-sm me-1">Ubah</a>
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal-{{ $i->id_pengeluaran }}">Delete</button>
                             </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete this record?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="confirmDeleteModal-{{ $i->id_pengeluaran }}" tabindex="-1"
+                        aria-labelledby="confirmDeleteModalLabel-{{ $i->id_pengeluaran }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel-{{ $i->id_pengeluaran }}">Confirm
+                                        Deletion
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this record?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
-                                {{-- <form action="{{ route('supplier.delete', $i->id_pengeluaran) }}" method="POST">
+                                    {{-- <form action="{{ route('supplier.delete', $i->id_pengeluaran) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Confirm Delete</button>
                     </form> --}}
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -225,19 +225,19 @@
                                         <option value="" disabled selected>Select FAI</option>
 
                                         @foreach ($brg as $r)
-                                        <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
-                                    @endforeach
-                                    @foreach ($prd as $r)
-                                        <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
-                                    @endforeach
+                                            <option value="{{ $r->FAI_code }}">
+                                                {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
+                                        @endforeach
+                                        @foreach ($prd as $r)
+                                            <option value="{{ $r->FAI_code }}">
+                                                {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="lotlah" class="form-label">LOT</label>
-                                <select name="LOT" class="form-control" id="lotlah">
+                                <select name="no_LOT" class="form-control" id="lotlah">
                                     <option value="" disabled selected>Select LOT</option>
                                 </select>
                             </div>
@@ -313,9 +313,10 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="exampleInputPassword1" class="form-label">status</label>
-                                <input type="text" name="status" class="form-control" id="exampleInputPassword1">
+                                <label for="exampleInputPassword1" class="form-label">Status</label>
+                                <input type="text" name="status" class="form-control" id="status">
                             </div>
+
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
                         </form>
                     </div>
@@ -328,69 +329,88 @@
     </div>
 
 
-    
+
 
 
 
     <script>
         $(document).ready(function() {
-    $('#barang1').change(function() {
-        var FAI_code = $(this).val();
-        $.ajax({
-            url: '/getRakOption', // Pastikan URL ini sesuai dengan rute yang ditentukan di sisi server
-            type: 'GET',
-            data: {
-                FAI_code: FAI_code
-            },
-            success: function(response) {
-                $('#rak').empty(); // Kosongkan opsi-opsi yang sudah ada sebelumnya
-                // Tambahkan opsi-opsi baru berdasarkan respons dari server
-                $.each(response.options, function(index, option) {
-                    $('#rak').append('<option value="' + option.id_rak + '">' + option.id_rak + '</option>');
+            $('#barang1').change(function() {
+                var FAI_code = $(this).val();
+                $.ajax({
+                    url: '/getRakOption', // Pastikan URL ini sesuai dengan rute yang ditentukan di sisi server
+                    type: 'GET',
+                    data: {
+                        FAI_code: FAI_code
+                    },
+                    success: function(response) {
+                        $('#rak').empty(); // Kosongkan opsi-opsi yang sudah ada sebelumnya
+                        // Tambahkan opsi-opsi baru berdasarkan respons dari server
+                        $.each(response.options, function(index, option) {
+                            $('#rak').append('<option value="' + option.id_rak + '">' +
+                                option.id_rak + '</option>');
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
+                    }
                 });
-            },
-            error: function(xhr) {
-                console.log('Error:', xhr.responseText);
-            }
-        });
-    });
-
-    // Menambahkan event listener untuk reset form pada modal
-    document.addEventListener('DOMContentLoaded', function() {
-        var modalElement = document.getElementById('staticBackdrop');
-        var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
-        var customerForm = document.getElementById('customerForm');
-
-        modalElement.addEventListener('hidden.bs.modal', function() {
-            customerForm.reset();
-        });
-
-        if (modalCloseButton && customerForm) {
-            modalCloseButton.addEventListener('click', function() {
-                customerForm.reset();
             });
-        }
-    });
-});
 
-    </script>
+            $('#barang1').change(function() {
+                var kode = $(this).val();
+                $.ajax({
+                    url: '/get-lot', // Ganti dengan URL endpoint Anda
+                    method: 'GET',
+                    data: {
+                        kode: kode
+                    },
+                    success: function(response) {
+                        $('#lotlah').empty();
+                        $.each(response, function(index, item) {
+                            $('#lotlah').append('<option value="' + item.no_LOT + '">' +
+                                item.no_LOT + '</option>');
+                        });
+                    }
+                });
+            });
 
-<script>
-    $(document).ready(function(){
-        $('#barang1').change(function(){
-            var kode = $(this).val();
-            $.ajax({
-                url: '/get-lot', // Ganti dengan URL endpoint Anda
-                method: 'GET',
-                data: { kode: kode },
-                success: function(response){
-                    $('#lotlah').empty();
-                    $.each(response, function(index, item){
-                        $('#lotlah').append('<option value="' + item.no_LOT + '">' + item.no_LOT + '</option>');
+            $('#lotlah').change(function() {
+                var no_LOT = $(this).val();
+                $.ajax({
+                    url: '/get-status', // Pastikan URL ini sesuai dengan rute yang ditentukan di sisi server
+                    type: 'GET',
+                    data: {
+                        no_LOT: no_LOT,
+                    },
+                    success: function(response) {
+                        $('#status').val(response.status);
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
+                    }
+                });
+            });
+
+
+
+
+            // Menambahkan event listener untuk reset form pada modal
+            document.addEventListener('DOMContentLoaded', function() {
+                var modalElement = document.getElementById('staticBackdrop');
+                var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
+                var customerForm = document.getElementById('customerForm');
+
+                modalElement.addEventListener('hidden.bs.modal', function() {
+                    customerForm.reset();
+                });
+
+                if (modalCloseButton && customerForm) {
+                    modalCloseButton.addEventListener('click', function() {
+                        customerForm.reset();
                     });
                 }
             });
         });
-    });
-</script>
+    </script>
 @endsection

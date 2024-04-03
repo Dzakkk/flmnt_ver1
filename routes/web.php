@@ -172,6 +172,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('permintaan', [PermintaanController::class, 'permintaan']);
     Route::post('permintaan/store', [PermintaanController::class, 'permintaan_store']);
     Route::get('get-lot', [PermintaanController::class, 'getlot']);
+    Route::get('get-status', [PermintaanController::class, 'getStatus']);
+
 });
 
 

@@ -390,13 +390,19 @@
                                     id="exampleInputPassword1">
                             </div>
                             <div class="col-md-6">
-                                <label for="supplier" class="form-label">supplier</label>
+                                <label for="supplier" class="form-label">Supplier</label>
                                 <select name="id_supplier" id="supplier" class="form-control select2" required>
                                     <option value="" disabled selected>Select Supplier</option>
                                     @foreach ($supp as $c)
                                         <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
                                     @endforeach
+                                    <option value="new">Tambah Supplier</option>
                                 </select>
+                            </div>
+            
+                            <div id="supplierNameSection" class="col-md-6" style="display: none;">
+                                <label for="supplierName" class="form-label">Nama Supplier</label>
+                                <input type="text" id="supplierName" name="supplier" class="form-control">
                             </div>
                             <div class="col-md-6">
                                 <label for="kategori_barang" class="form-label">kategori_barang</label>
@@ -655,7 +661,7 @@
                                 <input type="date" name="tanggal_masuk" class="form-control"
                                     id="exampleInputPassword1">
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="supplier" class="form-label">supplier</label>
                                 <select name="id_supplier" id="supplier" class="form-control select2" required>
                                     <option value="" disabled selected>Select Supplier</option>
@@ -663,6 +669,20 @@
                                         <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
                                     @endforeach
                                 </select>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <label for="supplier" class="form-label">Supplier</label>
+                                <select name="id_supplier" id="supplier2" class="form-control select2" required>
+                                    <option value="" disabled selected>Select Supplier</option>
+                                    @foreach ($supp as $c)
+                                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
+                                    @endforeach
+                                    <option value="new">Tambah Supplier</option>
+                                </select>
+                            </div>
+                            <div id="supplier2section" class="col-md-6" style="display: none;">
+                                <label for="supplierName" class="form-label">Nama Supplier</label>
+                                <input type="text" id="supplierName2" name="supplier" class="form-control">
                             </div>
                             <div class="col-md-6">
                                 <label for="kategori_barang" class="form-label">kategori_barang</label>
@@ -806,6 +826,41 @@
             </div>
         </div>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.select2').forEach(function(select) {
+                select.addEventListener('change', function() {
+                    if (select.id === "supplier") {
+                        var supplierNameSection = document.getElementById("supplierNameSection");
+                        var supplierNameInput = document.getElementById("supplierName");
+                        var selectedSupplier = select.value;
 
+                        if (selectedSupplier === "new") {
+                            supplierNameSection.style.display = "block";
+                            supplierNameInput.value = "";
+                        } else {
+                            supplierNameSection.style.display = "none";
+                            supplierNameInput.value = selectedSupplier;
+                        }
+                    }
+
+                    if (select.id === "supplier2") {
+                        var manufacturerNameSection = document.getElementById(
+                            "supplier2section");
+                        var manufacturerNameInput = document.getElementById("supplierName2");
+                        var selectedManufacturer = select.value;
+
+                        if (select.value === "new") {
+                            manufacturerNameSection.style.display = "block";
+                            manufacturerNameInput.value = "";
+                        } else {
+                            manufacturerNameSection.style.display = "none";
+                            manufacturerNameInput.value = selectedManufacturer;
+                        }
+                    }
+                });
+            });
+        });
+</script>
     
 @endsection
