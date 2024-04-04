@@ -22,8 +22,8 @@
     }
 
     .ttd {
-        height: 40px;
-        width: 85px;
+        height: 30px;
+        width: 80px;
     }
 
     .header-pemeriksaan {
@@ -35,7 +35,7 @@
     }
 
     img {
-        margin-left: 55px;
+        margin-left: 15px;
     }
 
     .tgl {
@@ -50,13 +50,13 @@
     }
 
     .tb-1 {
-        margin-left: 799px;
+        margin-left: 520px;
         padding: 15px;
         width: 200px;
     }
 
     .tb {
-        padding: 15px;
+        padding: 5px;
     }
 
     .no {
@@ -102,7 +102,7 @@
     }
 
     .tb td {
-        height: 20px;
+        height: 16px;
     }
 
     .float {
@@ -148,7 +148,7 @@
             <table>
                 <tbody>
                     <tr style="height: 12px">
-                        <td rowspan="4" style="width: 20%;"><img src="https://media.licdn.com/dms/image/D560BAQFbx5tbiiF1bw/company-logo_200_200/0/1707282963482/falmont_flavors_logo?e=2147483647&v=beta&t=Lb2kimFauyZ2cc7briKT45MWYPquX4KpyyjbEqtMiBU" alt="logo" width="80rem"></td>
+                        <td rowspan="4" style="width: 15%;"><img src="https://media.licdn.com/dms/image/D560BAQFbx5tbiiF1bw/company-logo_200_200/0/1707282963482/falmont_flavors_logo?e=2147483647&v=beta&t=Lb2kimFauyZ2cc7briKT45MWYPquX4KpyyjbEqtMiBU" alt="logo" width="80rem"></td>
                         <td rowspan="2" style="text-align: center;"><b><h3>FORM</h3></b></td>
                         <td style="width: 16%;">
                             <p style="font-size: 11sp">Kode Dokumen</p>
@@ -206,7 +206,7 @@
                 <tbody>
                     @foreach ($filteredData as $i)
                         <tr>
-                            <td>1</td>
+                            <td></td>
                             <td>{{ $i->nama }}</td>
                             <td>{{ $i->kode }}</td>
                             <td>{{ $i->LOT }}</td>
@@ -216,6 +216,136 @@
                             <td>{{ $i->request_by }} - {{ $i->departemen }}</td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table class="tb-1">
+                <tr>
+                    <td>Dibuat Oleh</td>
+                    <td>Diterima Oleh</td>
+                </tr>
+                <tr>
+                    <td class="ttd"></td>
+                    <td class="ttd"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="full-body">
+        <div class="header-pemeriksaan">
+            <table>
+                <tbody>
+                    <tr style="height: 12px">
+                        <td rowspan="4" style="width: 15%;"><img src="https://media.licdn.com/dms/image/D560BAQFbx5tbiiF1bw/company-logo_200_200/0/1707282963482/falmont_flavors_logo?e=2147483647&v=beta&t=Lb2kimFauyZ2cc7briKT45MWYPquX4KpyyjbEqtMiBU" alt="logo" width="80rem"></td>
+                        <td rowspan="2" style="text-align: center;"><b><h3>FORM</h3></b></td>
+                        <td style="width: 16%;">
+                            <p style="font-size: 11sp">Kode Dokumen</p>
+                        </td>
+                        <td style="width: 16%;">
+                            <p style="font-size: 10sp">: FRM - PRD - 00</p>
+                        </td>
+                    </tr>
+                    <tr style="height: 12px">
+                        <td>
+                            <p style="font-size: 11sp">Level Dokumen</p>
+                        </td>
+                        <td>
+                            <p style="font-size: 10sp">: IV</p>
+                        </td>
+                    </tr>
+                    <tr style="height: 12px">
+                        <td rowspan="2" style="text-align: center;"><b><h3>PERMINTAAN BARANG</h3></b>
+                        </td>
+                        <td>
+                            <p style="font-size: 11sp">Revisi</p>
+                        </td>
+                        <td>
+                            <p style="font-size: 10sp">: 1</p>
+                        </td>
+                    </tr>
+                    <tr style="height: 12px">
+                        <td>
+                            <p style="font-size: 11sp">Tanggal Efektif</p>
+                        </td>
+                        <td>
+                            <p style="font-size: 10sp">: 2 Desember 2023</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="tgl">
+                <div>Tanggal : {{ $yesterday }}</div>
+                {{-- <div>Asal Departemen : {{ $departemen }}</div>  --}}
+                <div>Nomor : </div> 
+            </div>
+        </div>
+        <div class="main-section">
+            <table class="tb">
+                <thead>
+                    <td class="no">No</td>
+                    <td>nama</td>
+                    <td>Kode</td>
+                    <td>LOT</td>
+                    <td>Jumlah</td>
+                    <td>Keterangan</td>
+                    <td>Status</td>
+                    <td>Request</td>
+                </thead>
+                <tbody>
+                    @foreach ($yesterdayData as $i)
+                        <tr>
+                            <td></td>
+                            <td>{{ $i->nama }}</td>
+                            <td>{{ $i->kode }}</td>
+                            <td>{{ $i->LOT }}</td>
+                            <td>{{ $i->quantity }}</td>
+                            <td>{{ $i->keterangan }}</td>
+                            <td>{{ $i->status }}</td>
+                            <td>{{ $i->request_by }} - {{ $i->departemen }}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

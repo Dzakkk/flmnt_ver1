@@ -12,8 +12,6 @@
 
     </form>
 
-
-
     <div class="table-responsive shadow">
         <table class="table table-hover">
             <thead>
