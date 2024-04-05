@@ -5,9 +5,39 @@
         td {
             font-size: 13px;
         }
+        #slideshow {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            max-width: 100%;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .pagination {
+            margin-top: 20px; /* Sesuaikan dengan kebutuhan Anda */
+            text-align: center;
+        }
+
+        .prev,
+        .next {
+            background: #ccc;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
     </style>
-    <div class="container-fluid d-flex">
-        <div class=" me-1">
+    <div class="" id="slideshow">
+        <div class="slide-container">
+        <div class="slide">
             <h5>Inhouse</h5>
             <table class="shadow table table-hover">
                 <thead>
@@ -53,7 +83,7 @@
                 </tbody>
             </table>
         </div>
-        <div class=" ms-1">
+        <div class="slide">
             <h5>Incoming</h5>
             <table class="shadow table table-hover">
                 <thead>
@@ -110,4 +140,29 @@
             </table>
         </div>
     </div>
+    
+    <div class="controls">
+        <button onclick="nextSlide()" class="btn btn-primary">Pindah</button>
+    </div>
+</div>
+    <script>
+        var slidesContainer = document.querySelector('.slide-container');
+        var slides = document.querySelectorAll('.slide');
+        var currentSlide = 0;
+
+        function showSlide(n) {
+            currentSlide = (n + slides.length) % slides.length;
+            slidesContainer.style.transform = 'translateX(-' + currentSlide * 100 + '%)';
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        
+    </script>
 @endsection

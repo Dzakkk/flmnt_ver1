@@ -15,9 +15,12 @@ class FormPrintOutController extends Controller
     public function kedatangan (Request $request) {
 
         $tanggal = $request->input('tanggal');
+        $carbonDate = Carbon::createFromFormat('Y-m-d', $tanggal);
+    
+        $formattedDate = $carbonDate->isoFormat('MMMM, DD YYYY');
         $filteredData = BarangMasuk::whereDate('tanggal_masuk', '=', $tanggal)->get();
 
-        $pdf = FacadePdf::loadView('form.printOut.kedatangan', ['filteredData' => $filteredData, 'tanggal' => $tanggal])->setPaper('a4', 'landscape');
+        $pdf = FacadePdf::loadView('form.printOut.kedatangan', ['filteredData' => $filteredData, 'tanggal' => $formattedDate])->setPaper('a4', 'landscape');
     
         return $pdf->stream('filtered_data.pdf');
     
@@ -26,9 +29,12 @@ class FormPrintOutController extends Controller
     public function pengiriman (Request $request) {
 
         $tanggal = $request->input('tanggal');
+        $carbonDate = Carbon::createFromFormat('Y-m-d', $tanggal);
+    
+        $formattedDate = $carbonDate->isoFormat('MMMM, DD YYYY');
         $filteredData = BarangKeluar::whereDate('tanggal_keluar', '=', $tanggal)->get();
 
-        $pdf = FacadePdf::loadView('form.printOut.pengiriman', ['filteredData' => $filteredData, 'tanggal' => $tanggal])->setPaper('a4', 'landscape');
+        $pdf = FacadePdf::loadView('form.printOut.pengiriman', ['filteredData' => $filteredData, 'tanggal' => $formattedDate])->setPaper('a4', 'landscape');
     
         return $pdf->stream('filtered_data.pdf');
     

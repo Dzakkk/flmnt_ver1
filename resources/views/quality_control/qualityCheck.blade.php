@@ -1,105 +1,145 @@
 @extends('dashboard')
 
 @section('qc_check')
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td rowspan="2">Lot</td>
-                    <td rowspan="2">Code</td>
-                    <td rowspan="2">Product Name</td>
-                    <td rowspan="2">Qty</td>
-                    <td rowspan="2">Customer</td>
-                    <td rowspan="2">Tanggal Produksi</td>
-                    {{-- <td rowspan="2">Test Methode</td>
-                    <td colspan="3">Appereance</td>
-                    <td colspan="3">Range Color</td>
-                    <td colspan="3">Odour Taste</td>
-                    <td colspan="5">Spesific Gravity d20</td>
-                    <td colspan="5">Spesific Gravity d25</td>
-                    <td colspan="5">Refractive Index d20</td>
-                    <td colspan="5">Refractive Index d25</td> --}}
-                    <td rowspan="2">Note</td>
-                    <td rowspan="2">status</td>
-                </tr>
-                {{-- <tr>
-                    <td>Parameter</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                    <td>Parameter</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                    <td>Parameter</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                    <td>Target</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                    <td>Target</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                    <td>Target</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                    <td>Target</td>
-                    <td>Value</td>
-                    <td>Result</td>
-                </tr> --}}
-            </thead>
-            <tbody>
-                @foreach ($qc as $i)
-                    
-                <tr>
-                    <td>{{ $i->LOT }}</td>
-                    <td>{{ $i->FAI_code }}</td>
-                    <td>{{ $i->product_name }}</td>
-                    <td>{{ $i->qty }}</td>
-                    <td>{{ $i->customer }}</td>
-                    <td>{{ $i->tanggal_produksi }}</td>
-                    {{-- <td>{{ $i->test_methode }}</td>
-                    <td>{{ $i->appereance }}</td>
-                    <td>{{ $i->color_value }}</td>
-                    <td>{{ $i->color_result }}</td>
-                    <td>{{ $i->appereance }}</td>
-                    <td>{{ $i->odour_value }}</td>
-                    <td>{{ $i->odour_result }}</td>
-                    <td>{{ $i->appereance }}</td>
-                    <td>{{ $i->taste_value }}</td>
-                    <td>{{ $i->taste_result }}</td>
-                    <td>{{ $i->sg_d20_min }}</td>
-                    <td>{{ $i->sg_d20_max }}</td>
-                    <td>{{ $i->sg_d20_target }}</td>
-                    <td>{{ $i->sg_d20_value }}</td>
-                    <td>{{ $i->sg_d20_result }}</td>
-                    <td>{{ $i->sg_d25_min }}</td>
-                    <td>{{ $i->sg_d25_max }}</td>
-                    <td>{{ $i->sg_d25_target }}</td>
-                    <td>{{ $i->sg_d25_value }}</td>
-                    <td>{{ $i->sg_d25_result }}</td>
-                    <td>{{ $i->ri_d20_min }}</td>
-                    <td>{{ $i->ri_d20_max }}</td>
-                    <td>{{ $i->ri_d20_target }}</td>
-                    <td>{{ $i->ri_d20_value }}</td>
-                    <td>{{ $i->ri_d20_result }}</td>
-                    <td>{{ $i->ri_d25_min }}</td>
-                    <td>{{ $i->ri_d25_max }}</td>
-                    <td>{{ $i->ri_d25_target }}</td>
-                    <td>{{ $i->ri_d25_value }}</td>
-                    <td>{{ $i->ri_d25_result }}</td> --}}
-                    <td>{{ $i->note }}</td>
-                    <td>{{ $i->status }}</td>
-                </tr>
-                @endforeach
+    <style>
+        #slideshow {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
 
-            </tbody>
-        </table>
+        .slide-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            max-width: 100%;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .pagination {
+            margin-top: 20px; /* Sesuaikan dengan kebutuhan Anda */
+            text-align: center;
+        }
+
+        .prev,
+        .next {
+            background: #ccc;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+    
+    <div id="slideshow">
+        <div class="slide-container">
+            <div class="table-responsive slide active p-2">
+                <h3>Inhouse</h3>
+
+                <table class="table table-hover shadow">
+                    <thead>
+                        <tr>
+                            <td rowspan="2">Lot</td>
+                            <td rowspan="2">Code</td>
+                            <td rowspan="2">Product Name</td>
+                            <td rowspan="2">Qty</td>
+                            <td rowspan="2">Customer</td>
+                            <td rowspan="2">Tanggal Produksi</td>
+                            <td rowspan="2">Note</td>
+                            <td rowspan="2">status</td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach ($prd as $i)
+                            <tr>
+                                <td>{{ $i->qc_check->LOT ?? null }}</td>
+                                <td>{{ $i->FAI_code ?? null }}</td>
+                                <td>{{ $i->qc_check->product_name ?? null }}</td>
+                                <td>{{ $i->qc_check->qty ?? null }}</td>
+                                <td>{{ $i->qc_check->customer ?? null }}</td>
+                                <td>{{ $i->qc_check->tanggal_produksi ?? null }}</td>
+
+                                <td>{{ $i->qc_check->note ?? null }}</td>
+                                <td>{{ $i->qc_check->status ?? null }}</td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+               
+            </div>
+            <div class="table-responsive slide p-2">
+                <h3>Incoming</h3>
+
+                <table class="table table-hover shadow">
+                    <thead>
+                        <tr>
+                            <td rowspan="2">Lot</td>
+                            <td rowspan="2">Code</td>
+                            <td rowspan="2">Product Name</td>
+                            <td rowspan="2">Qty</td>
+                            <td rowspan="2">Customer</td>
+                            <td rowspan="2">Tanggal Produksi</td>
+                            
+                            <td rowspan="2">Note</td>
+                            <td rowspan="2">status</td>
+                        </tr>
+                   
+                    </thead>
+                    <tbody>
+
+
+                        @foreach ($brg as $i)
+                            <tr>
+                                <td>{{ $i->qc_check->LOT ?? null }}</td>
+                                <td>{{ $i->FAI_code ?? null }}</td>
+                                <td>{{ $i->qc_check->product_name ?? null }}</td>
+                                <td>{{ $i->qc_check->qty ?? null }}</td>
+                                <td>{{ $i->qc_check->customer ?? null }}</td>
+                                <td>{{ $i->qc_check->tanggal_produksi ?? null }}</td>
+                                <td>{{ $i->qc_check->note ?? null }}</td>
+                                <td>{{ $i->qc_check->status ?? null }}</td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+        <div class="pagination">
+            {{ $prd->links() }}
+        </div>
+    
+        <div class="controls">
+            <button onclick="nextSlide()" class="btn btn-primary">Pindah</button>
+        </div>
     </div>
+
+
+
+
+    <script>
+        var slidesContainer = document.querySelector('.slide-container');
+        var slides = document.querySelectorAll('.slide');
+        var currentSlide = 0;
+
+        function showSlide(n) {
+            currentSlide = (n + slides.length) % slides.length;
+            slidesContainer.style.transform = 'translateX(-' + currentSlide * 100 + '%)';
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        
+    </script>
 @endsection

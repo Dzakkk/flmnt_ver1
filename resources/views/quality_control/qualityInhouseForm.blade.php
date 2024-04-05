@@ -97,7 +97,7 @@
                 <div class="mb-3 row">
                     <label for="8" class="col-sm-2 col-form-label">Test Methode</label>
                     <div class="col-sm-10">
-                        <input type="text" name="test_methode" class="form-control" id="8" value="">
+                        <input type="text" name="test_methode" class="form-control" id="8" value="" required>
                     </div>
                 </div>
                 <div class="mb-3 row">

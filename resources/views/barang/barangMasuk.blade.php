@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('barangMasuk')
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             var modalElement = document.getElementById('staticBackdrop');
             var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
@@ -20,14 +20,14 @@
             }
         });
     </script>
-        <script>
-            $(document).ready(function(){
-                $('#barang-masuk').select2({
-                    dropdownParent: $('#ehe2'),
-                    theme: 'bootstrap',
-                });
+    <script>
+        $(document).ready(function() {
+            $('#barang-masuk').select2({
+                dropdownParent: $('#ehe2'),
+                theme: 'bootstrap',
             });
-        </script>
+        });
+    </script>
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show">
             {{ session('success') }}
@@ -42,24 +42,24 @@
     @endif
     <div class="container-fluid me-2">
 
-    <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Bahan Baku Masuk
-    </button>
-    <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-        Bahan Kemasan Masuk
-    </button>
+        <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Bahan Baku Masuk
+        </button>
+        <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+            Bahan Kemasan Masuk
+        </button>
 
 
         <form action="/kedatangan" method="get" class="form d-flex m-2">
-    
+
             <input type="date" name="tanggal" id="tanggal" class="form-control me-2">
             <button type="submit" class="btn btn-success rounded-circle"><i class="bi bi-printer"></i></button>
-    
+
         </form>
-    
+
     </div>
 
-    
+
     <div class="table-responsive">
         <table class="table table-hover shadow">
             <thead>
@@ -399,7 +399,7 @@
                                     <option value="new">Tambah Supplier</option>
                                 </select>
                             </div>
-            
+
                             <div id="supplierNameSection" class="col-md-6" style="display: none;">
                                 <label for="supplierName" class="form-label">Nama Supplier</label>
                                 <input type="text" id="supplierName" name="supplier" class="form-control">
@@ -571,60 +571,7 @@
                             class="resettable-form row g-3">
                             @csrf
 
-                            {{-- <div class="col-md-9">
-                                <label class="form-label" for="unit">Jenis Kemasan</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="golongan_select" name="packaging_type">
-                                        <option value="">Nama Kemasan</option>
-                                        <option value="Alumunium Bottle">Alumunium Bottle</option>
-                                        <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
-                                        <option value="Bag">Bag</option>
-                                        <option value="Box with Alumunium Bottle">Box with Alumunium Bottle
-                                        </option>
-                                        <option value="Box with Alumunium Pouch Pack">Box with Alumunium
-                                            Pouch
-                                            Pack
-                                        </option>
-                                        <option value="Carton">Carton</option>
-                                        <option value="Fiber Box">Fiber Box</option>
-                                        <option value="Fiber Drum">Fiber Drum</option>
-                                        <option value="Glass Bottle">Glass Bottle</option>
-                                        <option value="Jerry Can">Jerry Can</option>
-                                        <option value="Metal Can">Metal Can</option>
-                                        <option value="Metal Drum">Metal Drum</option>
-                                        <option value="Plastic Bottle">Plastic Bottle</option>
-                                        <option value="Plastic Container with Polyethylene Inner Bag">
-                                            Plastic
-                                            Container
-                                            with Polyethylene Inner Bag</option>
-                                        <option value="Plastic Drum">Plastic Drum</option>
-                                        <option value="Plastic Jar">Plastic Jar</option>
-                                        <option value="Sacks">Sacks</option>
-                                        <option value="Goody Bag">Goody Bag</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="exampleInputPassword1" class="form-label">Capacity Packaging</label>
-                                <input type="text" name="capacity" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="col-md-8">
-                                <label for="supplier" class="form-label">supplier</label>
-                                <select name="id_supplier" id="supplier" class="form-control select2" required>
-                                    <option value="" disabled selected>Select Supplier</option>
-                                    @foreach ($supp as $c)
-                                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="exampleInputPassword1" class="form-label">Quantity</label>
-                                <input type="text" name="quantity" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="exampleInputEmail1" class="form-label">Penyimpanan</label>
-                                <input type="text" name="id_rak" class="form-control" id="exampleInputEmail1">
-                            </div> --}}
+
 
                             <div class="col-md-6">
                                 <label class="form-label" for="TMT">jenis_penerimaan</label>
@@ -642,17 +589,16 @@
                             </div>
 
 
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <label for="barang" class="form-label">FAI Code</label>
-                                <div id="ehe2" class="form-control">
-                                    <select name="FAI_code" id="barang-masuk" class="form-control" style="width: 450px">
-                                        <option value="" disabled selected>Select FAI code</option>
-                                        @foreach ($pcr as $r)
-                                            <option value="{{ $r->FAI_code }}">
-                                                {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->nama_kemasan }}&nbsp;-&nbsp;{{ $r->capacity }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <select name="FAI_code" class="form-control">
+                                    <option value="" disabled selected>Select FAI code</option>
+                                    @foreach ($pcr as $r)
+                                        <option value="{{ $r->FAI_code }}">
+                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->nama_kemasan }}&nbsp;-&nbsp;{{ $r->capacity }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
 
@@ -661,15 +607,7 @@
                                 <input type="date" name="tanggal_masuk" class="form-control"
                                     id="exampleInputPassword1">
                             </div>
-                            {{-- <div class="col-md-6">
-                                <label for="supplier" class="form-label">supplier</label>
-                                <select name="id_supplier" id="supplier" class="form-control select2" required>
-                                    <option value="" disabled selected>Select Supplier</option>
-                                    @foreach ($supp as $c)
-                                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
+
                             <div class="col-md-6">
                                 <label for="supplier" class="form-label">Supplier</label>
                                 <select name="id_supplier" id="supplier2" class="form-control select2" required>
@@ -711,7 +649,7 @@
                             </div>
 
 
-                            
+
 
 
                             <div class="col-md-4">
@@ -826,8 +764,8 @@
             </div>
         </div>
     </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.select2').forEach(function(select) {
                 select.addEventListener('change', function() {
                     if (select.id === "supplier") {
@@ -861,6 +799,5 @@
                 });
             });
         });
-</script>
-    
+    </script>
 @endsection

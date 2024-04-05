@@ -37,7 +37,6 @@ class ActivityController extends Controller
 
         $out = BarangKeluar::orderBy('created_at', 'desc')->take(3)->get();
 
-        // Mengambil data berdasarkan grup created_at dan menghitung jumlahnya
         $in = BarangMasuk::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
             ->groupBy('date')
             ->get();

@@ -39,8 +39,8 @@
                 <td style="font-size: 14px;">{{ $i->warehouse }}</td>
                 <td>
                     <div class="d-flex">
-                        <a href="/after/production/{{ $i->no_production }}" class="btn btn-primary btn-sm me-1"><i class="ri-edit-line"></i></a>
-                        <a href="/produksi/product/update/form/{{ $i->no_production }}" class="btn btn-warning btn-sm me-1"><i class="ri-edit-line"></i></a>
+                        <a href="/after/production/{{ $i->no_production }}" class="btn btn-primary btn-sm me-1" title="Data Setelah Produksi"><i class="bi bi-card-checklist"></i></a>
+                        <a href="/produksi/product/update/form/{{ $i->no_production }}" class="btn btn-warning btn-sm me-1" title="Data Produksi"><i class="ri-edit-line"></i></a>
 
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}"><i class="bi bi-trash"></i></button>

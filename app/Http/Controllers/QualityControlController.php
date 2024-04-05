@@ -16,8 +16,15 @@ class QualityControlController extends Controller
 {
     public function qc_check()
     {
+
+        $brg = BarangMasuk::with('qc_check')
+            ->whereHas('qc_check')->paginate(1);
+
+        $prd = ProductionControl::with('qc_check')
+            ->whereHas('qc_check')->paginate(1);
+
         $qc = QualityControl::paginate(5);
-        return view('quality_control.qualityCheck', compact('qc'));
+        return view('quality_control.qualityCheck', compact('qc', 'brg', 'prd'));
     }
 
     public function qc_form_inhouse($id)
@@ -27,8 +34,6 @@ class QualityControlController extends Controller
         $no_production = $parts[0] ?? null;
         $no_LOT = $parts[1] ?? null;
 
-        // dd($no_production, $no_LOT);
-
         $cust = Customer::all();
 
         $nl = Stock::where('no_LOT', $no_LOT)->where('no_production', $no_production)->first();
@@ -36,8 +41,6 @@ class QualityControlController extends Controller
         $fai = Stock::where('no_LOT', $no_LOT)->where('no_production', $no_production)->value('FAI_code');
 
         $prd = Products::where('FAI_code', $fai)->first();
-
-        // dd($no_production,$no_LOT, $nl, $fai, $prd);
 
         return view('quality_control.qualityInhouseForm', compact('nl', 'prd', 'cust'));
     }
@@ -49,7 +52,6 @@ class QualityControlController extends Controller
         $no_production = $parts[0] ?? null;
         $no_LOT = $parts[1] ?? null;
 
-        // dd($no_production, $no_LOT);
         $qc = QualityControl::where('no_production', $no_production)->where('LOT', $no_LOT)->first();
 
         $cust = Customer::all();
@@ -59,8 +61,6 @@ class QualityControlController extends Controller
         $fai = Stock::where('no_LOT', $no_LOT)->where('no_production', $no_production)->value('FAI_code');
 
         $prd = Products::where('FAI_code', $fai)->first();
-
-        // dd($no_production,$no_LOT, $nl, $fai, $prd);
 
         return view('quality_control.updateInhouse', compact('qc', 'nl', 'prd', 'cust'));
     }
@@ -73,9 +73,6 @@ class QualityControlController extends Controller
         $no_LOT = $parts[1] ?? null;
         $brg = $parts[2] ?? null;
 
-
-        // dd($no_production, $no_LOT);
-
         $cust = Customer::all();
 
         $nl = Stock::where('no_LOT', $no_LOT)->where('created_at', $tanggal)->first();
@@ -83,8 +80,6 @@ class QualityControlController extends Controller
         $fai = Stock::where('no_LOT', $no_LOT)->where('created_at', $tanggal)->value('FAI_code');
 
         $prd = Barang::where('FAI_code', $fai)->first();
-
-        // dd($no_production,$no_LOT, $nl, $fai, $prd);
 
         return view('quality_control.qualityIncomingForm', compact('nl', 'prd', 'cust'));
     }
@@ -97,8 +92,6 @@ class QualityControlController extends Controller
         $no_LOT = $parts[1] ?? null;
         $brg = $parts[2] ?? null;
 
-
-        // dd($no_production, $no_LOT);
         $qc = QualityControl::where('LOT', $no_LOT)->where('created_at', $tanggal)->first();
 
         $cust = Customer::all();
@@ -109,15 +102,22 @@ class QualityControlController extends Controller
 
         $prd = Barang::where('FAI_code', $fai)->first();
 
-        // dd($no_production,$no_LOT, $nl, $fai, $prd);
-
         return view('quality_control.updateIncoming', compact('qc', 'nl', 'prd', 'cust'));
     }
 
     public function qc_product()
     {
-        $brg = BarangMasuk::with('stockL','barang' ,'qc_check')->get();
-        $pro = ProductionControl::with('stockl', 'product', 'qc_check')->get();
+        $brg = BarangMasuk::with('stockL', 'barang', 'qc_check')
+            ->get()
+            ->sortBy(function ($item) {
+                return optional($item->qc_check)->status;
+            });
+
+        $pro = ProductionControl::with('stockl', 'product', 'qc_check')
+            ->get()
+            ->sortBy (function ($item) {
+                return optional($item->qc_check)->status;
+            });
 
         return view('quality_control.productCheck', compact('brg', 'pro'));
     }
@@ -135,14 +135,14 @@ class QualityControlController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // return redirect('your-form-route')
-            //     ->withErrors($validator)
-            //     ->withInput();
-            dd($validator);
+            return redirect('your-form-route')
+                ->withErrors($validator)
+                ->withInput();
+            // dd($validator);
         }
 
         $odour = $request->odour_value;
-        
+
         if ($odour < 2) {
             $odour_result = 'Pass';
         } else if ($odour > 3) {
@@ -152,7 +152,7 @@ class QualityControlController extends Controller
         }
 
         $color = $request->color_value;
-        
+
         if ($color < 2) {
             $color_result = 'Pass';
         } else if ($color > 3) {
@@ -162,7 +162,7 @@ class QualityControlController extends Controller
         }
 
         $taste = $request->taste_value;
-        
+
         if ($taste < 2) {
             $taste_result = 'Pass';
         } else if ($taste > 3) {
@@ -216,7 +216,6 @@ class QualityControlController extends Controller
         $qc->save();
 
         return redirect('/qc/check/data');
-
     }
 
     public function qc_update(Request $request, $id)
@@ -239,7 +238,7 @@ class QualityControlController extends Controller
         }
 
         $odour = $request->odour_value;
-        
+
         if ($odour < 2) {
             $odour_result = 'Pass';
         } else if ($odour > 3) {
@@ -249,7 +248,7 @@ class QualityControlController extends Controller
         }
 
         $color = $request->color_value;
-        
+
         if ($color < 2) {
             $color_result = 'Pass';
         } else if ($color > 3) {
@@ -259,7 +258,7 @@ class QualityControlController extends Controller
         }
 
         $taste = $request->taste_value;
-        
+
         if ($taste < 2) {
             $taste_result = 'Pass';
         } else if ($taste > 3) {
@@ -315,6 +314,5 @@ class QualityControlController extends Controller
         $qc->save();
 
         return redirect('/qc/check/data');
-
     }
 }
