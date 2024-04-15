@@ -267,8 +267,8 @@ class QualityControlController extends Controller
             $taste_result = 'Need Verification';
         }
 
-        $qc = QualityControl::find($id);
-
+        $qc = QualityControl::where('no_production', $id)->first();
+// dd($qc, $id);
         $qc->update([
             'LOT' => $request->LOT,
             'product_name' => $request->product_name,

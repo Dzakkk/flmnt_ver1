@@ -1,6 +1,11 @@
 @extends('dashboard')
 
 @section('data_lot')
+<style>
+    th, td {
+        font-size: 12px;
+    }
+</style>
 <div class="form-floating mb-4">
     <form action="/lot/cari" method="GET" class="form-floating mb-3 d-flex">
         <div class="form-floating container-fluid">

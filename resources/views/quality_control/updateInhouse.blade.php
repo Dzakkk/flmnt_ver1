@@ -44,7 +44,7 @@
 
 <div>
     <div class="container shadow pt-2 mt-2 pb-2">
-        <form action="/qc/update/{{ $qc->no_Production }}" method="post" enctype="multipart/form-data">
+        <form action="/qc/update/{{ $qc->no_production }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3 row">
                 <label for="1" class="col-sm-2 col-form-label">No Production</label>
