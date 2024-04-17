@@ -59,6 +59,11 @@
 
     </div>
 
+    <form action="/import/masuk" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file">
+        <button type="submit">Import</button>
+    </form>
 
     <div class="table-responsive">
         <table class="table table-hover shadow">
@@ -84,7 +89,8 @@
                     <tr>
                         <th scope="row" style="font-size: 14px;">{{ $i->jenis_penerimaan }}</th>
                         <td style="font-size: 14px;">{{ $i->tanggal_masuk }}</td>
-                        <td style="font-size: 14px;">{{ \App\Models\Supplier::find($i->id_supplier)->supplier_name }}</td>
+                        <td style="font-size: 14px;">{{ \App\Models\Supplier::find($i->id_supplier)->supplier_name ?? '' }}
+                        </td>
                         <td style="font-size: 14px;">{{ $i->NoSuratJalanMasuk_NoProduksi }}</td>
                         <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
                         <td style="font-size: 14px;">{{ $i->kategori_barang }}</td>
@@ -356,6 +362,7 @@
             </tbody>
         </table>
     </div>
+    {{ $brgmasuk->links() }}
 
     <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static"
         data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -479,11 +486,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label for="file" class="form-label">Uploud File</label>
+                                <div id="file-input-container">
+                                    <input type="file" name="files[]" class="form-control" multiple>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-sm mt-1" onclick="addFileInput()">Tambah
+                                    File</button>
+                            </div>
+                            <script>
+                                function addFileInput() {
+                                    var fileInput = '<input type="file" name="files[]" class="form-control mt-2" multiple>';
+                                    $('#file-input-container').append(fileInput);
+                                }
+                            </script>
+                            <div class="col-md-6">
                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
                                 <input type="string" name="qty_masuk_LOT" class="form-control" id="exampleInputEmail1">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label class="form-label" for="unit">unit</label>
                                 <div class="input-group">
                                     <select class="form-select" id="golongan_select" name="unit">

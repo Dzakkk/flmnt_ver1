@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MasukImport;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Packaging;
@@ -12,6 +13,7 @@ use App\Models\Supplier;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BarangMasukController extends Controller
 {
@@ -24,139 +26,6 @@ class BarangMasukController extends Controller
         $pcr = Packaging::all();
         return view('barang.barangMasuk', ['brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg, 'pcr' => $pcr]);
     }
-
-    //     public function brgMasuk(Request $request)
-    // {
-    //     $qtyMasuk = $request->input('qty_masuk_LOT');
-    //     $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
-
-    //     // Validate fields with custom rules
-    //     $request->validate([
-    //         'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
-    //         'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
-    //         'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
-    //         // Add other validation rules for BarangMasuk fields here
-    //     ]);
-
-    //     $barangMasuk = new BarangMasuk;
-    //     $barangMasuk->fill($request->only([
-    //         'tanggal_masuk',
-    //         'jenis_penerimaan',
-    //         'id_supplier',
-    //         'NoSuratJalanMasuk_NoProduksi',
-    //         'NoPO_NoWO',
-    //         'kategori_barang',
-    //         'dokumen',
-    //         'FAI_code',
-    //         'no_LOT',
-    //         'tanggal_produksi',
-    //         'tanggal_expire',
-    //         'qty_masuk_LOT',
-    //         'unit',
-    //         'jenis_kemasan',
-    //         'satuan_QTY_kemasan',
-    //         'total_QTY_kemasan',
-    //         'status',
-    //         'id_rak',
-    //     ]));
-
-    //     // Set 'dokumen' based on checkbox status
-    //     $barangMasuk->dokumen = $request->hasAny(['coa_documentation', 'tds_documentation', 'msds_documentation'])
-    //         ? 'Yes'
-    //         : 'No';
-
-
-    //     $stock = new Stock;
-    //     $stock->fill($request->only([
-    //         'FAI_code',
-    //         'no_LOT',
-    //         'tanggal_produksi',
-    //         'tanggal_expire',
-    //         'unit',
-    //         'weight',
-    //     ]));
-
-    //     // Set qty_masuk_LOT and weight to the same value
-    //     $stock->qty_masuk_LOT = $qtyMasuk;
-    //     $stock->weight = $qtyMasuk;
-
-
-    //     $barangMasuk->save();
-
-    //     $stock->save();
-
-    //     return redirect('barangMasuk');
-    // }
-
-    // public function brgMasuk(Request $request)
-    // {
-    //     $request->validate([
-    //         'jenis_penerimaan' => 'required',
-    //         'tanggal_masuk' => 'required',
-    //         'id_supplier' => 'required',
-    //         'NoSuratJalanMasuk_NoProduksi' => 'required',
-    //         'NoPO_NoWO' => 'required',
-    //         'kategori_barang' => 'required',
-    //         'FAI_code' => 'required',
-    //         'no_LOT' => 'required',
-    //         'tanggal_produksi' => 'required',
-    //         'tanggal_expire' => 'required',
-    //         'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
-    //         'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
-    //         'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
-    //         'qty_masuk_LOT' => 'required',
-    //         'unit' => 'required',
-    //         'jenis_kemasan' => 'required',
-    //         'satuan_QTY_kemasan' => 'required',
-    //         'total_QTY_kemasan' => 'required',
-    //         'status' => 'required',
-    //         'id_rak' => 'required',
-
-    //     ]);
-
-    //     // Combine selected documentation checkboxes into a string
-    //     $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
-
-    //     // Create a new BarangMasuk instance and fill it with the request data
-    //     $barangMasuk = new BarangMasuk([
-    //         'jenis_penerimaan' => $request->jenis_penerimaan,
-    //         'tanggal_masuk' => $request->tanggal_masuk,
-    //         'id_supplier' => $request->id_supplier,
-    //         'NoSuratJalanMasuk_NoProduksi' => $request->NoSuratJalanMasuk_NoProduksi,
-    //         'NoPO_NoWO' => $request->NoPO_NoWO,
-    //         'kategori_barang' => $request->kategori_barang,
-    //         'FAI_code' => $request->FAI_code,
-    //         'no_LOT' => $request->no_LOT,
-    //         'tanggal_produksi' => $request->tanggal_produksi,
-    //         'tanggal_expire' => $request->tanggal_expire,
-    //         'dokumen' => $documentation,
-    //         'qty_masuk_LOT' => $request->qty_masuk_LOT,
-    //         'unit' => $request->unit,
-    //         'jenis_kemasan' => $request->jenis_kemasan,
-    //         'satuan_QTY_kemasan' => $request->satuan_QTY_kemasan,
-    //         'total_QTY_kemasan' => $request->total_QTY_kemasan,
-    //         'status' => $request->status,
-    //         'id_rak' => $request->id_rak,
-    //     ]);
-
-    //     // Save the BarangMasuk instance to insert data into the barang_masuk table
-    //     $barangMasuk->save();
-
-    //     // Create a new Stock instance and fill it with the request data
-    //     $stock = new Stock([
-    //         'FAI_code' => $request->FAI_code,
-    //         'no_LOT' => $request->no_LOT,
-    //         'tanggal_produksi' => $request->tanggal_produksi,
-    //         'tanggal_expire' => $request->tanggal_expire,
-    //         'unit' => $request->unit,
-    //         'weight' => $request->qty_masuk_LOT, // Assuming qty_masuk_LOT and weight are the same
-    //     ]);
-
-    //     // Save the Stock instance to insert data into the stock_lot table
-    //     $stock->save();
-
-    //     return redirect('barangMasuk');
-    // }
 
     public function brgMasuk(Request $request)
     {
@@ -181,6 +50,7 @@ class BarangMasukController extends Controller
             'total_QTY_kemasan' => 'required',
             'status' => 'required',
             'id_rak' => 'required',
+            'file' => 'nullable|file|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -210,7 +80,15 @@ class BarangMasukController extends Controller
             'total_QTY_kemasan' => $request->total_QTY_kemasan,
             'status' => $request->status,
             'id_rak' => $request->id_rak,
+            
         ]);
+
+        if ($request->hasFile('file')) {
+            foreach( $request->file('file') as $file);
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path('file_masuk'), $fileName);
+            $barangMasuk->file[] = '/file_masuk/' . $fileName;
+        }
 
         $rakGudang = RakGudang::find($request->id_rak);
 
@@ -516,6 +394,12 @@ class BarangMasukController extends Controller
         }
         session()->flash('success', 'Data telah Ditambahkan!');
         return redirect('barangMasuk')->with('success', 'Barang masuk successfully.');
+    }
+
+    public function import_masuk()
+    {
+        Excel::import(new MasukImport, request()->file('file'));
+        return redirect()->back()->with('success', 'Users imported successfully!');
     }
 
     

@@ -20,23 +20,20 @@ class BarangImport implements ToCollection
     {
         
         foreach ($rows as $row) {
-            Barang::create([
-                'FAI_code' => $row[0],
-                'FINA_code' => $row[1],
-                'name' => $row[2],
-            ]);
+            Barang::updateOrCreate(
+                ['FAI_code' => $row[0]],
+                ['FINA_code' => $row[0], 'name' => $row[1]]
+            );
 
-            Stock::create([
-                'FAI_code' => $row[0],
-                'no_LOT' => 'sisa',
-                'quantity' => $row[3],
-            ]);
+            Stock::updateOrCreate(
+                ['FAI_code' => $row[0]],
+                ['no_LOT' => 'sisa', 'quantity' => $row[2]]
+            );
 
-            StockBarang::create([
-                'FAI_code' => $row[0],
-                'FINA_code' => $row[1],
-                'product_name' => $row[2],
-            ]);
+            StockBarang::updateOrCreate(
+                ['FAI_code' => $row[0]],
+                ['FINA_code' => $row[0], 'product_name' => $row[1]]
+            );
         }
     }
 }

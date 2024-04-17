@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangKeluar;
+use App\Models\BarangMasuk;
 use App\Models\CustList;
 use App\Models\Customer;
 use App\Models\Packaging;
@@ -240,8 +242,27 @@ class StockProductController extends Controller
             } else {
                 session()->flash('error', 'gudang Penuh');
                 return redirect('production/form')->with('error', 'Gudang Penuh');
-                
             }
+
+            $barangMasuk = new BarangMasuk([
+                'FAI_code' => $request->FAI_code,
+                'jenis_penerimaan' => 'Bahan Hasil Produksi',
+                'tanggal_masuk' => now(),
+                'tanggal_produksi' => $request->tanggal_produksi,
+                'tanggal_expire' => $tanggal_expire,
+                'NoSuratJalanMasuk_NoProduksi' => $request->no_production,
+                'unit' => $unit,
+                'no_LOT' => $no_LOT,
+                'qty_masuk_LOT' => $quantity,
+                'NoPO_NoWO' => $PO_customer + '/' + $no_work_order,
+                'id_rak' => $id_rak,
+                'jenis_kemasan' => $jenis_kemasan,
+                'jumlah_kemasan' => $jumlah_kemasan,
+
+            ]);
+
+            $barangMasuk->save();
+
 
             $newCust = Customer::where('customer_name', $request->customer_name)->first();
 
@@ -264,9 +285,9 @@ class StockProductController extends Controller
                 $custNew = new Customer([
                     'customer_name' => $request->customer_name,
                 ]);
-            $custNew->save();
+                $custNew->save();
             }
-                
+
             $cust = CustList::where('customer_name', $request->customer_name)
                 ->first();
 
@@ -324,22 +345,50 @@ class StockProductController extends Controller
                     'FAI_code' => $FAI_code_barang,
                     'tanggal_penggunaan' => $request->tanggal_produksi,
                 ]);
-                
-                 $usage->save();
+
+                $usage->save();
 
 
-                $lotStocks = Stock::where('FAI_code', $FAI_code_barang)->get();
+                $lotStocks = Stock::where('FAI_code', $FAI_code_barang)
+                    ->orderBy('tanggal_masuk', 'asc')
+                    ->get();
 
+                // Inisialisasi sisa persentase yang belum diproses
+                $remainingPercentage = $hasilPersen;
+
+                // Iterasi melalui setiap entri FAI code
                 foreach ($lotStocks as $lotStock) {
-                    if ($lotStock->quantity >= $hasilPersen) {
-                        $lotStock->quantity -= $hasilPersen;
-                        $lotStock->save();
+                    // Menghitung jumlah yang akan dikurangkan dari entri stok saat ini
+                    $quantityToReduce = min($lotStock->quantity, $remainingPercentage);
+
+                    // Menyimpan perubahan stok
+                    $stockChanges[] = [
+                        'id_lot' => $lotStock->id_lot,
+                        'quantity' => $quantityToReduce,
+                    ];
+
+                    $barangKeluar = new BarangKeluar([
+                        'FAI_code' => $FAI_code_barang,
+                        'jumlah_keluar' => $quantityToReduce,
+                        'tanggal_keluar' => $request->tanggal_produksi,
+                        'id_lot' => $lotStock->id_lot,
+                    ]);
+                    $barangKeluar->save();
+
+                    // Mengurangi sisa persentase yang belum diproses
+                    $remainingPercentage -= $quantityToReduce;
+
+                    // Hentikan iterasi jika sisa persentase yang belum diproses sudah 0
+                    if ($remainingPercentage <= 0) {
                         break;
-                    } elseif ($lotStock->quantity < $hasilPersen) {
-                        return redirect('/production/form')->with('error', 'stock tidak mencukupi');
-                        session()->flash('error', 'Stock Tidak mencukupi');
                     }
                 }
+            }
+
+            foreach ($stockChanges as $change) {
+                $stock = Stock::find($change['id_lot']);
+                $stock->quantity -= $change['quantity'];
+                $stock->save();
             }
 
             $pdf = FacadePdf::loadView('form.pControl', compact('FAI_code', 'product_name', 'no_LOT', 'quantity', 'customer_name', 'customer_code', 'PO_customer', 'tanggal_produksi', 'tanggal_expire', 'no_production', 'no_work_order', 'dataArray', 'persentase_array', 'jenis_kemasan', 'jumlah_kemasan'));
@@ -407,7 +456,8 @@ class StockProductController extends Controller
     }
 
 
-    public function updateProductionForm($id) {
+    public function updateProductionForm($id)
+    {
 
         $prc = ProductionControl::find($id);
 
@@ -416,11 +466,12 @@ class StockProductController extends Controller
         $kemasan = Packaging::all();
         $custList = CustList::all();
         $cust = Customer::all();
-// dd($prc, $stockl);
+        // dd($prc, $stockl);
         return view('production.formUpdateProduction', compact('stockl', 'rak', 'kemasan', 'custList', 'cust'));
     }
 
-    public function updateDataProduction1(Request $request, $id) {
+    public function updateDataProduction1(Request $request, $id)
+    {
         $prc = ProductionControl::find($id);
 
         $prc->update([
@@ -428,7 +479,7 @@ class StockProductController extends Controller
         ]);
 
         $stockL = Stock::where('no_production', $prc->no_production)->first();
-        
+
         $stockL->update([
             'no_production' => $request->no_production,
             'tanggal_produksi' => $request->tanggal_produksi,
@@ -441,9 +492,9 @@ class StockProductController extends Controller
         ]);
 
         $custList = CustList::where('customer_code', $request->customer_code)
-                                    ->where('customer_name', $request->customer_name)
-                                    ->first();
-        
+            ->where('customer_name', $request->customer_name)
+            ->first();
+
         if (!$custList) {
             $cust = new Customer([
                 'customer_name' => $request->customer_name,
@@ -462,10 +513,10 @@ class StockProductController extends Controller
         }
 
         return redirect('/production/control/data');
-        
     }
 
-    public function updateDataProduction2(Request $request, $id) {
+    public function updateDataProduction2(Request $request, $id)
+    {
         $prc = ProductionControl::find($id);
 
         $prc->update([
@@ -473,13 +524,13 @@ class StockProductController extends Controller
         ]);
 
         $stockL = Stock::where('no_production', $prc->no_production)->first();
-        
+
         $stockL->update($request->all());
 
         $custList = CustList::where('customer_code', $request->customer_code)
-                                    ->where('customer_name', $request->customer_name)
-                                    ->first();
-        
+            ->where('customer_name', $request->customer_name)
+            ->first();
+
         if (!$custList) {
             $cust = new Customer([
                 'customer_name' => $request->customer_name,
@@ -497,6 +548,6 @@ class StockProductController extends Controller
             $custList->update($request->all());
         }
 
-        return redirect('/after/production/'. $id);
+        return redirect('/after/production/' . $id);
     }
 }

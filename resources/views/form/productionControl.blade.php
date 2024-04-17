@@ -130,28 +130,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <script>
+                        {{-- <script>
                             $(document).ready(function(){
                                 $('.select2').select2({
                                 });
                             });
-                        </script>
+                        </script> --}}
                         @foreach ($barang_array as $index => $barang_data)
                             <tr>
                                 <td>{{ $no }}</td>
                                 <td>
-                                    
+
                                     <select name="FAI_code_barang[]" id="FAI_code_barang_{{ $index }}"
                                         class="form-select FAI_code_barang select2" data-index="{{ $index }}">
                                         @php
-                                            $lot = \App\Models\Stock::where(
+                                            $stocks = \App\Models\Stock::where(
                                                 'FAI_code',
                                                 $barang_data['FAI_code_barang'],
-                                            )->value('no_LOT');
-                                            $stock = \App\Models\Stock::where(
-                                                'FAI_code',
-                                                $barang_data['FAI_code_barang'],
-                                            )->value('quantity');
+                                            )
+                                                ->orderBy('created_at', 'asc')
+                                                ->get();
+                                            $firstStock = $stocks->first();
+                                            $lot = $firstStock ? $firstStock->no_LOT : '';
+                                            $stock = $firstStock ? $firstStock->quantity : '';
                                         @endphp
                                         <option class="border-0" value="{{ $barang_data['FAI_code_barang'] }}"
                                             data-lot="{{ $lot }}" data-stock="{{ $stock }}">
@@ -195,14 +196,10 @@
                                 <td></td>
                             </tr>
                         @endforeach
-                        
+
                         @php
                             $no++;
                         @endphp
-
-
-
-
 
                     </tbody>
                     <tfoot>
@@ -220,126 +217,39 @@
         </form>
     </div>
     {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let persentase_inputs = document.querySelectorAll('.persentase');
-            persentase_inputs.forEach(function(input) {
-                let index = input.dataset.index;
-                let FAI_select = document.querySelector('.FAI_code_barang[data-index="' + index + '"]');
-                if (FAI_select) {
-                    let selected_option = FAI_select.options[FAI_select.selectedIndex];
-                    let available_stock = parseFloat(selected_option.dataset.stock);
-                    input.addEventListener('input', function() {
-                        checkStock(input, available_stock);
-                    });
-                } else {
-                    console.error('Persentase input element not found.');
-                }
+        $(document).ready(function() {
+            $('.select2').select2();
+    
+            $('.FAI_code_barang').change(function() {
+                var selectedOption = $(this).find('option:selected');
+                var lot = selectedOption.data('lot');
+                var stock = selectedOption.data('stock');
+                
+                $(this).closest('tr').find('.lot').text(lot);
+                $(this).closest('tr').find('.stock-info').text('Stock: ' + stock);
             });
-
-            function checkStock(element, stock) {
-                let input_value = parseFloat(element.value);
-                let stockInfo = element.parentElement.nextElementSibling.querySelector('.stock-info');
-                if (input_value > stock) {
-                    element.classList.add('bg-danger');
-                    stockInfo.textContent = 'Stock kurang';
-                    stockInfo.classList.add('text-danger');
-                } else {
-                    element.classList.remove('bg-danger');
-                    stockInfo.textContent = 'Stock cukup';
-                    stockInfo.classList.remove('text-danger');
-                }
-            }
         });
     </script> --}}
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let FAI_selects = document.querySelectorAll('.FAI_code_barang');
-            FAI_selects.forEach(function (select) {
-                select.addEventListener('change', function () {
-                    let index = select.dataset.index;
-                    let persentase_input = document.querySelector('.persentase[data-index="' + index + '"]');
-                    let option = select.options[select.selectedIndex];
-                    let lot = option.dataset.lot;
-                    // Update lot
-                    let lot_td = select.parentElement.nextElementSibling.nextElementSibling;
-                    lot_td.textContent = lot;
-                    // Update persentase
-                    persentase_input.value = (parseFloat(persentase_input.value) / 100) * parseFloat(option.dataset.stock);
-    
-                    // Cek apakah persentase melebihi stok
-                    checkStock(persentase_input, option.dataset.stock);
-                });
-            });
-    
-            let persentase_inputs = document.querySelectorAll('.persentase');
-            persentase_inputs.forEach(function (input) {
-                input.addEventListener('input', function () {
-                    let index = input.dataset.index;
-                    let FAI_select = document.querySelector('.FAI_code_barang[data-index="' + index + '"]');
-                    let selected_option = FAI_select.options[FAI_select.selectedIndex];
-                    let available_stock = parseFloat(selected_option.dataset.stock);
-                    let input_value = parseFloat(input.value);
-                    checkStock(input, available_stock);
-                });
-            });
-    
-            function checkStock(element, stock) {
-                let input_value = parseFloat(element.value);
-                if (input_value > stock) {
-                    element.classList.add('bg-danger');
-                    element.nextElementSibling.textContent = 'Stock kurang';
-                } else {
-                    element.classList.remove('bg-danger');
-                    element.nextElementSibling.textContent = '';
-                }
-            }
-        });
-    
-    </script> --}}
-
-
-
-    {{-- ini yang pertama --}}
-
-    {{-- <script>
-        document.addEventListener('change', function(e) {
-            if (e.target && e.target.classList.contains('FAI_code_barang')) {
-                var selectedOption = e.target.options[e.target.selectedIndex];
-                var row = e.target.closest('tr');
-                var noLotField = row.querySelector('.lot');
-                var lots = selectedOption.getAttribute('data-lot').split(',');
-                var totalNeeded = {{ ($persentase_array[$index] / 100) * $quantity }};
-                var totalAvailable = 0;
-                noLotField.textContent = lots.join(', ');
-
-            }
-        });
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            function cekStock(index, stock, persentase) {
-                if (stock < (persentase / 100) * {{ $quantity }}) {
-                    $('.no_LOT:eq(' + index + ')').text('Stock Tidak mencukupi');
-                } else {
-                    $('.no_LOT:eq(' + index + ')').text('Stock Cukup');
-                }
-            }
+            $('.select2').select2();
 
-            $('.FAI_code_barang').change(function() {
-                var index = $(this).attr('id').split('_')[3];
-                var stock = $(this).find(':selected').data('lot');
-                var persentase = $('input[name="persentase_array[]"]').eq(index).val();
-                cekStock(index, stock, persentase);
+            // Fungsi untuk menampilkan informasi stok saat halaman dimuat
+            $('.FAI_code_barang').each(function() {
+                var selectedOption = $(this).find('option:selected');
+                var stock = selectedOption.data('stock');
+
+                $(this).closest('tr').find('.stock-info').text('Stock: ' + stock);
             });
 
-            @foreach ($barang_array as $index => $barang_data)
-                var stock = {{ $barang_data['no_LOT'] }};
-                var persentase = {{ ($persentase_array[$index] / 100) * $quantity }};
-                cekStock({{ $index }}, stock, persentase);
-            @endforeach
+            // Fungsi untuk menangani perubahan pada pilihan FAI_code_barang
+            $('.FAI_code_barang').change(function() {
+                var selectedOption = $(this).find('option:selected');
+                var stock = selectedOption.data('stock');
+
+                $(this).closest('tr').find('.stock-info').text('Stock: ' + stock);
+            });
         });
-    </script> --}}
+    </script>
 @endsection

@@ -114,7 +114,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('export/production/control', [ProductsController::class, 'exportProductionControl']);
 
     Route::post('import', [BarangController::class, 'import']);
-    
+    Route::post('import/masuk', [BarangMasukController::class, 'import_masuk']);
+  
     // Route::livewire('/product-form', [FormulaProduct::class]);
     Livewire::component('/product-form', [FormulaProduct::class]);
     
