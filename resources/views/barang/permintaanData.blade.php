@@ -19,6 +19,7 @@
                     <td>No</td>
                     <td>Nama</td>
                     <td>Kode</td>
+                    <td>Unic</td>
                     <td>LOT</td>
                     <td>Quantity</td>
                     <td>Request By</td>
@@ -35,6 +36,7 @@
                         <td></td>
                         <td>{{ $i->nama }}</td>
                         <td>{{ $i->kode }}</td>
+                        <td>{{ $i->unic_code }}</td>
                         <td>{{ $i->LOT }}</td>
                         <td>{{ $i->quantity }}</td>
                         <td>{{ $i->request_by }}</td>

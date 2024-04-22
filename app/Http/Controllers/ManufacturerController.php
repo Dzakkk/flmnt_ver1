@@ -22,16 +22,16 @@ class ManufacturerController extends Controller
     {
         $request->validate([
             'manufacturer_name' => 'required',
-            'telephone' => 'required',
-            'contact_name' => 'required',
-            'status' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'provinces' => 'required',
-            'postal_code' => 'required',
-            'country' => 'required',
-            'email' => 'required',
-            'note' => 'required',
+            // 'telephone' => 'required',
+            // 'contact_name' => 'required',
+            // 'status' => 'required',
+            // 'address' => 'required',
+            // 'city' => 'required',
+            // 'provinces' => 'required',
+            // 'postal_code' => 'required',
+            // 'country' => 'required',
+            // 'email' => 'required',
+            // 'note' => 'required',
         ]);
 
         Manufacturer::create([

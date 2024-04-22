@@ -28,6 +28,12 @@
 
     </form>
 
+     <form action="/import/keluar" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file">
+        <button type="submit">Import</button>
+    </form>
+
     <div class="table-responsive shadow">
 
         <table class="table table-hover">
@@ -53,7 +59,7 @@
                         <th scope="row" style="font-size: 14px;">{{ $i->jenis_pengeluaran }}</th>
                         <td style="font-size: 14px;">{{ $i->tanggal_keluar }}</td>
                         <td style="font-size: 14px;">{{ $i->shipment }}</td>
-                        <td style="font-size: 14px;">{{ \App\Models\Customer::find($i->id_customer)->customer_name }}</td>
+                        <td style="font-size: 14px;">{{ \App\Models\Customer::find($i->id_customer)->customer_name ?? null}}</td>
                         <td style="font-size: 14px;">{{ $i->NoPO_NoWO }}</td>
                         <td style="font-size: 14px;">{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
                         <td style="font-size: 14px;">{{ $i->dokumen }}</td>

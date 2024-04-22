@@ -14,6 +14,10 @@
         .prs {
             width: max-content;
         }
+
+        .select2 {
+            width: 500px;
+        }
     </style>
 
     @if (session('success'))

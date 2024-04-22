@@ -59,11 +59,12 @@
 
     </div>
 
-    <form action="/import/masuk" method="post" enctype="multipart/form-data">
+    {{-- import data barang masuk --}}
+    {{-- <form action="/import/masuk" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="file">
         <button type="submit">Import</button>
-    </form>
+    </form> --}}
 
     <div class="table-responsive">
         <table class="table table-hover shadow">
@@ -153,7 +154,7 @@
                                         <form action="/barang/masuk" method="POST" enctype="multipart/form-data"
                                             id="customerForm" class="resettable-form row g-3">
                                             @csrf
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="TMT">jenis_penerimaan</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
@@ -169,13 +170,13 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="exampleInputPassword1" class="form-label">Tanggal
                                                     Masuk</label>
                                                 <input type="date" name="tanggal_masuk" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->tanggal_masuk }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="supplier" class="form-label">supplier</label>
                                                 <select name="id_supplier" id="supplier" class="form-control select2"
                                                     required>
@@ -197,7 +198,7 @@
                                                 <input type="text" name="NoPO_NoWO" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->NoPO_NoWO }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="kategori_barang" class="form-label">kategori_barang</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
@@ -216,7 +217,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label">documentation</label>
                                                 <div>
                                                     <div class="form-check form-check-inline">
@@ -236,7 +237,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="barang" class="form-label">FAI Code</label>
                                                 <div id="ehe" class="form-control">
                                                     <select name="FAI_code" id="barang1" class="form-control select2"
@@ -250,29 +251,29 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="exampleInputPassword1" class="form-label">no_LOT</label>
                                                 <input type="text" name="no_LOT" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->no_LOT }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="exampleInputEmail1" class="form-label">Tanggal
                                                     Produksi</label>
                                                 <input type="date" name="tanggal_produksi" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->tanggal_produksi }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="exampleInputPassword1"
                                                     class="form-label">tanggal_expire</label>
                                                 <input type="date" name="tanggal_expire" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->tanggal_expire }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            {{-- <div class="col">
                                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
                                                 <input type="string" name="qty_masuk_LOT" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->qty_masuk_LOT }}">
-                                            </div>
-                                            <div class="col-md-6">
+                                            </div> --}}
+                                            <div class="col">
                                                 <label class="form-label" for="unit">unit</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select" name="unit">
@@ -285,7 +286,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="unit">Jenis Kemasan</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
@@ -332,12 +333,12 @@
                                                 <input type="number" name="total_QTY_kemasan" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->total_QTY_kemasan }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="exampleInputPassword1" class="form-label">status</label>
                                                 <input type="text" name="status" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->status }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="supplier" class="form-label">Rak</label>
                                                 <select name="id_rak" id="supplier" class="form-control select2"
                                                     required>
@@ -489,14 +490,14 @@
                             <div class="col-md-7">
                                 <label for="file" class="form-label">Uploud File</label>
                                 <div id="file-input-container">
-                                    <input type="file" name="files[]" class="form-control" multiple>
+                                    <input type="file" name="file[]" class="form-control" multiple>
                                 </div>
                                 <button type="button" class="btn btn-primary btn-sm mt-1" onclick="addFileInput()">Tambah
                                     File</button>
                             </div>
                             <script>
                                 function addFileInput() {
-                                    var fileInput = '<input type="file" name="files[]" class="form-control mt-2" multiple>';
+                                    var fileInput = '<input type="file" name="file[]" class="form-control mt-2" multiple>';
                                     $('#file-input-container').append(fileInput);
                                 }
                             </script>

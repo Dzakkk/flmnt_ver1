@@ -33,7 +33,7 @@
         Pendaftaran Barang
     </a>
     @php
-        $row = 1;
+        $row = ($brg->currentPage() - 1) * $brg->perPage() + 1;
     @endphp
     <a href="/barangMasuk" class="btn btn-info shadow m-2">Barang Masuk</a>
     <a href="/barangKeluar" class="btn btn-info shadow m-2">Barang keluar</a>
@@ -52,30 +52,6 @@
                     <th scope="col">aspect</th>
                     <th scope="col">reOrder qty</th>
                     <th scope="col">unit</th>
-                    {{-- <th scope="col">supplier</th>
-                    <th scope="col">packaging_type</th>
-                    <th scope="col">documentation</th>
-                    <th scope="col">halal_certification</th>
-                    <th scope="col">brandProduct_code</th>
-                    <th scope="col">chemical_IUPACname</th>
-                    <th scope="col">CAS_number</th>
-                    <th scope="col">ex_origin</th>
-                    <th scope="col">initial_ex</th>
-                    <th scope="col">country_of_origin</th>
-                    <th scope="col">remark</th>
-                    <th scope="col">usage_level</th>
-                    <th scope="col">harga_ex_work_USD</th>
-                    <th scope="col">harga_CIF_USD</th>
-                    <th scope="col">harga_MOQ_USD</th>
-                    <th scope="col">appearance</th>
-                    <th scope="col">color_rangeColor</th>
-                    <th scope="col">odour_taste</th>
-                    <th scope="col">material</th>
-                    <th scope="col">spesific_gravity_d20</th>
-                    <th scope="col">spesific_gravity_d25</th>
-                    <th scope="col">refractive_index_d20</th>
-                    <th scope="col">refractive_index_d25</th>
-                    <th scope="col">berat_gram</th> --}}
                     <th scope="col">#</th>
                 </tr>
             </thead>
@@ -91,40 +67,21 @@
                         <td style="font-size: 13px;">{{ $item->aspect }}</td>
                         <td style="font-size: 13px;">{{ $item->reOrder_qty }}</td>
                         <td style="font-size: 13px;">{{ $item->unit }}</td>
-                        {{-- <td style="font-size: 13px;">{{ $item->supplier }}</td>
-                        <td style="font-size: 13px;">{{ $item->packaging_type }}</td>
-                        <td style="font-size: 13px;">{{ $item->documentation }}</td>
-                        <td style="font-size: 13px;">{{ $item->halal_certification }}</td>
-                        <td style="font-size: 13px;">{{ $item->brandProduct_code }}</td>
-                        <td style="font-size: 13px;">{{ $item->chemical_IUPACname }}</td>
-                        <td style="font-size: 13px;">{{ $item->CAS_number }}</td>
-                        <td style="font-size: 13px;">{{ $item->ex_origin }}</td>
-                        <td style="font-size: 13px;">{{ $item->initial_ex }}</td>
-                        <td style="font-size: 13px;">{{ $item->country_of_origin }}</td>
-                        <td style="font-size: 13px;">{{ $item->remark }}</td>
-                        <td style="font-size: 13px;">{{ $item->usage_level }}</td>
-                        <td style="font-size: 13px;">{{ $item->harga_ex_work_USD }}</td>
-                        <td style="font-size: 13px;">{{ $item->harga_CIF_USD }}</td>
-                        <td style="font-size: 13px;">{{ $item->harga_MOQ_USD }}</td>
-                        <td style="font-size: 13px;">{{ $item->appearance }}</td>
-                        <td style="font-size: 13px;">{{ $item->color_rangeColor }}</td>
-                        <td style="font-size: 13px;">{{ $item->odour_taste }}</td>
-                        <td style="font-size: 13px;">{{ $item->material }}</td>
-                        <td style="font-size: 13px;">{{ $item->spesific_gravity_d20 }}</td>
-                        <td style="font-size: 13px;">{{ $item->spesific_gravity_d25 }}</td>
-                        <td style="font-size: 13px;">{{ $item->refractive_index_d20 }}</td>
-                        <td style="font-size: 13px;">{{ $item->refractive_index_d25 }}</td>
-                        <td style="font-size: 13px;">{{ $item->berat_gram }}</td> --}}
                         <td>
-                            <button type="button" class="btn btn-success m-1 btn-update" data-bs-toggle="modal" title="Edit"
-                                data-bs-target="#viewBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
+                            <button type="button" class="btn btn-success btn-sm m-1 btn-update" data-bs-toggle="modal"
+                                title="Edit" data-bs-target="#viewBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
                                 data-item-id="{{ $item->FAI_code }}">
                                 <i class="bi bi-eye"></i>
                             </button>
-                            <button type="button" class="btn btn-warning m-1 btn-update" data-bs-toggle="modal" title="View"
-                                data-bs-target="#staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
+                            <button type="button" class="btn btn-warning btn-sm m-1 btn-update" data-bs-toggle="modal"
+                                title="Edit" data-bs-target="#staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
                                 data-item-id="{{ $item->FAI_code }}">
                                 <i class="ri-edit-line"></i>
+                            </button>
+                            <button type="button" class="btn btn-info btn-sm m-1" data-bs-toggle="modal"
+                                data-bs-placement="top" title="Document"
+                                data-bs-target="#dokumen-{{ str_replace('.', '_', $item->FAI_code) }}">
+                                <i class="bi bi-file-earmark-pdf"></i>
                             </button>
                         </td>
                     </tr>
@@ -132,10 +89,112 @@
                     $row++;
                     ?>
 
+                    {{-- Document --}}
+
+
+                    <div class="modal fade" id="dokumen-{{ str_replace('.', '_', $item->FAI_code) }}" tabindex="-1"
+                        aria-labelledby="confirmDokumen-{{ str_replace('.', '_', $item->FAI_code) }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDokumen--{{ str_replace('.', '_', $item->FAI_code) }}">
+                                        Document
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Document of {{ $item->FAI_code }} - {{ $item->name }}
+                    
+                                    <div>
+                                        <strong>Files:</strong>
+                                        @if ($item->file)
+                                            <ul>
+                                                @php
+                                                    $files = json_decode($item->file, true);
+                                                    if (is_array($files)) {
+                                                        foreach ($files as $file) {
+                                                            echo '<li>';
+                                                            echo '<a href="' .
+                                                                asset('document_barang/' . $file) .
+                                                                '" target="_blank">' .
+                                                                $file .
+                                                                '</a>';
+                                                            echo '</li>';
+                                                        }
+                                                    } else {
+                                                        echo '<li>No files found</li>';
+                                                    }
+                                                @endphp
+                                            </ul>
+                                        @else
+                                            <p>No files found</p>
+                                        @endif
+                                        <form action="/barang/add/file/{{ str_replace('.', '_', $item->FAI_code) }}" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                    
+                                            <div>
+                                                <label for="file" class="form-label">Unggah File</label>
+                                                <i>Max 10 Mb</i>
+                                                <div class="file-input-container">
+                                                    <input type="file" name="file[]" class="form-control mt-2" multiple>
+                                                </div>
+                                                {{-- <button type="button" class="btn btn-success btn-sm mt-1"
+                                                    onclick="addFileInput()">Tambah File</button> --}}
+                                                <button type="submit" class="btn btn-primary btn-sm mt-1">Submit</button>
+                                            </div>
+                    
+                                            {{-- <script>
+                                                function addFileInput() {
+                                                    var fileInput = `<input type="file" name="file[]" class="form-control mt-2">`;
+                                                    $('.file-input-container').append(fileInput);
+                                                }
+                                            </script>
+                     --}}
+                                        </form>
+                                    </div>
+                    
+                                    <form action="/barang/update/file/{{ str_replace('.', '_', $item->FAI_code) }}" method="post"
+                                        enctype="multipart/form-data" id="fileReplacementForm">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan Diganti:</label>
+                                            <select class="form-select" id="currentFile" name="deleted_file">
+                                                <option value="">Pilih</option>
+                                                @if ($item->file)
+                                                    @php
+                                                        $files = json_decode($item->file, true);
+                                                    @endphp
+                                                    @foreach ($files as $fileName)
+                                                        <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled>No files found</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newFile" class="form-label">Pilih File Baru:</label>
+                                            <input type="file" class="form-control" id="newFile" name="file[]">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
                     {{-- View Modal --}}
 
-                    <div class="modal fade" id="viewBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="viewBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
+                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -148,7 +207,9 @@
                                     <div>
                                         @php
                                             $reOrderQty = $item->reOrder_qty;
-                                            $totalQuantity = $item->stock->where('FAI_code', $item->FAI_code)->sum('quantity');
+                                            $totalQuantity = $item->stock
+                                                ->where('FAI_code', $item->FAI_code)
+                                                ->sum('quantity');
                                             $lot = $item->stock->where('FAI_code', $item->FAI_code)->get();
 
                                             $weekUsage = $usageQuantities->where('FAI_code', $item->FAI_code)->first();
@@ -165,20 +226,22 @@
                                             @endif
                                             kg
                                         </div>
-                                       
+
                                         <div>
                                             <ul>
                                                 <li>Lot - Qty - Rak</li>
-                                            @foreach ($lot as $i)
-                                                <li>{{ $i->no_LOT }} - {{ $i->quantity }} - {{ $i->id_rak }}</li>
-                                            @endforeach
-                                        </ul>
+                                                @foreach ($lot as $i)
+                                                    <li>{{ $i->no_LOT }} - {{ $i->quantity }} - {{ $i->id_rak }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -189,32 +252,34 @@
                     {{-- edit modal --}}
                     <div class="modal fade modal-dialog-scrollable"
                         id="staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Edit</h5>
+                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Barang</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="container shadow pt-2 mt-2">
                                         <form action="/barang/update/{{ $item->FAI_code }}" method="POST"
-                                            enctype="multipart/form-data" id="customerForm" class="resettable-form">
+                                            enctype="multipart/form-data" id="customerForm"
+                                            class="row g-3">
                                             @method('PUT')
                                             @csrf
-                                            <div class="mb-3">
+                                            <div class="col">
                                                 <label for="exampleInputPassword1" class="form-label">FAI_code</label>
                                                 <input type="text" name="FAI_code" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $item->FAI_code }}">
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col">
                                                 <label for="exampleInputPassword1" class="form-label">FINA_code</label>
                                                 <input type="text" name="FINA_code" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $item->FINA_code }}">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="kategori_barang" class="form-label">kategori_barang</label>
+                                            <div class="col">
+                                                <label for="kategori_barang" class="form-label">kategori barang</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
                                                         name="kategori_barang">
@@ -231,7 +296,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="aspect">aspect</label>
                                                 <div class="input-group">
 
@@ -244,30 +309,19 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-6">
-                                <label class="form-label" for="TMT">initial_code</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="golongan_select" name="initial_code">
-                                        <option value="{{ $item->initial_code }}">{{ $item->initial_code }}</option>
-                                        <option value="BFC">BFC</option>
-                                        <option value="MKC">MKC</option>
-                                        <option value="PIC">PIC</option>
-                                        <option value="RMC">RMC</option>
-                                    </select>
-                                </div>
-                            </div> --}}
-                                            <div class="col-md-6">
+
+                                            <div class="col">
                                                 <label class="form-label"
                                                     for="alokasi_penyimpanan">alokasi_penyimpanan</label>
                                                 <input type="text" name="alokasi_penyimpanan" class="form-control"
                                                     id="alokasi_penyimpanan" value="{{ $item->alokasi_penyimpanan }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="reOrder_qty" class="form-label">reOrder_qty</label>
                                                 <input type="text" name="reOrder_qty" id="reOrder_qty"
                                                     class="form-control" value="{{ $item->reOrder_qty }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="unit">unit</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select" name="unit">
@@ -279,7 +333,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="supplier" class="form-label">supplier</label>
                                                 <select name="supplier" id="supplier" class="form-control select2">
                                                     <option value="{{ $item->supplier_name }}">{{ $item->supplier_name }}
@@ -290,7 +344,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="unit">Jenis Kemasan</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
@@ -325,7 +379,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label">documentation</label>
                                                 <div>
                                                     <div class="form-check form-check-inline">
@@ -345,40 +399,40 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label"
                                                     for="halal_certification">halal_certification</label>
                                                 <input type="text" name="halal_certification" class="form-control"
                                                     id="halal_certification" value="{{ $item->halal_certification }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="name" class="form-label">name</label>
                                                 <input type="text" name="name" id="name" class="form-control"
                                                     value="{{ $item->name }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="common_name">common_name</label>
                                                 <input type="text" name="common_name" class="form-control"
                                                     id="common_name" value="{{ $item->common_name }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="brandProduct_code"
                                                     class="form-label">brandProduct_code</label>
                                                 <input type="text" name="brandProduct_code" id="brandProduct_code"
                                                     class="form-control" value="{{ $item->brandProduct_code }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label"
                                                     for="chemical_IUPACname">chemical_IUPACname</label>
                                                 <input type="text" name="chemical_IUPACname" class="form-control"
                                                     id="chemical_IUPACname" value="{{ $item->chemical_IUPACname }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="CAS_number">CAS_number</label>
                                                 <input type="text" name="CAS_number" class="form-control"
                                                     id="CAS_number" value="{{ $item->CAS_number }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="ex_origin" class="form-label">ex_origin</label>
                                                 <select name="ex_origin" id="ex_origin" class="form-control select2">
                                                     <option value="{{ $item->ex_origin }}">{{ $item->ex_origin }}
@@ -389,57 +443,57 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="initial_ex">initial_ex</label>
                                                 <input type="text" name="initial_ex" class="form-control"
                                                     id="initial_ex" value="{{ $item->initial_code }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="country_of_origin"
                                                     class="form-label">country_of_origin</label>
                                                 <input type="text" name="country_of_origin" id="country_of_origin"
                                                     class="form-control" value="{{ $item->country_of_origin }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="remark">remark</label>
                                                 <input type="text" name="remark" class="form-control" id="remark"
                                                     value="{{ $item->remark }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="usage_level" class="form-label">usage_level</label>
                                                 <input type="text" name="usage_level" id="usage_level"
                                                     class="form-control" value="{{ $item->usage_level }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label"
                                                     for="harga_ex_work_USD">harga_ex_work_USD</label>
                                                 <input type="number" step="0.01" name="harga_ex_work_USD"
                                                     class="form-control" id="harga_ex_work_USD"
                                                     value="{{ $item->harga_ex_work_USD }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="harga_CIF_USD">harga_CIF_USD</label>
                                                 <input type="number" step="0.01" name="harga_CIF_USD"
                                                     class="form-control" id="harga_CIF_USD"
                                                     value="{{ $item->harga_CIF_USD }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="harga_MOQ_USD" class="form-label">harga_MOQ_USD</label>
                                                 <input type="number" step="0.01" name="harga_MOQ_USD"
                                                     id="harga_MOQ_USD" class="form-control"
                                                     value="{{ $item->harga_MOQ_USD }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="appearance">appearance</label>
                                                 <input type="text" name="appearance" class="form-control"
                                                     id="appearance" value="{{ $item->appearance }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="color_rangeColor" class="form-label">color_rangeColor</label>
                                                 <input type="text" name="color_rangeColor" id="color_rangeColor"
                                                     class="form-control" value="{{ $item->color_rangeColor }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label class="form-label" for="odour_taste">odour_taste</label>
                                                 <input type="text" name="odour_taste" class="form-control"
                                                     id="odour_taste" value="{{ $item->odour_taste }}">
@@ -509,13 +563,13 @@
                                                     class="form-control">
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="material" class="form-label">material</label>
                                                 <input type="text" name="material" id="material"
                                                     class="form-control" value="{{ $item->material }}">
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 <label for="berat_gram" class="form-label">berat_gram</label>
                                                 <input type="number" name="berat_gram" id="berat_gram"
                                                     class="form-control" value="{{ $item->berat_gram }}">
@@ -534,7 +588,13 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{-- @if ()
+            
+        @endif
+        {{ $brg->links() }} --}}
         {{ $brg->links() }}
+
 
     </div>
 

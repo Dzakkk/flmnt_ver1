@@ -16,6 +16,7 @@ use App\Http\Controllers\StockProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\FormulaProduct;
+use App\Models\Barang;
 use App\Models\ProductionControl;
 use App\Models\stockProduct;
 use Illuminate\Support\Facades\Auth;
@@ -61,10 +62,14 @@ Route::middleware(['auth'])->group(function (){
     Route::get('newBarang', [BarangController::class, 'newBarangForm']);
     Route::post('newBarang', [BarangController::class, 'newBarang']);
     Route::put('/barang/update/{id}', [BarangController::class, 'updateBarang'])->where('id', '[\w\/]+');
-    
+    Route::put('/barang/add/file/{id}', [BarangController::class, 'addFile']);
+    Route::put('/barang/update/file/{id}', [BarangController::class, 'update_file']);
+
+
     
     Route::get('supplier', [SupplierController::class, 'dataSupplier']);
     Route::post('supplier/store', [SupplierController::class, 'storeSupplier']);
+    Route::put('supplier/update/{id}', [SupplierController::class, 'update']);
     Route::delete('supplier/delete/{id}', [SupplierController::class, 'delete'])->name('supplier.delete');
     
     Route::get('barangMasuk', [BarangMasukController::class, 'dataMasuk']);
@@ -86,7 +91,9 @@ Route::middleware(['auth'])->group(function (){
     Route::delete('product/delete/{id}', [ProductsController::class, 'delete'])->name('product.delete');
     Route::get('/product/update/{id}', [ProductsController::class, 'updateProductForm'])->name('product.update');
     Route::put('/product/update/{id}', [ProductsController::class, 'updateProduct']);
-    
+    Route::put('/product/add/file/{id}', [ProductsController::class, 'addFile']);
+    Route::put('/product/update/file/{id}', [ProductsController::class, 'update_file']);
+  
     
     
     Route::get('formula', [ProductsController::class, 'formula'])->name('formula');
@@ -115,6 +122,8 @@ Route::middleware(['auth'])->group(function (){
 
     Route::post('import', [BarangController::class, 'import']);
     Route::post('import/masuk', [BarangMasukController::class, 'import_masuk']);
+    Route::post('import/keluar', [BarangKeluarController::class, 'import_keluar']);
+
   
     // Route::livewire('/product-form', [FormulaProduct::class]);
     Livewire::component('/product-form', [FormulaProduct::class]);

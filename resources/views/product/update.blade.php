@@ -30,7 +30,7 @@
             <div class="col-md-6">
                 <label class="form-label" for="aspect">Aspect</label>
                 <div class="input-group">
-                    <select class="form-select" id="golongan_select" name="aspect">
+                    <select class="form-select" id="aspectcoy" name="aspect">
                         <option value="{{ $prd->aspect }}">{{ $prd->aspect }}</option>
                         <option value="LIQUID">LIQUID</option>
                         <option value="POWDER">POWDER</option>
@@ -59,12 +59,12 @@
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="formula_id">
                         <option value="{{ $prd->formula_id }}">{{ $prd->formula_id }}</option>
-                        <option value="ALT1">ALT1</option>
-                        <option value="ALT2">ALT2</option>
-                        <option value="ALT3">ALT3</option>
-                        <option value="ALT4">ALT4</option>
-                        <option value="ALT5">ALT5</option>
-                        <option value="ORI">ORI</option>
+                        <option value="FORMULA 1">FORMULA 1</option>
+                        <option value="FORMULA 2">FORMULA 2</option>
+                        <option value="FORMULA 3">FORMULA 3</option>
+                        <option value="FORMULA 4">FORMULA 4</option>
+                        <option value="FORMULA 5">FORMULA 5</option>
+                        <option value="FORMULA 6">FORMULA 6</option>
                     </select>
                 </div>
             </div>
@@ -103,11 +103,8 @@
                 <input type="text" name="created_by" class="form-control" id="created_by"
                     value="{{ $prd->created_by }}">
             </div>
-            <div class="col-md-6">
-                <label class="form-label" for="note">Note</label>
-                <textarea name="note" id="note" cols="30" rows="1" class="form-control">{{ $prd->note }}</textarea>
-            </div>
-            <div class="col-md-6">
+           
+            {{-- <div class="col-md-6">
                 <label class="form-label" for="unit">Storage</label>
                 <div class="input-group">
                     <select class="form-select" id="golongan_select" name="storage">
@@ -117,11 +114,20 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-6">
                 <label class="form-label" for="target_order">Target Order</label>
                 <input type="number" name="target_order" class="form-control" id="target_order"
                     value="{{ $prd->target_order }}">
+            </div>
+            
+            <div class="col-md-6">
+                <label for="range" class="form-label">Range Color</label>
+                <input type="text" name="range_color" id="range" class="form-control" value="{{ $prd->range_color }}">
+            </div>
+            <div class="col-md-6">
+                <label for="odour_taste" class="form-label">Odour & Taste</label>
+                <input type="text" name="odour_taste" id="odour_taste" class="form-control" value="{{ $prd->odour_taste }}">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="unit">Unit</label>
@@ -135,6 +141,67 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <label class="form-label" for="note">Note</label>
+                <textarea name="note" id="note" cols="30" rows="1" class="form-control">{{ $prd->note }}</textarea>
+            </div>
+
+
+            <div class="col-md-4" id="rigra1" style="display: none">
+                <label for="sg_d20_min" class="form-label">SG d20 Min</label>
+                <input type="text" name="sg_d20_min" id="sg_d20_min" class="form-control" value="{{ $prd->sg_d20_min }}">
+            </div>
+            <div class="col-md-4" id="rigra2" style="display: none">
+                <label for="sg_d20_max" class="form-label">SG d20 Max</label>
+                <input type="text" name="sg_d20_max" id="sg_d20_max" class="form-control" value="{{ $prd->sg_d20_max }}">
+            </div>
+            <div class="col-md-4" id="rigra3" style="display: none">
+                <label for="sg_d20_target" class="form-label">SG d20 Target</label>
+                <input type="text" name="sg_d20_target" id="sg_d20_target" class="form-control" value="{{ $prd->sg_d20_target }}">
+            </div>
+
+            <div class="col-md-4" id="rigra4" style="display: none">
+                <label for="sg_d25_min" class="form-label">SG d25 Min</label>
+                <input type="text" name="sg_d25_min" id="sg_d25_min" class="form-control" value="{{ $prd->sg_d25_min }}">
+            </div>
+            <div class="col-md-4" id="rigra5" style="display: none">
+                <label for="sg_d25_max" class="form-label">SG d25 Max</label>
+                <input type="text" name="sg_d25_max" id="sg_d25_max" class="form-control" value="{{ $prd->sg_d25_max }}">
+            </div>
+            <div class="col-md-4" id="rigra6" style="display: none">
+                <label for="sg_d25_target" class="form-label">SG d25 Target</label>
+                <input type="text" name="sg_d25_target" id="sg_d25_target" class="form-control" value="{{ $prd->sg_d25_target }}">
+            </div>
+
+            <div class="col-md-4" id="rigra7" style="display: none">
+                <label for="ri_d20_min" class="form-label">RI d20 Min</label>
+                <input type="text" name="ri_d20_min" id="ri_d20_min" class="form-control" value="{{ $prd->ri_d20_min }}">
+            </div>
+            <div class="col-md-4" id="rigra8" style="display: none">
+                <label for="ri_d20_max" class="form-label">RI d20 Max</label>
+                <input type="text" name="ri_d20_max" id="ri_d20_max" class="form-control" value="{{ $prd->ri_d20_max }}">
+            </div>
+            <div class="col-md-4" id="rigra9" style="display: none">
+                <label for="ri_d20_target" class="form-label">RI d20 Target</label>
+                <input type="text" name="ri_d20_target" id="ri_d20_target" class="form-control" value="{{ $prd->ri_d20_target }}">
+            </div>
+
+            <div class="col-md-4" id="rigra10" style="display: none">
+                <label for="ri_d25_min" class="form-label">RI d25 Min</label>
+                <input type="text" name="ri_d25_min" id="ri_d25_min" class="form-control" value="{{ $prd->ri_d25_min }}">
+            </div>
+            <div class="col-md-4" id="rigra11" style="display: none">
+                <label for="ri_d25_max" class="form-label">RI d25 Max</label>
+                <input type="text" name="ri_d25_max" id="ri_d25_max" class="form-control" value="{{ $prd->ri_d25_max }}">
+            </div>
+            <div class="col-md-4" id="rigra12" style="display: none">
+                <label for="ri_d25_target" class="form-label">RI d25 Target</label>
+                <input type="text" name="ri_d25_target" id="ri_d25_target" class="form-control" value="{{ $prd->ri_d25_target }}">
+            </div>
+
+
+        
             <div class="mt-3">
                 <h3 class="pt-3">
                     FORMULA PRODUCT ===========================
@@ -152,6 +219,10 @@
                             @foreach ($brg as $barang)
                                 <option value="{{ $barang->FAI_code }}" {{ ($FAI_code[$index] == $barang->FAI_code) ? 'selected' : '' }}>
                                     {{ $barang->FAI_code }}&nbsp;&nbsp;{{ $barang->name }}</option>
+                            @endforeach
+                            @foreach ($prd as $product)
+                                    <option value="{{ $product->FAI_code }}">
+                                        {{ $product->FAI_code }}&nbsp;&nbsp;{{ $product->product_name }}</option>
                             @endforeach
                         </select>
                         <button type="button" class="btn btn-info" onclick="removeInput('persentase-{{ $index + 1 }}', 'FAI_code_barang-{{ $index + 1 }}')">Hapus</button>
@@ -177,13 +248,17 @@
         
                     const inputGroup = document.createElement('div');
                     inputGroup.innerHTML = `
-                        <div class="d-flex">
+                        <div class="d-flex mt-1">
                             <input type="text" class="me-1" name="persentase[]" id="persentase-${inputCount}" placeholder="Persentase"/>
                             <select class="select2 form-control me-1" name="FAI_code_barang[]" id="FAI_code_barang-${inputCount}">
                                 <option value="">Select FAI Code</option>
                                 @foreach ($brg as $barang)
                                     <option value="{{ $barang->FAI_code }}">
                                         {{ $barang->FAI_code }}&nbsp;&nbsp;{{ $barang->name }}</option>
+                                @endforeach
+                                @foreach ($prd as $product)
+                                    <option value="{{ $product->FAI_code }}">
+                                        {{ $product->FAI_code }}&nbsp;&nbsp;{{ $product->product_name }}</option>
                                 @endforeach
                             </select>
                             <button type="button" class="btn btn-info" onclick="removeInput('persentase-${inputCount}', 'FAI_code_barang-${inputCount}')">Hapus</button>
@@ -201,21 +276,27 @@
                     FAI_codeToRemove.parentElement.remove();
                 }
             </script>
-            
-            
-
-
-
-            {{-- @livewire('formula-product-update', ['persentase' => $persentase, 'FAI_code' => $FAI_code])
-            <button type="submit" class="btn btn-primary" id="add-input">Edit Formula</button>
-            @livewireScripts
-            <script>
-                document.addEventListener('livewire:load', function() {
-                    Livewire.on('initialize-select2', function() {
-                        $('.select2').select2();
-                    });
-                });
-            </script> --}}
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var aspectcoy = document.getElementById('aspectcoy');
+            var rigraElements = document.querySelectorAll('[id^="rigra"]');
+
+            aspectcoy.addEventListener('change', function() {
+                var selectedCategory = this.value;
+
+                if (selectedCategory === 'LIQUID') {
+                    rigraElements.forEach(function(element) {
+                        element.style.display = 'block';
+                    });
+                } else {
+                    rigraElements.forEach(function(element) {
+                        element.style.display = 'none';
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

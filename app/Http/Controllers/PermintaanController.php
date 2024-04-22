@@ -10,6 +10,7 @@ use App\Models\RakGudang;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Roman;
 
 class PermintaanController extends Controller
 {
@@ -21,6 +22,7 @@ class PermintaanController extends Controller
         $stock = Stock::all();
         return view('barang.permintaanData', compact('pr', 'brg', 'prd', 'stock'));
     }
+
 
 
     public function permintaan_store(Request $request)
@@ -42,6 +44,31 @@ class PermintaanController extends Controller
 
         $name = Barang::where('FAI_code', $request->kode)->value('name');
 
+        $bulanRomawi = (date('m'));
+
+        $romanNumeralMap = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+        $result = '';
+        foreach ($romanNumeralMap as $roman => $number) {
+            $matches = intval($bulanRomawi / $number);
+            $result .= str_repeat($roman, $matches);
+            $bulanRomawi = $bulanRomawi % $number;
+        }
+
+        $tahun = date('Y');
+
+        $tanggalTerakhir = Permintaan::orderBy('tanggal', 'desc')->value('tanggal');
+
+        $bulanTerakhir = date('m', strtotime($tanggalTerakhir));
+
+        if ($bulanTerakhir != $bulanRomawi) {
+            $nomorUrut = '001';
+        } else {
+            $jumlahData = Permintaan::whereMonth('tanggal', $bulanTerakhir)->count();
+
+            $nomorUrut = sprintf('%03d', $jumlahData + 1);
+        }
+
+        $unicCode = "PB/FAI/{$result}/{$tahun}/{$nomorUrut}";
 
         $permintaan = new Permintaan([
             'tanggal' => $request->tanggal,
@@ -53,8 +80,9 @@ class PermintaanController extends Controller
             'status' => $request->status,
             'request_by' => $request->request_by,
             'departemen' => $request->departemen,
+            'unic_code' => $unicCode,
         ]);
-
+        // dd($permintaan);
         $permintaan->save();
 
         $lot = Stock::where('FAI_code', $request->kode)->where('no_LOT', $request->LOT)->first();
@@ -86,7 +114,7 @@ class PermintaanController extends Controller
     {
         $lot = $request->no_LOT;
         $status = QualityControl::where('LOT', $lot)->value('status');
-        
+
         return response()->json(['status' => $status]);
     }
 }

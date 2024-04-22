@@ -23,16 +23,6 @@ class BarangController extends Controller
         $brg = Barang::with('stock')->paginate(15);
         $supp = Supplier::all();
         $ex = Manufacturer::all();
-
-        // $stock = StockBarang::with(['stockLots' => function ($query) {
-        //     $query->where('FAI_code', 'FAI_code') // Replace 'FAI_code' with the actual code
-        //         ->latest()
-        //         ->take(1); // Retrieve only the latest stockLots for each StockBarang
-        // }, 'barang'])
-        //     ->orderBy('updated_at', 'desc')
-        //     ->paginate(15);
-
-
         $startDate = Carbon::today()->subWeek()->startOfMonth();
         $endDate = Carbon::today()->subWeek()->endOfMonth();
 
@@ -52,26 +42,17 @@ class BarangController extends Controller
             $brg = Barang::with('stock')->where('FAI_code', 'like', '%' . $searchTerm . '%')
                 ->orWhere('name', 'like', '%' . $searchTerm . '%')
                 ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
-                ->paginate(8);
-                $supp = Supplier::all();
-                $ex = Manufacturer::all();
-            
-                // $stock = StockBarang::with(['stockLots' => function ($query) {
-                //     $query->where('FAI_code', 'FAI_code') // Replace 'FAI_code' with the actual code
-                //         ->latest()
-                //         ->take(1); // Retrieve only the latest stockLots for each StockBarang
-                // }, 'barang'])
-                //     ->orderBy('updated_at', 'desc')
-                //     ->paginate(15);
-        
-        
-                $startDate = Carbon::today()->subWeek()->startOfMonth();
-                $endDate = Carbon::today()->subWeek()->endOfMonth();
-        
-                $usageQuantities = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
-                    ->groupBy('FAI_code')
-                    ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
-                    ->get();
+                ->paginate(15);
+            $supp = Supplier::all();
+            $ex = Manufacturer::all();
+
+            $startDate = Carbon::today()->subWeek()->startOfMonth();
+            $endDate = Carbon::today()->subWeek()->endOfMonth();
+
+            $usageQuantities = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
+                ->groupBy('FAI_code')
+                ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
+                ->get();
             return view('barang.dataBarang', ['brg' => $brg, 'supp' => $supp, 'ex' => $ex, 'usageQuantities' => $usageQuantities]);
         } catch (\Exception $e) {
             return redirect('/barang');
@@ -225,44 +206,112 @@ class BarangController extends Controller
         return redirect('/barang')->with('success', 'Barang berhasil ditambahkan');
     }
 
+
+    public function update_file(Request $request, $id)
+    {
+        $request->validate([
+            'file.*' => 'nullable|file|max:10240',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+
+        dd($request->all(), $id);
+        // Menghapus file lama jika ada
+        if ($request->has('deleted_file')) {
+            $deletedFile = $request->input('deleted_file');
+            $filePath = public_path('document_barang') . '/' . $deletedFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Menghapus file dari daftar file yang disimpan di database
+            $fileNames = json_decode($barang->file, true);
+            $index = array_search($deletedFile, $fileNames);
+            if ($index !== false) {
+                unset($fileNames[$index]);
+                $barang->file = json_encode(array_values($fileNames)); // Mengatur kembali array ke string JSON setelah menghapus file
+            }
+        }
+
+        // Menambah file baru jika ada yang diunggah
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                $fileName = $file->getClientOriginalName();
+                $file->move(public_path('document_barang'), $fileName);
+                $fileNames[] = $fileName;
+            }
+            // Mengupdate daftar file baru ke dalam kolom file di database
+            $barang->file = json_encode($fileNames);
+        }
+
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Masuk');
+    }
+
+
+    public function addFile(Request $request, $id)
+    {
+        $request->validate([
+            'file.*' => 'nullable|file|max:10240',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+        // dd($barang, $request->all());
+        $fileNames = [];
+        if ($barang->file) {
+            $fileNames = json_decode($barang->file, true);
+        }
+
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $files) {
+                $fileName = $files->getClientOriginalName();
+                $files->move(public_path('document_barang'), $fileName);
+                $fileNames[] = $fileName;
+            }
+
+            $barang->file = json_encode($fileNames);
+        }
+
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Masuk');
+    }
+
+
     public function updateBarang(Request $request, $id)
     {
         $request->validate([
             'FAI_code' => 'required',
             'FINA_code' => 'required',
-            'kategori_barang' => 'required',
-            'aspect' => 'required',
-            // 'alokasi_penyimpanan' => 'required',
-            'reOrder_qty' => 'required',
-            'unit' => 'required',
-            'supplier' => 'required',
-            'packaging_type' => 'required',
-            'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
-            'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
-            'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
-            'halal_certification' => 'required',
-            'name' => 'required',
-            'common_name' => 'required',
-            'brandProduct_code' => 'required',
-            'chemical_IUPACname' => 'required',
-            'CAS_number' => 'required',
-            'ex_origin' => 'required',
-            'initial_ex' => 'required',
-            'country_of_origin' => 'required',
-            'remark' => 'required',
-            'usage_level' => 'required',
-            'harga_ex_work_USD' => 'required',
-            'harga_CIF_USD' => 'required',
-            'harga_MOQ_USD' => 'required',
-            'appearance' => 'required',
-            'color_rangeColor' => 'required',
-            'odour_taste' => 'required',
-            'material' => 'required',
-            // 'spesific_gravity_d20' => 'required',
-            // 'spesific_gravity_d25' => 'required',
-            // 'refractive_index_d20' => 'required',
-            // 'refractive_index_d25' => 'required',
-            'berat_gram' => 'required',
+            // 'kategori_barang' => 'required',
+            // 'aspect' => 'required',
+            // // 'alokasi_penyimpanan' => 'required',
+            // 'reOrder_qty' => 'required',
+            // 'unit' => 'required',
+            // 'supplier' => 'required',
+            // 'packaging_type' => 'required',
+            // 'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
+            // 'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
+            // 'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
+            // 'halal_certification' => 'required',
+            // 'name' => 'required',
+            // 'common_name' => 'required',
+            // 'brandProduct_code' => 'required',
+            // 'chemical_IUPACname' => 'required',
+            // 'CAS_number' => 'required',
+            // 'ex_origin' => 'required',
+            // 'initial_ex' => 'required',
+            // 'country_of_origin' => 'required',
+            // 'remark' => 'required',
+            // 'usage_level' => 'required',
+            // 'harga_ex_work_USD' => 'required',
+            // 'harga_CIF_USD' => 'required',
+            // 'harga_MOQ_USD' => 'required',
+            // 'appearance' => 'required',
+            // 'color_rangeColor' => 'required',
+            // 'odour_taste' => 'required',
+            // 'material' => 'required',
+            // 'berat_gram' => 'required',
         ]);
 
         // Combine selected documentation checkboxes into a string
@@ -335,12 +384,11 @@ class BarangController extends Controller
             'FAI_code' => $request->FAI_code,
         ]);
 
-        return redirect('/barang')->with('success', 'Data berhasil diperbarui');
+        return redirect()->back()->with('success', 'Data berhasil diperbarui');
     }
 
     public function export()
     {
         return Excel::download(new BarangExport, 'BarangTerdaftar.xlsx');
     }
-
 }

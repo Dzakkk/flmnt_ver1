@@ -80,7 +80,7 @@ class StockProductController extends Controller
             'jenis_kemasan' => 'required',
             // 'customer_name' => 'required',
             'customer_code' => 'required',
-            'no_production' => 'required',
+            // 'no_production' => 'required',
             'no_work_order' => 'required',
             'PO_customer' => 'required',
         ]);
@@ -90,6 +90,37 @@ class StockProductController extends Controller
                 ->withInput();
         }
 
+        $build = Products::where('FAI_code', $request->FAI_code)->value('build_product');
+
+        // ini fungsi buat bikin no produksi
+
+        $bulanRomawi = (date('m'));
+
+        $romanNumeralMap = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+        $result = '';
+        foreach ($romanNumeralMap as $roman => $number) {
+            $matches = intval($bulanRomawi / $number);
+            $result .= str_repeat($roman, $matches);
+            $bulanRomawi = $bulanRomawi % $number;
+        }
+
+        $tahun = date('Y');
+
+        $tanggalTerakhir = Stock::orderBy('tanggal_produksi', 'desc')->value('tanggal_produksi');
+
+        $bulanTerakhir = date('m', strtotime($tanggalTerakhir));
+
+        if ($bulanTerakhir != $bulanRomawi) {
+            $nomorUrut = '001';
+        } else {
+            $jumlahData = Stock::whereMonth('tanggal_produksi', $bulanTerakhir)->count();
+
+            $nomorUrut = sprintf('%03d', $jumlahData + 1);
+        }
+
+        $unicCode = "{$nomorUrut}/$build/{$result}/PROD/{$tahun}";
+
+        //fungsi no produksi sampe sini
 
         $kms = Packaging::where('FAI_code', $request->jenis_kemasan)->value('nama_kemasan');
         $cpc = Packaging::where('FAI_code', $request->jenis_kemasan)->value('capacity');
@@ -108,7 +139,7 @@ class StockProductController extends Controller
         session(['id_rak' => $request->input('id_rak')]);
         session(['jumlah_kemasan' => $jmlKs]);
         session(['jenis_kemasan' => $kms]);
-        session(['no_production' => $request->input('no_production')]);
+        session(['no_production' => $unicCode]);
         session(['no_work_order' => $request->input('no_work_order')]);
         session(['customer_name' => $request->input('customer_name')]);
         session(['customer_code' => $request->input('customer_code')]);
@@ -372,6 +403,7 @@ class StockProductController extends Controller
                         'jumlah_keluar' => $quantityToReduce,
                         'tanggal_keluar' => $request->tanggal_produksi,
                         'id_lot' => $lotStock->id_lot,
+                        'jenis_pengeluaran' => 'Pemakaian Produksi',
                     ]);
                     $barangKeluar->save();
 

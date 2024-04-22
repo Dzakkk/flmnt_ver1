@@ -17,16 +17,16 @@ class SupplierController extends Controller
     {
         $request->validate([
             'supplier_name' => 'required',
-            'telephone' => 'required',
-            'contact_name' => 'required',
-            'status' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'provinces' => 'required',
-            'postal_code' => 'required',
-            'country' => 'required',
-            'email' => 'required',
-            'note' => 'required',
+            // 'telephone' => 'required',
+            // 'contact_name' => 'required',
+            // 'status' => 'required',
+            // 'address' => 'required',
+            // 'city' => 'required',
+            // 'provinces' => 'required',
+            // 'postal_code' => 'required',
+            // 'country' => 'required',
+            // 'email' => 'required',
+            // 'note' => 'required',
         ]);
 
         Supplier::create([

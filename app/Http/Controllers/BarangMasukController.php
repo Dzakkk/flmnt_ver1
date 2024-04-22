@@ -19,7 +19,7 @@ class BarangMasukController extends Controller
 {
     public function dataMasuk()
     {
-        $brgmasuk = BarangMasuk::paginate(15);
+        $brgmasuk = BarangMasuk::orderBy('tanggal_masuk', 'desc')->paginate(15);
         $supp = Supplier::all();
         $brg = Barang::all();
         $rak = RakGudang::all();
@@ -179,7 +179,7 @@ class BarangMasukController extends Controller
             'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
             'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
             'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
-            'qty_masuk_LOT' => 'required',
+            // 'qty_masuk_LOT' => 'required',
             'unit' => 'required',
             'jenis_kemasan' => 'required',
             'satuan_QTY_kemasan' => 'required',
@@ -214,7 +214,7 @@ class BarangMasukController extends Controller
         $barangMasuk->tanggal_produksi = $request->tanggal_produksi;
         $barangMasuk->tanggal_expire = $request->tanggal_expire;
         $barangMasuk->dokumen = $documentation;
-        $barangMasuk->qty_masuk_LOT = $request->qty_masuk_LOT;
+        // $barangMasuk->qty_masuk_LOT = $request->qty_masuk_LOT;
         $barangMasuk->unit = $request->unit;
         $barangMasuk->jenis_kemasan = $request->jenis_kemasan;
         $barangMasuk->satuan_QTY_kemasan = $request->satuan_QTY_kemasan;
@@ -239,7 +239,7 @@ class BarangMasukController extends Controller
             $stock->tanggal_produksi = $request->tanggal_produksi;
             $stock->tanggal_expire = $request->tanggal_expire;
             $stock->unit = $request->unit;
-            $stock->quantity = $request->qty_masuk_LOT;
+            // $stock->quantity = $request->qty_masuk_LOT;
             $stock->id_rak = $request->id_rak;
 
             // Simpan perubahan Stock

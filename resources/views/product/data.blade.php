@@ -76,6 +76,10 @@
                                 <a href="/product/update/{{ $i->FAI_code }}" class="btn btn-warning btn-sm me-1"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i
                                         class="ri-edit-line"></i></a>
+                                <button type="button" class="btn btn-success btn-sm me-1" data-bs-toggle="modal"
+                                    data-bs-placement="top" title="Document" data-bs-target="#dokumen-{{ $i->FAI_code }}">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </button>
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                     data-bs-placement="top" title="Delete"
                                     data-bs-target="#confirmDeleteModal-{{ $i->FAI_code }}"><i
@@ -108,7 +112,7 @@
                                             @for ($index = 0; $index < count($FAI_codes) && $index < count($persentases); $index++)
                                                 <li class="underline">{{ $persentases[$index] }}% -
                                                     {{ $FAI_codes[$index] }} -
-                                                    {{ \App\Models\Barang::find($FAI_codes[$index])->name }}
+                                                    {{ \App\Models\Barang::find($FAI_codes[$index])->name ?? null }}{{ \App\Models\Products::find($FAI_codes[$index])->product_name ?? null }}
                                                 </li>
                                             @endfor
                                         @else
@@ -125,6 +129,7 @@
                         </div>
                     </div>
 
+                    {{-- Delete Modal --}}
 
                     <div class="modal fade" id="confirmDeleteModal-{{ $i->FAI_code }}" tabindex="-1"
                         aria-labelledby="confirmDeleteModalLabel-{{ $i->FAI_code }}" aria-hidden="true">
@@ -155,9 +160,202 @@
                         </div>
                     </div>
 
+                    {{-- Dokumen Modal --}}
+
+                    <!-- Modal untuk menambah file -->
+                    <div class="modal fade" id="dokumen-{{ $i->FAI_code }}" tabindex="-1"
+                        aria-labelledby="confirmDokumen-{{ $i->FAI_code }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDokumen-{{ $i->FAI_code }}">
+                                        Document
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Document of {{ $i->FAI_code }} - {{ $i->product_name }}
+
+                                    <div>
+                                        <strong>Files:</strong>
+                                        @if ($i->file)
+                                            <ul>
+                                                @php
+                                                    $files = json_decode($i->file, true);
+                                                    if (is_array($files)) {
+                                                        foreach ($files as $file) {
+                                                            echo '<li>';
+                                                            echo '<a href="' .
+                                                                asset('document_product/' . $file) .
+                                                                '" target="_blank">' .
+                                                                $file .
+                                                                '</a>';
+                                                            echo '</li>';
+                                                        }
+                                                    } else {
+                                                        echo '<li>No files found</li>';
+                                                    }
+                                                @endphp
+                                            </ul>
+                                        @else
+                                            <p>No files found</p>
+                                        @endif
+                                    </div>
+
+                                    <form action="/product/add/file/{{ $i->FAI_code }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div>
+                                            <label for="file" class="form-label">Unggah File</label>
+                                            <i>Max 10 Mb</i>
+                                            <div class="file-input-container">
+                                                <input type="file" name="file[]" class="form-control" multiple>
+                                            </div>
+                                            {{-- <button type="button" class="btn btn-success btn-sm mt-1"
+                                                onclick="addFileInput()">Tambah File</button> --}}
+                                            <button type="submit" class="btn btn-primary btn-sm mt-1">Submit</button>
+                                        </div>
+                                        {{-- <script>
+                                            function addFileInput() {
+                                                var fileInput = `<input type="file" name="file[]" class="form-control mt-2">`;
+                                                $('.file-input-container').append(fileInput);
+                                            }
+                                        </script> --}}
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        {{-- </div>
+                    </div>
+
+                    <!-- Modal untuk mengganti file -->
+                    <div class="modal fade" id="fileReplacementModal" tabindex="-1"
+                        aria-labelledby="fileReplacementModalLabel" aria-hidden="true">
+                        <div class="modal-dialog"> --}}
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="fileReplacementModalLabel">Ganti File</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/product/update/file/{{ $i->FAI_code }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan
+                                                Diganti:</label>
+                                            <select class="form-select" id="currentFile" name="deleted_file">
+                                                <option value="">Pilih File yang akan Diganti</option>
+                                                @if ($i->file)
+                                                    @php
+                                                        $files = json_decode($i->file, true);
+                                                    @endphp
+                                                    @foreach ($files as $fileName)
+                                                        <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newFile" class="form-label">Pilih File Baru:</label>
+                                            <input type="file" class="form-control" id="newFile" name="file[]">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
 
 
                     {{-- Produksi modal --}}
+
+                    {{-- <div class="modal fade" id="dokumen-{{ $i->FAI_code }}" tabindex="-1"
+                        aria-labelledby="confirmDokumen-{{ $i->FAI_code }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDokumen-{{ $i->FAI_code }}">Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Document of {{ $i->FAI_code }} - {{ $i->product_name }}
+                                    <div>
+                                        <strong>Files:</strong>
+                                        @if ($i->file)
+                                            <ul>
+                                                @php
+                                                    $files = json_decode($i->file, true);
+                                                    if (is_array($files)) {
+                                                        foreach ($files as $file) {
+                                                            echo '<li>';
+                                                            echo '<a href="' .
+                                                                asset('document_product/' . $file) .
+                                                                '" target="_blank">' .
+                                                                $file .
+                                                                '</a>';
+                                                            // Button untuk mengganti file
+                                                            echo '<button type="button" class="btn btn-primary btn-sm mx-2" onclick="openFileReplacementModal(\'' .
+                                                                $file .
+                                                                '\')">Ganti File</button>';
+                                                            echo '</li>';
+                                                        }
+                                                    } else {
+                                                        echo '<li>No files found</li>';
+                                                    }
+                                                @endphp
+                                            </ul>
+                                        @else
+                                            <p>No files found</p>
+                                        @endif
+                                    </div>
+                                    <form action="/product/update/file/{{ $i->FAI_code }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div>
+                                            <label for="file" class="form-label">Unggah File Baru</label>
+                                            <input type="file" name="file[]" class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Blade untuk form penggantian file -->
+                                    <form action="/product/update/file/{{ $i->FAI_code }}" method="post"
+                                        enctype="multipart/form-data" id="fileReplacementForm">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan
+                                                Diganti:</label>
+                                            <select class="form-select" id="currentFile" name="current_file_name">
+                                                @foreach ($files as $fileName)
+                                                    <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newFile" class="form-label">Pilih File Baru:</label>
+                                            <input type="file" class="form-control" id="newFile" name="file[]">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
 
                     <div class="modal fade" id="produksi-{{ $i->FAI_code }}" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -250,10 +448,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            {{-- <div class="col-md-6">
                                                 <label for="" class="form-label">no_production</label>
                                                 <input type="text" class="form-control" name="no_production">
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">No.Work Order</label>
                                                 <input type="text" class="form-control" name="no_work_order">
@@ -313,62 +511,77 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    uhuh
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
 
-                {{ $prd->links() }}
             </tbody>
         </table>
     </div>
+    {{ $prd->links() }}
 
 
     <script>
         $(document).ready(function() {
-    // Initialize Select2 for all customer code selects
-    $('.customer-code-select').each(function() {
-        $(this).select2({
-            dropdownParent: $(this).closest('.boo')
-        });
-    });
-
-    // Add event listener for select change
-    $('.customer-code-select').on('change', function() {
-        var modal = $(this).closest('.modal-content');
-        var customerNameSection = modal.find('.customer-name-section');
-        var newCustomerSection = modal.find('.new-customer-section');
-        var customerNameInput = modal.find('.customer-name-input');
-        var newCustomerCodeInput = modal.find('.new-customer-code-input');
-        var newCustomerNameInput = modal.find('.new-customer-name-input');
-
-        if ($(this).val() === "new") {
-            customerNameSection.hide();
-            newCustomerSection.show();
-            customerNameInput.val("");
-            customerNameInput.removeAttr("readonly");
-        } else {
-            var selectedCustomerCode = $(this).val();
-            var customerData = {!! json_encode($custList) !!};
-            var customer = customerData.find(function(item) {
-                return item.customer_code == selectedCustomerCode;
+            // Initialize Select2 for all customer code selects
+            $('.customer-code-select').each(function() {
+                $(this).select2({
+                    dropdownParent: $(this).closest('.boo')
+                });
             });
 
-            if (customer) {
-                customerNameInput.val(customer.customer_name);
-                customerNameSection.show();
-                newCustomerSection.hide();
-                newCustomerCodeInput.val(selectedCustomerCode);
-                newCustomerNameInput.val(customer.customer_name);
-            } else {
-                customerNameSection.hide();
-                newCustomerSection.hide();
-            }
-        }
-    });
-});
+            // Add event listener for select change
+            $('.customer-code-select').on('change', function() {
+                var modal = $(this).closest('.modal-content');
+                var customerNameSection = modal.find('.customer-name-section');
+                var newCustomerSection = modal.find('.new-customer-section');
+                var customerNameInput = modal.find('.customer-name-input');
+                var newCustomerCodeInput = modal.find('.new-customer-code-input');
+                var newCustomerNameInput = modal.find('.new-customer-name-input');
 
+                if ($(this).val() === "new") {
+                    customerNameSection.hide();
+                    newCustomerSection.show();
+                    customerNameInput.val("");
+                    customerNameInput.removeAttr("readonly");
+                } else {
+                    var selectedCustomerCode = $(this).val();
+                    var customerData = {!! json_encode($custList) !!};
+                    var customer = customerData.find(function(item) {
+                        return item.customer_code == selectedCustomerCode;
+                    });
+
+                    if (customer) {
+                        customerNameInput.val(customer.customer_name);
+                        customerNameSection.show();
+                        newCustomerSection.hide();
+                        newCustomerCodeInput.val(selectedCustomerCode);
+                        newCustomerNameInput.val(customer.customer_name);
+                    } else {
+                        customerNameSection.hide();
+                        newCustomerSection.hide();
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // JavaScript to handle modal and file replacement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listener for button click
+            document.querySelectorAll('.change-file-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the data-file attribute value (filename)
+                    let existingFile = this.getAttribute('data-file');
+                    // Set the value of the hidden input field in the modal
+                    document.getElementById('existingFileInput').value = existingFile;
+                    // Show the modal
+                    $('#fileReplacementModal').modal('show');
+                });
+            });
+        });
     </script>
 @endsection

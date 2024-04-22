@@ -194,12 +194,12 @@
                         <tr>
                             <td>1</td>
                             <td>{{ $i->NoSuratJalanMasuk_NoProduksi }}</td>
-                            <td>{{ \App\Models\Supplier::find($i->id_supplier)->supplier_name }}</td>
+                            <td>{{ \App\Models\Supplier::find($i->id_supplier)->supplier_name ?? null }}</td>
                             <td>{{ \App\Models\Barang::find($i->FAI_code)->name }}&nbsp;({{ $i->FAI_code }})</td>
                             <td>{{ $i->no_LOT }}</td>
                             <td>{{ $i->qty_masuk_LOT }}</td>
-                            <td>{{ $i->unit }}</td>
-                            <td>{{ $i->id_rak }}</td>
+                            <td>{{ $i->unit ?? 'kg' }}</td>
+                            <td>{{ $i->id_rak ?? null }}</td>
                             <td>{{ $i->tanggal_expire }}</td>
                         </tr>
                     @endforeach

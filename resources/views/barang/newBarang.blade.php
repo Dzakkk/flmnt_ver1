@@ -14,12 +14,14 @@
         <option value="b">Kemasan</option>
     </select> --}}
 
-    <form action="/import" method="post" enctype="multipart/form-data">
+    {{-- import data barang yang ada --}}
+
+    {{-- <form action="/import" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="file">
         <button type="submit">Import</button>
-    </form>
-    
+    </form> --}}
+
     <div class="hidden" id="formA">
         <div class="container shadow pt-2 mt-2" style="width: 800px">
             <form class="row g-3 d-flex" action="/newBarang" method="POST" enctype="multipart/form-data">
@@ -54,7 +56,7 @@
                 <div class="col-md-6">
                     <label class="form-label" for="aspect">aspect</label>
                     <div class="input-group">
-                        <select class="form-select" id="aspect" name="aspect">
+                        <select class="form-select" id="aspectcoy" name="aspect">
                             <option value="">Pilih Kategori</option>
                             <option value="LIQUID">LIQUID</option>
                             <option value="POWDER">POWDER</option>
@@ -258,63 +260,63 @@
                     <label class="form-label" for="odour_taste">odour_taste</label>
                     <input type="text" name="odour_taste" class="form-control" id="odour_taste">
                 </div>
-            
 
 
 
 
-                <div class="col-md-4" id="rigra13" style="display: none" >
+
+                <div class="col-md-4" id="woogo1" style="display: none">
                     <label class="form-label" for="spesific_gravity_d20">sg_d20_min</label>
                     <input type="text" name="sg_d20_min" class="form-control" id="spesific_gravity_d20">
                 </div>
-                <div class="col-md-4" id="rigra14" style="display: none" >
+                <div class="col-md-4" id="woogo2" style="display: none">
                     <label class="form-label" for="spesific_gravity_d25">sg_d20_max</label>
                     <input type="text" name="sg_d20_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra15" style="display: none" >
+                <div class="col-md-4" id="woogo3" style="display: none">
                     <label for="refractive_index_d20" class="form-label">sg_d20_target</label>
                     <input type="text" name="sg_d20_target" id="refractive_index_d20" class="form-control">
                 </div>
 
-                <div class="col-md-4" id="rigra16" style="display: none" >
+                <div class="col-md-4" id="woogo4" style="display: none">
                     <label class="form-label" for="spesific_gravity_d20">sg_d25_min</label>
                     <input type="text" name="sg_d25_min" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra17" style="display: none" >
+                <div class="col-md-4" id="woogo5" style="display: none">
                     <label class="form-label" for="spesific_gravity_d25">sg_d25_max</label>
                     <input type="text" name="sg_d25_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra18" style="display: none" >
+                <div class="col-md-4" id="woogo6" style="display: none">
                     <label for="refractive_index_d25" class="form-label">sg_d25_target</label>
                     <input type="text" name="sg_d25_target" id="refractive_index_d25" class="form-control">
                 </div>
 
-                <div class="col-md-4" id="rigra19" style="display: none" >
+                <div class="col-md-4" id="woogo7" style="display: none">
                     <label class="form-label" for="spesific_gravity_d20">ri_d20_min</label>
                     <input type="text" name="ri_d20_min" class="form-control" id="spesific_gravity_d20">
                 </div>
-                <div class="col-md-4" id="rigra20" style="display: none" >
+                <div class="col-md-4" id="woogo8" style="display: none">
                     <label class="form-label" for="spesific_gravity_d25">ri_d20_max</label>
                     <input type="text" name="ri_d20_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra21" style="display: none" >
+                <div class="col-md-4" id="woogo9" style="display: none">
                     <label for="refractive_index_d20" class="form-label">ri_d20_target</label>
                     <input type="text" name="ri_d20_target" id="refractive_index_d20" class="form-control">
                 </div>
 
-                <div class="col-md-4" id="rigra22" style="display: none" >
+                <div class="col-md-4" id="woogo10" style="display: none">
                     <label class="form-label" for="spesific_gravity_d20">ri_d25_min</label>
                     <input type="text" name="ri_d25_min" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra23" style="display: none" >
+                <div class="col-md-4" id="woogo11" style="display: none">
                     <label class="form-label" for="spesific_gravity_d25">ri_d25_max</label>
                     <input type="text" name="ri_d25_max" class="form-control" id="spesific_gravity_d25">
                 </div>
-                <div class="col-md-4" id="rigra24" style="display: none" >
+                <div class="col-md-4" id="woogo12" style="display: none">
                     <label for="refractive_index_d25" class="form-label">ri_d25_target</label>
                     <input type="text" name="ri_d25_target" id="refractive_index_d25" class="form-control">
                 </div>
-                
+
 
 
                 <div class="col-md-6" id="material" style="display: none">
@@ -329,10 +331,32 @@
                 <div class="col-12 pb-4">
                     <button type="submit" class="btn btn-primary">Tambah Data</button>
                 </div>
+                <div class="col-12 pb-4">
+                    <a href="/barang" class="btn btn-warning">Cancel</a>
+                </div>
             </form>
         </div>
     </div>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var aspectcoy = document.getElementById('aspectcoy');
+            var rigraElements = document.querySelectorAll('[id^="woogo"]');
+
+            aspectcoy.addEventListener('change', function() {
+                var selectedCategory = this.value;
+
+                if (selectedCategory === 'LIQUID') {
+                    rigraElements.forEach(function(element) {
+                        element.style.display = 'block';
+                    });
+                } else {
+                    rigraElements.forEach(function(element) {
+                        element.style.display = 'none';
+                    });
+                }
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.select2').forEach(function(select) {
                 select.addEventListener('change', function() {
@@ -368,123 +392,69 @@
             });
         });
 
-        document.getElementById('aspect').addEventListener('change', function() {
-            var selectedAspect = this.value;
-            var odourTaste = document.getElementById('odour');
-            var rig = document.getElementById('rigra');
-            // var gravity25 = document.getElementById('gra25');
-            // var index20 = document.getElementById('ind20');
-            // var index25 = document.getElementById('ind25');
-
-            if (selectedAspect === 'LIQUID') {
-                odourTaste.style.display = 'block';
-                gravity20.style.display = 'block';
-                gravity25.style.display = 'block';
-                index20.style.display = 'block';
-                index25.style.display = 'block';
-
-            } else {
-
-                rig.style.display = 'none';
-                gravity20.style.display = 'none';
-                gravity25.style.display = 'none';
-                index20.style.display = 'none';
-                index25.style.display = 'none';
-            }
-        })
+        
 
         document.getElementById('category').addEventListener('change', function() {
-            var celectedCategory = this.value;
-            var chemical = document.getElementById('cmc');
-            var casNumber = document.getElementById('cas');
-            var kemasan = document.getElementById('kemasan')
-            var capacity = document.getElementById('capacity');
-            var jenisKemasan = document.getElementById('jenis_kemasan');
-            var rigra1 = document.getElementById('rigra1');
-            var rigra2 = document.getElementById('rigra2');
-            var rigra3 = document.getElementById('rigra3');
-            // var rigra4 = document.getElementById('rigra4');
-            var rigra5 = document.getElementById('rigra5');
-            var rigra7 = document.getElementById('rigra7');
-            var rigra8 = document.getElementById('rigra8');
-            var rigra9 = document.getElementById('rigra9');
-            var rigra10 = document.getElementById('rigra10');
-            var rigra11 = document.getElementById('rigra11');
-            var rigra12 = document.getElementById('rigra12');
-            var rigra14 = document.getElementById('rigra14');
-            var rigra15 = document.getElementById('rigra15');
-            var rigra16 = document.getElementById('rigra16');
-            var rigra17 = document.getElementById('rigra17');
-            var rigra18 = document.getElementById('rigra18');
-            var rigra19 = document.getElementById('rigra19');
-            var rigra20 = document.getElementById('rigra20');
-            var rigra21 = document.getElementById('rigra21');
-            var rigra22 = document.getElementById('rigra22');
-            var rigra23 = document.getElementById('rigra23');
-            var rigra24 = document.getElementById('rigra24');
+                    var celectedCategory = this.value;
+                    var chemical = document.getElementById('cmc');
+                    var casNumber = document.getElementById('cas');
+                    var kemasan = document.getElementById('kemasan')
+                    var odour = document.getElementById('odour');
+                    var capacity = document.getElementById('capacity');
+                    var jenisKemasan = document.getElementById('jenis_kemasan');
+                    var rigra1 = document.getElementById('rigra1');
+                    var rigra2 = document.getElementById('rigra2');
+                    var rigra3 = document.getElementById('rigra3');
+                    var rigra4 = document.getElementById('rigra4');
+                    var rigra5 = document.getElementById('rigra5');
+                    var rigra7 = document.getElementById('rigra7');
+                    var rigra8 = document.getElementById('rigra8');
+                    var rigra9 = document.getElementById('rigra9');
+                    var rigra10 = document.getElementById('rigra10');
+                    var rigra11 = document.getElementById('rigra11');
+                    var rigra12 = document.getElementById('rigra12');
 
-            if (celectedCategory === 'PACKAGING') {
-                chemical.style.display = 'none';
-                casNumber.style.display = 'none';
-                jenisKemasan.style.display = 'none';
-                kemasan.style.display = 'block';
-                capacity.style.display = 'block';
-                rigra1.style.display = 'none';
-                rigra2.style.display = 'none';
-                rigra3.style.display = 'none';
-                // rigra4.style.display = 'none';
-                rigra5.style.display = 'none';
-                rigra6.style.display = 'none';
-                rigra7.style.display = 'none';
-                rigra8.style.display = 'none';
-                rigra9.style.display = 'none';
-                rigra10.style.display = 'none';
-                rigra11.style.display = 'none';
-                rigra12.style.display = 'none';
-                rigra13.style.display = 'none';
-                rigra14.style.display = 'none';
-                rigra15.style.display = 'none';
-                rigra16.style.display = 'none';
-                rigra17.style.display = 'none';
-                rigra18.style.display = 'none';
-                rigra19.style.display = 'none';
-                rigra20.style.display = 'none';
-                rigra21.style.display = 'none';
-                rigra22.style.display = 'none';
-                rigra23.style.display = 'none';
-                rigra24.style.display = 'none';
 
-            } else {
-                chemical.style.display = 'block';
-                casNumber.style.display = 'block';
-                jenisKemasan.style.display = 'block';
-                kemasan.style.display = 'none';
-                capacity.style.display = 'none';
-                rigra1.style.display = 'block';
-                rigra2.style.display = 'block';
-                rigra3.style.display = 'block';
-                rigra4.style.display = 'block';
-                rigra5.style.display = 'block';
-                rigra6.style.display = 'block';
-                rigra7.style.display = 'block';
-                rigra8.style.display = 'block';
-                rigra9.style.display = 'block';
-                rigra10.style.display = 'block';
-                rigra11.style.display = 'block';
-                rigra12.style.display = 'block';
-                rigra13.style.display = 'block';
-                rigra14.style.display = 'block';
-                rigra15.style.display = 'block';
-                rigra16.style.display = 'block';
-                rigra17.style.display = 'block';
-                rigra18.style.display = 'block';
-                rigra19.style.display = 'block';
-                rigra20.style.display = 'block';
-                rigra21.style.display = 'block';
-                rigra22.style.display = 'block';
-                rigra23.style.display = 'block';
-                rigra24.style.display = 'block';
-            }
-        })
+                    if (celectedCategory === 'PACKAGING') {
+                        chemical.style.display = 'none';
+                        casNumber.style.display = 'none';
+                        jenisKemasan.style.display = 'none';
+                        kemasan.style.display = 'block';
+                        capacity.style.display = 'block';
+                        odour.style.display = 'none';
+                        rigra1.style.display = 'none';
+                        rigra2.style.display = 'none';
+                        rigra3.style.display = 'none';
+                        rigra4.style.display = 'none';
+                        rigra5.style.display = 'none';
+                        rigra6.style.display = 'none';
+                        rigra7.style.display = 'none';
+                        rigra8.style.display = 'none';
+                        rigra9.style.display = 'none';
+                        rigra10.style.display = 'none';
+                        rigra11.style.display = 'none';
+                        rigra12.style.display = 'none';
+
+                    } else {
+                        chemical.style.display = 'block';
+                        casNumber.style.display = 'block';
+                        jenisKemasan.style.display = 'block';
+                        kemasan.style.display = 'none';
+                        capacity.style.display = 'none';
+                        odour.style.display = 'block';
+                        rigra1.style.display = 'block';
+                        rigra2.style.display = 'block';
+                        rigra3.style.display = 'block';
+                        rigra4.style.display = 'block';
+                        rigra5.style.display = 'block';
+                        rigra6.style.display = 'block';
+                        rigra7.style.display = 'block';
+                        rigra8.style.display = 'block';
+                        rigra9.style.display = 'block';
+                        rigra10.style.display = 'block';
+                        rigra11.style.display = 'block';
+                        rigra12.style.display = 'block';
+
+                    }})
     </script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\KeluarImport;
 use App\Models\Barang;
 use App\Models\BarangKeluar;
 use App\Models\Customer;
@@ -13,6 +14,7 @@ use App\Models\stockProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BarangKeluarController extends Controller
 {
@@ -195,5 +197,11 @@ class BarangKeluarController extends Controller
             ->get();
 
         return response()->json(['options' => $rakOptions]);
+    }
+
+    public function import_keluar()
+    {
+        Excel::import(new KeluarImport, request()->file('file'));
+        return redirect()->back()->with('success', 'Users imported successfully!');
     }
 }
