@@ -220,9 +220,9 @@
                                 <option value="{{ $barang->FAI_code }}" {{ ($FAI_code[$index] == $barang->FAI_code) ? 'selected' : '' }}>
                                     {{ $barang->FAI_code }}&nbsp;&nbsp;{{ $barang->name }}</option>
                             @endforeach
-                            @foreach ($prd as $product)
-                                    <option value="{{ $product->FAI_code }}">
-                                        {{ $product->FAI_code }}&nbsp;&nbsp;{{ $product->product_name }}</option>
+                            @foreach ($prd1   as $product)
+                                    <option value="{{ $product->FAI_code ?? null }}">
+                                        {{ $product->FAI_code ?? null }}&nbsp;&nbsp;{{ $product->product_name ?? null }}</option>
                             @endforeach
                         </select>
                         <button type="button" class="btn btn-info" onclick="removeInput('persentase-{{ $index + 1 }}', 'FAI_code_barang-{{ $index + 1 }}')">Hapus</button>
@@ -256,9 +256,9 @@
                                     <option value="{{ $barang->FAI_code }}">
                                         {{ $barang->FAI_code }}&nbsp;&nbsp;{{ $barang->name }}</option>
                                 @endforeach
-                                @foreach ($prd as $product)
-                                    <option value="{{ $product->FAI_code }}">
-                                        {{ $product->FAI_code }}&nbsp;&nbsp;{{ $product->product_name }}</option>
+                                @foreach ($prd1 as $product)
+                                    <option value="{{ $product->FAI_code ?? null }}">
+                                        {{ $product->FAI_code ?? null }}&nbsp;&nbsp;{{ $product->product_name ?? null }}</option>
                                 @endforeach
                             </select>
                             <button type="button" class="btn btn-info" onclick="removeInput('persentase-${inputCount}', 'FAI_code_barang-${inputCount}')">Hapus</button>

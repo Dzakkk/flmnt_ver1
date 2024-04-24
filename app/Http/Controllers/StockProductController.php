@@ -10,6 +10,7 @@ use App\Models\Packaging;
 use App\Models\ProductFormula;
 use App\Models\ProductionControl;
 use App\Models\Products;
+use App\Models\Produksi;
 use App\Models\RakGudang;
 use App\Models\Stock;
 use App\Models\StockBarang;
@@ -75,7 +76,7 @@ class StockProductController extends Controller
             'unit' => 'required',
             'tanggal_produksi' => 'required',
             'tanggal_expire' => 'required',
-            'no_LOT' => 'required',
+            // 'no_LOT' => 'required',
             // 'jumlah_kemasan' => 'required',
             'jenis_kemasan' => 'required',
             // 'customer_name' => 'required',
@@ -92,9 +93,60 @@ class StockProductController extends Controller
 
         $build = Products::where('FAI_code', $request->FAI_code)->value('build_product');
 
+        if ($build == 'OSF') {
+            $build = 'O';
+        } elseif ($build == 'FAI'){
+        $build = 'F';
+        }
+        $nomorUrut = $request->nopro;
         // ini fungsi buat bikin no produksi
 
         $bulanRomawi = (date('m'));
+        $bulan = date('m', strtotime($request->tanggal_produksi));
+        $tahun = date('y', strtotime($request->tanggal_produksi));
+        $tanggal = date('d', strtotime($request->tanggal_produksi));
+
+        switch ($bulan) {
+            case 1:
+                $bulan = 'A';
+                break;
+            case 2:
+                $bulan = 'B';
+                break;
+            case 3:
+                $bulan = 'C';
+                break;
+            case 4:
+                $bulan = 'D';
+                break;
+            case 5:
+                $bulan = 'E';
+                break;
+            case 6:
+                $bulan = 'F';
+                break;
+            case 7:
+                $bulan = 'G';
+                break;
+            case 8:
+                $bulan = 'H';
+                break;
+            case 9:
+                $bulan = 'I';
+                break;
+            case 10:
+                $bulan = 'J';
+                break;
+            case 11:
+                $bulan = 'K';
+                break;
+            case 12:
+                $bulan = 'L';
+                break;
+            default:
+                $bulan = '';
+        }
+    
 
         $romanNumeralMap = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
         $result = '';
@@ -104,23 +156,14 @@ class StockProductController extends Controller
             $bulanRomawi = $bulanRomawi % $number;
         }
 
-        $tahun = date('Y');
-
-        $tanggalTerakhir = Stock::orderBy('tanggal_produksi', 'desc')->value('tanggal_produksi');
-
-        $bulanTerakhir = date('m', strtotime($tanggalTerakhir));
-
-        if ($bulanTerakhir != $bulanRomawi) {
-            $nomorUrut = '001';
-        } else {
-            $jumlahData = Stock::whereMonth('tanggal_produksi', $bulanTerakhir)->count();
-
-            $nomorUrut = sprintf('%03d', $jumlahData + 1);
-        }
-
-        $unicCode = "{$nomorUrut}/$build/{$result}/PROD/{$tahun}";
+        $unicCode = "{$nomorUrut}/FAI/{$result}/PROD/{$tahun}";
 
         //fungsi no produksi sampe sini
+
+        //fungsi no lot
+
+        $lot = "{$bulan}{$tanggal}{$tahun}{$build}L{$nomorUrut}";
+
 
         $kms = Packaging::where('FAI_code', $request->jenis_kemasan)->value('nama_kemasan');
         $cpc = Packaging::where('FAI_code', $request->jenis_kemasan)->value('capacity');
@@ -131,7 +174,7 @@ class StockProductController extends Controller
 
         session(['FAI_code' => $request->input('FAI_code')]);
         session(['product_name' => $request->input('product_name')]);
-        session(['no_LOT' => $request->input('no_LOT')]);
+        session(['no_LOT' => $lot]);
         session(['quantity' => $request->input('quantity')]);
         session(['unit' => $request->input('unit')]);
         session(['tanggal_produksi' => $request->input('tanggal_produksi')]);
@@ -248,6 +291,12 @@ class StockProductController extends Controller
         $tanggal_expire = session('tanggal_expire');
         $unit = session('unit');
 
+        $aspect = Products::where('FAI_code', $FAI_code)->value('aspect');
+        $formula = Products::where('FAI_code', $FAI_code)->value('formula_id');
+        $build = Products::where('FAI_code', $FAI_code)->value('build_product');
+        $segment = Products::where('FAI_code', $FAI_code)->value('segment');
+        $solubility = Products::where('FAI_code', $FAI_code)->value('solubility');
+
         $production = new Stock([
             'FAI_code' => $request->FAI_code,
             'no_LOT' => $request->no_LOT,
@@ -356,7 +405,7 @@ class StockProductController extends Controller
             $production_control->save();
 
             $kemasan = Packaging::where('nama_kemasan', $jenis_kemasan)->firstOrFail();
-            $kemasan->quantity -= $request->quantity;
+            $kemasan->quantity -= $jumlah_kemasan;
             $kemasan->save();
 
             foreach ($dataArray as $index => $FAI_code_barang) {
@@ -416,6 +465,36 @@ class StockProductController extends Controller
                     }
                 }
             }
+
+            $qty = $quantity / $jumlah_kemasan;            
+
+            $produksi = new Produksi ([
+                'proses' => $request->proses,
+                'category' => $ctgry,
+                'barang' => $request->product_name + '(' + $request->FAI_code + ')',
+                'tanggal_produksi' => $request->tanggal_produksi,
+                'tanggal_expire' => $tanggal_expire,
+                'tanki',
+                'noWo' => $no_work_order,
+                'no_produksi' => $request->no_production,
+                'LOT' => $no_LOT,
+                'customer_name' => $request->customer_name,
+                'FAI_code' => $request->FAI_code,
+                'nama_product' => $request->product_name,
+                'formula' => $formula,
+                'aspect' => $aspect,
+                'build' => $build,
+                'segment' => $segment,
+                'solubility' => $solubility,
+                'cust_code'=> $request->customer_code,
+                'cust_name' => $request->customer_name,
+                'total_qty' => $quantity,
+                'qty' => $qty,
+                'kemasan' => $jenis_kemasan,
+                'label_kemasan' => $qty + 'KG NET',
+                'total_kemasan'=> $jumlah_kemasan,
+                'note' => 'Ini Produksi',
+            ]);
 
             foreach ($stockChanges as $change) {
                 $stock = Stock::find($change['id_lot']);

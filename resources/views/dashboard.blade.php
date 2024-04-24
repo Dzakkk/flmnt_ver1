@@ -368,6 +368,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="/cas/data">
+                    <i class="bi bi-person"></i>
+                    <span>Cas</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="/rekap">
                     <i class="bi bi-archive"></i>
                     <span>Rekap Barang</span>
@@ -451,6 +457,7 @@
             @yield('update_inhouse')
 
             @yield('permintaan_data')
+            @yield('cas')
 
 
 

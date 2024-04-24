@@ -226,18 +226,9 @@
                                         </script> --}}
                                     </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        {{-- </div>
-                    </div>
 
-                    <!-- Modal untuk mengganti file -->
-                    <div class="modal fade" id="fileReplacementModal" tabindex="-1"
-                        aria-labelledby="fileReplacementModalLabel" aria-hidden="true">
-                        <div class="modal-dialog"> --}}
+                            </div>
+
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="fileReplacementModalLabel">Ganti File</h5>
@@ -271,91 +262,51 @@
                                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                     </form>
                                 </div>
+
                             </div>
-                        </div>
-                    </div>
-
-                    
-
-
-                    {{-- Produksi modal --}}
-
-                    {{-- <div class="modal fade" id="dokumen-{{ $i->FAI_code }}" tabindex="-1"
-                        aria-labelledby="confirmDokumen-{{ $i->FAI_code }}" aria-hidden="true">
-                        <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDokumen-{{ $i->FAI_code }}">Document</h5>
+                                    <h5 class="modal-title" id="fileReplacementModalLabel">Ganti File</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    Document of {{ $i->FAI_code }} - {{ $i->product_name }}
-                                    <div>
-                                        <strong>Files:</strong>
-                                        @if ($i->file)
-                                            <ul>
-                                                @php
-                                                    $files = json_decode($i->file, true);
-                                                    if (is_array($files)) {
-                                                        foreach ($files as $file) {
-                                                            echo '<li>';
-                                                            echo '<a href="' .
-                                                                asset('document_product/' . $file) .
-                                                                '" target="_blank">' .
-                                                                $file .
-                                                                '</a>';
-                                                            // Button untuk mengganti file
-                                                            echo '<button type="button" class="btn btn-primary btn-sm mx-2" onclick="openFileReplacementModal(\'' .
-                                                                $file .
-                                                                '\')">Ganti File</button>';
-                                                            echo '</li>';
-                                                        }
-                                                    } else {
-                                                        echo '<li>No files found</li>';
-                                                    }
-                                                @endphp
-                                            </ul>
-                                        @else
-                                            <p>No files found</p>
-                                        @endif
-                                    </div>
-                                    <form action="/product/update/file/{{ $i->FAI_code }}" method="post"
+                                    <form action="/product/delete/file/{{ $i->FAI_code }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
-                                        @method('PUT')
-                                        <div>
-                                            <label for="file" class="form-label">Unggah File Baru</label>
-                                            <input type="file" name="file[]" class="form-control">
+                                        @method('DELETE')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan
+                                                Dihapus:</label>
+                                            <select class="form-select" id="currentFile" name="deleted_file">
+                                                <option value="">Pilih File yang akan Dihapus</option>
+                                                @if ($i->file)
+                                                    @php
+                                                        $files = json_decode($i->file, true);
+                                                    @endphp
+                                                    @foreach ($files as $fileName)
+                                                        <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                                        <button type="submit" class="btn btn-danger">delete Perubahan</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <!-- Blade untuk form penggantian file -->
-                                    <form action="/product/update/file/{{ $i->FAI_code }}" method="post"
-                                        enctype="multipart/form-data" id="fileReplacementForm">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="mb-3">
-                                            <label for="currentFile" class="form-label">Pilih File yang akan
-                                                Diganti:</label>
-                                            <select class="form-select" id="currentFile" name="current_file_name">
-                                                @foreach ($files as $fileName)
-                                                    <option value="{{ $fileName }}">{{ $fileName }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="newFile" class="form-label">Pilih File Baru:</label>
-                                            <input type="file" class="form-control" id="newFile" name="file[]">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                    </form>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
+
+
+
+
+                    {{-- Produksi modal --}}
+
+
 
                     <div class="modal fade" id="produksi-{{ $i->FAI_code }}" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -371,17 +322,32 @@
                                         <form action="/produksi/product" class="row g-3 d-flex" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            <div class="col-md-6">
-                                                <label for="" class="form-label">FAI code Product</label>
-                                                <input type="text" class="form-control" name="FAI_code"
-                                                    value="{{ $i->FAI_code }}">
+                                            <div class="col-md-12">
+                                                <label for="" class="form-label">Proses Produksi</label>
+                                                {{-- <input type="text" id="barang1" class="form-control"
+                                                    name="FAI_code" value="{{ $i->FAI_code }}"> --}}
+                                                <select name="proses" id="proses"
+                                                    class="form-control barang12">
+                                                    <option value="REPACK">REPACK</option>
+                                                    <option value="BLEND">BLEND</option>
+                                                </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <label for="" class="form-label">FAI code Product</label>
+                                                {{-- <input type="text" id="barang1" class="form-control"
+                                                    name="FAI_code" value="{{ $i->FAI_code }}"> --}}
+                                                <select name="FAI_code" id="barang-{{ $i->FAI_code }}"
+                                                    class="form-control barang12">
+                                                    <option value="{{ $i->FAI_code }}">{{ $i->FAI_code }}</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-12">
                                                 <label for="" class="form-label">Product Name</label>
                                                 <input type="text" class="form-control" name="product_name"
                                                     value="{{ $i->product_name }}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="supplier" class="form-label">Rak</label>
                                                 <select name="id_rak" id="supplier" class="form-control select2"
                                                     required>
@@ -391,11 +357,11 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="" class="form-label">Weight/Quantity</label>
                                                 <input type="text" class="form-control" name="quantity">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label class="form-label" for="unit">Unit</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select" name="unit">
@@ -407,81 +373,65 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-6">
-                                            <label for="" class="form-label">jumlah_kemasan</label>
-                                            <input type="number" class="form-control" name="jumlah_kemasan">
-                                        </div> --}}
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <label for="" class="form-label">No Produksi</label>
+                                                <input type="number" class="form-control" name="nopro">
+                                            </div>
+                                            <div class="col-md-12">
                                                 <label class="form-label" for="unit">Jenis Kemasan</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
                                                         name="jenis_kemasan">
 
-                                                        @foreach ($kemasan as $i)
-                                                            <option value="{{ $i->FAI_code }}">{{ $i->nama_kemasan }} -
-                                                                {{ $i->capacity }} Stock&nbsp;{{ $i->quantity }}
+                                                        @foreach ($kemasan as $p)
+                                                            <option value="{{ $p->FAI_code }}">{{ $p->nama_kemasan }} -
+                                                                {{ $p->capacity }} Stock&nbsp;{{ $p->quantity }}
                                                             </option>
                                                         @endforeach
-                                                        {{-- <option value="Alumunium Bottle">Alumunium Bottle</option>
-                                                    <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
-                                                    <option value="Bag">Bag</option>
-                                                    <option value="Box with Alumunium Bottle">Box with Alumunium Bottle
-                                                    </option>
-                                                    <option value="Box with Alumunium Pouch Pack">Box with Alumunium Pouch
-                                                        Pack
-                                                    </option>
-                                                    <option value="Carton">Carton</option>
-                                                    <option value="Fiber Box">Fiber Box</option>
-                                                    <option value="Fiber Drum">Fiber Drum</option>
-                                                    <option value="Glass Bottle">Glass Bottle</option>
-                                                    <option value="Jerry Can">Jerry Can</option>
-                                                    <option value="Metal Can">Metal Can</option>
-                                                    <option value="Metal Drum">Metal Drum</option>
-                                                    <option value="Plastic Bottle">Plastic Bottle</option>
-                                                    <option value="Plastic Container with Polyethylene Inner Bag">Plastic
-                                                        Container
-                                                        with Polyethylene Inner Bag</option>
-                                                    <option value="Plastic Drum">Plastic Drum</option>
-                                                    <option value="Plastic Jar">Plastic Jar</option>
-                                                    <option value="Sacks">Sacks</option>
-                                                    <option value="Goody Bag">Goody Bag</option> --}}
+
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-6">
+                                            {{-- <div class="col-md-12">
                                                 <label for="" class="form-label">no_production</label>
                                                 <input type="text" class="form-control" name="no_production">
                                             </div> --}}
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="" class="form-label">No.Work Order</label>
                                                 <input type="text" class="form-control" name="no_work_order">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="" class="form-label">no_LOT</label>
-                                                <input type="text" class="form-control" name="no_LOT">
-                                            </div>
-                                            <div class="col-md-6 boo">
-                                                <label for="customerCode" class="form-label">Kode Pelanggan</label>
-                                                <select id="customerCode" class="form-control customer-code-select"
-                                                    name="customer_code">
+                                            <div class="col-md-12 boo">
+                                                <label for="customerCode" class="form-label">Kode Pelanggan untuk {{ $i->FAI_code }}</label>
+                                                <!-- Tambahkan data-fai-code pada setiap option customer code -->
+                                                <select id="customerCode" class="form-control customer-code-select" name="customer_code">
                                                     <option value="">Pilih Kode Pelanggan</option>
+                                                    @php $matchFound = false; @endphp <!-- Inisialisasi variabel untuk mengecek apakah ada kecocokan -->
                                                     @foreach ($custList as $code)
-                                                        <option value="{{ $code->customer_code }}">
-                                                            {{ $code->customer_code }} - {{ $code->customer_name }}
-                                                        </option>
+                                                        @if ($code->FAI_code == $i->FAI_code)
+                                                            <option value="{{ $code->customer_code }}">
+                                                                {{ $code->customer_code }} - {{ $code->customer_name }}
+                                                            </option>
+                                                            @php $matchFound = true; @endphp <!-- Set matchFound ke true jika ada kecocokan -->
+                                                        @endif
                                                     @endforeach
+                                                    <!-- Tambahkan opsi "gak ada" jika tidak ada kecocokan -->
+                                                    @if (!$matchFound)
+                                                        <option value="">gak ada</option>
+                                                    @endif
                                                     <option value="new">Tambah Pelanggan Baru</option>
                                                 </select>
                                             </div>
+                                            
+                                            
 
-                                            <div id="customerNameSection" class="col-md-6 customer-name-section"
+                                            <div id="customerNameSection" class="col-md-12 customer-name-section"
                                                 style="display: none;">
                                                 <label for="customerName" class="form-label">Nama Pelanggan</label>
                                                 <input type="text" name="customer_name"
                                                     class="form-control customer-name-input">
                                             </div>
 
-                                            <div id="newCustomerSection" class="col-md-6 new-customer-section"
+                                            <div id="newCustomerSection" class="col-md-12 new-customer-section"
                                                 style="display: none;">
                                                 <label for="newCustomerCode" class="form-label">Customer Item Code</label>
                                                 <input type="text" name="customer_code"
@@ -491,16 +441,15 @@
                                                     class="form-control new-customer-name-input">
                                             </div>
 
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="" class="form-label">PO_customer</label>
                                                 <input type="text" class="form-control" name="PO_customer">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="" class="form-label">tanggal Produksi</label>
                                                 <input type="date" class="form-control" name="tanggal_produksi">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="" class="form-label">tanggal expire</label>
                                                 <input type="date" class="form-control" name="tanggal_expire">
                                             </div>
@@ -521,6 +470,35 @@
         </table>
     </div>
     {{ $prd->links() }}
+    <script>
+        // Ambil semua FAI code dan customer code select element
+        var faiCodes = document.querySelectorAll('.barang12');
+        var customerCodeSelects = document.querySelectorAll('.customer-code-select');
+
+        // Tambahkan event listener untuk setiap FAI code element
+        faiCodes.forEach(function(faiCode) {
+            faiCode.addEventListener('change', function() {
+                var selectedFAICode = this.value; // Ambil FAI code yang dipilih
+
+                // Loop melalui setiap customer code select element
+                customerCodeSelects.forEach(function(customerCodeSelect) {
+                    var options = customerCodeSelect.options;
+
+                    // Atur tampilan opsi customer code berdasarkan FAI code yang dipilih
+                    for (var i = 0; i < options.length; i++) {
+                        var option = options[i];
+                        var faiCode = option.getAttribute('data-fai-code');
+                        if (faiCode === selectedFAICode || faiCode === null) {
+                            option.style.display = 'block';
+                        } else {
+                            option.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
 
 
     <script>

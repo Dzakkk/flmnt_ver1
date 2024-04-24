@@ -9,6 +9,7 @@ use App\Http\Controllers\FormPrintOutController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PermintaanController;
+use App\Http\Controllers\PositiveListController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\QualityControlController;
 use App\Http\Controllers\StockController;
@@ -64,7 +65,7 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/barang/update/{id}', [BarangController::class, 'updateBarang'])->where('id', '[\w\/]+');
     Route::put('/barang/add/file/{id}', [BarangController::class, 'addFile']);
     Route::put('/barang/update/file/{id}', [BarangController::class, 'update_file']);
-
+    Route::delete('/barang/delete/file/{id}', [BarangController::class, 'delete_file']);
 
     
     Route::get('supplier', [SupplierController::class, 'dataSupplier']);
@@ -93,7 +94,10 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/product/update/{id}', [ProductsController::class, 'updateProduct']);
     Route::put('/product/add/file/{id}', [ProductsController::class, 'addFile']);
     Route::put('/product/update/file/{id}', [ProductsController::class, 'update_file']);
+    Route::delete('/product/delete/file/{id}', [ProductsController::class, 'delete_file']);
+
   
+    Route::get('/cas/data', [PositiveListController::class, 'cas']);
     
     
     Route::get('formula', [ProductsController::class, 'formula'])->name('formula');
@@ -102,20 +106,16 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/produksi/product/update/{id}', [StockProductController::class, 'updateDataProduction1'])->where('id', '[\w\/]+');
     Route::put('/produksi/product/update/redirect/{id}', [StockProductController::class, 'updateDataProduction2'])->where('id', '[\w\/]+');
 
-
     Route::get('stock/lot', [StockController::class, 'lot']);
     Route::get('stock/barang', [StockController::class, 'stock']);
     Route::get('stock/product', [StockProductController::class, 'stock']);
     Route::get('stock/kemasan', [StockController::class, 'packaging']);
-    
     
     Route::get('/manufacturer', [ManufacturerController::class, 'dataManufacturer']);
     Route::post('/manufacturer/store', [ManufacturerController::class, 'storeManufacturer']);
     Route::get('/manufacturer/update/{id}', [ManufacturerController::class, 'updateManufacturer']);
     Route::put('/manufacturer/update/{id}', [ManufacturerController::class, 'update']);
     Route::delete('/manufacturer/delete/{id}', [ManufacturerController::class, 'delete'])->name('manufacturer.delete');
-    
-    
 
     Route::get('/barang/export', [BarangController::class, 'export']);
     Route::get('export/production/control', [ProductsController::class, 'exportProductionControl']);
@@ -123,17 +123,14 @@ Route::middleware(['auth'])->group(function (){
     Route::post('import', [BarangController::class, 'import']);
     Route::post('import/masuk', [BarangMasukController::class, 'import_masuk']);
     Route::post('import/keluar', [BarangKeluarController::class, 'import_keluar']);
-
+    Route::post('import/cas', [PositiveListController::class, 'import_cas']);
   
     // Route::livewire('/product-form', [FormulaProduct::class]);
     Livewire::component('/product-form', [FormulaProduct::class]);
     
-    
-    
     Route::get('/search', [BarangController::class, 'search'])->name('search.index');
     
     Route::get('/search/stock', [StockController::class, 'search'])->name('search.stock');
-    
     
     Route::get('production/form', [StockProductController::class, 'productionControl'])->name('production.form');
     Route::post('production/control/store', [StockProductController::class, 'productProduction']);
@@ -183,8 +180,11 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('permintaan', [PermintaanController::class, 'permintaan']);
     Route::post('permintaan/store', [PermintaanController::class, 'permintaan_store']);
+
     Route::get('get-lot', [PermintaanController::class, 'getlot']);
     Route::get('get-status', [PermintaanController::class, 'getStatus']);
+    Route::get('get-cust', [PermintaanController::class, 'getCust']);
+
 
 });
 

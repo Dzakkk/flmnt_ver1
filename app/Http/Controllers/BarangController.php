@@ -7,6 +7,7 @@ use App\Imports\BarangImport;
 use App\Models\Barang;
 use App\Models\Manufacturer;
 use App\Models\Packaging;
+use App\Models\PositiveList;
 use App\Models\Stock;
 use App\Models\StockBarang;
 use App\Models\Supplier;
@@ -69,34 +70,35 @@ class BarangController extends Controller
     {
         $supp = Supplier::all();
         $mnc = Manufacturer::all();
-        return view('barang.newBarang', ['supp' => $supp, 'ex' => $mnc]);
+        $cas = PositiveList::all();
+        return view('barang.newBarang', ['cas' => $cas, 'supp' => $supp, 'ex' => $mnc]);
     }
 
     public function newBarang(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'FAI_code' => 'required',
-            'FINA_code' => 'required',
-            'kategori_barang' => 'required',
-            'aspect' => 'required',
+            // 'FINA_code' => 'required',
+            // 'kategori_barang' => 'required',
+            // 'aspect' => 'required',
             // 'initial_code' => 'required',
             // 'number_code' => 'required',
             // 'alokasi_penyimpanan' => 'required',
-            'reOrder_qty' => 'required',
-            'unit' => 'required',
-            'supplier' => 'required',
+            // 'reOrder_qty' => 'required',
+            // 'unit' => 'required',
+            // 'supplier' => 'required',
             // 'packaging_type' => 'required',
-            'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
-            'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
-            'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
-            'halal_certification' => 'required',
+            // 'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
+            // 'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
+            // 'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
+            // 'halal_certification' => 'required',
             // 'name' => 'required',
             // 'common_name' => 'required',
             // 'brandProduct_code' => 'required',
             // 'chemical_IUPACname' => 'required',
             // 'CAS_number' => 'required',
-            'ex_origin' => 'required',
-            'initial_ex' => 'required',
+            // 'ex_origin' => 'required',
+            // 'initial_ex' => 'required',
             // 'country_of_origin' => 'required',
             // 'remark' => 'required',
             // 'usage_level' => 'required',
@@ -182,6 +184,7 @@ class BarangController extends Controller
                 'color_rangeColor' => $request->color_rangeColor,
                 'odour_taste' => $request->odour_taste,
                 'material' => $request->material,
+                'alergen' => $request->alergen,
                 'sg_d20_min' => $request->sg_d20_min,
                 'sg_d20_max' => $request->sg_d20_max,
                 'sg_d20_target' => $request->sg_d20_target,
@@ -215,7 +218,7 @@ class BarangController extends Controller
 
         $barang = Barang::findOrFail($id);
 
-        dd($request->all(), $id);
+        // dd($request->all(), $id);
         // Menghapus file lama jika ada
         if ($request->has('deleted_file')) {
             $deletedFile = $request->input('deleted_file');
@@ -232,20 +235,18 @@ class BarangController extends Controller
             }
         }
 
-        // Menambah file baru jika ada yang diunggah
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
                 $fileName = $file->getClientOriginalName();
                 $file->move(public_path('document_barang'), $fileName);
                 $fileNames[] = $fileName;
             }
-            // Mengupdate daftar file baru ke dalam kolom file di database
             $barang->file = json_encode($fileNames);
         }
 
         $barang->save();
 
-        return redirect()->back()->with('success', 'Masuk');
+        return redirect()->back()->with('success', 'Bertambah');
     }
 
 
@@ -274,7 +275,32 @@ class BarangController extends Controller
 
         $barang->save();
 
-        return redirect()->back()->with('success', 'Masuk');
+        return redirect()->back()->with('success', 'Telah Diubah+');
+    }
+
+    public function delete_file(Request $request, $id)
+    {
+        $barang = Barang::findOrFail($id);
+
+        // dd($request->all(), $id);
+        // Menghapus file lama jika ada
+        if ($request->has('deleted_file')) {
+            $deletedFile = $request->input('deleted_file');
+            $filePath = public_path('document_barang') . '/' . $deletedFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Menghapus file dari daftar file yang disimpan di database
+            $fileNames = json_decode($barang->file, true);
+            $index = array_search($deletedFile, $fileNames);
+            if ($index !== false) {
+                unset($fileNames[$index]);
+                $barang->file = json_encode(array_values($fileNames)); // Mengatur kembali array ke string JSON setelah menghapus file
+            }
+        }
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Telah dihapus');
     }
 
 

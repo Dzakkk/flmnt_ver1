@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\CustList;
 use App\Models\Permintaan;
 use App\Models\Products;
 use App\Models\QualityControl;
@@ -116,5 +117,13 @@ class PermintaanController extends Controller
         $status = QualityControl::where('LOT', $lot)->value('status');
 
         return response()->json(['status' => $status]);
+    }
+
+    public function getCust(Request $request)
+    {
+        $FAI_code = $request->FAI_code;
+        $cust = CustList::where('FAI_code', $FAI_code)->get();
+        return response()->json($cust);
+
     }
 }

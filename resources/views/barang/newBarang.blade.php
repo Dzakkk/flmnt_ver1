@@ -199,9 +199,15 @@
                     <label class="form-label" for="chemical_IUPACname">chemical_IUPACname</label>
                     <input type="text" name="chemical_IUPACname" class="form-control" id="chemical_IUPACname">
                 </div>
-                <div class="col-md-6" id="cas" style="display: none;">
+                <div class="col-md-6" id="cas">
                     <label class="form-label" for="CAS_number">CAS_number</label>
-                    <input type="text" name="CAS_number" class="form-control" id="CAS_number">
+                    <select name="CAS_number" id="CAS_number" class="form-control">
+                        <option value="">Select CAS</option>
+                        @foreach ($cas as $cs)
+                            <option value="{{ $cs->CAS }}">{{ $cs->CAS }} || {{ $cs->nama_kimia }}</option>
+                        @endforeach
+                    </select>
+                    {{-- <input type="text" name="CAS_number" class="form-control" id="CAS_number"> --}}
                 </div>
                 <div class="col-md-6">
                     <label for="manufacturer" class="form-label">Manufacturer</label>
@@ -261,7 +267,24 @@
                     <input type="text" name="odour_taste" class="form-control" id="odour_taste">
                 </div>
 
-
+                <div class="col-md-12">
+                    <label for="">Alergen</label>
+                    <div class="d-flex">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="alergen" id="alergen1">
+                            <label class="form-check-label" for="alergen1">
+                                Yes
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="alergen" id="alergen2">
+                            <label class="form-check-label" for="alergen2">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                </div>
 
 
 
@@ -357,11 +380,13 @@
             });
         });
 
+
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.select2').forEach(function(select) {
                 select.addEventListener('change', function() {
                     if (select.id === "supplier") {
-                        var supplierNameSection = document.getElementById("supplierNameSection");
+                        var supplierNameSection = document.getElementById(
+                            "supplierNameSection");
                         var supplierNameInput = document.getElementById("supplierName");
                         var selectedSupplier = select.value;
 
@@ -377,7 +402,8 @@
                     if (select.id === "manufacturer") {
                         var manufacturerNameSection = document.getElementById(
                             "manufacturerNameSection");
-                        var manufacturerNameInput = document.getElementById("manufacturerName");
+                        var manufacturerNameInput = document.getElementById(
+                            "manufacturerName");
                         var selectedManufacturer = select.value;
 
                         if (select.value === "new") {
@@ -392,69 +418,73 @@
             });
         });
 
-        
+        $(document).ready(function() {
+            $('#CAS_number').select2();
+        });
+
 
         document.getElementById('category').addEventListener('change', function() {
-                    var celectedCategory = this.value;
-                    var chemical = document.getElementById('cmc');
-                    var casNumber = document.getElementById('cas');
-                    var kemasan = document.getElementById('kemasan')
-                    var odour = document.getElementById('odour');
-                    var capacity = document.getElementById('capacity');
-                    var jenisKemasan = document.getElementById('jenis_kemasan');
-                    var rigra1 = document.getElementById('rigra1');
-                    var rigra2 = document.getElementById('rigra2');
-                    var rigra3 = document.getElementById('rigra3');
-                    var rigra4 = document.getElementById('rigra4');
-                    var rigra5 = document.getElementById('rigra5');
-                    var rigra7 = document.getElementById('rigra7');
-                    var rigra8 = document.getElementById('rigra8');
-                    var rigra9 = document.getElementById('rigra9');
-                    var rigra10 = document.getElementById('rigra10');
-                    var rigra11 = document.getElementById('rigra11');
-                    var rigra12 = document.getElementById('rigra12');
+            var celectedCategory = this.value;
+            var chemical = document.getElementById('cmc');
+            var casNumber = document.getElementById('cas');
+            var kemasan = document.getElementById('kemasan')
+            var odour = document.getElementById('odour');
+            var capacity = document.getElementById('capacity');
+            var jenisKemasan = document.getElementById('jenis_kemasan');
+            var rigra1 = document.getElementById('rigra1');
+            var rigra2 = document.getElementById('rigra2');
+            var rigra3 = document.getElementById('rigra3');
+            var rigra4 = document.getElementById('rigra4');
+            var rigra5 = document.getElementById('rigra5');
+            var rigra7 = document.getElementById('rigra7');
+            var rigra8 = document.getElementById('rigra8');
+            var rigra9 = document.getElementById('rigra9');
+            var rigra10 = document.getElementById('rigra10');
+            var rigra11 = document.getElementById('rigra11');
+            var rigra12 = document.getElementById('rigra12');
 
 
-                    if (celectedCategory === 'PACKAGING') {
-                        chemical.style.display = 'none';
-                        casNumber.style.display = 'none';
-                        jenisKemasan.style.display = 'none';
-                        kemasan.style.display = 'block';
-                        capacity.style.display = 'block';
-                        odour.style.display = 'none';
-                        rigra1.style.display = 'none';
-                        rigra2.style.display = 'none';
-                        rigra3.style.display = 'none';
-                        rigra4.style.display = 'none';
-                        rigra5.style.display = 'none';
-                        rigra6.style.display = 'none';
-                        rigra7.style.display = 'none';
-                        rigra8.style.display = 'none';
-                        rigra9.style.display = 'none';
-                        rigra10.style.display = 'none';
-                        rigra11.style.display = 'none';
-                        rigra12.style.display = 'none';
+            if (celectedCategory === 'PACKAGING') {
+                chemical.style.display = 'none';
+                casNumber.style.display = 'none';
+                jenisKemasan.style.display = 'none';
+                kemasan.style.display = 'block';
+                capacity.style.display = 'block';
+                odour.style.display = 'none';
+                rigra1.style.display = 'none';
+                rigra2.style.display = 'none';
+                rigra3.style.display = 'none';
+                rigra4.style.display = 'none';
+                rigra5.style.display = 'none';
+                rigra6.style.display = 'none';
+                rigra7.style.display = 'none';
+                rigra8.style.display = 'none';
+                rigra9.style.display = 'none';
+                rigra10.style.display = 'none';
+                rigra11.style.display = 'none';
+                rigra12.style.display = 'none';
 
-                    } else {
-                        chemical.style.display = 'block';
-                        casNumber.style.display = 'block';
-                        jenisKemasan.style.display = 'block';
-                        kemasan.style.display = 'none';
-                        capacity.style.display = 'none';
-                        odour.style.display = 'block';
-                        rigra1.style.display = 'block';
-                        rigra2.style.display = 'block';
-                        rigra3.style.display = 'block';
-                        rigra4.style.display = 'block';
-                        rigra5.style.display = 'block';
-                        rigra6.style.display = 'block';
-                        rigra7.style.display = 'block';
-                        rigra8.style.display = 'block';
-                        rigra9.style.display = 'block';
-                        rigra10.style.display = 'block';
-                        rigra11.style.display = 'block';
-                        rigra12.style.display = 'block';
+            } else {
+                chemical.style.display = 'block';
+                casNumber.style.display = 'block';
+                jenisKemasan.style.display = 'block';
+                kemasan.style.display = 'none';
+                capacity.style.display = 'none';
+                odour.style.display = 'block';
+                rigra1.style.display = 'block';
+                rigra2.style.display = 'block';
+                rigra3.style.display = 'block';
+                rigra4.style.display = 'block';
+                rigra5.style.display = 'block';
+                rigra6.style.display = 'block';
+                rigra7.style.display = 'block';
+                rigra8.style.display = 'block';
+                rigra9.style.display = 'block';
+                rigra10.style.display = 'block';
+                rigra11.style.display = 'block';
+                rigra12.style.display = 'block';
 
-                    }})
+            }
+        })
     </script>
 @endsection

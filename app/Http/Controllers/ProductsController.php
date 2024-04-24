@@ -95,7 +95,31 @@ class ProductsController extends Controller
 
         $product->save();
 
-        return redirect('product')->with('success', 'Masuk');
+        return redirect('product')->with('success', 'Telah Diganti');
+    }
+
+    public function delete_file(Request $request, $id) {
+        $product = Products::findOrFail($id);
+
+        // Menghapus file lama jika ada
+        if ($request->has('deleted_file')) {
+            $deletedFile = $request->input('deleted_file');
+            $filePath = public_path('document_product') . '/' . $deletedFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Menghapus file dari daftar file yang disimpan di database
+            $fileNames = json_decode($product->file, true);
+            $index = array_search($deletedFile, $fileNames);
+            if ($index !== false) {
+                unset($fileNames[$index]);
+                $product->file = json_encode(array_values($fileNames)); // Mengatur kembali array ke string JSON setelah menghapus file
+            }
+        }
+        $product->save();
+
+        return redirect('product')->with('success', 'Telah Dihapus');
+
     }
 
 
@@ -143,13 +167,14 @@ class ProductsController extends Controller
         $prd = Products::find($id);
         $brg = Barang::all();
         $gdg = Gudang::all();
+        $prd1 = Products::all();
 
         // Ambil nilai persentase dan FAI_code dari entitas ProductFormula
         $productFormula = ProductFormula::find($id);
         $persentase = json_decode($productFormula->persentase, true);
         $FAI_code = json_decode($productFormula->FAI_code_barang, true);
 
-        return view('product.update', compact('prd', 'brg', 'gdg', 'persentase', 'FAI_code'));
+        return view('product.update', compact('prd','prd1', 'brg', 'gdg', 'persentase', 'FAI_code'));
     }
 
     public function newProductForm()

@@ -183,8 +183,40 @@
                                         <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
                                     </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                
+                            </div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="fileReplacementModalLabel">Ganti File</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/barang/delete/file/{{ str_replace('.', '_', $item->FAI_code) }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan
+                                                Dihapus:</label>
+                                            <select class="form-select" id="currentFile" name="deleted_file">
+                                                <option value="">Pilih File yang akan Dihapus</option>
+                                                @if ($item->file)
+                                                    @php
+                                                        $files = json_decode($item->file, true);
+                                                    @endphp
+                                                    @foreach ($files as $fileName)
+                                                        <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">delete</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer"> 
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -206,14 +238,34 @@
                                 <div class="modal-body">
                                     <div>
                                         @php
-                                            $reOrderQty = $item->reOrder_qty;
-                                            $totalQuantity = $item->stock
-                                                ->where('FAI_code', $item->FAI_code)
-                                                ->sum('quantity');
-                                            $lot = $item->stock->where('FAI_code', $item->FAI_code)->get();
-
+                                        $reOrderQty = $item->reOrder_qty;
+                                        $lot = $item->stock;
+                                        $totalQuantity = 0;
+                                        $weekUsage = null;
+                                    
+                                        // Periksa apakah $lot tidak null sebelum menggunakan metode where()
+                                        if ($lot) {
+                                            $lot = $lot->where('FAI_code', $item->FAI_code)->get();
+                                            $totalQuantity = $lot->sum('quantity');
+                                        }
+                                    
+                                        // Periksa apakah $usageQuantities tidak null sebelum menggunakan metode where()
+                                        if ($usageQuantities) {
                                             $weekUsage = $usageQuantities->where('FAI_code', $item->FAI_code)->first();
-                                        @endphp
+                                        }
+                                    @endphp
+                                    
+                                    @if(!$lot)
+                                        <!-- Tambahkan kode yang ingin ditampilkan jika $lot kosong -->
+                                        <p>Data lot tidak tersedia.</p>
+                                    @endif
+                                    
+                                    @if(!$weekUsage)
+                                        <!-- Tambahkan kode yang ingin ditampilkan jika $weekUsage kosong -->
+                                        <p>Data penggunaan mingguan tidak tersedia.</p>
+                                    @endif
+                                    
+
                                         <div>
                                             Total Quantity = {{ $totalQuantity }}&nbsp;{{ $item->Kg }}
                                         </div>
@@ -227,16 +279,17 @@
                                             kg
                                         </div>
 
-                                        <div>
-                                            <ul>
-                                                <li>Lot - Qty - Rak</li>
-                                                @foreach ($lot as $i)
-                                                    <li>{{ $i->no_LOT }} - {{ $i->quantity }} - {{ $i->id_rak }}
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                        @if($lot)
+    <ul>
+        <li>Lot - Qty - Rak</li>
+        @foreach ($lot as $i)
+            <li>{{ $i->no_LOT }} - {{ $i->quantity }} - {{ $i->id_rak }}</li>
+        @endforeach
+    </ul>
+@else
+    <p>Tidak ada data lot yang tersedia.</p>
+@endif
 
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -606,64 +659,64 @@
             $('#search').on('input', function() {
                 var searchTerm = $(this).val();
 
-                $.ajax({
-                    url: "{{ route('search.index') }}",
-                    type: "GET",
-                    data: {
-                        search: searchTerm
-                    },
-                    success: function(response) {
-                        $('#search-results').empty();
+                // $.ajax({
+                //     url: "{{ route('search.index') }}",
+                //     type: "GET",
+                //     data: {
+                //         search: searchTerm
+                //     },
+                //     success: function(response) {
+                //         $('#search-results').empty();
 
-                        $.each(response.brg, function(index, item) {
-                            var row = '<tr>' +
-                                '<td>' + (index + 1) + '</td>' +
-                                '<td>' + item.FAI_code + '</td>' +
-                                '<td>' + item.FINA_code + '</td>' +
-                                '<td>' + item.name + '</td>' +
-                                '<td>' + item.common_name + '</td>' +
-                                '<td>' + item.kategori_barang + '</td>' +
-                                '<td>' + item.aspect + '</td>' +
-                                '<td>' + item.reOrder_qty + '</td>' +
-                                '<td>' + item.unit + '</td>' +
-                                '<td>' + item.supplier + '</td>' +
-                                '<td>' + item.packaging_type + '</td>' +
-                                '<td>' + item.documentation + '</td>' +
-                                '<td>' + item.halal_certification + '</td>' +
-                                '<td>' + item.brandProduct_code + '</td>' +
-                                '<td>' + item.chemical_IUPACname + '</td>' +
-                                '<td>' + item.CAS_number + '</td>' +
-                                '<td>' + item.ex_origin + '</td>' +
-                                '<td>' + item.initial_ex + '</td>' +
-                                '<td>' + item.country_of_origin + '</td>' +
-                                '<td>' + item.remark + '</td>' +
-                                '<td>' + item.usage_level + '</td>' +
-                                '<td>' + item.harga_ex_work_USD + '</td>' +
-                                '<td>' + item.harga_CIF_USD + '</td>' +
-                                '<td>' + item.harga_MOQ_USD + '</td>' +
-                                '<td>' + item.appearance + '</td>' +
-                                '<td>' + item.color_rangeColor + '</td>' +
-                                '<td>' + item.odour_taste + '</td>' +
-                                '<td>' + item.material + '</td>' +
-                                '<td>' + item.spesific_gravity_d20 + '</td>' +
-                                '<td>' + item.spesific_gravity_d25 + '</td>' +
-                                '<td>' + item.refractive_index_d20 + '</td>' +
-                                '<td>' + item.refractive_index_d25 + '</td>' +
-                                '<td>' + item.berat_gram + '</td>' +
-                                '<td><button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal" data-bs-target="#staticBackdrop-' +
-                                item.FAI_code + '">Update</button></td>' +
-                                '</tr>';
+                //         $.each(response.brg, function(index, item) {
+                //             var row = '<tr>' +
+                //                 '<td>' + (index + 1) + '</td>' +
+                //                 '<td>' + item.FAI_code + '</td>' +
+                //                 '<td>' + item.FINA_code + '</td>' +
+                //                 '<td>' + item.name + '</td>' +
+                //                 '<td>' + item.common_name + '</td>' +
+                //                 '<td>' + item.kategori_barang + '</td>' +
+                //                 '<td>' + item.aspect + '</td>' +
+                //                 '<td>' + item.reOrder_qty + '</td>' +
+                //                 '<td>' + item.unit + '</td>' +
+                //                 '<td>' + item.supplier + '</td>' +
+                //                 '<td>' + item.packaging_type + '</td>' +
+                //                 '<td>' + item.documentation + '</td>' +
+                //                 '<td>' + item.halal_certification + '</td>' +
+                //                 '<td>' + item.brandProduct_code + '</td>' +
+                //                 '<td>' + item.chemical_IUPACname + '</td>' +
+                //                 '<td>' + item.CAS_number + '</td>' +
+                //                 '<td>' + item.ex_origin + '</td>' +
+                //                 '<td>' + item.initial_ex + '</td>' +
+                //                 '<td>' + item.country_of_origin + '</td>' +
+                //                 '<td>' + item.remark + '</td>' +
+                //                 '<td>' + item.usage_level + '</td>' +
+                //                 '<td>' + item.harga_ex_work_USD + '</td>' +
+                //                 '<td>' + item.harga_CIF_USD + '</td>' +
+                //                 '<td>' + item.harga_MOQ_USD + '</td>' +
+                //                 '<td>' + item.appearance + '</td>' +
+                //                 '<td>' + item.color_rangeColor + '</td>' +
+                //                 '<td>' + item.odour_taste + '</td>' +
+                //                 '<td>' + item.material + '</td>' +
+                //                 '<td>' + item.spesific_gravity_d20 + '</td>' +
+                //                 '<td>' + item.spesific_gravity_d25 + '</td>' +
+                //                 '<td>' + item.refractive_index_d20 + '</td>' +
+                //                 '<td>' + item.refractive_index_d25 + '</td>' +
+                //                 '<td>' + item.berat_gram + '</td>' +
+                //                 '<td><button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal" data-bs-target="#staticBackdrop-' +
+                //                 item.FAI_code + '">Update</button></td>' +
+                //                 '</tr>';
 
-                            $('#search-results').append(row);
-                        });
+                //             $('#search-results').append(row);
+                //         });
 
-                        // Update modal targets after new search results are loaded
-                        updateModalTargets($('#search-results'));
-                    },
-                    error: function(xhr) {
-                        console.log(xhr.responseText);
-                    }
-                });
+                //         // Update modal targets after new search results are loaded
+                //         updateModalTargets($('#search-results'));
+                //     },
+                //     error: function(xhr) {
+                //         console.log(xhr.responseText);
+                //     }
+                // });
             });
         });
 

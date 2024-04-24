@@ -120,6 +120,11 @@
             </div>
 
             <div>
+                <input type="text" name="tanki" class="form-control">
+                <textarea name="note" id="" cols="25" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div>
                 <h4>PRODUCT FORMULA</h4>
                 <table class="table table-bordered">
                     <thead>
