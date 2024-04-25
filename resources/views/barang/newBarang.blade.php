@@ -1,6 +1,8 @@
 @extends('dashboard')
 
 @section('newBarang')
+
+
     {{-- <style>
         .hidden {
             display: none
@@ -199,22 +201,29 @@
                     <label class="form-label" for="chemical_IUPACname">chemical_IUPACname</label>
                     <input type="text" name="chemical_IUPACname" class="form-control" id="chemical_IUPACname">
                 </div>
-                <div class="col-md-6" id="cas">
+                {{-- <div class="col-md-6" id="cas">
                     <label class="form-label" for="CAS_number">CAS_number</label>
-                    <select name="CAS_number" id="CAS_number" class="form-control">
+                    <select name="" id="" class="form-control">
                         <option value="">Select CAS</option>
                         @foreach ($cas as $cs)
                             <option value="{{ $cs->CAS }}">{{ $cs->CAS }} || {{ $cs->nama_kimia }}</option>
                         @endforeach
                     </select>
-                    {{-- <input type="text" name="CAS_number" class="form-control" id="CAS_number"> --}}
+                    <input type="text" name="CAS_number" class="form-control" id="CAS_number">
+                </div> --}}
+                <div class="col-md-12" id="cas2">
+                    <label class="form-label" for="CAS_number">CAS number</label>
+                    <input type="text" name="CAS_number" class="form-control" id="CAS_number">
+                </div>
+                <div class="uh" id="uh">
+
                 </div>
                 <div class="col-md-6">
                     <label for="manufacturer" class="form-label">Manufacturer</label>
                     <select name="ex_origin" id="manufacturer" class="form-control select2" required>
                         <option value="" disabled selected>Select Manufacturer</option>
                         @foreach ($ex as $c)
-                            <option value="{{ $c->manufacturer_name }}">{{ $c->manufacturer_name }}</option>
+                            <option value="{{ $c->id_manufacturer }}">{{ $c->manufacturer_name }}</option>
                         @endforeach
                         <option value="new">Add New Manufacturer</option>
                     </select>
@@ -418,9 +427,9 @@
             });
         });
 
-        $(document).ready(function() {
-            $('#CAS_number').select2();
-        });
+        // $(document).ready(function() {
+        //     $('#CAS_number').select2();
+        // });
 
 
         document.getElementById('category').addEventListener('change', function() {
@@ -486,5 +495,27 @@
 
             }
         })
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#CAS_number').on('input', function(){
+                var CAS_number = $(this).val();
+                $.ajax({
+                    url: '/get-cas', // Ubah dengan URL endpoint Anda
+                    method: 'GET', // Gunakan metode GET
+                    data: { CAS_number: CAS_number },
+                    success: function(response){
+                        $('#uh').empty();
+                        if (response.length > 0) {
+                            $.each(response, function(index, item){
+                                $('#uh').append('<p class="bg-success text-white p-2 rounded-pill ">Positive List ' + item.nama_kimia + '</p>');
+                            });
+                        } else {
+                            $('#uh').append('<p class="bg-warning p-2 rounded-pill">Data tidak ditemukan atau bukan termasuk dalam positive list.</p>');
+                        }
+                    }
+                });
+            });
+        });
     </script>
 @endsection

@@ -20,7 +20,7 @@ class BarangKeluarController extends Controller
 {
     public function dataKeluar()
     {
-        $brgkeluar = BarangKeluar::paginate(10);
+        $brgkeluar = BarangKeluar::orderBy('tanggal_keluar', 'desc')->paginate(15);
         $cust = Customer::all();
         $brg = Barang::all();
         $rak = RakGudang::all();

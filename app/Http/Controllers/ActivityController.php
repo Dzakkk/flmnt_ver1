@@ -60,6 +60,8 @@ class ActivityController extends Controller
             ->orderBy('total_quantity')
             ->take(5)
             ->get();
+        
+        
 
         return view('home', compact('lastActivity', 'cust', 'supp', 'usage', 'in', 'out','out2','production', 'stocksTerkecil', 'stocksTerbesar'));
     }

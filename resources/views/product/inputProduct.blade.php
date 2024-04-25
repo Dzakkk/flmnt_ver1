@@ -86,6 +86,7 @@
                         <option value="" disabled>Pilih Kategori</option>
                         <option value="SAVORY">SAVORY</option>
                         <option value="SWEET">SWEET</option>
+                        <option value="NDS">NDS</option>
                     </select>
                 </div>
             </div>

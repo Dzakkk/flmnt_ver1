@@ -35,9 +35,7 @@
             @foreach ($gudang as $item)
                 <tr>
                     <th scope="row">{{ $row }}</th>
-                    <td data-bs-toggle="collapse" data-bs-target="#collapseExample-{{ $item->id_gudang }}"
-                        aria-expanded="false" aria-controls="collapseExample-{{ $item->id_gudang }}"
-                        style="cursor: pointer">{{ $item->nama_gudang }}
+                    <td>{{ $item->nama_gudang }}
                         <div class="collapse multi-collapse" id="collapseExample-{{ $item->id_gudang }}">
                             <div class="">
                                 <div>
@@ -47,7 +45,8 @@
                                                 <li class="list-group-item w-25">RAK</li>
                                                 <li class="list-group-item w-25">Keterangan</li>
                                                 <li class="list-group-item w-25">Lokasi</li>
-                                                <li class="list-group-item w-25">Kapasitas/Kg</li>
+                                                <li class="list-group-item w-25">Capacity</li>
+                                                <li class="list-group-item w-25">Tersedia/Kg</li>
                                             </ul>
                                         </li>
                                         @foreach ($item->rak as $rg)
@@ -56,9 +55,15 @@
                                                     <li class="list-group-item w-25">{{ $rg->id_rak }}</li>
                                                     <li class="list-group-item w-25">{{ $rg->keterangan }}</li>
                                                     <li class="list-group-item w-25">{{ $rg->posisi_lokasi }}</li>
+                                                    <li class="list-group-item w-25">{{ $rg->total_capacity }}</li>
                                                     <li class="list-group-item w-25">{{ $rg->kapasitas }} Kg</li>
+                                                    <li>
+                                                        
+                                                            <a href="/rak/{{ $rg->id_rak }}/update" class="btn btn-sm btn-warning"  onclick="event.stopPropagation()"><i class="ri-edit-line"></i></a>
+                                                    </li>
                                                 </ul>
                                             </li>
+                                             
                                         @endforeach
                                     </ul>
                                 </div>
@@ -68,18 +73,22 @@
                     <td>
                         {{ $item->rak->count() }}
                     </td>
+                    <td data-bs-toggle="collapse" data-bs-target="#collapseExample-{{ $item->id_gudang }}"
+                        aria-expanded="false" aria-controls="collapseExample-{{ $item->id_gudang }}"
+                        style="cursor: pointer" class="btn btn-primary m-1"><i class="bi bi-eye"></i></td>
                 </tr>
                 <?php $row++; ?>
+                
             @endforeach
         </tbody>
     </table>
 
-    <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Gudang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

@@ -455,7 +455,7 @@
             @yield('update_data_production')
             @yield('update_incoming')
             @yield('update_inhouse')
-
+            @yield('editgd')
             @yield('permintaan_data')
             @yield('cas')
 

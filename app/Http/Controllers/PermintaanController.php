@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\CustList;
 use App\Models\Permintaan;
+use App\Models\PositiveList;
 use App\Models\Products;
 use App\Models\QualityControl;
 use App\Models\RakGudang;
@@ -124,6 +125,14 @@ class PermintaanController extends Controller
         $FAI_code = $request->FAI_code;
         $cust = CustList::where('FAI_code', $FAI_code)->get();
         return response()->json($cust);
+
+    }
+
+    public function getCas(Request $request)
+    {
+        $CAS_number = $request->CAS_number;
+        $cas = PositiveList::where('CAS', $CAS_number)->get();
+        return response()->json($cas);
 
     }
 }

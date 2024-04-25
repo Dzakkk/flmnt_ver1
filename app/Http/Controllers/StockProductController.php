@@ -334,10 +334,10 @@ class StockProductController extends Controller
                 'unit' => $unit,
                 'no_LOT' => $no_LOT,
                 'qty_masuk_LOT' => $quantity,
-                'NoPO_NoWO' => $PO_customer + '/' + $no_work_order,
+                'NoPO_NoWO' => $PO_customer . '/' . $no_work_order,
                 'id_rak' => $id_rak,
                 'jenis_kemasan' => $jenis_kemasan,
-                'jumlah_kemasan' => $jumlah_kemasan,
+                'total_qty_kemasan' => $jumlah_kemasan,
 
             ]);
 
@@ -430,7 +430,7 @@ class StockProductController extends Controller
 
 
                 $lotStocks = Stock::where('FAI_code', $FAI_code_barang)
-                    ->orderBy('tanggal_masuk', 'asc')
+                    ->orderBy('tanggal_produksi', 'asc')
                     ->get();
 
                 // Inisialisasi sisa persentase yang belum diproses
@@ -449,10 +449,12 @@ class StockProductController extends Controller
 
                     $barangKeluar = new BarangKeluar([
                         'FAI_code' => $FAI_code_barang,
-                        'jumlah_keluar' => $quantityToReduce,
+                        'total_qty_keluar_LOT' => $quantityToReduce,
                         'tanggal_keluar' => $request->tanggal_produksi,
-                        'id_lot' => $lotStock->id_lot,
+                        'no_LOT' => $lotStock->id_lot,
                         'jenis_pengeluaran' => 'Pemakaian Produksi',
+                        'NoSuratJalanKeluar_NoProduksi' => $request->no_production,
+                        'note' => 'Job Costing (' . $product_name . '=' . $FAI_code . $quantity . $unit . ')',
                     ]);
                     $barangKeluar->save();
 
@@ -461,7 +463,6 @@ class StockProductController extends Controller
 
                     // Hentikan iterasi jika sisa persentase yang belum diproses sudah 0
                     if ($remainingPercentage <= 0) {
-                        break;
                     }
                 }
             }
@@ -471,7 +472,7 @@ class StockProductController extends Controller
             $produksi = new Produksi ([
                 'proses' => $request->proses,
                 'category' => $ctgry,
-                'barang' => $request->product_name + '(' + $request->FAI_code + ')',
+                'barang' => $request->product_name . '(' . $request->FAI_code . ')',
                 'tanggal_produksi' => $request->tanggal_produksi,
                 'tanggal_expire' => $tanggal_expire,
                 'tanki',
@@ -491,7 +492,7 @@ class StockProductController extends Controller
                 'total_qty' => $quantity,
                 'qty' => $qty,
                 'kemasan' => $jenis_kemasan,
-                'label_kemasan' => $qty + 'KG NET',
+                'label_kemasan' => $qty . 'KG NET',
                 'total_kemasan'=> $jumlah_kemasan,
                 'note' => 'Ini Produksi',
             ]);

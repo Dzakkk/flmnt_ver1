@@ -58,6 +58,9 @@ Route::middleware(['auth'])->group(function (){
     
     Route::get('gudang', [GudangController::class, 'dataGudang']);
     Route::post('rak/store', [GudangController::class, 'storeRak']);
+    Route::get('rak/{id}/update', [GudangController::class, 'update']);
+    Route::put('rak/update/{id}', [GudangController::class, 'updateRak']);
+
     
     Route::get('barang', [BarangController::class, 'dataBarang']);
     Route::get('newBarang', [BarangController::class, 'newBarangForm']);
@@ -66,6 +69,8 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/barang/add/file/{id}', [BarangController::class, 'addFile']);
     Route::put('/barang/update/file/{id}', [BarangController::class, 'update_file']);
     Route::delete('/barang/delete/file/{id}', [BarangController::class, 'delete_file']);
+    Route::put('update/halal/barang/{id}', [BarangController::class, 'halal']);
+
 
     
     Route::get('supplier', [SupplierController::class, 'dataSupplier']);
@@ -75,6 +80,7 @@ Route::middleware(['auth'])->group(function (){
     
     Route::get('barangMasuk', [BarangMasukController::class, 'dataMasuk']);
     Route::post('barang/masuk', [BarangMasukController::class, 'brgMasuk']);
+    Route::put('barang/masuk/{id}/edit', [BarangMasukController::class, 'updateBarangMasuk']);
     Route::post('kemasan/masuk', [BarangMasukController::class, 'storePackage']);
     
     Route::get('barangKeluar', [BarangKeluarController::class, 'dataKeluar']);
@@ -184,6 +190,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('get-lot', [PermintaanController::class, 'getlot']);
     Route::get('get-status', [PermintaanController::class, 'getStatus']);
     Route::get('get-cust', [PermintaanController::class, 'getCust']);
+    Route::get('get-cas', [PermintaanController::class, 'getCas']);
+
 
 
 });

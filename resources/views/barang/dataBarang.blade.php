@@ -73,6 +73,11 @@
                                 data-item-id="{{ $item->FAI_code }}">
                                 <i class="bi bi-eye"></i>
                             </button>
+                            <button type="button" class="btn btn-success btn-sm m-1 btn-update" data-bs-toggle="modal"
+                                title="Halal" data-bs-target="#halal-{{ str_replace('.', '_', $item->FAI_code) }}"
+                                data-item-id="{{ $item->FAI_code }}">
+                                حلال
+                            </button>
                             <button type="button" class="btn btn-warning btn-sm m-1 btn-update" data-bs-toggle="modal"
                                 title="Edit" data-bs-target="#staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"
                                 data-item-id="{{ $item->FAI_code }}">
@@ -89,7 +94,43 @@
                     $row++;
                     ?>
 
+
                     {{-- Document --}}
+
+                    <div class="modal fade" id="halal-{{ str_replace('.', '_', $item->FAI_code) }}" tabindex="-1"
+                        aria-labelledby="confirmhalal-{{ str_replace('.', '_', $item->FAI_code) }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="halalReplacementModalLabel">Halal</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/update/halal/barang/{{ str_replace('.', '_', $item->FAI_code) }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="col m-1">
+                                            <label class="form-label"
+                                                for="halal_certification">Halal Certification</label>
+                                            <input type="text" name="halal_certification" class="form-control"
+                                                id="halal_certification" value="{{ $item->halal_certification }}">
+                                        </div>
+                                        <div class="col m-1">
+                                            <label for="form-label">Active Until</label>
+                                            <input type="date" name="halal_date" id="" class="form-control" value="{{ $item->halal_date }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-warning">Update</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer"> 
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div class="modal fade" id="dokumen-{{ str_replace('.', '_', $item->FAI_code) }}" tabindex="-1"
@@ -363,12 +404,12 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col">
+                                            {{-- <div class="col">
                                                 <label class="form-label"
                                                     for="alokasi_penyimpanan">alokasi_penyimpanan</label>
                                                 <input type="text" name="alokasi_penyimpanan" class="form-control"
                                                     id="alokasi_penyimpanan" value="{{ $item->alokasi_penyimpanan }}">
-                                            </div>
+                                            </div> --}}
                                             <div class="col">
                                                 <label for="reOrder_qty" class="form-label">reOrder_qty</label>
                                                 <input type="text" name="reOrder_qty" id="reOrder_qty"
@@ -389,7 +430,7 @@
                                             <div class="col">
                                                 <label for="supplier" class="form-label">supplier</label>
                                                 <select name="supplier" id="supplier" class="form-control select2">
-                                                    <option value="{{ $item->supplier_name }}">{{ $item->supplier_name }}
+                                                    <option value="{{ $item->supplier }}">{{ $item->supplier }}
                                                     </option>
                                                     @foreach ($supp as $c)
                                                         <option value="{{ $c->supplier_name }}">{{ $c->supplier_name }}
@@ -452,12 +493,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col">
+                                            {{-- <div class="col">
                                                 <label class="form-label"
                                                     for="halal_certification">halal_certification</label>
                                                 <input type="text" name="halal_certification" class="form-control"
                                                     id="halal_certification" value="{{ $item->halal_certification }}">
-                                            </div>
+                                            </div> --}}
                                             <div class="col">
                                                 <label for="name" class="form-label">name</label>
                                                 <input type="text" name="name" id="name" class="form-control"
@@ -480,10 +521,12 @@
                                                 <input type="text" name="chemical_IUPACname" class="form-control"
                                                     id="chemical_IUPACname" value="{{ $item->chemical_IUPACname }}">
                                             </div>
-                                            <div class="col">
-                                                <label class="form-label" for="CAS_number">CAS_number</label>
-                                                <input type="text" name="CAS_number" class="form-control"
-                                                    id="CAS_number" value="{{ $item->CAS_number }}">
+                                            <div class="col-md-12" id="cas2">
+                                                <label class="form-label" for="CAS_number">CAS number</label>
+                                                <input type="text" name="CAS_number" class="form-control CAS_number_uh" id="CAS_number_uhe" value="{{ $item->CAS_number }}">
+                                            </div>
+                                            <div class="uhek col" id="uh">
+                            
                                             </div>
                                             <div class="col">
                                                 <label for="ex_origin" class="form-label">ex_origin</label>
@@ -555,65 +598,65 @@
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d20">sg_d20_min</label>
                                                 <input type="text" name="sg_d20_min" class="form-control"
-                                                    id="spesific_gravity_d20">
+                                                    id="spesific_gravity_d20" value="{{ $item->sg_d20_min }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d25">sg_d20_max</label>
                                                 <input type="text" name="sg_d20_max" class="form-control"
-                                                    id="spesific_gravity_d25">
+                                                    id="spesific_gravity_d25" value="{{ $item->sg_d20_max }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label for="refractive_index_d20" class="form-label">sg_d20_target</label>
                                                 <input type="text" name="sg_d20_target" id="refractive_index_d20"
-                                                    class="form-control">
+                                                    class="form-control" value="{{ $item->sg_d20_target }}">
                                             </div>
 
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d20">sg_d25_min</label>
                                                 <input type="text" name="sg_d25_min" class="form-control"
-                                                    id="spesific_gravity_d25">
+                                                    id="spesific_gravity_d25" value="{{ $item->sg_d25_min }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d25">sg_d25_max</label>
                                                 <input type="text" name="sg_d25_max" class="form-control"
-                                                    id="spesific_gravity_d25">
+                                                    id="spesific_gravity_d25" value="{{ $item->sg_d25_max }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label for="refractive_index_d25" class="form-label">sg_d25_target</label>
                                                 <input type="text" name="sg_d25_target" id="refractive_index_d25"
-                                                    class="form-control">
+                                                    class="form-control" value="{{ $item->sg_d25_target }}">
                                             </div>
 
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d20">ri_d20_min</label>
                                                 <input type="text" name="ri_d20_min" class="form-control"
-                                                    id="spesific_gravity_d20">
+                                                    id="spesific_gravity_d20" value="{{ $item->ri_d20_min }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d25">ri_d20_max</label>
                                                 <input type="text" name="ri_d20_max" class="form-control"
-                                                    id="spesific_gravity_d25">
+                                                    id="spesific_gravity_d25" value="{{ $item->ri_d20_max }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label for="refractive_index_d20" class="form-label">ri_d20_target</label>
                                                 <input type="text" name="ri_d20_target" id="refractive_index_d20"
-                                                    class="form-control">
+                                                    class="form-control" value="{{ $item->ri_d20_target }}">
                                             </div>
 
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d20">ri_d25_min</label>
                                                 <input type="text" name="ri_d25_min" class="form-control"
-                                                    id="spesific_gravity_d25">
+                                                    id="spesific_gravity_d25" value="{{ $item->ri_d25_min }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label class="form-label" for="spesific_gravity_d25">ri_d25_max</label>
                                                 <input type="text" name="ri_d25_max" class="form-control"
-                                                    id="spesific_gravity_d25">
+                                                    id="spesific_gravity_d25" value="{{ $item->ri_d25_max }}">
                                             </div>
                                             <div class="col-md-4" id="rigra">
                                                 <label for="refractive_index_d25" class="form-label">ri_d25_target</label>
                                                 <input type="text" name="ri_d25_target" id="refractive_index_d25"
-                                                    class="form-control">
+                                                    class="form-control" value="{{ $item->ri_d25_target }}">
                                             </div>
 
                                             <div class="col">
@@ -653,72 +696,29 @@
 
 
     <a href="/barang/export" class="btn btn-success">export excel <i class="ri-file-excel-2-fill"></i></a>
-
     <script>
-        $(document).ready(function() {
-            $('#search').on('input', function() {
-                var searchTerm = $(this).val();
-
-                // $.ajax({
-                //     url: "{{ route('search.index') }}",
-                //     type: "GET",
-                //     data: {
-                //         search: searchTerm
-                //     },
-                //     success: function(response) {
-                //         $('#search-results').empty();
-
-                //         $.each(response.brg, function(index, item) {
-                //             var row = '<tr>' +
-                //                 '<td>' + (index + 1) + '</td>' +
-                //                 '<td>' + item.FAI_code + '</td>' +
-                //                 '<td>' + item.FINA_code + '</td>' +
-                //                 '<td>' + item.name + '</td>' +
-                //                 '<td>' + item.common_name + '</td>' +
-                //                 '<td>' + item.kategori_barang + '</td>' +
-                //                 '<td>' + item.aspect + '</td>' +
-                //                 '<td>' + item.reOrder_qty + '</td>' +
-                //                 '<td>' + item.unit + '</td>' +
-                //                 '<td>' + item.supplier + '</td>' +
-                //                 '<td>' + item.packaging_type + '</td>' +
-                //                 '<td>' + item.documentation + '</td>' +
-                //                 '<td>' + item.halal_certification + '</td>' +
-                //                 '<td>' + item.brandProduct_code + '</td>' +
-                //                 '<td>' + item.chemical_IUPACname + '</td>' +
-                //                 '<td>' + item.CAS_number + '</td>' +
-                //                 '<td>' + item.ex_origin + '</td>' +
-                //                 '<td>' + item.initial_ex + '</td>' +
-                //                 '<td>' + item.country_of_origin + '</td>' +
-                //                 '<td>' + item.remark + '</td>' +
-                //                 '<td>' + item.usage_level + '</td>' +
-                //                 '<td>' + item.harga_ex_work_USD + '</td>' +
-                //                 '<td>' + item.harga_CIF_USD + '</td>' +
-                //                 '<td>' + item.harga_MOQ_USD + '</td>' +
-                //                 '<td>' + item.appearance + '</td>' +
-                //                 '<td>' + item.color_rangeColor + '</td>' +
-                //                 '<td>' + item.odour_taste + '</td>' +
-                //                 '<td>' + item.material + '</td>' +
-                //                 '<td>' + item.spesific_gravity_d20 + '</td>' +
-                //                 '<td>' + item.spesific_gravity_d25 + '</td>' +
-                //                 '<td>' + item.refractive_index_d20 + '</td>' +
-                //                 '<td>' + item.refractive_index_d25 + '</td>' +
-                //                 '<td>' + item.berat_gram + '</td>' +
-                //                 '<td><button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal" data-bs-target="#staticBackdrop-' +
-                //                 item.FAI_code + '">Update</button></td>' +
-                //                 '</tr>';
-
-                //             $('#search-results').append(row);
-                //         });
-
-                //         // Update modal targets after new search results are loaded
-                //         updateModalTargets($('#search-results'));
-                //     },
-                //     error: function(xhr) {
-                //         console.log(xhr.responseText);
-                //     }
-                // });
+        $(document).ready(function(){
+            $('.CAS_number_uh').on('focusout', function(){
+                var CAS_number = $(this).val();
+                $.ajax({
+                    url: '/get-cas', // Ubah dengan URL endpoint Anda
+                    method: 'GET', // Gunakan metode GET
+                    data: { CAS_number: CAS_number },
+                    success: function(response){
+                        $('.uhek').empty();
+                        if (response.length > 0) {
+                            $.each(response, function(index, item){
+                                $('.uhek').append('<p class="bg-success text-white p-2 rounded-pill ">Positive List ' + item.nama_kimia + '</p>');
+                            });
+                        } else {
+                            $('.uhek').append('<p class="bg-warning p-2 rounded-pill">Data tidak ditemukan atau bukan termasuk dalam positive list.</p>');
+                        }
+                    }
+                });
             });
         });
+    </script>
+    <script>
 
         function updateModalTargets(searchResults) {
             $('.btn-update').each(function() {
@@ -741,101 +741,5 @@
     </script>
 
 
-    {{-- <script>
-       $(document).ready(function() {
-    $('#search').on('input', function() {
-        var searchTerm = $(this).val();
-
-        $.ajax({
-            url: "{{ route('search.index') }}",
-            type: "GET",
-            data: {
-                search: searchTerm
-            },
-            success: function(response) {
-                $('#search-results').empty();
-
-                $.each(response.brg, function(index, item) {
-                    var row = '<tr>' +
-                        '<td>' + (index + 1) + '</td>' +
-                        '<td>' + item.FAI_code + '</td>' +
-                        '<td>' + item.FINA_code + '</td>' +
-                        '<td>' + item.name + '</td>' +
-                        '<td>' + item.common_name + '</td>' +
-                        '<td>' + item.kategori_barang + '</td>' +
-                        '<td>' + item.aspect + '</td>' +
-                        '<td>' + item.reOrder_qty + '</td>' +
-                        '<td>' + item.unit + '</td>' +
-                        '<td>' + item.supplier + '</td>' +
-                        '<td>' + item.packaging_type + '</td>' +
-                        '<td>' + item.documentation + '</td>' +
-                        '<td>' + item.halal_certification + '</td>' +
-                        '<td>' + item.brandProduct_code + '</td>' +
-                        '<td>' + item.chemical_IUPACname + '</td>' +
-                        '<td>' + item.CAS_number + '</td>' +
-                        '<td>' + item.ex_origin + '</td>' +
-                        '<td>' + item.initial_ex + '</td>' +
-                        '<td>' + item.country_of_origin + '</td>' +
-                        '<td>' + item.remark + '</td>' +
-                        '<td>' + item.usage_level + '</td>' +
-                        '<td>' + item.harga_ex_work_USD + '</td>' +
-                        '<td>' + item.harga_CIF_USD + '</td>' +
-                        '<td>' + item.harga_MOQ_USD + '</td>' +
-                        '<td>' + item.appearance + '</td>' +
-                        '<td>' + item.color_rangeColor + '</td>' +
-                        '<td>' + item.odour_taste + '</td>' +
-                        '<td>' + item.material + '</td>' +
-                        '<td>' + item.spesific_gravity_d20 + '</td>' +
-                        '<td>' + item.spesific_gravity_d25 + '</td>' +
-                        '<td>' + item.refractive_index_d20 + '</td>' +
-                        '<td>' + item.refractive_index_d25 + '</td>' +
-                        '<td>' + item.berat_gram + '</td>' +
-                        '<td><button type="button" class="btn btn-primary m-3 btn-update" data-bs-toggle="modal" data-bs-target="#staticBackdrop-' + item.FAI_code + '">Update</button></td>' +
-                        '</tr>';
-
-                    $('#search-results').append(row);
-                });
-
-                // Update modal targets after new search results are loaded
-                updateModalTargets($('#search-results'));
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-    });
-});
-
-function updateModalTargets(searchResults) {
-    $('.btn-update').each(function() {
-        var itemId = $(this).data('item-id');
-        var modalTarget = searchResults.find('#staticBackdrop-' + itemId);
-        $(this).attr('data-bs-target', '#staticBackdrop-' + itemId);
-    });
-}
-
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modalElement = document.getElementById('staticBackdrop');
-            var modalCloseButton = modalElement.querySelector('[data-bs-dismiss="modal"]');
-            var customerForm = document.getElementById('customerForm');
-
-            modalElement.addEventListener('shown.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditampilkan
-            });
-
-            modalElement.addEventListener('hidden.bs.modal', function() {
-                // Tindakan yang dijalankan ketika modal ditutup
-                customerForm.reset();
-            });
-
-            if (modalCloseButton && customerForm) {
-                modalCloseButton.addEventListener('click', function() {
-                    // Mengosongkan nilai formulir
-                    customerForm.reset();
-                });
-            }
-        });
-    </script> --}}
+    
 @endsection

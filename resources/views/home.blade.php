@@ -81,7 +81,7 @@
                 <table class="table table-hover shadow">
                     <thead>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 Usage <b>{{ $thisMonth }}</b>
                             </td>
                         </tr>
@@ -89,6 +89,7 @@
                             <th scope="col">#</th>
                             <th scope="col">FAI Code</th>
                             <th scope="col">Jumlah</th>
+                            <th> </th>
                         </tr>
                     </thead>
                     @php
@@ -110,15 +111,81 @@
                                         <th scope="row">{{ $row }}</th>
                                         <td>{{ $i->FAI_code }} - {{ \App\Models\Barang::find($i->FAI_code)->name }}</td>
                                         <td>{{ $i->total_usage }}</td>
+                                        <td><button type="button" class="btn btn-success btn-sm m-1 btn-update"
+                                                data-bs-toggle="modal" title="Lihat"
+                                                data-bs-target="#viewBackdrop-{{ str_replace('.', '_', $i->FAI_code) }}"
+                                                data-item-id="{{ $i->FAI_code }}">
+                                                <i class="bi bi-eye"></i>
+                                            </button></td>
                                     @endif
                                 </tr>
+
+                                <div class="modal fade" id="viewBackdrop-{{ str_replace('.', '_', $i->FAI_code) }}"
+                                    tabindex="-1" aria-labelledby="confirmhalal-{{ str_replace('.', '_', $i->FAI_code) }}"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="halalReplacementModalLabel">Data</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                @php
+                                                    $bulanIni = now()->format('m'); // Mendapatkan nomor bulan saat ini (format 'm')
+                                                    $tahunIni = now()->format('Y'); // Mendapatkan tahun saat ini (format 'Y')
+
+                                                    $keluar = \App\Models\BarangKeluar::where('FAI_code', $i->FAI_code)
+                                                        ->whereMonth('tanggal_keluar', $bulanIni)
+                                                        ->whereYear('tanggal_keluar', $tahunIni)
+                                                        ->pluck('NoSuratJalanKeluar_NoProduksi')
+                                                        ->toArray();
+
+                                                    $masuk = \App\Models\BarangMasuk::whereIn(
+                                                        'NoSuratJalanMasuk_NoProduksi',
+                                                        $keluar,
+                                                    )
+                                                        ->whereMonth('tanggal_masuk', $bulanIni)
+                                                        ->whereYear('tanggal_masuk', $tahunIni)
+                                                        ->pluck('NoSuratJalanMasuk_NoProduksi')
+                                                        ->toArray();
+
+                                                    $sama = array_intersect($keluar, $masuk);
+                                                @endphp
+
+                                                <ul>
+                                                    @foreach ($sama as $item)
+                                                        <li>
+                                                            Kode
+                                                            {{ \App\Models\BarangMasuk::where('NoSuratJalanMasuk_NoProduksi', $item)->value('FAI_code') }}
+                                                            -
+                                                            {{ \App\Models\BarangKeluar::where('NoSuratJalanKeluar_NoProduksi', $item)->where('FAI_code', $i->FAI_code)->value('total_qty_keluar_LOT') }}
+                                                            {{ \App\Models\BarangKeluar::where('NoSuratJalanKeluar_NoProduksi', $item)->where('FAI_code', $i->FAI_code)->value('unit') }}
+
+                                                        </li>
+                                                    @endforeach
+
+                                                </ul>
+
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @php
+                                $row++;
+                            @endphp
                                 {{ $usage->links() }}
                             @endforeach
                         @endif
                     </tbody>
-                    @php
-                    $row++;
-                @endphp
+                    
                 </table>
             </div>
             <div class="d-flex stock">
@@ -193,7 +260,7 @@
                                         },
                                         dataLabels: {
                                             enabled: true,
-                                            
+
                                         },
                                         xaxis: {
                                             categories: [

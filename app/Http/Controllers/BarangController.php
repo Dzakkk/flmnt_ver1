@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\BarangExport;
 use App\Imports\BarangImport;
 use App\Models\Barang;
+use App\Models\BarangMasuk;
 use App\Models\Manufacturer;
 use App\Models\Packaging;
 use App\Models\PositiveList;
@@ -142,6 +143,14 @@ class BarangController extends Controller
             $ex->save();
         }
 
+        if ($request->CAS_number) {
+            $cas = PositiveList::where('CAS', $request->CAS_number)->value('nama_kimia')->get();
+        }
+        $pl = $cas ? 'Positive List' : 'Bukan Termasuk Positive List';
+
+        // Jika nomor CAS ada dalam daftar positif, dekode nilai $cas
+        $cas_n = $cas ? json_decode($cas) : null;
+
         if ($request->kategori_barang === 'PACKAGING') {
             $kemasan = new Packaging([
                 'FAI_code' => $request->FAI_code,
@@ -172,6 +181,10 @@ class BarangController extends Controller
                 'brandProduct_code' => $request->brandProduct_code,
                 'chemical_IUPACname' => $request->chemical_IUPACname,
                 'CAS_number' => $request->CAS_number,
+
+                'kimia' => $cas_n,
+                'pl' => $pl,
+
                 'ex_origin' => $request->ex_origin,
                 'initial_ex' => $request->initial_ex,
                 'country_of_origin' => $request->country_of_origin,
@@ -348,6 +361,15 @@ class BarangController extends Controller
         $stockBarang = StockBarang::find($id);
         $stockLot = Stock::where('FAI_code', $id)->first();
 
+        if ($request->CAS_number) {
+            $cas = PositiveList::where('CAS', $request->CAS_number)->value('nama_kimia')->get();
+        }
+
+        $pl = $cas ? 'Positive List' : 'Bukan Termasuk Positive List';
+
+        // Jika nomor CAS ada dalam daftar positif, dekode nilai $cas
+        $cas_n = $cas ? json_decode($cas) : null;
+
         // Update the fields
         $barang->update([
             'FAI_code' => $request->FAI_code,
@@ -366,6 +388,10 @@ class BarangController extends Controller
             'brandProduct_code' => $request->brandProduct_code,
             'chemical_IUPACname' => $request->chemical_IUPACname,
             'CAS_number' => $request->CAS_number,
+
+            'kimia' => $cas_n,
+            'pl' => $pl,
+
             'ex_origin' => $request->ex_origin,
             'initial_ex' => $request->initial_ex,
             'country_of_origin' => $request->country_of_origin,
@@ -416,5 +442,21 @@ class BarangController extends Controller
     public function export()
     {
         return Excel::download(new BarangExport, 'BarangTerdaftar.xlsx');
+    }
+
+    public function halal(Request $request, $id)
+    {
+        $request->validate([
+            'halal_certification' => 'required',
+            'halal_date' => 'required',
+        ]);
+        $halal = Barang::find($id);
+        // dd($id, $halal, $request);
+        $halal->update([
+            'halal_certification' => $request->halal_certification,
+            'halal_date' => $request->halal_date,
+        ]);
+
+        return redirect()->back()->with('success', 'Halal update successfully!');
     }
 }

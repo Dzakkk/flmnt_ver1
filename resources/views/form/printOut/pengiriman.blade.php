@@ -196,9 +196,9 @@
                         <tr>
                             <td>1</td>
                             <td>{{ $i->NoSuratJalankeluar_NoProduksi }}</td>
-                            <td>{{ \App\Models\Customer::find($i->id_customer)->customer_name }}</td>
+                            <td>{{ \App\Models\Customer::find($i->id_customer)->customer_name ?? null}}</td>
                             <td>{{ $i->FAI_code }}</td>
-                            <td>{{ \App\Models\Barang::find($i->FAI_code)->name }}</td>
+                            <td>{{ \App\Models\Barang::find($i->FAI_code)->name ?? null}}</td>
                             <td>{{ $i->no_LOT }}</td>
                             <td>{{ $i->total_qty_keluar_LOT }}</td>
                             <td>{{ $i->unit }}</td>

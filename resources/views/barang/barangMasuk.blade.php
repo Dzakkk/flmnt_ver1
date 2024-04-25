@@ -151,9 +151,10 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="container shadow pt-2 mt-2">
-                                        <form action="/barang/masuk" method="POST" enctype="multipart/form-data"
+                                        <form action="/barang/masuk/{{ $i->id_penerimaan }}/edit" method="POST" enctype="multipart/form-data"
                                             id="customerForm" class="resettable-form row g-3">
                                             @csrf
+                                            @method('PUT')
                                             <div class="col">
                                                 <label class="form-label" for="TMT">jenis_penerimaan</label>
                                                 <div class="input-group">
@@ -204,7 +205,7 @@
                                                     <select class="form-select" id="golongan_select"
                                                         name="kategori_barang">
                                                         <option value="{{ $i->kategori_barang }}">
-                                                            {{ $i->kategori_barang }}"
+                                                            {{ $i->kategori_barang }}
                                                         </option>
                                                         <option value="BASE(RM)">BASE(RM)</option>
                                                         <option value="FLAVOR(RM)">FLAVOR(RM)</option>
@@ -268,11 +269,11 @@
                                                 <input type="date" name="tanggal_expire" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->tanggal_expire }}">
                                             </div>
-                                            {{-- <div class="col">
+                                            <div class="col">
                                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
                                                 <input type="string" name="qty_masuk_LOT" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->qty_masuk_LOT }}">
-                                            </div> --}}
+                                            </div>
                                             <div class="col">
                                                 <label class="form-label" for="unit">unit</label>
                                                 <div class="input-group">

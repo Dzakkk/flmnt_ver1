@@ -80,11 +80,11 @@ class BarangMasukController extends Controller
             'total_QTY_kemasan' => $request->total_QTY_kemasan,
             'status' => $request->status,
             'id_rak' => $request->id_rak,
-            
+
         ]);
 
         if ($request->hasFile('file')) {
-            foreach( $request->file('file') as $file);
+            foreach ($request->file('file') as $file);
             $fileName = $file->getClientOriginalName();
             $file->move(public_path('file_masuk'), $fileName);
             $barangMasuk->file[] = '/file_masuk/' . $fileName;
@@ -159,37 +159,33 @@ class BarangMasukController extends Controller
         }
     }
 
-
-
-
-
-    public function updateBrgMasuk(Request $request, $id)
+    public function updateBarangMasuk(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'jenis_penerimaan' => 'required',
-            'tanggal_masuk' => 'required',
-            'id_supplier' => 'required',
-            'NoSuratJalanMasuk_NoProduksi' => 'required',
-            'NoPO_NoWO' => 'required',
-            'kategori_barang' => 'required',
-            'FAI_code' => 'required',
-            'no_LOT' => 'required',
-            'tanggal_produksi' => 'required',
-            'tanggal_expire' => 'required',
-            'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
-            'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
-            'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
-            // 'qty_masuk_LOT' => 'required',
-            'unit' => 'required',
-            'jenis_kemasan' => 'required',
-            'satuan_QTY_kemasan' => 'required',
-            'total_QTY_kemasan' => 'required',
+            // 'jenis_penerimaan' => 'required',
+            // 'tanggal_masuk' => 'required',
+            // 'id_supplier' => 'required',
+            // 'NoSuratJalanMasuk_NoProduksi' => 'required',
+            // 'NoPO_NoWO' => 'required',
+            // 'kategori_barang' => 'required',
+            // 'FAI_code' => 'required',
+            // 'no_LOT' => 'required',
+            // 'tanggal_produksi' => 'required',
+            // 'tanggal_expire' => 'required',
+            // 'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
+            // 'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
+            // 'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
+            'qty_masuk_LOT' => 'required',
+            // 'unit' => 'required',
+            // 'jenis_kemasan' => 'required',
+            // 'satuan_QTY_kemasan' => 'required',
+            // 'total_QTY_kemasan' => 'required',
             'status' => 'required',
             'id_rak' => 'required',
         ]);
-
+        // dd($validator, $id);
         if ($validator->fails()) {
-            return redirect()->route('your-form-route.edit', $id)  // Ganti 'your-form-route.edit' dengan nama route untuk form edit
+            return redirect()->route('barangMasuk', $id)  // Ganti 'your-form-route.edit' dengan nama route untuk form edit
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -197,6 +193,10 @@ class BarangMasukController extends Controller
         $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
 
         $barangMasuk = BarangMasuk::find($id);
+
+        $qty_asal = BarangMasuk::where('id_penerimaan', $id)->value('qty_masuk_LOT');
+
+        $qty_baru = $request->qty_masuk_LOT;
 
         if (!$barangMasuk) {
             return redirect('barangMasuk')->with('error', 'Data barang masuk tidak ditemukan.');
@@ -214,7 +214,7 @@ class BarangMasukController extends Controller
         $barangMasuk->tanggal_produksi = $request->tanggal_produksi;
         $barangMasuk->tanggal_expire = $request->tanggal_expire;
         $barangMasuk->dokumen = $documentation;
-        // $barangMasuk->qty_masuk_LOT = $request->qty_masuk_LOT;
+        $barangMasuk->qty_masuk_LOT = $qty_baru;
         $barangMasuk->unit = $request->unit;
         $barangMasuk->jenis_kemasan = $request->jenis_kemasan;
         $barangMasuk->satuan_QTY_kemasan = $request->satuan_QTY_kemasan;
@@ -222,7 +222,22 @@ class BarangMasukController extends Controller
         $barangMasuk->status = $request->status;
         $barangMasuk->id_rak = $request->id_rak;
 
-        // Simpan perubahan
+
+        $rakGudang = RakGudang::find($request->id_rak);
+        $rak_asal = BarangMasuk::where('id_penerimaan', $id)->value('id_rak');
+
+        $rg_asal = RakGudang::find($rak_asal);
+
+        if ($rak_asal == $request->id_rak) {
+            $rakGudang->kapasitas += $qty_asal;
+            $rakGudang->kapasitas -= $request->qty_masuk_LOT;
+            $rakGudang->save();
+        } else {
+            $rg_asal->kapasitas += $qty_asal;
+            $rakGudang->kapasitas -= $request->qty_masuk_LOT;
+            $rakGudang->save();
+        }
+
         try {
             $barangMasuk->save();
         } catch (\Exception $e) {
@@ -239,7 +254,7 @@ class BarangMasukController extends Controller
             $stock->tanggal_produksi = $request->tanggal_produksi;
             $stock->tanggal_expire = $request->tanggal_expire;
             $stock->unit = $request->unit;
-            // $stock->quantity = $request->qty_masuk_LOT;
+            $stock->quantity = $request->qty_masuk_LOT;
             $stock->id_rak = $request->id_rak;
 
             // Simpan perubahan Stock
@@ -285,8 +300,8 @@ class BarangMasukController extends Controller
                 $newStockBarang->save();
             } catch (\Exception $e) {
                 return redirect()->route('your-form-route.edit', $id)
-                ->session()->flash('error', 'Data Gagal')
-                ->with('error', 'Gagal menyimpan StockBarang baru: ' . $e->getMessage());
+                    ->session()->flash('error', 'Data Gagal')
+                    ->with('error', 'Gagal menyimpan StockBarang baru: ' . $e->getMessage());
             }
         }
 
@@ -298,7 +313,7 @@ class BarangMasukController extends Controller
 
 
 
-    public function storePackage (Request $request)
+    public function storePackage(Request $request)
     {
         $validator = Validator::make($request->all(), [
             // 'nama_kemasan' => 'required',
@@ -323,13 +338,13 @@ class BarangMasukController extends Controller
             // 'satuan_QTY_kemasan' => 'required',
             // 'total_QTY_kemasan' => 'required',
             'status' => 'required',
-            'id_rak' => 'required',        
+            'id_rak' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect('barang')
-            ->withErrors($validator)
-            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
@@ -401,6 +416,4 @@ class BarangMasukController extends Controller
         Excel::import(new MasukImport, request()->file('file'));
         return redirect()->back()->with('success', 'Users imported successfully!');
     }
-
-    
 }
