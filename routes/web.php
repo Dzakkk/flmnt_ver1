@@ -18,6 +18,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\FormulaProduct;
 use App\Models\Barang;
+use App\Models\BarangMasuk;
 use App\Models\ProductionControl;
 use App\Models\stockProduct;
 use Illuminate\Support\Facades\Auth;
@@ -151,6 +152,7 @@ Route::middleware(['auth'])->group(function (){
     
     Route::get('rekap', [StockController::class, 'rekap']);
     Route::get('export/usage/{month}', [StockController::class, 'exportDataPerMonth']);
+    Route::get('masuk/export', [BarangMasukController::class, 'export_masuk']);
 
     Route::get('profile', [UserController::class, 'profile']);
 

@@ -44,7 +44,7 @@ class BarangController extends Controller
             $brg = Barang::with('stock')->where('FAI_code', 'like', '%' . $searchTerm . '%')
                 ->orWhere('name', 'like', '%' . $searchTerm . '%')
                 ->orWhere('aspect', 'like', '%' . $searchTerm . '%')
-                ->paginate(15);
+                ->paginate(25);
             $supp = Supplier::all();
             $ex = Manufacturer::all();
 

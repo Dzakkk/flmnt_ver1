@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BarangMasukExport;
 use App\Imports\MasukImport;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
+use App\Models\Gudang;
 use App\Models\Packaging;
 use App\Models\RakGudang;
 use App\Models\Stock;
@@ -24,7 +26,12 @@ class BarangMasukController extends Controller
         $brg = Barang::all();
         $rak = RakGudang::all();
         $pcr = Packaging::all();
-        return view('barang.barangMasuk', ['brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg, 'pcr' => $pcr]);
+        $gudang = Gudang::all();
+        return view('barang.barangMasuk', ['gudang' => $gudang, 'brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg, 'pcr' => $pcr]);
+    }
+
+    public function export_masuk() {
+        return Excel::download(new BarangMasukExport, 'BarangMasukTerdaftar.xlsx');   
     }
 
     public function brgMasuk(Request $request)
@@ -61,6 +68,8 @@ class BarangMasukController extends Controller
 
         $documentation = implode(',', $request->only(['coa_documentation', 'tds_documentation', 'msds_documentation']));
 
+        $qty_kemasan = $request->qty_masuk_LOT / $request->satuan_QTY_kemasan;
+
         $barangMasuk = new BarangMasuk([
             'jenis_penerimaan' => $request->jenis_penerimaan,
             'tanggal_masuk' => $request->tanggal_masuk,
@@ -77,7 +86,7 @@ class BarangMasukController extends Controller
             'unit' => $request->unit,
             'jenis_kemasan' => $request->jenis_kemasan,
             'satuan_QTY_kemasan' => $request->satuan_QTY_kemasan,
-            'total_QTY_kemasan' => $request->total_QTY_kemasan,
+            'total_QTY_kemasan' => $qty_kemasan,
             'status' => $request->status,
             'id_rak' => $request->id_rak,
 
@@ -319,28 +328,28 @@ class BarangMasukController extends Controller
             // 'nama_kemasan' => 'required',
             'quantity' => 'required',
             // 'supplier' => 'required',
-            'jenis_penerimaan' => 'required',
-            'tanggal_masuk' => 'required',
-            'id_supplier' => 'required',
-            'NoSuratJalanMasuk_NoProduksi' => 'required',
-            'NoPO_NoWO' => 'required',
-            'kategori_barang' => 'required',
-            'FAI_code' => 'required',
-            'no_LOT' => 'required',
-            'tanggal_produksi' => 'required',
-            'tanggal_expire' => 'required',
-            'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
-            'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
-            'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
+            // 'jenis_penerimaan' => 'required',
+            // 'tanggal_masuk' => 'required',
+            // 'id_supplier' => 'required',
+            // 'NoSuratJalanMasuk_NoProduksi' => 'required',
+            // 'NoPO_NoWO' => 'required',
+            // 'kategori_barang' => 'required',
+            // 'FAI_code' => 'required',
+            // 'no_LOT' => 'required',
+            // 'tanggal_produksi' => 'required',
+            // 'tanggal_expire' => 'required',
+            // 'coa_documentation' => 'required_without_all:tds_documentation,msds_documentation',
+            // 'tds_documentation' => 'required_without_all:coa_documentation,msds_documentation',
+            // 'msds_documentation' => 'required_without_all:coa_documentation,tds_documentation',
             // 'qty_masuk_LOT' => 'required',
             'unit' => 'required',
             // 'jenis_kemasan' => 'required',
             // 'satuan_QTY_kemasan' => 'required',
             // 'total_QTY_kemasan' => 'required',
-            'status' => 'required',
-            'id_rak' => 'required',
+            // 'status' => 'required',
+            // 'id_rak' => 'required',
         ]);
-
+                                   
         if ($validator->fails()) {
             return redirect('barang')
                 ->withErrors($validator)

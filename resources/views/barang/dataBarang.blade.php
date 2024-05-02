@@ -76,7 +76,7 @@
                             <button type="button" class="btn btn-success btn-sm m-1 btn-update" data-bs-toggle="modal"
                                 title="Halal" data-bs-target="#halal-{{ str_replace('.', '_', $item->FAI_code) }}"
                                 data-item-id="{{ $item->FAI_code }}">
-                                حلال
+                                حلال                            
                             </button>
                             <button type="button" class="btn btn-warning btn-sm m-1 btn-update" data-bs-toggle="modal"
                                 title="Edit" data-bs-target="#staticBackdrop-{{ str_replace('.', '_', $item->FAI_code) }}"

@@ -33,7 +33,7 @@ class ActivityController extends Controller
         $usage = UsageData::whereBetween('tanggal_penggunaan', [$startDate, $endDate])
             ->groupBy('FAI_code')
             ->selectRaw('FAI_code, SUM(pemakaian) as total_usage')
-            ->paginate('6');
+            ->take('6');
 
         $out = BarangKeluar::orderBy('created_at', 'desc')->take(3)->get();
 

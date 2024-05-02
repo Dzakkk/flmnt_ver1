@@ -349,11 +349,16 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <label for="supplier" class="form-label">Rak</label>
-                                                <select name="id_rak" id="supplier" class="form-control select2"
-                                                    required>
-                                                    <option value="{{ $i->id_rak }}">{{ $i->id_rak }}</option>
-                                                    @foreach ($rak as $r)
-                                                        <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                                <select name="id_rak" id="supplier" class="form-control select2" required>
+                                                    <option value="" disabled selected>Select Rak</option>
+                                                    @foreach ($gudang as $g)
+                                                        <optgroup label="{{ $g->nama_gudang }}">
+                                                            @foreach ($rak as $r)
+                                                                @if ($r->id_gudang == $g->id_gudang)
+                                                                    <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </optgroup>
                                                     @endforeach
                                                 </select>
                                             </div>

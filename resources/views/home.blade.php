@@ -96,7 +96,7 @@
                         $row = 1;
                     @endphp
                     <tbody>
-                        @if ($usage->isEmpty())
+                        @if (!$usage)
                             <tr>
                                 <td colspan="3">Belum ada data penggunaan untuk bulan {{ $thisMonth }}.</td>
                             </tr>
@@ -179,13 +179,13 @@
                                     </div>
                                 </div>
                                 @php
-                                $row++;
-                            @endphp
+                                    $row++;
+                                @endphp
                                 {{ $usage->links() }}
                             @endforeach
                         @endif
                     </tbody>
-                    
+
                 </table>
             </div>
             <div class="d-flex stock">

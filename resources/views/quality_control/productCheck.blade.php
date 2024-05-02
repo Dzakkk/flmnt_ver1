@@ -58,7 +58,7 @@
                             <tr>
                                 <td>{{ $i->no_production }}</td>
                                 <td>{{ $i->stockl->no_LOT }}</td>
-                                <td>{{ $i->product->product_name }}</td>
+                                <td>{{ $i->product->product_name ?? null }}</td>
                                 <td>{{ $i->FAI_code }}</td>
                                 <td>{{ $i->qc_check->test_methode ?? 'Need Verification' }}</td>
                                 <td>{{ $i->qc_check->status ?? 'Need Verification' }}</td>
@@ -104,8 +104,8 @@
                         @foreach ($brg as $i)
                             <tr>
                                 <td>{{ $i->NoSuratJalanMasuk_NoProduksi }}</td>
-                                <td>{{ $i->stockL->no_LOT }}</td>
-                                <td>{{ $i->barang->name }}</td>
+                                <td>{{ $i->stockL->no_LOT ?? null }}</td>
+                                <td>{{ $i->barang->name ?? null }}</td>
                                 <td>{{ $i->FAI_code }}</td>
                                 <td>{{ $i->qc_check->test_methode ?? 'Need Verification' }}</td>
                                 <td>{{ $i->qc_check->status ?? 'Need Verification' }}</td>

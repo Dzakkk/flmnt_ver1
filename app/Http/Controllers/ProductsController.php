@@ -27,7 +27,8 @@ class ProductsController extends Controller
         $cust = Customer::all();
         $custList = CustList::all();
         $kemasan = Packaging::all();
-        return view('product.data', compact('prd', 'rak', 'cust', 'custList', 'kemasan'));
+        $gudang = Gudang::all();
+        return view('product.data', compact('gudang','prd', 'rak', 'cust', 'custList', 'kemasan'));
     }
 
     public function addFile(Request $request, $id)

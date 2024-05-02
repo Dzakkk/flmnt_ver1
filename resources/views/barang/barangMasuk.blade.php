@@ -322,18 +322,18 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <label for="exampleInputPassword1"
                                                     class="form-label">satuan_QTY_kemasan</label>
                                                 <input type="number" name="satuan_QTY_kemasan" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->satuan_QTY_kemasan }}">
                                             </div>
-                                            <div class="col-md-3">
+                                            {{-- <div class="col-md-3">
                                                 <label for="exampleInputEmail1"
                                                     class="form-label">total_QTY_kemasan</label>
                                                 <input type="number" name="total_QTY_kemasan" class="form-control"
                                                     id="exampleInputEmail1" value="{{ $i->total_QTY_kemasan }}">
-                                            </div>
+                                            </div> --}}
                                             <div class="col">
                                                 <label for="exampleInputPassword1" class="form-label">status</label>
                                                 <input type="text" name="status" class="form-control"
@@ -564,8 +564,14 @@
                                 <label for="supplier" class="form-label">Rak</label>
                                 <select name="id_rak" id="supplier" class="form-control select2" required>
                                     <option value="" disabled selected>Select Rak</option>
-                                    @foreach ($rak as $r)
-                                        <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                    @foreach ($gudang as $g)
+                                        <optgroup label="{{ $g->nama_gudang }}">
+                                            @foreach ($rak as $r)
+                                                @if ($r->id_gudang == $g->id_gudang)
+                                                    <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                                @endif
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>
@@ -771,11 +777,18 @@
                                 <label for="supplier" class="form-label">Rak</label>
                                 <select name="id_rak" id="supplier" class="form-control select2" required>
                                     <option value="" disabled selected>Select Rak</option>
-                                    @foreach ($rak as $r)
-                                        <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                    @foreach ($gudang as $g)
+                                        <optgroup label="{{ $g->nama_gudang }}">
+                                            @foreach ($rak as $r)
+                                                @if ($r->id_gudang == $g->nama_gudang)
+                                                    <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
+                                                @endif
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>
+                            
 
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
                         </form>
@@ -786,6 +799,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <a href="/masuk/export" class="btn btn-success">Export</a>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
