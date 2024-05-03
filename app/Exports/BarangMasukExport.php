@@ -3,34 +3,16 @@
 namespace App\Exports;
 
 use App\Models\BarangMasuk;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class BarangMasukExport implements FromCollection
+class BarangMasukExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return BarangMasuk::orderBy('tanggal_masuk', 'desc')->get();
-    }
-
-    public function headings():array
-    {
-        return [
-            'jenis_penerimaan',
-            'tanggal_masuk',
-            'id_supplier',
-            'NoSuratJalanMasuk_NoProduksi',
-            'NoPO_NoWO',
-            'FAI_code',
-            'no_LOT',
-            'tanggal_produksi',
-            'tanggal_expire',
-            'qty_masuk_LOT',
-            'unit',
-            'status',
-            'note'
-        ];
+        return view('form.layoutExcel.brgMasukLayout', [
+            'brg' => BarangMasuk::with('barang', 'product', 'package')->get()
+        ]);
     }
 }

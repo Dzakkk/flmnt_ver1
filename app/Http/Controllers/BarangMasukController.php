@@ -7,6 +7,7 @@ use App\Imports\MasukImport;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Gudang;
+use App\Models\JenisKemasan;
 use App\Models\Packaging;
 use App\Models\RakGudang;
 use App\Models\Stock;
@@ -27,11 +28,105 @@ class BarangMasukController extends Controller
         $rak = RakGudang::all();
         $pcr = Packaging::all();
         $gudang = Gudang::all();
-        return view('barang.barangMasuk', ['gudang' => $gudang, 'brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg, 'pcr' => $pcr]);
+        $jenis = JenisKemasan::all();
+        return view('barang.barangMasuk', ['gudang' => $gudang, 'brgmasuk' => $brgmasuk, 'rak' => $rak, 'supp' => $supp, 'brg' => $brg, 'pcr' => $pcr , 'jenis' => $jenis]);
     }
 
     public function export_masuk() {
         return Excel::download(new BarangMasukExport, 'BarangMasukTerdaftar.xlsx');   
+    }
+
+    public function update_file(Request $request, $id)
+    {
+        $request->validate([
+            'file.*' => 'nullable|file|max:10240',
+        ]);
+
+        $barang = BarangMasuk::findOrFail($id);
+
+        // dd($request->all(), $id);
+        // Menghapus file lama jika ada
+        if ($request->has('deleted_file')) {
+            $deletedFile = $request->input('deleted_file');
+            $filePath = public_path('file_masuk') . '/' . $deletedFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Menghapus file dari daftar file yang disimpan di database
+            $fileNames = json_decode($barang->file, true);
+            $index = array_search($deletedFile, $fileNames);
+            if ($index !== false) {
+                unset($fileNames[$index]);
+                $barang->file = json_encode(array_values($fileNames)); // Mengatur kembali array ke string JSON setelah menghapus file
+            }
+        }
+
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                $fileName = $file->getClientOriginalName();
+                $file->move(public_path('file_masuk'), $fileName);
+                $fileNames[] = $fileName;
+            }
+            $barang->file = json_encode($fileNames);
+        }
+
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Bertambah');
+    }
+
+
+    public function addFile(Request $request, $id)
+    {
+        $request->validate([
+            'file.*' => 'nullable|file|max:10240',
+        ]);
+
+        $barang = BarangMasuk::findOrFail($id);
+        // dd($barang, $request->all());
+        $fileNames = [];
+        if ($barang->file) {
+            $fileNames = json_decode($barang->file, true);
+        }
+
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $files) {
+                $fileName = $files->getClientOriginalName();
+                $files->move(public_path('file_masuk'), $fileName);
+                $fileNames[] = $fileName;
+            }
+
+            $barang->file = json_encode($fileNames);
+        }
+
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Telah Diubah+');
+    }
+
+    public function delete_file(Request $request, $id)
+    {
+        $barang = BarangMasuk::findOrFail($id);
+
+        // dd($request->all(), $id);
+        // Menghapus file lama jika ada
+        if ($request->has('deleted_file')) {
+            $deletedFile = $request->input('deleted_file');
+            $filePath = public_path('file_masuk') . '/' . $deletedFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Menghapus file dari daftar file yang disimpan di database
+            $fileNames = json_decode($barang->file, true);
+            $index = array_search($deletedFile, $fileNames);
+            if ($index !== false) {
+                unset($fileNames[$index]);
+                $barang->file = json_encode(array_values($fileNames)); // Mengatur kembali array ke string JSON setelah menghapus file
+            }
+        }
+        $barang->save();
+
+        return redirect()->back()->with('success', 'Telah dihapus');
     }
 
     public function brgMasuk(Request $request)
@@ -91,6 +186,15 @@ class BarangMasukController extends Controller
             'id_rak' => $request->id_rak,
 
         ]);
+
+        $jns = JenisKemasan::where('jenis', $request->jenis_kemasan)->first;
+
+        if (!$jns) {
+            $jns = new JenisKemasan([
+                'jenis' => $request->jenis_kemasan
+            ]);
+            $jns->save();
+        }
 
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file);
@@ -379,6 +483,13 @@ class BarangMasukController extends Controller
             'status' => $request->status,
             'id_rak' => $request->id_rak,
         ]);
+
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file);
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path('file_masuk'), $fileName);
+            $barangMasuk->file[] = '/file_masuk/' . $fileName;
+        }
 
         $namaKemasan = Packaging::where('FAI_code', $request->FAI_code)->first();
 

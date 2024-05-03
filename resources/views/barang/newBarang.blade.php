@@ -185,11 +185,11 @@
                     <label class="form-label" for="halal_certification">halal_certification</label>
                     <input type="text" name="halal_certification" class="form-control" id="halal_certification">
                 </div>
-                <div class="col-md-6" id="rigra1" style="display: none">
+                <div class="col-md-6" id="rigra1">
                     <label for="name" class="form-label">name</label>
                     <input type="text" name="name" id="name" class="form-control">
                 </div>
-                <div class="col-md-6" id="rigra2" style="display: none">
+                <div class="col-md-6" id="rigra2">
                     <label class="form-label" for="common_name">common_name</label>
                     <input type="text" name="common_name" class="form-control" id="common_name">
                 </div>

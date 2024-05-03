@@ -93,8 +93,7 @@
                     <?php
                     $row++;
                     ?>
-
-
+ 
                     {{-- Document --}}
 
                     <div class="modal fade" id="halal-{{ str_replace('.', '_', $item->FAI_code) }}" tabindex="-1"

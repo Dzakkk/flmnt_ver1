@@ -156,6 +156,7 @@ class BarangController extends Controller
                 'FAI_code' => $request->FAI_code,
                 'nama_kemasan' => $request->nama_kemasan,
                 'supplier' => $request->supplier,
+                'manufacturer' => $request->ex_origin,
                 'capacity' => $request->capacity,
                 'quantity' => 0,
                 'id_rak' => 'LOADING DECK',

@@ -144,10 +144,9 @@ class ProductsController extends Controller
             $cust = Customer::all();
             $custList = CustList::all();
             $kemasan = Packaging::all();
+            $gudang = Gudang::all();
 
-
-
-            return view('product.data', compact('prd', 'rak', 'custList', 'kemasan', 'cust'));
+            return view('product.data', compact('gudang', 'prd', 'rak', 'custList', 'kemasan', 'cust'));
         } catch (\Exception $e) {
             return redirect('/product');
         }

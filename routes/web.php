@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\BarangMasukExport;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
@@ -83,6 +84,9 @@ Route::middleware(['auth'])->group(function (){
     Route::post('barang/masuk', [BarangMasukController::class, 'brgMasuk']);
     Route::put('barang/masuk/{id}/edit', [BarangMasukController::class, 'updateBarangMasuk']);
     Route::post('kemasan/masuk', [BarangMasukController::class, 'storePackage']);
+    Route::put('/masuk/add/file/{id}', [BarangMasukController::class, 'addFile']);
+    Route::put('/masuk/update/file/{id}', [BarangMasukController::class, 'update_file']);
+    Route::delete('/masuk/delete/file/{id}', [BarangMasukController::class, 'delete_file']);
     
     Route::get('barangKeluar', [BarangKeluarController::class, 'dataKeluar']);
     Route::post('barang/keluar', [BarangKeluarController::class, 'brgKeluar']);

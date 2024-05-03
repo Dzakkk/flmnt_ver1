@@ -68,12 +68,12 @@
                         <td style="font-size: 14px;">{{ $i->jenis_kemasan }}</td>
                         <td style="font-size: 14px;">{{ $i->total_qty_keluar_LOT }}</td>
                         <td style="font-size: 14px;">
-                            <div class="d-flex">
+                            {{-- <div class="d-flex">
                                 <a href="/supplier/update/{{ $i->id_pengeluaran }}"
                                     class="btn btn-outline-primary btn-sm me-1">Ubah</a>
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#confirmDeleteModal-{{ $i->id_pengeluaran }}">Delete</button>
-                            </div>
+                            </div> --}}
                         </td>
                     </tr>
                     <div class="modal fade" id="confirmDeleteModal-{{ $i->id_pengeluaran }}" tabindex="-1"

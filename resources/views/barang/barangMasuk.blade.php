@@ -1,6 +1,37 @@
 @extends('dashboard')
 
 @section('barangMasuk')
+    <style>
+        .custom-select {
+            position: relative;
+        }
+
+        .custom-select select,
+        .custom-select input {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 16px;
+        }
+
+        .custom-select select {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .custom-select input {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .custom-select select:focus,
+        .custom-select input:focus {
+            outline: none;
+        }
+
+        .custom-select input[type="text"] {
+            display: none;
+        }
+    </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var modalElement = document.getElementById('staticBackdrop');
@@ -106,6 +137,11 @@
                                     data-bs-target="#staticBackdrop-{{ $i->id_penerimaan }}">
                                     <i class="ri-edit-line"></i>
                                 </button>
+                                <button type="button" class="btn btn-success btn-sm me-1" data-bs-toggle="modal"
+                                    data-bs-placement="top" title="Document"
+                                    data-bs-target="#dokumen-{{ $i->id_penerimaan }}">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </button>
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#confirmDeleteModal-{{ $i->id_penerimaan }}"><i
                                         class="bi bi-trash"></i></button>
@@ -151,16 +187,18 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="container shadow pt-2 mt-2">
-                                        <form action="/barang/masuk/{{ $i->id_penerimaan }}/edit" method="POST" enctype="multipart/form-data"
-                                            id="customerForm" class="resettable-form row g-3">
+                                        <form action="/barang/masuk/{{ $i->id_penerimaan }}/edit" method="POST"
+                                            enctype="multipart/form-data" id="customerForm"
+                                            class="resettable-form row g-3">
                                             @csrf
                                             @method('PUT')
                                             <div class="col">
-                                                <label class="form-label" for="TMT">jenis_penerimaan</label>
+                                                <label class="form-label" for="TMT">Jenis Penerimaan</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
                                                         name="jenis_penerimaan">
-                                                        <option value="{{ $i->jenis_penerimaan }}">Pilih Kategori</option>
+                                                        <option value="{{ $i->jenis_penerimaan }}">
+                                                            {{ $i->jenis_penerimaan }}</option>
                                                         <option value="Barang Hasil Produksi">Barang Hasil Produksi
                                                         </option>
                                                         <option value="Bahan Baku Produksi">Bahan Baku Produksi</option>
@@ -178,12 +216,15 @@
                                                     id="exampleInputPassword1" value="{{ $i->tanggal_masuk }}">
                                             </div>
                                             <div class="col">
-                                                <label for="supplier" class="form-label">supplier</label>
+                                                <label for="supplier" class="form-label">Supplier</label>
                                                 <select name="id_supplier" id="supplier" class="form-control select2"
                                                     required>
-                                                    <option value="{{ $i->id_supplier }}">{{ $i->id_supplier }}</option>
+                                                    <option value="{{ $i->id_supplier }}">{{ $i->id_supplier }} -
+                                                        {{ \App\Models\Supplier::find($i->supplier)->supplier_name ?? null }}
+                                                    </option>
                                                     @foreach ($supp as $c)
-                                                        <option value="{{ $c->id_supplier }}">{{ $c->supplier_name }}
+                                                        <option value="{{ $c->id_supplier }}">{{ $c->id_supplier }} -
+                                                            {{ $c->supplier_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -200,7 +241,7 @@
                                                     id="exampleInputEmail1" value="{{ $i->NoPO_NoWO }}">
                                             </div>
                                             <div class="col">
-                                                <label for="kategori_barang" class="form-label">kategori_barang</label>
+                                                <label for="kategori_barang" class="form-label">Kategori Barang</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="golongan_select"
                                                         name="kategori_barang">
@@ -218,7 +259,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col">
+                                            {{-- <div class="col">
                                                 <label class="form-label">documentation</label>
                                                 <div>
                                                     <div class="form-check form-check-inline">
@@ -237,11 +278,11 @@
                                                         <label class="form-check-label" for="msds_checkbox">MSDS</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col">
                                                 <label for="barang" class="form-label">FAI Code</label>
-                                                <div id="ehe" class="form-control">
-                                                    <select name="FAI_code" id="barang1" class="form-control select2"
+                                                <div id="ehe" class="form-control ehe">
+                                                    <select name="FAI_code" id="" class="form-control select21"
                                                         style="width: 450px">
                                                         <option value="{{ $i->FAI_code }}">{{ $i->FAI_code }}</option>
                                                         @foreach ($brg as $r)
@@ -253,7 +294,7 @@
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label for="exampleInputPassword1" class="form-label">no_LOT</label>
+                                                <label for="exampleInputPassword1" class="form-label">No LOT</label>
                                                 <input type="text" name="no_LOT" class="form-control"
                                                     id="exampleInputPassword1" value="{{ $i->no_LOT }}">
                                             </div>
@@ -356,6 +397,190 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="dokumen-{{ $i->id_penerimaan }}" tabindex="-1"
+                        aria-labelledby="confirmDokumen-{{ $i->id_penerimaan }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDokumen-{{ $i->id_penerimaan }}">
+                                        Document
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Document of {{ $i->FAI_code }} -
+                                    @if ($barang = \App\Models\Barang::find($i->FAI_code))
+                                        {{ $barang->name }}
+                                    @elseif($product = \App\Models\Product::find($i->FAI_code))
+                                        {{ $product->product_name }}
+                                    @elseif($packaging = \App\Models\Packaging::find($i->FAI_code))
+                                        {{ $packaging->nama_kemasan }}
+                                    @else
+                                        No document found
+                                    @endif
+                                    <div>
+                                        <strong>Files CoA:</strong>
+                                        @if ($i->file)
+                                            @php
+                                                $files = json_decode($i->file, true);
+                                                if (is_array($files)) {
+                                                    echo '<ul>';
+                                                    foreach ($files as $file) {
+                                                        echo '<li><a href="' .
+                                                            asset('file_masuk/' . $file) .
+                                                            '" target="_blank">' .
+                                                            $file .
+                                                            '</a></li>';
+                                                    }
+                                                    echo '</ul>';
+                                                } else {
+                                                    echo '<p>No files found</p>';
+                                                }
+                                            @endphp
+                                        @endif
+
+                                    </div>
+                                    <div>
+                                        <strong>Other Files:</strong>
+                                        @if ($barang)
+                                            @php
+                                                $files = json_decode($barang->file, true);
+                                                if (is_array($files)) {
+                                                    echo '<ul>';
+                                                    foreach ($files as $file) {
+                                                        echo '<li><a href="' .
+                                                            asset('document_barang/' . $file) .
+                                                            '" target="_blank">' .
+                                                            $file .
+                                                            '</a></li>';
+                                                    }
+                                                    echo '</ul>';
+                                                } else {
+                                                    echo '<p>No files found</p>';
+                                                }
+                                            @endphp
+                                        @elseif ($product)
+                                            @php
+                                                $files = json_decode($product->file, true);
+                                                if (is_array($files)) {
+                                                    echo '<ul>';
+                                                    foreach ($files as $file) {
+                                                        echo '<li><a href="' .
+                                                            asset('document_product/' . $file) .
+                                                            '" target="_blank">' .
+                                                            $file .
+                                                            '</a></li>';
+                                                    }
+                                                    echo '</ul>';
+                                                } else {
+                                                    echo '<p>No files found</p>';
+                                                }
+                                            @endphp
+                                        @else
+                                            <p>No files found</p>
+                                        @endif
+                                    </div>
+
+
+
+                                    <form action="/masuk/add/file/{{ $i->id_penerimaan }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div>
+                                            <label for="file" class="form-label">Unggah File</label>
+                                            <i>Max 10 Mb</i>
+                                            <div class="file-input-container">
+                                                <input type="file" name="file[]" class="form-control" multiple>
+                                            </div>
+                                            {{-- <button type="button" class="btn btn-success btn-sm mt-1"
+                                                onclick="addFileInput()">Tambah File</button> --}}
+                                            <button type="submit" class="btn btn-primary btn-sm mt-1">Submit</button>
+                                        </div>
+                                        {{-- <script>
+                                            function addFileInput() {
+                                                var fileInput = `<input type="file" name="file[]" class="form-control mt-2">`;
+                                                $('.file-input-container').append(fileInput);
+                                            }
+                                        </script> --}}
+                                    </form>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="fileReplacementModalLabel">Ganti File</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/masuk/update/file/{{ $i->id_penerimaan }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan
+                                                Diganti:</label>
+                                            <select class="form-select" id="currentFile" name="deleted_file">
+                                                <option value="">Pilih File yang akan Diganti</option>
+                                                @if ($i->file)
+                                                    @php
+                                                        $files = json_decode($i->file, true);
+                                                    @endphp
+                                                    @foreach ($files as $fileName)
+                                                        <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newFile" class="form-label">Pilih File Baru:</label>
+                                            <input type="file" class="form-control" id="newFile" name="file[]">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="fileReplacementModalLabel">Ganti File</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/masuk/delete/file/{{ $i->id_penerimaa }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="mb-3">
+                                            <label for="currentFile" class="form-label">Pilih File yang akan
+                                                Dihapus:</label>
+                                            <select class="form-select" id="currentFile" name="deleted_file">
+                                                <option value="">Pilih File yang akan Dihapus</option>
+                                                @if ($i->file)
+                                                    @php
+                                                        $files = json_decode($i->file, true);
+                                                    @endphp
+                                                    @foreach ($files as $fileName)
+                                                        <option value="{{ $fileName }}">{{ $fileName }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">delete Perubahan</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -493,7 +718,8 @@
                                 <div id="file-input-container">
                                     <input type="file" name="file[]" class="form-control" multiple>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-sm mt-1" onclick="addFileInput()">Tambah
+                                <button type="button" class="btn btn-primary btn-sm mt-1"
+                                    onclick="addFileInput()">Tambah
                                     File</button>
                             </div>
                             <script>
@@ -518,12 +744,16 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label" for="unit">Jenis Kemasan</label>
-                                <div class="input-group">
-                                    <select class="form-select" id="golongan_select" name="jenis_kemasan">
+                                <div class="input-group custom-select">
+                                    <select class="form-select" id="options" name="jenis_kemasan">
                                         <option value="">Pilih Kemasan</option>
-                                        <option value="Alumunium Bottle">Alumunium Bottle</option>
+                                        @foreach ($jenis as $j)
+                                            <option value="{{ $j->jenis }}">{{ $j->jenis }}</option>
+                                        @endforeach
+                                        <option value="custom">Add New</option>
+                                        {{-- <option value="Alumunium Bottle">Alumunium Bottle</option>
                                         <option value="Alumunium Pouch Pack">Alumunium Pouch Pack</option>
                                         <option value="Bag">Bag</option>
                                         <option value="Box with Alumunium Bottle">Box with Alumunium Bottle</option>
@@ -542,9 +772,15 @@
                                         <option value="Plastic Drum">Plastic Drum</option>
                                         <option value="Plastic Jar">Plastic Jar</option>
                                         <option value="Sacks">Sacks</option>
-                                        <option value="Goody Bag">Goody Bag</option>
+                                        <option value="Goody Bag">Goody Bag</option> --}}
                                     </select>
+                                    <input type="text" id="customInput" style="display: none;" name="jenis_kemasan"
+                                        class="form-control" placeholder="Enter custom value">
+
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+
                             </div>
                             <div class="col-md-3">
                                 <label for="exampleInputPassword1" class="form-label">satuan_QTY_kemasan</label>
@@ -560,9 +796,9 @@
                                 <label for="exampleInputPassword1" class="form-label">status</label>
                                 <input type="text" name="status" class="form-control" id="exampleInputPassword1">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="gdh">
                                 <label for="supplier" class="form-label">Rak</label>
-                                <select name="id_rak" id="supplier" class="form-control select2" required>
+                                <select name="id_rak" id="gd" class="form-control select2" required>
                                     <option value="" disabled selected>Select Rak</option>
                                     @foreach ($gudang as $g)
                                         <optgroup label="{{ $g->nama_gudang }}">
@@ -600,8 +836,6 @@
                             class="resettable-form row g-3">
                             @csrf
 
-
-
                             <div class="col-md-6">
                                 <label class="form-label" for="TMT">jenis_penerimaan</label>
                                 <div class="input-group">
@@ -616,20 +850,6 @@
                                     </select>
                                 </div>
                             </div>
-
-
-                            <div class="col-md-6">
-                                <label for="barang" class="form-label">FAI Code</label>
-                                <select name="FAI_code" class="form-control">
-                                    <option value="" disabled selected>Select FAI code</option>
-                                    @foreach ($pcr as $r)
-                                        <option value="{{ $r->FAI_code }}">
-                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->nama_kemasan }}&nbsp;-&nbsp;{{ $r->capacity }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
 
                             <div class="col-md-6">
                                 <label for="exampleInputPassword1" class="form-label">Tanggal Masuk</label>
@@ -668,20 +888,30 @@
                                 </div>
                             </div>
                             <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">NO PO/WO</label>
+                                <input type="text" name="NoPO_NoWO" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            <div class="mb-2">
                                 <label for="exampleInputPassword1" class="form-label">Surat Jalan</label>
                                 <input type="text" name="NoSuratJalanMasuk_NoProduksi" class="form-control"
                                     id="exampleInputPassword1">
                             </div>
-                            <div class="mb-2">
-                                <label for="exampleInputEmail1" class="form-label">NO PO/WO</label>
-                                <input type="text" name="NoPO_NoWO" class="form-control" id="exampleInputEmail1">
+
+
+                            <div class="col-md-7">
+                                <label for="barang" class="form-label">FAI Code</label>
+                                <select name="FAI_code" class="form-control">
+                                    <option value="" disabled selected>Select FAI code</option>
+                                    @foreach ($pcr as $r)
+                                        <option value="{{ $r->FAI_code }}">
+                                            {{ $r->FAI_code }}&nbsp;-&nbsp;{{ $r->nama_kemasan }}&nbsp;-&nbsp;{{ $r->capacity }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
 
-
-
-
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <label for="exampleInputPassword1" class="form-label">no_LOT</label>
                                 <input type="text" name="no_LOT" class="form-control" id="exampleInputPassword1">
                             </div>
@@ -715,11 +945,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-md-7">
+                                <label for="file" class="form-label">Uploud File</label>
+                                <div id="file-input-container">
+                                    <input type="file" name="file[]" class="form-control" multiple>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
                                 <label for="exampleInputEmail1" class="form-label">qty_masuk_LOT</label>
                                 <input type="string" name="quantity" class="form-control" id="exampleInputEmail1">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <label class="form-label" for="unit">unit</label>
                                 <div class="input-group">
                                     <select class="form-select" id="golongan_select" name="unit">
@@ -780,7 +1017,7 @@
                                     @foreach ($gudang as $g)
                                         <optgroup label="{{ $g->nama_gudang }}">
                                             @foreach ($rak as $r)
-                                                @if ($r->id_gudang == $g->nama_gudang)
+                                                @if ($r->id_gudang == $g->id_gudang)
                                                     <option value="{{ $r->id_rak }}">{{ $r->id_rak }}</option>
                                                 @endif
                                             @endforeach
@@ -788,8 +1025,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
-
                             <button type="submit" class="btn btn-primary m-2">Submit</button>
                         </form>
                     </div>
@@ -803,6 +1038,24 @@
     <div>
         <a href="/masuk/export" class="btn btn-success">Export</a>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#options').change(function() {
+                if ($(this).val() === 'custom') {
+                    $('#customInput').show();
+                } else {
+                    $('#customInput').hide();
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.select21').select2({
+                dropdownParent: $('.ehe'),
+            });
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.select2').forEach(function(select) {

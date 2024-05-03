@@ -47,4 +47,12 @@ class BarangMasuk extends Model
     {
         return $this->belongsTo(Barang::class, 'FAI_code', 'FAI_code');
     }
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Products::class, 'FAI_code', 'FAI_code');
+    }
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Packaging::class, 'FAI_code', 'FAI_code');
+    }
 }
