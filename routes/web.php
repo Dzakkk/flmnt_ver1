@@ -95,6 +95,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('customer', [CustomerController::class, 'dataCustomer']);
     Route::post('customer/store', [CustomerController::class, 'storeCustomer']);
     Route::delete('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    Route::put('customer/update/{id}', [CustomerController::class, 'update']);
+
     
     
     Route::get('product', [ProductsController::class, 'dataProduct']);

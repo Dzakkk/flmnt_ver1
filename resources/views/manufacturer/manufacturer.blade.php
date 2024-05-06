@@ -41,6 +41,8 @@
                     <td style="font-size: 14px;">{{ $i->note }}</td>
                     <td style="font-size: 14px;">
                         <div class="d-flex">
+                            <button type="button" class="btn btn-warning btn-sm btn-sm m-1" data-bs-toggle="modal"
+                            data-bs-target="#update-{{ $i->id_manufacturer }}">update</button>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal-{{ $i->id_manufacturer }}">Delete</button>
                         </div>
@@ -69,6 +71,94 @@
                                     <button type="submit" class="btn btn-danger">Confirm Delete</button>
                                 </form>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade modal-dialog-scrollable" id="update-{{ $i->id_manufacturer }}" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Update Supplier</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container shadow pt-2 mt-2">
+                                <form action="/manufacturer/update/{{ $i->id_manufacturer }}" method="POST" enctype="multipart/form-data"
+                                        id="customerForm" class="resettable-form">
+                                        @method('PUT')
+                                        @csrf
+                                        {{-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">ID SUPPLIER</label>
+                            <input type="text" name="id_supplier" class="form-control" id="exampleInputEmail1">
+                        </div> --}}
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Manufacturer NAME</label>
+                                            <input type="text" name="supplier_name" class="form-control"
+                                                id="name" value="{{ $i->manufacturer_name }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="telephone" class="form-label">TELEPHONE</label>
+                                            <input type="text" name="telephone" class="form-control"
+                                                id="telephone" value="{{ $i->telephone }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="contact" class="form-label">CONTACT NAME</label>
+                                            <input type="text" name="contact_name" class="form-control"
+                                                id="contact" value="{{ $i->contact_name }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="status" class="form-label">STATUS</label>
+                                            <input type="text" name="status" class="form-control"
+                                                id="status" value="{{ $i->status }}"> 
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">ADDRESS</label>
+                                            <input type="text" name="address" class="form-control"
+                                                id="address" value="{{ $i->address }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="city" class="form-label">CITY</label>
+                                            <input type="text" name="city" class="form-control"
+                                                id="city" value="{{ $i->city }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="provinces" class="form-label">PROVINCES</label>
+                                            <input type="text" name="provinces" class="form-control"
+                                                id="provinces" value="{{ $i->provinces }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="post_code" class="form-label">POSTAL CODE</label>
+                                            <input type="text" name="postal_code" class="form-control"
+                                                id="post_code" value="{{ $i->postal_code }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="country" class="form-label">COUNTRY</label>
+                                            <input type="text" name="country" class="form-control"
+                                                id="country" value="{{ $i->country }}" >
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">EMAIL</label>
+                                            <input type="email" name="email" class="form-control"
+                                                id="exampleInputEmail1" value="{{ $i->email }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="note" class="form-label">NOTE</label>
+                                            <input type="text" name="note" class="form-control"
+                                                id="note" value="{{ $i->note }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

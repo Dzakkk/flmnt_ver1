@@ -160,6 +160,11 @@ class BarangController extends Controller
                 'capacity' => $request->capacity,
                 'quantity' => 0,
                 'id_rak' => 'LOADING DECK',
+                'berat_min' => $request->berat_min,
+                'berat_max' => $request->berat_max,
+                'berat_target' => $request->berat_target,
+                'material' => $request->material,
+                'ex' => $request->ex_origin,
             ]);
             $kemasan->save();
         } else {

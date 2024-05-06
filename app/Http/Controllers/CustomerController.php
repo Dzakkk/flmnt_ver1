@@ -48,12 +48,6 @@ class CustomerController extends Controller
         return redirect('/customer')->with('success', 'Customer created successfully.');
     }
 
-    public function updateCustomer($id) 
-    {
-        $Customer = Customer::find($id);
-        return view('customer.update', ['customer' => $Customer ]);
-    }
-
     public function update(Request $request, $id)
     {
         $data = Customer::find($id);

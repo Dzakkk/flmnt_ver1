@@ -1,8 +1,6 @@
 @extends('dashboard')
 
 @section('newBarang')
-
-
     {{-- <style>
         .hidden {
             display: none
@@ -157,7 +155,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6" id="capacity" style="display: none">
+                <div class="col-md-6" id="capacity" style="display: none;">
                     <label class="form-label" for="capacity">capacity</label>
                     <input type="text" name="capacity" class="form-control" id="capacity">
                 </div>
@@ -292,10 +290,21 @@
                             </label>
                         </div>
                     </div>
-                    
+
                 </div>
 
-
+                <div class="col-md-4" id="br1" style="display: none">
+                    <label class="form-label" for="spesific_gravity_d20">berat_min</label>
+                    <input type="text" name="berat_min" class="form-control" id="spesific_gravity_d20">
+                </div>
+                <div class="col-md-4" id="br2" style="display: none">
+                    <label class="form-label" for="spesific_gravity_d25">berat_max</label>
+                    <input type="text" name="berat_max" class="form-control" id="spesific_gravity_d25">
+                </div>
+                <div class="col-md-4" id="br3" style="display: none">
+                    <label for="refractive_index_d20" class="form-label">berat_target</label>
+                    <input type="text" name="berat_target" id="refractive_index_d20" class="form-control">
+                </div>
 
                 <div class="col-md-4" id="woogo1" style="display: none">
                     <label class="form-label" for="spesific_gravity_d20">sg_d20_min</label>
@@ -351,12 +360,12 @@
 
 
 
-                <div class="col-md-6" id="material" style="display: none">
+                <div class="col-md-6" id="material">
                     <label for="material" class="form-label">material</label>
                     <input type="text" name="material" id="material" class="form-control">
                 </div>
 
-                <div class="col-md-6" style="display: none">
+                <div class="col-md-6">
                     <label for="berat_gram" class="form-label">berat_gram</label>
                     <input type="number" name="berat_gram" id="berat_gram" class="form-control">
                 </div>
@@ -429,89 +438,63 @@
 
         // $(document).ready(function() {
         //     $('#CAS_number').select2();
-        // });
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('category').addEventListener('change', function() {
+                var selectedCategory = this.value;
+                var chemical = document.getElementById('cmc');
+                var casNumber = document.getElementById('cas2');
+                var kemasan = document.getElementById('kemasan');
+                var odour = document.getElementById('odour');
+                var capacity = document.getElementById('capacity');
+                var jenisKemasan = document.getElementById('jenis_kemasan');
+                var br1 = document.getElementById('br1');
+                var br2 = document.getElementById('br2');
+                var br3 = document.getElementById('br3');
 
+                if (selectedCategory === 'PACKAGING') {
+                    hideElements([chemical, casNumber, jenisKemasan, odour]);
+                    showElements([kemasan, capacity, br1, br2, br3]);
+                } else {
+                    hideElements([kemasan, capacity, br1, br2, br3]);
+                    showElements([chemical, casNumber, jenisKemasan, odour]);
+                }
+            });
+        });
 
-        document.getElementById('category').addEventListener('change', function() {
-            var celectedCategory = this.value;
-            var chemical = document.getElementById('cmc');
-            var casNumber = document.getElementById('cas');
-            var kemasan = document.getElementById('kemasan')
-            var odour = document.getElementById('odour');
-            var capacity = document.getElementById('capacity');
-            var jenisKemasan = document.getElementById('jenis_kemasan');
-            var rigra1 = document.getElementById('rigra1');
-            var rigra2 = document.getElementById('rigra2');
-            var rigra3 = document.getElementById('rigra3');
-            var rigra4 = document.getElementById('rigra4');
-            var rigra5 = document.getElementById('rigra5');
-            var rigra7 = document.getElementById('rigra7');
-            var rigra8 = document.getElementById('rigra8');
-            var rigra9 = document.getElementById('rigra9');
-            var rigra10 = document.getElementById('rigra10');
-            var rigra11 = document.getElementById('rigra11');
-            var rigra12 = document.getElementById('rigra12');
+        function hideElements(elements) {
+            elements.forEach(function(element) {
+                element.style.display = 'none';
+            });
+        }
 
-
-            if (celectedCategory === 'PACKAGING') {
-                chemical.style.display = 'none';
-                casNumber.style.display = 'none';
-                jenisKemasan.style.display = 'none';
-                kemasan.style.display = 'block';
-                capacity.style.display = 'block';
-                odour.style.display = 'none';
-                rigra1.style.display = 'none';
-                rigra2.style.display = 'none';
-                rigra3.style.display = 'none';
-                rigra4.style.display = 'none';
-                rigra5.style.display = 'none';
-                rigra6.style.display = 'none';
-                rigra7.style.display = 'none';
-                rigra8.style.display = 'none';
-                rigra9.style.display = 'none';
-                rigra10.style.display = 'none';
-                rigra11.style.display = 'none';
-                rigra12.style.display = 'none';
-
-            } else {
-                chemical.style.display = 'block';
-                casNumber.style.display = 'block';
-                jenisKemasan.style.display = 'block';
-                kemasan.style.display = 'none';
-                capacity.style.display = 'none';
-                odour.style.display = 'block';
-                rigra1.style.display = 'block';
-                rigra2.style.display = 'block';
-                rigra3.style.display = 'block';
-                rigra4.style.display = 'block';
-                rigra5.style.display = 'block';
-                rigra6.style.display = 'block';
-                rigra7.style.display = 'block';
-                rigra8.style.display = 'block';
-                rigra9.style.display = 'block';
-                rigra10.style.display = 'block';
-                rigra11.style.display = 'block';
-                rigra12.style.display = 'block';
-
-            }
-        })
+        function showElements(elements) {
+            elements.forEach(function(element) {
+                element.style.display = 'block';
+            });
+        }
     </script>
     <script>
-        $(document).ready(function(){
-            $('#CAS_number').on('input', function(){
+        $(document).ready(function() {
+            $('#CAS_number').on('input', function() {
                 var CAS_number = $(this).val();
                 $.ajax({
                     url: '/get-cas', // Ubah dengan URL endpoint Anda
                     method: 'GET', // Gunakan metode GET
-                    data: { CAS_number: CAS_number },
-                    success: function(response){
+                    data: {
+                        CAS_number: CAS_number
+                    },
+                    success: function(response) {
                         $('#uh').empty();
                         if (response.length > 0) {
-                            $.each(response, function(index, item){
-                                $('#uh').append('<p class="bg-success text-white p-2 rounded-pill ">Positive List ' + item.nama_kimia + '</p>');
+                            $.each(response, function(index, item) {
+                                $('#uh').append(
+                                    '<p class="bg-success text-white p-2 rounded-pill ">Positive List ' +
+                                    item.nama_kimia + '</p>');
                             });
                         } else {
-                            $('#uh').append('<p class="bg-warning p-2 rounded-pill">Data tidak ditemukan atau bukan termasuk dalam positive list.</p>');
+                            $('#uh').append(
+                                '<p class="bg-warning p-2 rounded-pill">Data tidak ditemukan atau bukan termasuk dalam positive list.</p>'
+                            );
                         }
                     }
                 });

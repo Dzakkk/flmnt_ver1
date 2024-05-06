@@ -701,7 +701,7 @@
                                             name="coa_documentation" id="coa_checkbox">
                                         <label class="form-check-label" for="coa_checkbox">CoA</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    {{-- <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" value="TDS"
                                             name="tds_documentation" id="tds_checkbox">
                                         <label class="form-check-label" for="tds_checkbox">TDS</label>
@@ -710,7 +710,7 @@
                                         <input class="form-check-input" type="checkbox" value="MSDS"
                                             name="msds_documentation" id="msds_checkbox">
                                         <label class="form-check-label" for="msds_checkbox">MSDS</label>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="col-md-7">
@@ -933,7 +933,7 @@
                                             name="coa_documentation" id="coa_checkbox">
                                         <label class="form-check-label" for="coa_checkbox">CoA</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    {{-- <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" value="TDS"
                                             name="tds_documentation" id="tds_checkbox">
                                         <label class="form-check-label" for="tds_checkbox">TDS</label>
@@ -942,7 +942,7 @@
                                         <input class="form-check-input" type="checkbox" value="MSDS"
                                             name="msds_documentation" id="msds_checkbox">
                                         <label class="form-check-label" for="msds_checkbox">MSDS</label>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
